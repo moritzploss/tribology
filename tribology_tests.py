@@ -58,7 +58,7 @@ class TestUM(unittest.TestCase):
 
     def test_hertz_half_axes(self):
         """
-        base test for hertz_load_carrying
+        base test for hertz_half_axes
         """
         e_eff = effective_modulus(210000, 0.3, 210000, 0.3)
         r_eff, r_eff_x, r_eff_y = effective_radii(15, 0, 0, 10)
