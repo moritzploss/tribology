@@ -712,8 +712,4 @@ def boundary_element_solve_pressure(profile_1, profile_2, outer_force,
 
 
 if __name__ == "__main__":
-    e_eff = effective_modulus(210000, 0.3, 210000, 0.3)
-    r_eff, r_eff_x, r_eff_y = effective_radii(15, 0, 0, 10)
-    ax_a, ax_b, area = hertz_half_axes(r_eff, r_eff_x, r_eff_y, e_eff, 100)
-    print(round(ax_a, 3), round(ax_b, 3), round(area, 3))
     pass
