@@ -1,6 +1,6 @@
 import unittest
 from tribology import dyn2kin, kin2dyn, hertz_mean_pressure, effective_radii, \
-    effective_modulus
+    effective_modulus, hertz_load_carrying
 
 
 class TestUM(unittest.TestCase):
@@ -25,3 +25,8 @@ class TestUM(unittest.TestCase):
         p_mean = hertz_mean_pressure(r_eff, r_eff_x, r_eff_y, e_eff, 10)
         self.assertEqual(round(p_mean), 574)
 
+    def test_hertz_load_carrying(self):
+        e_eff = effective_modulus(210000, 0.3, 210000, 0.3)
+        r_eff, r_eff_x, r_eff_y = effective_radii(6.35, 6.35, 0, 0)
+        f_crit = hertz_load_carrying(r_eff, r_eff_x, r_eff_y, e_eff, 574)
+        self.assertEqual(round(f_crit, 2), 9.99)
