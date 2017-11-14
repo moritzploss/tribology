@@ -385,6 +385,8 @@ def effective_radius(r_1, r_2):
     elif (r_1 == 0 or abs(r_1) == float('inf')) and \
             (r_2 == 0 or abs(r_2) == float('inf')):
         return 0
+    elif r_1 == -r_2:
+        return 0
     else:
         return 1 / (1 / r_1 + 1 / r_2)
 
@@ -710,4 +712,4 @@ def boundary_element_solve_pressure(profile_1, profile_2, outer_force,
 
 
 if __name__ == "__main__":
-    print(walther(20, 121.5, 40, 67, 100))
+    pass
