@@ -4,7 +4,7 @@ Test cases for tribology methods
 
 import unittest
 from tribology import dyn2kin, kin2dyn, hertz_mean_pressure, effective_radii, \
-    effective_modulus, hertz_load_carrying
+    effective_modulus, hertz_load_carrying, hertz_half_axes
 
 
 class TestUM(unittest.TestCase):
@@ -55,3 +55,13 @@ class TestUM(unittest.TestCase):
         r_eff, r_eff_x, r_eff_y = effective_radii(6.35, 6.35, 0, 0)
         f_crit = hertz_load_carrying(r_eff, r_eff_x, r_eff_y, e_eff, 574)
         self.assertEqual(round(f_crit, 2), 9.99)
+
+    def test_hertz_half_axes(self):
+        """
+        base test for hertz_load_carrying
+        """
+        e_eff = effective_modulus(210000, 0.3, 210000, 0.3)
+        r_eff, r_eff_x, r_eff_y = effective_radii(15, 0, 0, 10)
+        ax_a, ax_b, area = hertz_half_axes(r_eff, r_eff_x, r_eff_y, e_eff, 100)
+        rounded = [round(var, 3) for var in (ax_a, ax_b, area)]
+        self.assertEqual(rounded, [0.175, 0.227, 0.125])

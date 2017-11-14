@@ -473,7 +473,7 @@ def hertz_displacement(e_eff, r_x_1, r_y_1, r_x_2, r_y_2, force):
     return param_a * param_b / r_c * (f_2 / f_1)
 
 
-def hertz_half_axis(r_eff, r_eff_x, r_eff_y, e_eff, force):
+def hertz_half_axes(r_eff, r_eff_x, r_eff_y, e_eff, force):
     """
     Calculate Hertzian contact area half-axis
     :param r_eff: effective radius of contact bodies
@@ -513,7 +513,7 @@ def hertz_mean_pressure(r_eff, r_eff_x, r_eff_y, e_eff, force):
     :param force: normal force
     :return: mean contact pressure
     """
-    _, _, area = hertz_half_axis(r_eff, r_eff_x, r_eff_y, e_eff, force)
+    _, _, area = hertz_half_axes(r_eff, r_eff_x, r_eff_y, e_eff, force)
     return force / area
 
 
@@ -712,4 +712,8 @@ def boundary_element_solve_pressure(profile_1, profile_2, outer_force,
 
 
 if __name__ == "__main__":
+    e_eff = effective_modulus(210000, 0.3, 210000, 0.3)
+    r_eff, r_eff_x, r_eff_y = effective_radii(15, 0, 0, 10)
+    ax_a, ax_b, area = hertz_half_axes(r_eff, r_eff_x, r_eff_y, e_eff, 100)
+    print(round(ax_a, 3), round(ax_b, 3), round(area, 3))
     pass
