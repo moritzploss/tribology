@@ -102,3 +102,6 @@ ENV/
 
 # PyCharm IDE files
 .idea/*
+
+# files related to package publishing
+.pypirc

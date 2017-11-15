@@ -4,10 +4,7 @@ Short demonstration of how to use dowson-hamrock equation for point contact
 
 import matplotlib.pyplot as plt
 import numpy as np
-
-from tribology import AlphaP, YoungsMod, PoissonRatio, LubeViscosity, \
-    LubeDensity, BallRadii, dowson_hamrock_point, kin2dyn, convert_prefix, \
-    walther, effective_modulus, effective_radii
+import tribology as tr
 
 
 def plot_results(films, film_calc, speeds):
@@ -43,24 +40,26 @@ def dowson_hamrock_demo():
     temp = np.mean(database['lube_temp_c'])
 
     # get material and lube properties
-    alpha_p = convert_prefix(AlphaP.MINERAL_OIL_GENERIC.value, 'M', '')
-    kin = LubeViscosity.SIGMA_ALDRICH_MINERAL_OIL_HEAVY.value
-    lube_temps = LubeViscosity.TEMPS.value
-    density = LubeDensity.SIGMA_ALDRICH_MINERAL_OIL_HEAVY.value
+    alpha_p = tr.convert_prefix(tr.AlphaP.MINERAL_OIL_GENERIC.value, 'M', '')
+    kin = tr.LubeViscosity.SIGMA_ALDRICH_MINERAL_OIL_HEAVY.value
+    lube_temps = tr.LubeViscosity.TEMPS.value
+    density = tr.LubeDensity.SIGMA_ALDRICH_MINERAL_OIL_HEAVY.value
 
     # calculate dynamic viscosity at operating temperature
-    kin_temp = walther(lube_temps[0], kin[0], lube_temps[1], kin[1], temp)
-    dyn_temp = convert_prefix(kin2dyn(kin_temp, density), 'm', 'M')
+    kin_temp = tr.walther(lube_temps[0], kin[0], lube_temps[1], kin[1], temp)
+    dyn_temp = tr.convert_prefix(tr.kin2dyn(kin_temp, density), 'm', 'M')
 
     # calculate effective modulus and radius
-    e_eff = effective_modulus(YoungsMod.STEEL.value, PoissonRatio.STEEL.value,
-                              YoungsMod.GLASS.value, PoissonRatio.GLASS.value)
-    r_eff, _, _ = effective_radii(BallRadii.ThreeQuarterInch.value, 0, 0, 0)
+    e_eff = tr.effective_modulus(tr.YoungsMod.STEEL.value,
+                                 tr.PoissonRatio.STEEL.value,
+                                 tr.YoungsMod.GLASS.value,
+                                 tr.PoissonRatio.GLASS.value)
+    r_eff, _, _ = tr.effective_radii(tr.RadBall.TQInch.value, 0, 0, 0)
 
     # calculate and plot film thickness
-    film_calc = dowson_hamrock_point(speeds, loads, alpha_p, e_eff, r_eff,
-                                     dyn_temp)
-    plot_results(films, convert_prefix(film_calc, 'm', 'n'), speeds)
+    film_calc = tr.dowson_hamrock_point(speeds, loads, alpha_p, e_eff, r_eff,
+                                        dyn_temp)
+    plot_results(films, tr.convert_prefix(film_calc, 'm', 'n'), speeds)
 
 
 if __name__ == "__main__":

@@ -6,88 +6,12 @@ KTH Royal Institute of Technology, Stockholm, Sweden.
 """
 
 import copy
-from enum import Enum
 from math import log10 as lg
-from math import sqrt, acos, cos, sin, pi, log, e
+from math import sqrt, acos, cos, sin, pi, e
 
 import numexpr as ne
 import numpy as np
 import scipy.sparse.linalg as spla
-
-
-"""
-Relevant constants for tribology research
-"""
-
-
-class RadBall(Enum):
-    """
-    Constants for ball radii
-    """
-    TQInch = 25.4 * 3 / 8
-    HInch = 25.4 / 4
-    Inch = 25.4 / 2
-
-
-class YoungsMod(Enum):
-    """
-    Young's modulus data in MPa at ambient temperature
-    """
-    STEEL = 210000
-    GLASS = 70000
-    SiN = 315
-
-
-class PoissonRatio(Enum):
-    """
-    Poisson ratio data at ambient temperature
-    """
-    STEEL = 0.3
-    GLASS = 0.22
-    SiN = 0.26
-
-
-class MatDensity(Enum):
-    """
-    Density in kg / m^3 at ambient temperature
-    """
-    STEEL = 7800
-    SiN = 3200
-
-
-class LubeDensity(Enum):
-    """
-    Density in g / ml
-    """
-    NA_LUBE_KR_015 = 0.884
-    NYNAS_HP_4 = 0.852
-    NYNAS_HP_12 = 0.867
-    NYNAS_T_3 = 0.868
-    NYNAS_T_9 = 0.888
-    NYNAS_T_22 = 0.902
-    SIGMA_ALDRICH_MINERAL_OIL_HEAVY = 0.862
-
-
-class LubeViscosity(Enum):
-    """
-    Lubricant viscosity in cSt at 40 and 100 degree C
-    """
-    TEMPS = (40, 100)
-    NA_LUBE_KR_015 = (114.0, 13.5)
-    NYNAS_HP_4 = (20, 4.2)
-    NYNAS_HP_12 = (110, 12)
-    NYNAS_T_3 = (3.7, 1.3)
-    NYNAS_T_9 = (9.0, 2.2)
-    NYNAS_T_22 = (22.5, 3.6)
-    SIGMA_ALDRICH_MINERAL_OIL_HEAVY = (67.0, 18.9)
-
-
-class AlphaP(Enum):
-    """
-    Pressure-viscosity coefficients in 1 / Pa at ambient temperature
-    """
-    ESTER_OIL_GENERIC = 15 * 10 ** (-9)
-    MINERAL_OIL_GENERIC = 30 * 10 ** (-9)
 
 
 def secant_method(x_list, fx_list):
@@ -333,73 +257,7 @@ def dyn2kin(dyn, density):
     return dyn * density
 
 
-def dowson_hamrock_parameters(r_eff, param_g, param_u, param_w):
-    """
-    part of dowson-hamrock
-    :param r_eff: effective radius
-    :param param_g: elasticity_parameter
-    :param param_u: velocity_parameter
-    :param param_w: load parameter
-    :return: ehd parameter
-    """
-    return r_eff * param_g ** 0.53 * param_u ** 0.67 * param_w ** -0.067
 
-
-def dowson_hamrock_elasticity(alpha_p, e_eff):
-    """
-    calculate elasticity parameter of dowson-hamrock equation
-    :param alpha_p: pressure-viscosity coefficient
-    :param e_eff: effective young's modulus
-    :return: elasticity parameter
-    """
-    return alpha_p * e_eff
-
-
-def dowson_hamrock_velocity(eta, speed, e_eff, r_eff):
-    """
-    calculate velocity parameter of dowson-hamrock equation
-    :param eta: dynamic viscosity
-    :param speed: entrainment speed
-    :param e_eff: effective young's modulus
-    :param r_eff: effective radius
-    :return: velocity parameter
-    """
-    return eta * speed / (e_eff * r_eff)
-
-
-def dowson_hamrock_line(speed, force, alpha_p, e_eff, r_eff, eta, l_eff):
-    """
-    Calculate mean film thickness according to Dowson-Hamrock equation.
-    :param speed: entrainment speed, vector or int/float
-    :param force: force, vector or int/float
-    :param e_eff: effective modulus
-    :param alpha_p: pressure-viscosity coefficient in, int/float
-    :param eta: dynamic viscosity of lube, int/float
-    :param r_eff: effective radius
-    :param l_eff: effective length
-    :return: mean film thickness, vector or int/float
-    """
-    param_g = dowson_hamrock_elasticity(alpha_p, e_eff)
-    param_u = dowson_hamrock_velocity(eta, speed, e_eff, r_eff)
-    param_w = force / (l_eff * r_eff * e_eff)
-    return 2.69 * dowson_hamrock_parameters(r_eff, param_g, param_u, param_w)
-
-
-def dowson_hamrock_point(speed, force, alpha_p, e_eff, r_eff, eta):
-    """
-    Calculate mean film thickness according to Dowson-Hamrock equation.
-    :param speed: entrainment speed, vector or int/float
-    :param force: force, vector or int/float
-    :param e_eff: effective modulus in MPa
-    :param alpha_p: pressure-viscosity coefficient, int/float
-    :param eta: dynamic viscosity of lube, int/float
-    :param r_eff: effective radius
-    :return: mean film thickness, vector or int/float
-    """
-    param_g = dowson_hamrock_elasticity(alpha_p, e_eff)
-    param_u = dowson_hamrock_velocity(eta, speed, e_eff, r_eff)
-    param_w = force / (r_eff ** 2 * e_eff)
-    return 1.9 * dowson_hamrock_parameters(r_eff, param_g, param_u, param_w)
 
 
 def walther_calc_z_from_nu(kin_visc):
@@ -499,101 +357,6 @@ def effective_modulus(e_1, nu_1, e_2, nu_2):
     :return:
     """
     return 1 / ((1 - nu_1 ** 2) / (2 * e_1) + (1 - nu_2 ** 2) / (2 * e_2))
-
-
-
-
-
-def hertz_parameters(r_eff_x, r_eff_y):
-    """
-    Calculate Hertz parameters required for contact area/pressure calculations
-    :param r_eff_x: effective radius in x direction
-    :param r_eff_y: effective radius in y direction
-    :return: dimensionless Hertz parameters
-    """
-    if r_eff_x == 0 or r_eff_y == 0:
-        param_lambda = 0
-    else:
-        param_lambda = min(r_eff_x / r_eff_y, r_eff_y / r_eff_x)
-    kappa = 1 / (1 + sqrt(log(16 / param_lambda) / (2 * param_lambda)) -
-                 sqrt(log(4)) + 0.16 * log(param_lambda))
-    a_ast = kappa * (1 + (2 * (1 - kappa ** 2)) / (pi * kappa ** 2) -
-                     0.25 * log(kappa)) ** (1 / 3)
-    b_ast = a_ast / kappa
-    return a_ast, b_ast, kappa, param_lambda
-
-
-def hertz_displacement(e_eff, r_x_1, r_y_1, r_x_2, r_y_2, force):
-    """
-    Elastic displacement in normal direction for arbitrary bodies according to
-    hertz contact theory
-    :param e_eff: effective young's modulus in MPa
-    :param r_x_1: radius body 1 in x direction in mm
-    :param r_y_1: radius body 1 in y direction in mm
-    :param r_x_2: radius body 2 in x direction in mm
-    :param r_y_2: radius body 2 in y direction in mm
-    :param force: normal force in N
-    :return: combined normal displacement in mm
-    """
-    apb = 0.5 * (1 / r_x_1 + 1 / r_y_1 + 1 / r_x_2 + 1 / r_y_2)
-    bma = 0.5 * sqrt((1 / r_x_1 - 1 / r_y_1) ** 2 +
-                     (1 / r_x_2 - 1 / r_y_2) ** 2)
-    r_a = 1 / (apb - bma)
-    r_b = 1 / (apb + bma)
-    r_c = sqrt(r_a * r_b)
-
-    f_1 = 1 - pow(pow(r_a / r_b, 0.0602) - 1, 1.456)
-    f_2 = 1 - pow(pow(r_a / r_b, 0.0684) - 1, 1.531)
-
-    param_c = pow(3 * force * r_c / (4 * e_eff), 1 / 3) * f_1
-    param_e = 1 - pow(r_b / r_a, 4 / 3)
-    param_a = param_c * pow(1 - param_e ** 2, 1 / 4)
-    param_b = param_c * pow(1 - param_e ** 2, 1 / 4)
-    return param_a * param_b / r_c * (f_2 / f_1)
-
-
-def hertz_half_axes(r_eff, r_eff_x, r_eff_y, e_eff, force):
-    """
-    Calculate Hertzian contact area half-axis
-    :param r_eff: effective radius of contact bodies
-    :param r_eff_x: effective radius in x direction
-    :param r_eff_y: effective radius in y direction
-    :param e_eff: effective modulus
-    :param force: normal load
-    :return: half axes and total area
-    """
-    a_ast, b_ast, _, _ = hertz_parameters(r_eff_x, r_eff_y)
-    half_axis_a = a_ast * (3 * force * r_eff / e_eff) ** (1 / 3)
-    half_axis_b = b_ast * (3 * force * r_eff / e_eff) ** (1 / 3)
-    return half_axis_a, half_axis_b, pi * half_axis_a * half_axis_b
-
-
-def hertz_load_carrying(r_eff, r_eff_x, r_eff_y, e_eff, p_critical):
-    """
-    Calculate load carrying capacity of Hertzian contact
-    :param r_eff: effective radius of contact bodies
-    :param r_eff_x: effective radius in x direction
-    :param r_eff_y: effective radius in y direction
-    :param e_eff: effective modulus
-    :param p_critical: critical mean contact pressure
-    :return: critical normal force
-    """
-    a_ast, b_ast, _, _ = hertz_parameters(r_eff_x, r_eff_y)
-    return (pi * a_ast * b_ast * p_critical) ** 3 * (3 * r_eff / e_eff) ** 2
-
-
-def hertz_mean_pressure(r_eff, r_eff_x, r_eff_y, e_eff, force):
-    """
-    Calculate mean contact pressure in Hertzian contact
-    :param r_eff: effective radius of contact bodies
-    :param r_eff_x: effective radius in x direction
-    :param r_eff_y: effective radius in y direction
-    :param e_eff: effective modulus
-    :param force: normal force
-    :return: mean contact pressure
-    """
-    _, _, area = hertz_half_axes(r_eff, r_eff_x, r_eff_y, e_eff, force)
-    return force / area
 
 
 def influ_mat_coordinate_grid(axis):
