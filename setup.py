@@ -2,7 +2,8 @@ from setuptools import setup
 
 setup(
    name='tribology',
-   version='0.1.25',
+   version_format='0.1.dev{commitcount}+{gitsha}',
+   setup_requires=['setuptools-git-version'],
    description='methods and classes for tribology research',
    long_description='collection of methods and classes for tribology research '
                     'and education, including contact mechanics and '
