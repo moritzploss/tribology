@@ -11,8 +11,3 @@ install:
 
 script:
   - pytest tribology/tests/tests_tribology.py
-
-after_success:
-  - pylint --output-format=html pylint_server > /tmp/pylint-report.html
-  - curl -v -m 120 -X POST -F travis-job-id=$TRAVIS_JOB_ID -F pylint-report=@/tmp/pylint-report.html https://pylint.moritzploss.com/reports
-
