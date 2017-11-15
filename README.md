@@ -10,7 +10,7 @@ The package is currently hosted on github:
 
 The package was initially developed by Moritz Ploss at KTH Royal
 Institute of Technology, Stockholm, Sweden. For questions and comments,
-please contact Moritz at
+please contact Moritz at:
 
     moritz.ploss@gmail.com
 
