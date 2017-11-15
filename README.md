@@ -21,5 +21,5 @@ please contact Moritz at:
 
     moritz.ploss@gmail.com
 
-The package is provided under an MIT license. See the LICENSE.txt file
+The package is provided under a MIT license. See the LICENSE.txt file
 for more information.
