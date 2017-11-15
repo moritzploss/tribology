@@ -1,13 +1,23 @@
+deploy:
+  provider: pypi
+  user: moritz.ploss
+  password:
+    secure: fNXwnrlFDTH5Zn5p/hBJb97kGSOvH50PcGRN4wmCTU6P6zsycJqWq4T5ful2kZd87hjtwHqodrackkfnmqiGb9juXvh3lldnb6AQmFzfcsXDwboG9sDrNrhcvqEBU7PM5RBeHRGhmVNYS47kouVzMcpHzgfB+ClZVxDY6YnBy21RzuP7iUcLsNyMu9o7D9jh5TQVBRlZn1U/tV0DOFwxqf5jNEdtO2RkH68I0b6XFPSXugv+X3YQ8hoXjnYjDJAD35BV3T2FIDKlTOf/U/4ps7fcKFiS9wlwW98L4Hq95qdAj6NHW9/G/JHf2X9KGjp2TMZdFONgmO1vul6GHdEM5uCYi+PQzBbON8ETDuwEzkm3/eQwnh236lJPxaXAQEyIecM2lb8y4Yb9FK164f6u0C6EBjckxIJoHTvYPbA8hTOs0HuVvkcEBAmDk6ifCTf5zm/OZzR8cMhHMEpymvWrXno0jMSLksNUj+vpgixAeUEU3/PPSiGgnMmKZiog2R91RdpPbL/4bkQvZ9cMUUZvjXPbZ+ijaDAk4K5uvWkjHJjxzttllvQtu8Dk7A46q+9SYPdkcR1eeoTMWyWlIF4ZiRYzHbxe+rloY4gJeOz80+CShJM9Py4OD3JL9v5FgHYK4NaXw1baDeZjSBLxcfbiT22VibGJCxf5xQgBAsZiXBI=
+  server: https://test.pypi.org/simple/
+  distributions: "sdist bdist_wheel"
+  on:
+    tags: true
+
 
 language: python
 
 python:
-  - "3.6"
+- '3.6'
 
 install:
-  - pip install .
-  - pip install pylint
-  - pip install -r requirements.txt
+- pip install .
+- pip install pylint
+- pip install -r requirements.txt
 
 script:
-  - pytest tribology/tests/tests_tribology.py
+- pytest tribology/tests/tests_tribology.py
