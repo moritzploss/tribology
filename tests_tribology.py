@@ -4,7 +4,8 @@ Test cases for tribology methods
 
 import unittest
 
-from tribology import dyn2kin, effective_modulus
+from tribology import dyn2kin, kin2dyn, effective_modulus, effective_radii, \
+    hertz_mean_pressure, hertz_load_carrying, hertz_half_axes
 
 
 class TestUM(unittest.TestCase):
