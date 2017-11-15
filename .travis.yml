@@ -1,6 +1,5 @@
 
 language: python
-rwm:
 - "3.6"
 
 install:
