@@ -4,14 +4,90 @@
 Collection of tribology-related functions, developed and maintained at
 KTH Royal Institute of Technology, Stockholm, Sweden.
 """
+
 import copy
-
-from math import sqrt, acos, cos, sin, pi, log, e
+from enum import Enum
 from math import log10 as lg
+from math import sqrt, acos, cos, sin, pi, log, e
 
-import numpy as np
 import numexpr as ne
+import numpy as np
 import scipy.sparse.linalg as spla
+
+
+"""
+Relevant constants for tribology research
+"""
+
+
+class RadBall(Enum):
+    """
+    Constants for ball radii
+    """
+    TQInch = 25.4 * 3 / 8
+    HInch = 25.4 / 4
+    Inch = 25.4 / 2
+
+
+class YoungsMod(Enum):
+    """
+    Young's modulus data in MPa at ambient temperature
+    """
+    STEEL = 210000
+    GLASS = 70000
+    SiN = 315
+
+
+class PoissonRatio(Enum):
+    """
+    Poisson ratio data at ambient temperature
+    """
+    STEEL = 0.3
+    GLASS = 0.22
+    SiN = 0.26
+
+
+class MatDensity(Enum):
+    """
+    Density in kg / m^3 at ambient temperature
+    """
+    STEEL = 7800
+    SiN = 3200
+
+
+class LubeDensity(Enum):
+    """
+    Density in g / ml
+    """
+    NA_LUBE_KR_015 = 0.884
+    NYNAS_HP_4 = 0.852
+    NYNAS_HP_12 = 0.867
+    NYNAS_T_3 = 0.868
+    NYNAS_T_9 = 0.888
+    NYNAS_T_22 = 0.902
+    SIGMA_ALDRICH_MINERAL_OIL_HEAVY = 0.862
+
+
+class LubeViscosity(Enum):
+    """
+    Lubricant viscosity in cSt at 40 and 100 degree C
+    """
+    TEMPS = (40, 100)
+    NA_LUBE_KR_015 = (114.0, 13.5)
+    NYNAS_HP_4 = (20, 4.2)
+    NYNAS_HP_12 = (110, 12)
+    NYNAS_T_3 = (3.7, 1.3)
+    NYNAS_T_9 = (9.0, 2.2)
+    NYNAS_T_22 = (22.5, 3.6)
+    SIGMA_ALDRICH_MINERAL_OIL_HEAVY = (67.0, 18.9)
+
+
+class AlphaP(Enum):
+    """
+    Pressure-viscosity coefficients in 1 / Pa at ambient temperature
+    """
+    ESTER_OIL_GENERIC = 15 * 10 ** (-9)
+    MINERAL_OIL_GENERIC = 30 * 10 ** (-9)
 
 
 def secant_method(x_list, fx_list):
@@ -425,6 +501,9 @@ def effective_modulus(e_1, nu_1, e_2, nu_2):
     return 1 / ((1 - nu_1 ** 2) / (2 * e_1) + (1 - nu_2 ** 2) / (2 * e_2))
 
 
+
+
+
 def hertz_parameters(r_eff_x, r_eff_y):
     """
     Calculate Hertz parameters required for contact area/pressure calculations
@@ -709,6 +788,7 @@ def boundary_element_solve_pressure(profile_1, profile_2, outer_force,
 
     disp = get_displacements(profile, norm_disp)
     return pressure, disp, inner_force, x_value[-1]
+
 
 
 if __name__ == "__main__":

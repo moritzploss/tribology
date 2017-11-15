@@ -5,9 +5,8 @@ Short demonstration of how to use dowson-hamrock equation for point contact
 import matplotlib.pyplot as plt
 import numpy as np
 
-from tribology_constants import AlphaP, YoungsMod, PoissonRatio, \
-    LubeViscosity, LubeDensity, BallRadii
-from tribology import dowson_hamrock_point, kin2dyn, convert_prefix, \
+from tribology import AlphaP, YoungsMod, PoissonRatio, LubeViscosity, \
+    LubeDensity, BallRadii, dowson_hamrock_point, kin2dyn, convert_prefix, \
     walther, effective_modulus, effective_radii
 
 
