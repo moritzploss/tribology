@@ -29,7 +29,7 @@ def dyn2kin(dyn, density):
     return dyn * density
 
 
-def walther_calc_z_from_nu(kin_visc):
+def zedwalther(kin_visc):
     """
     calculate z factor for Walther Equation (ASTM D341)
     :param kin_visc: kinematic viscosity
@@ -39,7 +39,7 @@ def walther_calc_z_from_nu(kin_visc):
            10 ** (-1.47 - 1.84 * kin_visc - 0.51 * kin_visc ** 2)
 
 
-def walther_calc_nu(zed):
+def nuwalther(zed):
     """
     calculate kinematic viscosity for Walther equation (ASTM D341)
     :param zed: z factor
@@ -66,15 +66,15 @@ def walther(temp_1, nu_1, temp_2, nu_2, temp_3):
     viscs = [nu_1, nu_2]
     thetas = [temp_1 - abs_zero, temp_2 - abs_zero, temp_3 - abs_zero]
 
-    zed = [walther_calc_z_from_nu(nu) for nu in viscs]
+    zed = [zedwalther(nu) for nu in viscs]
     const_a = (lg(lg(zed[0])) - lg(lg(zed[1])) *
                lg(thetas[0]) / lg(thetas[1])) / \
               (1 - lg(thetas[0]) / lg(thetas[1]))
     const_b = (const_a - lg(lg(zed[1]))) / lg(thetas[1])
-    return walther_calc_nu(10 ** 10 ** (const_a - const_b * lg(thetas[2])))
+    return nuwalther(10 ** 10 ** (const_a - const_b * lg(thetas[2])))
 
 
-def rheometer_flat_torque(eta, gap_height, omega, r_a):
+def trheomflat(eta, gap_height, omega, r_a):
     """
     Calculate torque based on dynamic viscosity measurement from plate-on-
     plate rheometer
@@ -87,7 +87,7 @@ def rheometer_flat_torque(eta, gap_height, omega, r_a):
     return eta * pi * omega * r_a ** 4 / (2 * gap_height)
 
 
-def rheometer_flat_viscosity(torque, gap_height, omega, r_a):
+def viscrheomflat(torque, gap_height, omega, r_a):
     """
     Calculate the dynamic viscosity based on torque measurement from plate-on-
     plate rheometer
@@ -101,7 +101,7 @@ def rheometer_flat_viscosity(torque, gap_height, omega, r_a):
     return 2 * gap_height * torque / (pi * omega * r_a ** 4)
 
 
-def rheometer_cone_torque(eta, alpha, omega, r_a):
+def trheomcone(eta, alpha, omega, r_a):
     """
     Calculate torque based on dynamic viscosity measurement from cone-on-
     plate rheometer
@@ -114,7 +114,7 @@ def rheometer_cone_torque(eta, alpha, omega, r_a):
     return 2 * pi * eta * omega * r_a ** 3 / (3 * alpha)
 
 
-def rheometer_cone_viscosity(torque, alpha, omega, r_a):
+def viscrheomcone(torque, alpha, omega, r_a):
     """
     Calculate the dynamic viscosity based on torque measurement from cone-on-
     plate rheometer

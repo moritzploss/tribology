@@ -17,7 +17,7 @@ def dowson_hamrock_parameters(r_eff, param_g, param_u, param_w):
     return r_eff * param_g ** 0.53 * param_u ** 0.67 * param_w ** -0.067
 
 
-def dowson_hamrock_elasticity(alpha_p, e_eff):
+def edowham(alpha_p, e_eff):
     """
     calculate elasticity parameter of dowson-hamrock equation
     :param alpha_p: pressure-viscosity coefficient
@@ -27,7 +27,7 @@ def dowson_hamrock_elasticity(alpha_p, e_eff):
     return alpha_p * e_eff
 
 
-def dowson_hamrock_velocity(eta, speed, e_eff, r_eff):
+def vdowham(eta, speed, e_eff, r_eff):
     """
     calculate velocity parameter of dowson-hamrock equation
     :param eta: dynamic viscosity
@@ -39,7 +39,7 @@ def dowson_hamrock_velocity(eta, speed, e_eff, r_eff):
     return eta * speed / (e_eff * r_eff)
 
 
-def dowson_hamrock_line(speed, force, alpha_p, e_eff, r_eff, eta, l_eff):
+def dowhamline(speed, force, alpha_p, e_eff, r_eff, eta, l_eff):
     """
     Calculate mean film thickness according to Dowson-Hamrock equation.
     :param speed: entrainment speed, vector or int/float
@@ -51,13 +51,13 @@ def dowson_hamrock_line(speed, force, alpha_p, e_eff, r_eff, eta, l_eff):
     :param l_eff: effective length
     :return: mean film thickness, vector or int/float
     """
-    param_g = dowson_hamrock_elasticity(alpha_p, e_eff)
-    param_u = dowson_hamrock_velocity(eta, speed, e_eff, r_eff)
+    param_g = edowham(alpha_p, e_eff)
+    param_u = vdowham(eta, speed, e_eff, r_eff)
     param_w = force / (l_eff * r_eff * e_eff)
     return 2.69 * dowson_hamrock_parameters(r_eff, param_g, param_u, param_w)
 
 
-def dowson_hamrock_point(speed, force, alpha_p, e_eff, r_eff, eta):
+def dowhampoint(speed, force, alpha_p, e_eff, r_eff, eta):
     """
     Calculate mean film thickness according to Dowson-Hamrock equation.
     :param speed: entrainment speed, vector or int/float
@@ -68,7 +68,7 @@ def dowson_hamrock_point(speed, force, alpha_p, e_eff, r_eff, eta):
     :param r_eff: effective radius
     :return: mean film thickness, vector or int/float
     """
-    param_g = dowson_hamrock_elasticity(alpha_p, e_eff)
-    param_u = dowson_hamrock_velocity(eta, speed, e_eff, r_eff)
+    param_g = edowham(alpha_p, e_eff)
+    param_u = vdowham(eta, speed, e_eff, r_eff)
     param_w = force / (r_eff ** 2 * e_eff)
     return 1.9 * dowson_hamrock_parameters(r_eff, param_g, param_u, param_w)

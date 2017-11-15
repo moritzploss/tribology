@@ -4,41 +4,12 @@
 Methods related to general tribology
 """
 
-import copy
-from math import sqrt, acos, cos, sin, pi, e
+from math import sqrt, acos, cos, sin, pi
 
-import numexpr as ne
 import numpy as np
-import scipy.sparse.linalg as spla
 
 
-def secant_method(x_list, fx_list):
-    """
-    Applies secant method to find root x of function f(x).
-    If not enough (x, f(x)) value pairs are known to apply
-    secant method, a new x value is guessed by slightly changing the
-    initial x value
-    :param x_list: list of function inputs
-    :param fx_list: list of function outputs
-    :return: estimate of function root
-    """
-    if fx_list[-1] != 0:
-        if len(x_list) > 1 and \
-                        fx_list[-1] != 0 and \
-                        abs(fx_list[-1]) != abs(fx_list[-2]):
-            x_0 = x_list[-2]
-            x_1 = x_list[-1]
-            fx_0 = fx_list[-2]
-            fx_1 = fx_list[-1]
-            slope = (fx_1 - fx_0) / (x_1 - x_0)
-            return x_1 + (-fx_1 / slope)
-        else:
-            return x_list[0] * 0.9 + 0.0001
-    else:
-        return x_list[-1]
-
-
-def sliding_speed(vel_1, vel_2):
+def vslide(vel_1, vel_2):
     """
     Calculate the sliding speed in a tribological contact based contact body
     velocities
@@ -49,7 +20,7 @@ def sliding_speed(vel_1, vel_2):
     return vel_1 - vel_2
 
 
-def rolling_speed(vel_1, vel_2):
+def vroll(vel_1, vel_2):
     """
     Calculate the rolling speed in a tribological contact based contact body
     velocities
@@ -67,7 +38,7 @@ def srr(vel_1, vel_2):
     :param vel_2: velocity 2
     :return: slide-to-roll ratio
     """
-    return sliding_speed(vel_1, vel_2) / rolling_speed(vel_1, vel_2)
+    return vslide(vel_1, vel_2) / vroll(vel_1, vel_2)
 
 
 def rad_per_s_to_rpm(vel):
@@ -88,7 +59,7 @@ def rpm_to_rad_per_s(vel):
     return vel / 60 * 2 * pi
 
 
-def ball_on_3_plates_slide_radius(r_ball, plate_angle=1.5708):
+def rball3plates(r_ball, plate_angle=1.5708):
     """
     Sliding radius (lever arm) for ball-on-3-plates setup
     :param r_ball: radius of rotating ball
@@ -99,7 +70,7 @@ def ball_on_3_plates_slide_radius(r_ball, plate_angle=1.5708):
     return r_ball * sin((pi - plate_angle) / 2)
 
 
-def ball_on_3_plates_norm_force(ax_force, plate_angle=1.5708):
+def fball3plates(ax_force, plate_angle=1.5708):
     """
     Calculate normal force per contact in ball-on-3-plates setup
     :param ax_force: axial force on rotating ball
@@ -110,7 +81,7 @@ def ball_on_3_plates_norm_force(ax_force, plate_angle=1.5708):
     return ax_force / 3 / cos(plate_angle / 2)
 
 
-def fourball_geometry(r_1, r_2):
+def gfourball(r_1, r_2):
     """
     Geometric parameters of 4-ball setup
     :param r_1: radius rotating ball
@@ -123,7 +94,7 @@ def fourball_geometry(r_1, r_2):
     return sliding_radius, contact_angle
 
 
-def fourball_norm_force(r_1, r_2, ax_force):
+def ffourball(r_1, r_2, ax_force):
     """
     Calculate normal force per contact in 4 ball setup
     :param r_1: radius rotating ball
@@ -131,16 +102,16 @@ def fourball_norm_force(r_1, r_2, ax_force):
     :param ax_force: axial force on rotating ball
     :return: normal force per contact
     """
-    _, contact_angle = fourball_geometry(r_1, r_2)
+    _, contact_angle = gfourball(r_1, r_2)
     return ax_force / sin(contact_angle) / 3
 
 
-def convert_prefix(value, in_prefix, out_prefix):
+def convpref(value, p_in='', p_out=''):
     """
     Convert between different SI unit prefixes
     :param value:  value to convert
-    :param in_prefix:  input SI unit prefix
-    :param out_prefix:  output SI unit prefix
+    :param p_in:  input SI unit prefix
+    :param p_out:  output SI unit prefix
     :return:  value converted to new unit prefix
     """
     prefix = {'p': 10 ** -12,
@@ -152,10 +123,10 @@ def convert_prefix(value, in_prefix, out_prefix):
               'M': 10 ** 6,
               'G': 10 ** 9,
               'T': 10 ** 12}
-    return value * prefix[in_prefix] / prefix[out_prefix]
+    return value * prefix[p_in] / prefix[p_out]
 
 
-def abbott_firestone(trace, res=100):
+def abbottfirestone(trace, res=100):
     """
     Calculate Abbott-Firestone curve for 2D surface trace
     :param trace: vector containing surface heights
@@ -170,7 +141,7 @@ def abbott_firestone(trace, res=100):
     return baskets, cum_dist
 
 
-def effective_radius(r_1, r_2):
+def reff(r_1, r_2):
     """
     Effective radius according to Hertzian contact theory
     :param r_1: radius 1
@@ -190,7 +161,7 @@ def effective_radius(r_1, r_2):
         return 1 / (1 / r_1 + 1 / r_2)
 
 
-def effective_radii(r_x_1, r_y_1, r_x_2, r_y_2, ):
+def eeff(r_x_1, r_y_1, r_x_2, r_y_2, ):
     """
     Effective radii for combination of 2 bodies according to Hertzian
     contact theory
@@ -207,12 +178,12 @@ def effective_radii(r_x_1, r_y_1, r_x_2, r_y_2, ):
         else:
             recip_radius.append(1 / radius)
 
-    r_eff_x = effective_radius(r_x_1, r_x_2)
-    r_eff_y = effective_radius(r_y_1, r_y_2)
-    return effective_radius(r_eff_x, r_eff_y), r_eff_x, r_eff_y
+    r_eff_x = reff(r_x_1, r_x_2)
+    r_eff_y = reff(r_y_1, r_y_2)
+    return reff(r_eff_x, r_eff_y), r_eff_x, r_eff_y
 
 
-def effective_modulus(e_1, nu_1, e_2, nu_2):
+def meff(e_1, nu_1, e_2, nu_2):
     """
     Effective Young's modulus according to Hertzian contact theory
     :param e_1: young's modulus body 1
@@ -222,201 +193,6 @@ def effective_modulus(e_1, nu_1, e_2, nu_2):
     :return:
     """
     return 1 / ((1 - nu_1 ** 2) / (2 * e_1) + (1 - nu_2 ** 2) / (2 * e_2))
-
-
-def influ_mat_coordinate_grid(axis):
-    """
-    Generate coordinate grid based on axis as required for influence matrix
-    generation
-    :param axis: axis to make grid
-    :return: grid
-    """
-    len_axis = len(axis)
-    vec = np.zeros((1, len_axis))
-    vec[0, :] = axis
-    vertical_ax = np.zeros((len_axis, 1))
-    vertical_ax[:, 0] = axis
-    grid = np.repeat(vec, len_axis, axis=0)
-    return np.absolute(np.subtract(grid, vertical_ax))
-
-
-def influ_mat_reduce(influ_mat):
-    """
-    Extract the reduced influence matrix from the complete influence matrix
-    :param influ_mat: complete influence matrix
-    :return: reduced influence matrix
-    """
-    shape_mat = np.shape(influ_mat)
-    len_mat = shape_mat[0] * shape_mat[1]
-    reduced_influence_matrix = np.zeros((len_mat, len_mat))
-    counter = 0
-    for i in range(0, shape_mat[0]):
-        for j in range(0, shape_mat[1]):
-            reduced_influence_matrix[counter, :] = \
-                np.reshape(influ_mat[i, j, :, :], len_mat)
-            counter += 1
-    return reduced_influence_matrix
-
-
-def boundary_element_influ_mat(x_axis, y_axis, e_eff):
-    """
-    Generate an influence matrix as required for boundary element contact
-    mechanics calculations
-    :param x_axis: x-axis of coordinate grid
-    :param y_axis: y-axis of coordinate grid
-    :param e_eff: effective youngs modulus
-    :return: complete influence matrix
-    """
-    len_x = len(x_axis)
-    len_y = len(y_axis)
-    influence_matrix_complete = np.zeros((len_x, len_y, len_x, len_y))
-
-    # generate coordinate grids
-    a_factor = (x_axis[-1] - x_axis[0]) / len_x / 2
-    b_factor = y_axis[-1] - y_axis[0] / len_x / 2
-    x_grid = influ_mat_coordinate_grid(x_axis)
-    y_grid = influ_mat_coordinate_grid(y_axis)
-
-    # use numexpr to evaluate expressions
-    xpa = ne.evaluate('x_grid + a_factor')
-    xma = ne.evaluate('x_grid - a_factor')
-    ypb = ne.evaluate('y_grid + b_factor')
-    ymb = ne.evaluate('y_grid - b_factor')
-
-    # calculate complete influence matrix
-    for j in range(0, len_y):
-        for j_prime in range(0, len_y):
-            influence_matrix_complete[:, j, :, j_prime] =  \
-                    (np.multiply(xpa, np.log(
-                        np.divide(
-                            ((ypb[j, j_prime]) +
-                             np.sqrt(np.multiply((ypb[j, j_prime]),
-                                                 (ypb[j, j_prime])) +
-                                     np.multiply(xpa, xpa))),
-                            ((ymb[j, j_prime]) +
-                             np.sqrt(np.multiply((ymb[j, j_prime]),
-                                                 (ymb[j, j_prime])) +
-                                     np.multiply(xpa, xpa)))))) +
-                     (ypb[j, j_prime]) * np.log(
-                         np.divide(
-                             (xpa +
-                              np.sqrt(np.multiply((ypb[j, j_prime]),
-                                                  (ypb[j, j_prime])) +
-                                      np.multiply(xpa, xpa))),
-                             (xma +
-                              np.sqrt(np.multiply((ypb[j, j_prime]),
-                                                  (ypb[j, j_prime])) +
-                                      np.multiply(xma, xma))))) +
-                     np.multiply(xma, np.log(
-                         np.divide(
-                             ((ymb[j, j_prime]) +
-                              np.sqrt(np.multiply((ymb[j, j_prime]),
-                                                  (ymb[j, j_prime])) +
-                                      np.multiply(xma, xma))),
-                             ((ypb[j, j_prime]) +
-                              np.sqrt(np.multiply((ypb[j, j_prime]),
-                                                  (ypb[j, j_prime])) +
-                                      np.multiply(xma, xma)))))) +
-                     (ymb[j, j_prime]) * np.log(
-                         np.divide(
-                             (xma +
-                              np.sqrt(np.multiply((ymb[j, j_prime]),
-                                                  (ymb[j, j_prime])) +
-                                      np.multiply(xma, xma))),
-                             (xpa +
-                              np.sqrt(np.multiply((ymb[j, j_prime]),
-                                                  (ymb[j, j_prime])) +
-                                      np.multiply(xpa, xpa))))))
-
-    return influence_matrix_complete * e_eff / pi
-
-
-def get_displacements(profile, norm_disp):
-    """
-    Calculate local elastic displacements of profile
-    :param profile: combined profile of two contacting bodies
-    :param norm_disp: global normal elastic displ between contacting bodies
-    :return: local normal displacements as a result of global displ norm_displ
-    """
-    displ_field = np.subtract(np.ones(profile.shape) * norm_disp, profile)
-    disp = np.reshape(displ_field, (profile.shape[0] * profile.shape[1]))
-    return disp
-
-
-def combine_profile(profile_1, profile_2):
-    """
-    Combine two body profiles for boundary element calculation
-    :param profile_1: array-like profile heights
-    :param profile_2: array-like profile heights
-    :return: negative combined profile heights
-    """
-    return -(profile_1 + profile_2)
-
-
-def boundary_element_solve_pressure(profile_1, profile_2, outer_force,
-                                    red_influ_mat, delta_x, delta_y,
-                                    norm_disp=0.001, max_offset=0.005):
-    """
-    Solve system of equations:
-
-        [pressure] = [influence matrix]^-1 * [displacement]
-
-    Stop solver once inner and outer forces are in equilibrium
-
-    :param profile_1: array with profile heights of body 1
-    :param profile_2: array with profile hights of body 2
-    :param outer_force: outer (normal) force on body 1/2
-    :param red_influ_mat: reduced influence matrix
-    :param delta_x: grid spacing of profile arrays in x-direction
-    :param delta_y: grid spacing of profile arrays in y-direction
-    :param norm_disp: initial normal elastic deformation to start calculation
-    :param max_offset: maximum allowed percentage difference of inner and outer
-                       force at end of calculation
-    :return: local pressure (array), local displacements (array).
-             inner force (scalar), global normal displacement (scalar)
-    """
-    # initialise variables
-    x_value = [0]
-    fx_value = [outer_force]
-    pressure = 0
-    inner_force = 0
-    profile = combine_profile(profile_1, profile_2)
-
-    # while difference between inner forces and outer forces is significant
-    while abs(inner_force - outer_force) > max_offset * outer_force:
-
-        # update local displacements
-        disp = get_displacements(profile, norm_disp)
-
-        # find negative pressure arguments
-        pressure = spla.gmres(red_influ_mat, disp)[0]
-        p_index = np.zeros(len(pressure))
-        negative_p = np.where(pressure < 0)[0]
-        p_neg = copy.deepcopy(negative_p)
-
-        # remove elements with negative pressure
-        while len(negative_p) > 0:
-            pressure[p_neg] = 0
-            p_index[p_neg] = 1
-            u_new_reduced = np.delete(disp, [p_neg], axis=0)
-            g_new_reduced = np.delete(red_influ_mat, [p_neg], axis=0)
-            g_new_reduced = np.delete(g_new_reduced, [p_neg], axis=1)
-            if pressure[np.where(p_index == 0)].size > 0:
-                pressure[np.where(p_index == 0)] = \
-                    spla.gmres(g_new_reduced, u_new_reduced)[0]
-            negative_p = np.where(pressure < 0)[0]
-            p_neg = np.append(p_neg, negative_p)
-
-        # calculate resulting force and adjust displacement for next loop
-        pressure = np.reshape(pressure, (profile.shape[0], profile.shape[1]))
-        inner_force = sum(sum(np.multiply(delta_x * delta_y, pressure)))
-        x_value = np.append(x_value, [norm_disp])
-        fx_value = np.append(fx_value, [inner_force - outer_force])
-        norm_disp = secant_method(x_value, fx_value)
-
-    disp = get_displacements(profile, norm_disp)
-    return pressure, disp, inner_force, x_value[-1]
-
 
 
 if __name__ == "__main__":

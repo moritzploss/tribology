@@ -34,7 +34,7 @@ class PoissonRatio(Enum):
     SiN = 0.26
 
 
-class MatDensity(Enum):
+class MatDens(Enum):
     """
     Density in kg / m^3 at ambient temperature
     """
@@ -42,7 +42,7 @@ class MatDensity(Enum):
     SiN = 3200
 
 
-class LubeDensity(Enum):
+class LubeDens(Enum):
     """
     Density in g / ml
     """
@@ -55,7 +55,7 @@ class LubeDensity(Enum):
     SIGMA_ALDRICH_MINERAL_OIL_HEAVY = 0.862
 
 
-class LubeViscosity(Enum):
+class LubeVisc(Enum):
     """
     Lubricant viscosity in cSt at 40 and 100 degree C
     """
@@ -69,7 +69,7 @@ class LubeViscosity(Enum):
     SIGMA_ALDRICH_MINERAL_OIL_HEAVY = (67.0, 18.9)
 
 
-class AlphaP(Enum):
+class PressVisc(Enum):
     """
     Pressure-viscosity coefficients in 1 / Pa at ambient temperature
     """

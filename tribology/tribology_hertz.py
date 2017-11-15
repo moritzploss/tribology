@@ -7,7 +7,7 @@ Methods related to Hertz contact theory
 from math import sqrt, pi, log
 
 
-def hertz_parameters(r_eff_x, r_eff_y):
+def auxparamshertz(r_eff_x, r_eff_y):
     """
     Calculate Hertz parameters required for contact area/pressure calculations
     :param r_eff_x: effective radius in x direction
@@ -26,7 +26,7 @@ def hertz_parameters(r_eff_x, r_eff_y):
     return a_ast, b_ast, kappa, param_lambda
 
 
-def hertz_displacement(e_eff, r_x_1, r_y_1, r_x_2, r_y_2, force):
+def dhertz(e_eff, r_x_1, r_y_1, r_x_2, r_y_2, force):
     """
     Elastic displacement in normal direction for arbitrary bodies according to
     hertz contact theory
@@ -55,7 +55,7 @@ def hertz_displacement(e_eff, r_x_1, r_y_1, r_x_2, r_y_2, force):
     return param_a * param_b / r_c * (f_2 / f_1)
 
 
-def hertz_half_axes(r_eff, r_eff_x, r_eff_y, e_eff, force):
+def ahertz(r_eff, r_eff_x, r_eff_y, e_eff, force):
     """
     Calculate Hertzian contact area half-axis
     :param r_eff: effective radius of contact bodies
@@ -65,13 +65,13 @@ def hertz_half_axes(r_eff, r_eff_x, r_eff_y, e_eff, force):
     :param force: normal load
     :return: half axes and total area
     """
-    a_ast, b_ast, _, _ = hertz_parameters(r_eff_x, r_eff_y)
+    a_ast, b_ast, _, _ = auxparamshertz(r_eff_x, r_eff_y)
     half_axis_a = a_ast * (3 * force * r_eff / e_eff) ** (1 / 3)
     half_axis_b = b_ast * (3 * force * r_eff / e_eff) ** (1 / 3)
     return half_axis_a, half_axis_b, pi * half_axis_a * half_axis_b
 
 
-def hertz_load_carrying(r_eff, r_eff_x, r_eff_y, e_eff, p_critical):
+def fhertz(r_eff, r_eff_x, r_eff_y, e_eff, p_critical):
     """
     Calculate load carrying capacity of Hertzian contact
     :param r_eff: effective radius of contact bodies
@@ -81,11 +81,11 @@ def hertz_load_carrying(r_eff, r_eff_x, r_eff_y, e_eff, p_critical):
     :param p_critical: critical mean contact pressure
     :return: critical normal force
     """
-    a_ast, b_ast, _, _ = hertz_parameters(r_eff_x, r_eff_y)
+    a_ast, b_ast, _, _ = auxparamshertz(r_eff_x, r_eff_y)
     return (pi * a_ast * b_ast * p_critical) ** 3 * (3 * r_eff / e_eff) ** 2
 
 
-def hertz_mean_pressure(r_eff, r_eff_x, r_eff_y, e_eff, force):
+def phertz(r_eff, r_eff_x, r_eff_y, e_eff, force):
     """
     Calculate mean contact pressure in Hertzian contact
     :param r_eff: effective radius of contact bodies
@@ -95,5 +95,5 @@ def hertz_mean_pressure(r_eff, r_eff_x, r_eff_y, e_eff, force):
     :param force: normal force
     :return: mean contact pressure
     """
-    _, _, area = hertz_half_axes(r_eff, r_eff_x, r_eff_y, e_eff, force)
+    _, _, area = ahertz(r_eff, r_eff_x, r_eff_y, e_eff, force)
     return force / area
