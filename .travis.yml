@@ -9,4 +9,4 @@ install:
   - pip install -r requirements.txt
 
 script:
-  - pytest
+  - pytest tribology/tests/tests_tribology.py
