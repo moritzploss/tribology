@@ -11,7 +11,7 @@ The package is currently hosted on github:
     https://github.com/moritzploss/tribology
 
 You can also install the package through pip. Currently, the package
-is available for test purposes only:
+is only available for test purposes:
 
     pip install --index-url https://test.pypi.org/simple/ tribology
 
