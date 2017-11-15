@@ -4,6 +4,7 @@ Short demonstration of how to use dowson-hamrock equation for point contact
 
 import matplotlib.pyplot as plt
 import numpy as np
+
 import tribology as tr
 
 

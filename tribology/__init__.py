@@ -9,9 +9,9 @@ __all__ = ['tribology',
            'tribology_hertz',
            'tribology_lubrication']
 
-import tribology.tribology
-from . import tribology_boundary_element
-from . import tribology_constants
-from . import tribology_dowson_hamrock
-from . import tribology_hertz
-from . import tribology_lubrication
+from tribology.tribology import *
+from tribology.tribology_boundary_element import *
+from tribology.tribology_constants import *
+from tribology.tribology_dowson_hamrock import *
+from tribology.tribology_hertz import *
+from tribology.tribology_lubrication import *
