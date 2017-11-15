@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/moritzploss/tribology.svg?branch=master.png)](https://travis-ci.org/moritzploss/tribology.svg?branch=master)
+[![Build Status](https://travis-ci.org/moritzploss/tribology.png)](https://travis-ci.org/moritzploss/tribology)
 
 # tribology package
 This package is a collection of methods and classes for tribology
