@@ -2,7 +2,7 @@ deploy:
   provider: pypi
   user: moritz.ploss
   password:
-    secure: b2Q/IBWahvwzSCxldhrLODdUV3+uHSiKxEQ0MiKOI1uINDLWrLcYWrjvv1BfiOy1QyfU1fZaQYHj/YbgraB1d4amp+fvMmXvNsbXiUCfm55o2aZZ3hjrFYmG3xy1JNkBAaNkfCLCKPd9y9VsbsuhcVXaJAzu/6bfrSau/y57Ee9dhZmj9dTYkf/DoLn8M+k1j4mH/JnnC96vFRSzA1ry4bm6Wnns7sFz3T069vVWfjPqyFPANPMGUQiTa0uH89zChCcoLLzuPjOtAHZ1RMTuXLAJ2od4Vb0uxU9AscryVPoPLwmK8YvIqRn8DXHPO6nCLc0Mdh0z0SW5io2IAro5fVNFFW/r1N7Eda0btmpnA7iceEIjA7ymI0ynpnVRjeGDkQUKPCLVS+ztdbxSvtgNV4RrxFyGSVbAyteigZDOpS1YekyLW2AZm+kTNvU4p1ihYC6gEN/B6DB5zseA5+V1YeIYZbw+KK+1ZVPSOq93+PyvVF2MdacZxGS7zwlPfdnUWvMTwUstkuAa+Tn3m/O4v6D+M0XHMXy4BVW9lwOU3P5olkZU7CPCgNFil4lsxjrrYQWwKd0yVLlzb/AzekNuR1BaBY6fs8iF0gBa26tcGE/h0dBVyT4z0Z8q1DRgVaakuC/9rDP+4jArLXUndnyPdluqgrY/NYSJrAjW6JxgW+A=
+    secure: b2Q/IBWahvwzSCxldhrLODdUV3+uHSiKx
   server: https://test.pypi.org/simple/
   distributions: sdist bdist_wheel
   on:
