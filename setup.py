@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
    name='tribology',
-   version='0.1.11',
+   version='0.1.12',
    description='methods and classes for tribology research',
    long_description='collection of methods and classes for tribology research '
                     'and education, including contact mechanics and '
@@ -14,5 +14,5 @@ setup(
    keywords='tribology machine design research',
    install_requires=['numpy', 'numexpr', 'scipy'],
    python_requires='>=3',
-   url='',
+   url='https://github.com/moritzploss/tribology',
 )

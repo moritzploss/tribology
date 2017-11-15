@@ -5,7 +5,9 @@ Test cases for tribology methods
 import unittest
 
 from .. import tribology as tr
+from .. import tribology_dowson_hamrock as td
 from .. import tribology_hertz as th
+from .. import tribology_lubrication as tl
 
 
 class TestUM(unittest.TestCase):
@@ -17,13 +19,13 @@ class TestUM(unittest.TestCase):
         """
         base test for dyn2kin method
         """
-        self.assertEqual(tr.dyn2kin(1, 0.5), 0.5)
+        self.assertEqual(tl.dyn2kin(1, 0.5), 0.5)
 
     def test_kin2dyn(self):
         """
         base test for kin2dyn method
         """
-        self.assertEqual(tr.kin2dyn(1, 0.5), 2)
+        self.assertEqual(tl.kin2dyn(1, 0.5), 2)
 
     def test_effective_modulus(self):
         """
