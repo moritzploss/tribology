@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
    name='tribology',
-   version='0.1.21',
+   version='0.1.22',
    description='methods and classes for tribology research',
    long_description='collection of methods and classes for tribology research '
                     'and education, including contact mechanics and '
