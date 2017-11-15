@@ -10,9 +10,9 @@ from .. import tribology_hertz as th
 from .. import tribology_lubrication as tl
 
 
-class TestUM(unittest.TestCase):
+class TestTribology(unittest.TestCase):
     """
-    test case methods for different tribology methods
+    test case methods for general tribology methods
     """
 
     def test_dyn2kin(self):
@@ -40,6 +40,26 @@ class TestUM(unittest.TestCase):
         """
         r_eff, r_eff_x, r_eff_y = tr.effective_radii(6, 0, float('inf'), 3)
         self.assertEqual([r_eff, r_eff_x, r_eff_y], [2, 6, 3])
+
+
+class TestDowsonHamrock(unittest.TestCase):
+    """
+    test case methods for tribology methods relatex to Dowson-Hamrock
+    """
+    pass
+
+
+class TestLubrication(unittest.TestCase):
+    """
+    test case methods for tribology methods relatex to Lubrication
+    """
+    pass
+
+
+class TestHertz(unittest.TestCase):
+    """
+    test case methods for tribology methods relatex to Hertz contact theory
+    """
 
     def test_hertz_mean_pressure_ball(self):
         """
