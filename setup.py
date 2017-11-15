@@ -13,6 +13,6 @@ setup(
    license='MIT',
    keywords='tribology machine design research',
    install_requires=['numpy', 'numexpr', 'scipy'],
-   python_requires='>=3',
+   python_requires='>=3.6',
    url='https://github.com/moritzploss/tribology',
 )
