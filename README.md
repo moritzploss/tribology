@@ -26,6 +26,7 @@ for more information.
 # version history
 
 #### 0.2.1.dev
+- Python 3.5 builds added to Travis CI (now 3.5 and 3.6)
 - change log added to `README.md`
 - function `convpref` renamed to `refix`
 - classifiers added to `setup.py`
