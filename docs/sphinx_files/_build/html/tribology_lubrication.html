@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Methods Related to Lubricants &#8212; Tribology  documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Methods Related to Hertz Contact Theory" href="tribology_hertz.html" /> 
+  </head>
+  <body role="document">
+
+
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tribology_hertz.html" title="Methods Related to Hertz Contact Theory"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tribology_constants.html">Constants for Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology_boundary_element.html">Methods Related to Boundary Element Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology_dowson_hamrock.html">Methods Related to Dowson-Hamrock Film Thickness Caluclations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology_hertz.html">Methods Related to Hertz Contact Theory</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Methods Related to Lubricants</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tribology_lubrication.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-tribology_lubrication">
+<span id="methods-related-to-lubricants"></span><h1>Methods Related to Lubricants<a class="headerlink" href="#module-tribology_lubrication" title="Permalink to this headline">¶</a></h1>
+<p>Methods related to lubricants and lubrication</p>
+<dl class="function">
+<dt id="tribology_lubrication.barus">
+<code class="descclassname">tribology_lubrication.</code><code class="descname">barus</code><span class="sig-paren">(</span><em>eta_0</em>, <em>alpha_p</em>, <em>pressure</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#barus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.barus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate dynamic viscosity at a given pressure based on the dynamic
+viscosity at ambient pressure and the pressure-viscosity coefficient
+:param eta_0: dynamic viscosity at ambient pressure
+:param alpha_p: pressure-viscosity coefficient
+:param pressure: pressure of interest
+:return: dynamic viscosity at pressure of interest</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_lubrication.dyn2kin">
+<code class="descclassname">tribology_lubrication.</code><code class="descname">dyn2kin</code><span class="sig-paren">(</span><em>dyn</em>, <em>density</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#dyn2kin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.dyn2kin" title="Permalink to this definition">¶</a></dt>
+<dd><p>dynamic to kinematic viscosity
+:param dyn: dynamic viscosity
+:param density: density
+:return: kinematic viscosity</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_lubrication.kin2dyn">
+<code class="descclassname">tribology_lubrication.</code><code class="descname">kin2dyn</code><span class="sig-paren">(</span><em>kin</em>, <em>density</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#kin2dyn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.kin2dyn" title="Permalink to this definition">¶</a></dt>
+<dd><p>kinematic to dynamic viscosity
+:param kin: kinematic viscosity
+:param density: density
+:return: dynamic viscosity</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_lubrication.nuwalther">
+<code class="descclassname">tribology_lubrication.</code><code class="descname">nuwalther</code><span class="sig-paren">(</span><em>zed</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#nuwalther"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.nuwalther" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate kinematic viscosity for Walther equation (ASTM D341)
+:param zed: z factor
+:return: kinematic viscosity</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_lubrication.trheomcone">
+<code class="descclassname">tribology_lubrication.</code><code class="descname">trheomcone</code><span class="sig-paren">(</span><em>eta</em>, <em>alpha</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#trheomcone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.trheomcone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate torque based on dynamic viscosity measurement from cone-on-
+plate rheometer
+:param eta: dinamic viscosity
+:param alpha: cone angle
+:param omega: angular velocity
+:param r_a: cone outer radius
+:return: torque</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_lubrication.trheomflat">
+<code class="descclassname">tribology_lubrication.</code><code class="descname">trheomflat</code><span class="sig-paren">(</span><em>eta</em>, <em>gap_height</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#trheomflat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.trheomflat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate torque based on dynamic viscosity measurement from plate-on-
+plate rheometer
+:param eta: dynamic viscosity
+:param gap_height: distance between plates
+:param omega: angular velocity
+:param r_a: cone outer radius
+:return: torque</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_lubrication.viscrheomcone">
+<code class="descclassname">tribology_lubrication.</code><code class="descname">viscrheomcone</code><span class="sig-paren">(</span><em>torque</em>, <em>alpha</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#viscrheomcone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.viscrheomcone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the dynamic viscosity based on torque measurement from cone-on-
+plate rheometer
+:param torque: measured torque
+:param alpha: cone angle
+:param omega: angular velocity
+:param r_a: cone outer radius
+:return: dynamic viscosity</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_lubrication.viscrheomflat">
+<code class="descclassname">tribology_lubrication.</code><code class="descname">viscrheomflat</code><span class="sig-paren">(</span><em>torque</em>, <em>gap_height</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#viscrheomflat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.viscrheomflat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the dynamic viscosity based on torque measurement from plate-on-
+plate rheometer
+:param torque: measured torque
+:param gap_height: distance between plates
+:param alpha: cone angle
+:param omega: angular velocity
+:param r_a: cone outer radius
+:return: dynamic viscosity</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_lubrication.walther">
+<code class="descclassname">tribology_lubrication.</code><code class="descname">walther</code><span class="sig-paren">(</span><em>temp_1</em>, <em>nu_1</em>, <em>temp_2</em>, <em>nu_2</em>, <em>temp_3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#walther"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.walther" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates kinematic viscosity at temperature temp_3 based on kin.
+viscosities at temperatures temp_1 and tempo_2. Equations according to
+ASTM D341.
+:param temp_1: temperature in deg C
+:param nu_1: kin. viscosity at t1 in cSt
+:param temp_2: temperature in deg C
+:param nu_2: kin. viscosity at t2 in cSt
+:param temp_3: temperature of interest, in deg C
+:return: kin. viscosity in cSt at temperature t3</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_lubrication.zedwalther">
+<code class="descclassname">tribology_lubrication.</code><code class="descname">zedwalther</code><span class="sig-paren">(</span><em>kin_visc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#zedwalther"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.zedwalther" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate z factor for Walther Equation (ASTM D341)
+:param kin_visc: kinematic viscosity
+:return: z factor</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tribology_hertz.html" title="Methods Related to Hertz Contact Theory"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Moritz Ploss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

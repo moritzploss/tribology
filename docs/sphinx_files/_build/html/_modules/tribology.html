@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tribology &#8212; Tribology  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+  <body role="document">
+
+
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_constants.html">Constants for Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_boundary_element.html">Methods Related to Boundary Element Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_dowson_hamrock.html">Methods Related to Dowson-Hamrock Film Thickness Caluclations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_hertz.html">Methods Related to Hertz Contact Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_lubrication.html">Methods Related to Lubricants</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for tribology</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Methods related to general tribology</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">acos</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">floor</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="profball"><a class="viewcode-back" href="../tribology.html#tribology.profball">[docs]</a><span class="k">def</span> <span class="nf">profball</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">r_ball</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a 2D ball profile based on ball radius and ball axis</span>
+
+<span class="sd">    :param x_axis: vector containing coordinate points for which to calculate profile heights</span>
+<span class="sd">    :param r_ball: the radius of the ball</span>
+<span class="sd">    :return: vector containing profile heights along x_axis</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prof</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">r_ball</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r_ball</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">prof</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">r_ball</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="profrevolve"><a class="viewcode-back" href="../tribology.html#tribology.profrevolve">[docs]</a><span class="k">def</span> <span class="nf">profrevolve</span><span class="p">(</span><span class="n">prof_2d</span><span class="p">,</span> <span class="n">y_axis</span><span class="p">,</span> <span class="n">y_diam</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    creates a 3d profile by revolving a 2D profile around the central axis of</span>
+<span class="sd">    a body</span>
+<span class="sd">    :param prof_2d: 2d profile vector containing profile heights</span>
+<span class="sd">    :param y_axis: vector containing coordinate points for which to calculate</span>
+<span class="sd">                   profile heights in y-direction</span>
+<span class="sd">    :param y_diam: diameter around which to revolve prof_2d</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">len_x</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">prof_2d</span><span class="p">)</span>
+    <span class="n">len_y</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_axis</span><span class="p">)</span>
+    <span class="n">prof_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">len_x</span><span class="p">,</span> <span class="n">len_y</span><span class="p">))</span>
+    <span class="n">sign_diam</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">y_diam</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i_x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_x</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i_y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_y</span><span class="p">):</span>
+            <span class="n">bracket</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">((</span><span class="n">y_diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">sign_diam</span> <span class="o">*</span> <span class="n">prof_2d</span><span class="p">[</span><span class="n">i_x</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>\
+                      <span class="o">-</span> <span class="nb">pow</span><span class="p">(</span><span class="n">y_axis</span><span class="p">[</span><span class="n">i_y</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">bracket</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">prof_3d</span><span class="p">[</span><span class="n">i_x</span><span class="p">,</span> <span class="n">i_y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y_diam</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prof_3d</span><span class="p">[</span><span class="n">i_x</span><span class="p">,</span> <span class="n">i_y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y_diam</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">sign_diam</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">bracket</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">y_diam</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">min_prof</span> <span class="o">=</span> <span class="n">prof_3d</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">min_prof</span> <span class="o">=</span> <span class="n">prof_3d</span><span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">len_x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">len_x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">prof_3d</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">prof_3d</span> <span class="o">-</span> <span class="n">min_prof</span><span class="p">)</span>
+    <span class="n">y_profile</span> <span class="o">=</span> <span class="n">prof_3d</span><span class="p">[:,</span> <span class="n">floor</span><span class="p">(</span><span class="n">len_y</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">prof_3d</span><span class="p">,</span> <span class="n">y_profile</span></div>
+
+
+<div class="viewcode-block" id="vslide"><a class="viewcode-back" href="../tribology.html#tribology.vslide">[docs]</a><span class="k">def</span> <span class="nf">vslide</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the sliding speed in a tribological contact based contact body</span>
+<span class="sd">    velocities</span>
+<span class="sd">    :param vel_1: velocity 1</span>
+<span class="sd">    :param vel_2: velocity 2</span>
+<span class="sd">    :return: sliding speed in contact between body 1 and 2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">vel_1</span> <span class="o">-</span> <span class="n">vel_2</span></div>
+
+
+<div class="viewcode-block" id="vroll"><a class="viewcode-back" href="../tribology.html#tribology.vroll">[docs]</a><span class="k">def</span> <span class="nf">vroll</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the rolling speed in a tribological contact based contact body</span>
+<span class="sd">    velocities</span>
+<span class="sd">    :param vel_1:</span>
+<span class="sd">    :param vel_2:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">vel_1</span> <span class="o">+</span> <span class="n">vel_2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="srr"><a class="viewcode-back" href="../tribology.html#tribology.srr">[docs]</a><span class="k">def</span> <span class="nf">srr</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the slide-to-roll ratio (srr) in a tribological contact</span>
+<span class="sd">    :param vel_1: velocity 1</span>
+<span class="sd">    :param vel_2: velocity 2</span>
+<span class="sd">    :return: slide-to-roll ratio</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">vslide</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">)</span> <span class="o">/</span> <span class="n">vroll</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="rad_per_s_to_rpm"><a class="viewcode-back" href="../tribology.html#tribology.rad_per_s_to_rpm">[docs]</a><span class="k">def</span> <span class="nf">rad_per_s_to_rpm</span><span class="p">(</span><span class="n">vel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert from rpm to rad/s</span>
+<span class="sd">    :param vel: velocity in rad/s</span>
+<span class="sd">    :return: velocity in rpm</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">rpm_to_rad_per_s</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">vel</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="rpm_to_rad_per_s"><a class="viewcode-back" href="../tribology.html#tribology.rpm_to_rad_per_s">[docs]</a><span class="k">def</span> <span class="nf">rpm_to_rad_per_s</span><span class="p">(</span><span class="n">vel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert from rpm to rad/s</span>
+<span class="sd">    :param vel: velocity in rpm</span>
+<span class="sd">    :return: velocity in rad/s</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">vel</span> <span class="o">/</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span></div>
+
+
+<div class="viewcode-block" id="rball3plates"><a class="viewcode-back" href="../tribology.html#tribology.rball3plates">[docs]</a><span class="k">def</span> <span class="nf">rball3plates</span><span class="p">(</span><span class="n">r_ball</span><span class="p">,</span> <span class="n">plate_angle</span><span class="o">=</span><span class="mf">1.5708</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sliding radius (lever arm) for ball-on-3-plates setup</span>
+<span class="sd">    :param r_ball: radius of rotating ball</span>
+<span class="sd">    :param plate_angle: plate angle with respect to ball in rad</span>
+<span class="sd">                        (default corresponds to 45 degree)</span>
+<span class="sd">    :return: sliding radius</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">r_ball</span> <span class="o">*</span> <span class="n">sin</span><span class="p">((</span><span class="n">pi</span> <span class="o">-</span> <span class="n">plate_angle</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="fball3plates"><a class="viewcode-back" href="../tribology.html#tribology.fball3plates">[docs]</a><span class="k">def</span> <span class="nf">fball3plates</span><span class="p">(</span><span class="n">ax_force</span><span class="p">,</span> <span class="n">plate_angle</span><span class="o">=</span><span class="mf">1.5708</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate normal force per contact in ball-on-3-plates setup</span>
+<span class="sd">    :param ax_force: axial force on rotating ball</span>
+<span class="sd">    :param plate_angle: plate angle with respect to each other</span>
+<span class="sd">                        (default corresponds to 90 degree)</span>
+<span class="sd">    :return: normal force per contact</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ax_force</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="n">cos</span><span class="p">(</span><span class="n">plate_angle</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="gfourball"><a class="viewcode-back" href="../tribology.html#tribology.gfourball">[docs]</a><span class="k">def</span> <span class="nf">gfourball</span><span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">r_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Geometric parameters of 4-ball setup</span>
+<span class="sd">    :param r_1: radius rotating ball</span>
+<span class="sd">    :param r_2: radius stationary balls</span>
+<span class="sd">    :return: sliding radius (lever arm) on rotating ball, contact angle in rad</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">r_circum_circle</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r_2</span>
+    <span class="n">contact_angle</span> <span class="o">=</span> <span class="n">acos</span><span class="p">(</span><span class="n">r_circum_circle</span> <span class="o">/</span> <span class="p">(</span><span class="n">r_1</span> <span class="o">+</span> <span class="n">r_2</span><span class="p">))</span>
+    <span class="n">sliding_radius</span> <span class="o">=</span> <span class="n">r_circum_circle</span> <span class="o">-</span> <span class="n">r_2</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">contact_angle</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sliding_radius</span><span class="p">,</span> <span class="n">contact_angle</span></div>
+
+
+<div class="viewcode-block" id="ffourball"><a class="viewcode-back" href="../tribology.html#tribology.ffourball">[docs]</a><span class="k">def</span> <span class="nf">ffourball</span><span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">r_2</span><span class="p">,</span> <span class="n">ax_force</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate normal force per contact in 4 ball setup</span>
+<span class="sd">    :param r_1: radius rotating ball</span>
+<span class="sd">    :param r_2: radius stationary balls</span>
+<span class="sd">    :param ax_force: axial force on rotating ball</span>
+<span class="sd">    :return: normal force per contact</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">contact_angle</span> <span class="o">=</span> <span class="n">gfourball</span><span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">r_2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ax_force</span> <span class="o">/</span> <span class="n">sin</span><span class="p">(</span><span class="n">contact_angle</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="refix"><a class="viewcode-back" href="../tribology.html#tribology.refix">[docs]</a><span class="k">def</span> <span class="nf">refix</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">p_in</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">p_out</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert between different SI unit prefixes</span>
+<span class="sd">    :param value:  value to convert</span>
+<span class="sd">    :param p_in:  input SI unit prefix</span>
+<span class="sd">    :param p_out:  output SI unit prefix</span>
+<span class="sd">    :return:  value converted to new unit prefix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;p&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span>
+              <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="o">-</span><span class="mi">9</span><span class="p">,</span>
+              <span class="s1">&#39;mu&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span>
+              <span class="s1">&#39;m&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span>
+              <span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="o">-</span><span class="mi">0</span><span class="p">,</span>
+              <span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span>
+              <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">6</span><span class="p">,</span>
+              <span class="s1">&#39;G&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">9</span><span class="p">,</span>
+              <span class="s1">&#39;T&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">12</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">value</span> <span class="o">*</span> <span class="n">prefix</span><span class="p">[</span><span class="n">p_in</span><span class="p">]</span> <span class="o">/</span> <span class="n">prefix</span><span class="p">[</span><span class="n">p_out</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="abbottfirestone"><a class="viewcode-back" href="../tribology.html#tribology.abbottfirestone">[docs]</a><span class="k">def</span> <span class="nf">abbottfirestone</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate Abbott-Firestone curve for 2D surface trace</span>
+
+<span class="sd">    :param trace: vector containing surface heights</span>
+<span class="sd">    :param res: number of discontinuous data steps</span>
+<span class="sd">    :return: data baskets (steps) and cumulative distribution</span>
+<span class="sd">             (x and y data for Abbott-Firestone plot)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">baskets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">trace</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">trace</span><span class="p">),</span> <span class="n">res</span><span class="p">)</span>
+    <span class="n">cum_dist</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">basket</span> <span class="ow">in</span> <span class="n">baskets</span><span class="p">:</span>
+        <span class="n">cum_dist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">trace</span> <span class="o">&gt;=</span> <span class="n">basket</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span> <span class="o">*</span> <span class="n">res</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">baskets</span><span class="p">,</span> <span class="n">cum_dist</span></div>
+
+
+<div class="viewcode-block" id="reff"><a class="viewcode-back" href="../tribology.html#tribology.reff">[docs]</a><span class="k">def</span> <span class="nf">reff</span><span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">r_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Effective radius according to Hertzian contact theory</span>
+<span class="sd">    :param r_1: radius 1</span>
+<span class="sd">    :param r_2: radius 2</span>
+<span class="sd">    :return: reduced (effective) radius</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">r_1</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">r_1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">r_2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">r_2</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">r_2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">r_2</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">r_1</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">r_1</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">r_1</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">r_1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">))</span> <span class="ow">and</span> \
+            <span class="p">(</span><span class="n">r_2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">r_2</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="n">r_1</span> <span class="o">==</span> <span class="o">-</span><span class="n">r_2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">r_1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="eeff"><a class="viewcode-back" href="../tribology.html#tribology.eeff">[docs]</a><span class="k">def</span> <span class="nf">eeff</span><span class="p">(</span><span class="n">r_x_1</span><span class="p">,</span> <span class="n">r_y_1</span><span class="p">,</span> <span class="n">r_x_2</span><span class="p">,</span> <span class="n">r_y_2</span><span class="p">,</span> <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Effective radii for combination of 2 bodies according to Hertzian</span>
+<span class="sd">    contact theory</span>
+<span class="sd">    :param r_x_1: radius of body 1 in x</span>
+<span class="sd">    :param r_y_1: radius of body 1 in y</span>
+<span class="sd">    :param r_x_2: radius of body 2 in x</span>
+<span class="sd">    :param r_y_2: radius of body 2 in y</span>
+<span class="sd">    :return: effective radius (total) and effective radii in each plane</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">recip_radius</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">radius</span> <span class="ow">in</span> <span class="p">[</span><span class="n">r_x_1</span><span class="p">,</span> <span class="n">r_y_1</span><span class="p">,</span> <span class="n">r_x_2</span><span class="p">,</span> <span class="n">r_y_2</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">radius</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">recip_radius</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">recip_radius</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">radius</span><span class="p">)</span>
+
+    <span class="n">r_eff_x</span> <span class="o">=</span> <span class="n">reff</span><span class="p">(</span><span class="n">r_x_1</span><span class="p">,</span> <span class="n">r_x_2</span><span class="p">)</span>
+    <span class="n">r_eff_y</span> <span class="o">=</span> <span class="n">reff</span><span class="p">(</span><span class="n">r_y_1</span><span class="p">,</span> <span class="n">r_y_2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">reff</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">),</span> <span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span></div>
+
+
+<div class="viewcode-block" id="meff"><a class="viewcode-back" href="../tribology.html#tribology.meff">[docs]</a><span class="k">def</span> <span class="nf">meff</span><span class="p">(</span><span class="n">e_1</span><span class="p">,</span> <span class="n">nu_1</span><span class="p">,</span> <span class="n">e_2</span><span class="p">,</span> <span class="n">nu_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Effective Young&#39;s modulus according to Hertzian contact theory</span>
+<span class="sd">    :param e_1: young&#39;s modulus body 1</span>
+<span class="sd">    :param nu_1: poisson ratio body 1</span>
+<span class="sd">    :param e_2: young&#39;s modulus body 2</span>
+<span class="sd">    :param nu_2: poisson ratio body 2</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu_1</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">e_1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu_2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">e_2</span><span class="p">))</span></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Moritz Ploss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

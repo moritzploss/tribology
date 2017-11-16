@@ -1,0 +1,25 @@
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+  target_branch: master
+  on:
+    branch: master
+
+language: python
+python:
+- '3.4'
+- '3.5'
+- '3.6'
+
+install:
+- pip install .
+- pip install sphinx
+- pip install sphinxjp.themes.dotted
+- pip install sphinxcontrib-fulltoc
+- pip install pylint
+- pip install -r requirements.txt
+script:
+- pytest tribology/tests/tests_tribology.py
+- pylint --rcfile=tribology.pylintrc tribology -E --extension-pkg-whitelist=numpy
+- sphinx-build -b singlehtml docs/sphinx_files/ docs/ -a

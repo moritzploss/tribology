@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Methods Related to Hertz Contact Theory &#8212; Tribology  documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Methods Related to Lubricants" href="tribology_lubrication.html" />
+    <link rel="prev" title="Methods Related to Dowson-Hamrock Film Thickness Caluclations" href="tribology_dowson_hamrock.html" /> 
+  </head>
+  <body role="document">
+
+
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tribology_lubrication.html" title="Methods Related to Lubricants"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tribology_dowson_hamrock.html" title="Methods Related to Dowson-Hamrock Film Thickness Caluclations"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tribology_constants.html">Constants for Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology_boundary_element.html">Methods Related to Boundary Element Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology_dowson_hamrock.html">Methods Related to Dowson-Hamrock Film Thickness Caluclations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Methods Related to Hertz Contact Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology_lubrication.html">Methods Related to Lubricants</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tribology_hertz.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-tribology_hertz">
+<span id="methods-related-to-hertz-contact-theory"></span><h1>Methods Related to Hertz Contact Theory<a class="headerlink" href="#module-tribology_hertz" title="Permalink to this headline">¶</a></h1>
+<p>Methods related to Hertz contact theory</p>
+<dl class="function">
+<dt id="tribology_hertz.ahertz">
+<code class="descclassname">tribology_hertz.</code><code class="descname">ahertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_hertz.html#ahertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_hertz.ahertz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate Hertzian contact area half-axis
+:param r_eff: effective radius of contact bodies
+:param r_eff_x: effective radius in x direction
+:param r_eff_y: effective radius in y direction
+:param e_eff: effective modulus
+:param force: normal load
+:return: half axes and total area</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_hertz.auxparamshertz">
+<code class="descclassname">tribology_hertz.</code><code class="descname">auxparamshertz</code><span class="sig-paren">(</span><em>r_eff_x</em>, <em>r_eff_y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_hertz.html#auxparamshertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_hertz.auxparamshertz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate Hertz parameters required for contact area/pressure calculations
+:param r_eff_x: effective radius in x direction
+:param r_eff_y: effective radius in y direction
+:return: dimensionless Hertz parameters</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_hertz.dhertz">
+<code class="descclassname">tribology_hertz.</code><code class="descname">dhertz</code><span class="sig-paren">(</span><em>e_eff</em>, <em>r_x_1</em>, <em>r_y_1</em>, <em>r_x_2</em>, <em>r_y_2</em>, <em>force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_hertz.html#dhertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_hertz.dhertz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Elastic displacement in normal direction for arbitrary bodies according to
+hertz contact theory
+:param e_eff: effective young&#8217;s modulus in MPa
+:param r_x_1: radius body 1 in x direction in mm
+:param r_y_1: radius body 1 in y direction in mm
+:param r_x_2: radius body 2 in x direction in mm
+:param r_y_2: radius body 2 in y direction in mm
+:param force: normal force in N
+:return: combined normal displacement in mm</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_hertz.fhertz">
+<code class="descclassname">tribology_hertz.</code><code class="descname">fhertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>p_critical</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_hertz.html#fhertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_hertz.fhertz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate load carrying capacity of Hertzian contact
+:param r_eff: effective radius of contact bodies
+:param r_eff_x: effective radius in x direction
+:param r_eff_y: effective radius in y direction
+:param e_eff: effective modulus
+:param p_critical: critical mean contact pressure
+:return: critical normal force</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_hertz.phertz">
+<code class="descclassname">tribology_hertz.</code><code class="descname">phertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_hertz.html#phertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_hertz.phertz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate mean contact pressure in Hertzian contact
+:param r_eff: effective radius of contact bodies
+:param r_eff_x: effective radius in x direction
+:param r_eff_y: effective radius in y direction
+:param e_eff: effective modulus
+:param force: normal force
+:return: mean contact pressure</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tribology_lubrication.html" title="Methods Related to Lubricants"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tribology_dowson_hamrock.html" title="Methods Related to Dowson-Hamrock Film Thickness Caluclations"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Moritz Ploss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

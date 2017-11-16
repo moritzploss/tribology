@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tribology_hertz &#8212; Tribology  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+  <body role="document">
+
+
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_constants.html">Constants for Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_boundary_element.html">Methods Related to Boundary Element Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_dowson_hamrock.html">Methods Related to Dowson-Hamrock Film Thickness Caluclations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_hertz.html">Methods Related to Hertz Contact Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_lubrication.html">Methods Related to Lubricants</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for tribology_hertz</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Methods related to Hertz contact theory</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">log</span>
+
+
+<div class="viewcode-block" id="auxparamshertz"><a class="viewcode-back" href="../tribology_hertz.html#tribology_hertz.auxparamshertz">[docs]</a><span class="k">def</span> <span class="nf">auxparamshertz</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate Hertz parameters required for contact area/pressure calculations</span>
+<span class="sd">    :param r_eff_x: effective radius in x direction</span>
+<span class="sd">    :param r_eff_y: effective radius in y direction</span>
+<span class="sd">    :return: dimensionless Hertz parameters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">r_eff_x</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">r_eff_y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">param_lambda</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">param_lambda</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">r_eff_x</span> <span class="o">/</span> <span class="n">r_eff_y</span><span class="p">,</span> <span class="n">r_eff_y</span> <span class="o">/</span> <span class="n">r_eff_x</span><span class="p">)</span>
+    <span class="n">kappa</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="mi">16</span> <span class="o">/</span> <span class="n">param_lambda</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">param_lambda</span><span class="p">))</span> <span class="o">-</span>
+                 <span class="n">sqrt</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span> <span class="o">+</span> <span class="mf">0.16</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="n">param_lambda</span><span class="p">))</span>
+    <span class="n">a_ast</span> <span class="o">=</span> <span class="n">kappa</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">kappa</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="n">kappa</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span>
+                     <span class="mf">0.25</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="n">kappa</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">b_ast</span> <span class="o">=</span> <span class="n">a_ast</span> <span class="o">/</span> <span class="n">kappa</span>
+    <span class="k">return</span> <span class="n">a_ast</span><span class="p">,</span> <span class="n">b_ast</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">param_lambda</span></div>
+
+
+<div class="viewcode-block" id="dhertz"><a class="viewcode-back" href="../tribology_hertz.html#tribology_hertz.dhertz">[docs]</a><span class="k">def</span> <span class="nf">dhertz</span><span class="p">(</span><span class="n">e_eff</span><span class="p">,</span> <span class="n">r_x_1</span><span class="p">,</span> <span class="n">r_y_1</span><span class="p">,</span> <span class="n">r_x_2</span><span class="p">,</span> <span class="n">r_y_2</span><span class="p">,</span> <span class="n">force</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Elastic displacement in normal direction for arbitrary bodies according to</span>
+<span class="sd">    hertz contact theory</span>
+<span class="sd">    :param e_eff: effective young&#39;s modulus in MPa</span>
+<span class="sd">    :param r_x_1: radius body 1 in x direction in mm</span>
+<span class="sd">    :param r_y_1: radius body 1 in y direction in mm</span>
+<span class="sd">    :param r_x_2: radius body 2 in x direction in mm</span>
+<span class="sd">    :param r_y_2: radius body 2 in y direction in mm</span>
+<span class="sd">    :param force: normal force in N</span>
+<span class="sd">    :return: combined normal displacement in mm</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">apb</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">r_x_1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_y_1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_x_2</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_y_2</span><span class="p">)</span>
+    <span class="n">bma</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">((</span><span class="mi">1</span> <span class="o">/</span> <span class="n">r_x_1</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_y_1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span>
+                     <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">r_x_2</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_y_2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">r_a</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">apb</span> <span class="o">-</span> <span class="n">bma</span><span class="p">)</span>
+    <span class="n">r_b</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">apb</span> <span class="o">+</span> <span class="n">bma</span><span class="p">)</span>
+    <span class="n">r_c</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">r_a</span> <span class="o">*</span> <span class="n">r_b</span><span class="p">)</span>
+
+    <span class="n">f_1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="nb">pow</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="n">r_a</span> <span class="o">/</span> <span class="n">r_b</span><span class="p">,</span> <span class="mf">0.0602</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.456</span><span class="p">)</span>
+    <span class="n">f_2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="nb">pow</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="n">r_a</span> <span class="o">/</span> <span class="n">r_b</span><span class="p">,</span> <span class="mf">0.0684</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.531</span><span class="p">)</span>
+
+    <span class="n">param_c</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">force</span> <span class="o">*</span> <span class="n">r_c</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">e_eff</span><span class="p">),</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">f_1</span>
+    <span class="n">param_e</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="nb">pow</span><span class="p">(</span><span class="n">r_b</span> <span class="o">/</span> <span class="n">r_a</span><span class="p">,</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">param_a</span> <span class="o">=</span> <span class="n">param_c</span> <span class="o">*</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">param_e</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">param_b</span> <span class="o">=</span> <span class="n">param_c</span> <span class="o">*</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">param_e</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">param_a</span> <span class="o">*</span> <span class="n">param_b</span> <span class="o">/</span> <span class="n">r_c</span> <span class="o">*</span> <span class="p">(</span><span class="n">f_2</span> <span class="o">/</span> <span class="n">f_1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ahertz"><a class="viewcode-back" href="../tribology_hertz.html#tribology_hertz.ahertz">[docs]</a><span class="k">def</span> <span class="nf">ahertz</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">force</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate Hertzian contact area half-axis</span>
+<span class="sd">    :param r_eff: effective radius of contact bodies</span>
+<span class="sd">    :param r_eff_x: effective radius in x direction</span>
+<span class="sd">    :param r_eff_y: effective radius in y direction</span>
+<span class="sd">    :param e_eff: effective modulus</span>
+<span class="sd">    :param force: normal load</span>
+<span class="sd">    :return: half axes and total area</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a_ast</span><span class="p">,</span> <span class="n">b_ast</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">auxparamshertz</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">)</span>
+    <span class="n">half_axis_a</span> <span class="o">=</span> <span class="n">a_ast</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">force</span> <span class="o">*</span> <span class="n">r_eff</span> <span class="o">/</span> <span class="n">e_eff</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">half_axis_b</span> <span class="o">=</span> <span class="n">b_ast</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">force</span> <span class="o">*</span> <span class="n">r_eff</span> <span class="o">/</span> <span class="n">e_eff</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">half_axis_a</span><span class="p">,</span> <span class="n">half_axis_b</span><span class="p">,</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">half_axis_a</span> <span class="o">*</span> <span class="n">half_axis_b</span></div>
+
+
+<div class="viewcode-block" id="fhertz"><a class="viewcode-back" href="../tribology_hertz.html#tribology_hertz.fhertz">[docs]</a><span class="k">def</span> <span class="nf">fhertz</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">p_critical</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate load carrying capacity of Hertzian contact</span>
+<span class="sd">    :param r_eff: effective radius of contact bodies</span>
+<span class="sd">    :param r_eff_x: effective radius in x direction</span>
+<span class="sd">    :param r_eff_y: effective radius in y direction</span>
+<span class="sd">    :param e_eff: effective modulus</span>
+<span class="sd">    :param p_critical: critical mean contact pressure</span>
+<span class="sd">    :return: critical normal force</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a_ast</span><span class="p">,</span> <span class="n">b_ast</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">auxparamshertz</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="n">a_ast</span> <span class="o">*</span> <span class="n">b_ast</span> <span class="o">*</span> <span class="n">p_critical</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">r_eff</span> <span class="o">/</span> <span class="n">e_eff</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="phertz"><a class="viewcode-back" href="../tribology_hertz.html#tribology_hertz.phertz">[docs]</a><span class="k">def</span> <span class="nf">phertz</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">force</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate mean contact pressure in Hertzian contact</span>
+<span class="sd">    :param r_eff: effective radius of contact bodies</span>
+<span class="sd">    :param r_eff_x: effective radius in x direction</span>
+<span class="sd">    :param r_eff_y: effective radius in y direction</span>
+<span class="sd">    :param e_eff: effective modulus</span>
+<span class="sd">    :param force: normal force</span>
+<span class="sd">    :return: mean contact pressure</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">area</span> <span class="o">=</span> <span class="n">ahertz</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">force</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">force</span> <span class="o">/</span> <span class="n">area</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Moritz Ploss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>
