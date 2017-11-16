@@ -41,14 +41,14 @@ def dowson_hamrock_demo():
     temp = np.mean(database['lube_temp_c'])
 
     # get material and lube properties
-    alpha_p = tr.convpref(tr.PressVisc.MINERAL_OIL_GENERIC.value, 'M', '')
+    alpha_p = tr.refix(tr.PressVisc.MINERAL_OIL_GENERIC.value, 'M', '')
     kin = tr.LubeVisc.SIGMA_ALDRICH_MINERAL_OIL_HEAVY.value
     lube_temps = tr.LubeVisc.TEMPS.value
     density = tr.LubeDens.SIGMA_ALDRICH_MINERAL_OIL_HEAVY.value
 
     # calculate dynamic viscosity at operating temperature
     kin_temp = tr.walther(lube_temps[0], kin[0], lube_temps[1], kin[1], temp)
-    dyn_temp = tr.convpref(tr.kin2dyn(kin_temp, density), 'm', 'M')
+    dyn_temp = tr.refix(tr.kin2dyn(kin_temp, density), 'm', 'M')
 
     # calculate effective modulus and radius
     e_eff = tr.meff(tr.YoungsMod.STEEL.value,
@@ -60,7 +60,7 @@ def dowson_hamrock_demo():
     # calculate and plot film thickness
     film_calc = tr.dowhampoint(speeds, loads, alpha_p, e_eff, r_eff,
                                dyn_temp)
-    plot_results(films, tr.convpref(film_calc, 'm', 'n'), speeds)
+    plot_results(films, tr.refix(film_calc, 'm', 'n'), speeds)
 
 
 if __name__ == "__main__":

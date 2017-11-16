@@ -149,7 +149,7 @@ def ffourball(r_1, r_2, ax_force):
     return ax_force / sin(contact_angle) / 3
 
 
-def convpref(value, p_in='', p_out=''):
+def refix(value, p_in='', p_out=''):
     """
     Convert between different SI unit prefixes
     :param value:  value to convert

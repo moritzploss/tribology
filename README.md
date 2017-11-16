@@ -22,3 +22,15 @@ please contact Moritz at:
 
 The package is provided under an MIT license. See the LICENSE.txt file
 for more information.
+
+# version history
+
+#### 0.2.1.dev
+- change log added to `README.md`
+- function `convpref` renamed to `refix`
+- classifiers added to `setup.py`
+- demo for boundary element methods added (`demo_ball_on_plate.py`)
+- refactoring
+
+#### 0.2.0
+first release on PyPI
