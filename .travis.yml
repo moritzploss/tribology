@@ -3,7 +3,6 @@ deploy:
   user: "moritz.ploss"
   password:
     secure: "GrqGWfnwWrkhxZ2POaDbWTwGU3U/U96Eg2qVkLViaBZ/VlEY8CwlMDDI6YX8gOxdEG9Q0dao/KpnXofb1e6QCR45dBjAZ2FmJMFUWaYWUFKLvPJCQK/5NAfrsedaKU7khBVwfAXuoWmyoON8M9aQ3+GUcALrkHUx2Dat/J9onCLrk0S86ea5CSK+58yCHBLOleCbOsZygVvjhVt8A6ApgbT64L+pP8dlV7qZKvbPe0BdBETuR42cgZob2jjzOXMUfxtFVBaAgehzVFbKLI/856Cz3f6PEeYzl9l43Ahdy68vJhb9vG9mzEzvIwEnhrr0xAPwmMOZ1tMnhYf2QAKOsjwwE4P1Qm9f7doN1fv/oHv1kHOCYfVF6wvflcGl8yJDNXDGivnWGSXyDjNPv9LM/d/2oK3d6Tc1AlrOfbf3imvV6N7eme+gpH4ZI8OEsdVL0A2igb4dLiGCIhDv8hZv+mjnK8/UDprTMxcjtUfq+X53pq29VfG8e8h3KIVfNZ1YiXAFwlTIGardJqtwuXKUETqmWoSuWbC8x5H8Fzv5G6apkwgTHN/1Q3xFCAeoeMSQuE3oYAc2R+OIEkSamrHwqtoypLr7d9U8UwJX0na5b+5o11HkdV6vlbT/8zsML/P3DKhcWRDa5iTmm7Er9mh8aFz1BIa97imMi6DpJfYASRg="
-  server: "https://test.pypi.org/simple/"
   distributions: "sdist bdist_wheel"
   on:
     tags: true
