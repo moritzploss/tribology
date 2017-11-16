@@ -4,9 +4,12 @@ Test cases for tribology methods
 
 import unittest
 
-from ..tribology import meff, eeff
+import numpy as np
+
+from ..tribology import meff, eeff, profball, profrevolve
 from .. import tribology_hertz as th
 from .. import tribology_lubrication as tl
+from .. import tribology_boundary_element as tb
 
 
 class TestTribology(unittest.TestCase):
@@ -41,23 +44,57 @@ class TestTribology(unittest.TestCase):
         self.assertEqual([r_eff, r_eff_x, r_eff_y], [2, 6, 3])
 
 
+class TestBoundaryElement(unittest.TestCase):
+    """
+    test case methods for tribology methods relate to boundary element codes
+    """
+    def test_be(self):
+        """
+        base test for combination of boundary element methods
+        """
+        # inputs for steel ball geometry in contact with steel flat
+        r_ball = 6.35
+        f_outer = 10
+        e_eff = meff(210000, 0.3, 210000, 0.3)
+        r_eff, r_eff_x, _ = eeff(r_ball, r_ball, 0, 0)
+
+        # create 3d profile for ball
+        width, _, _ = th.ahertz(r_eff, r_eff_x, r_eff_x, e_eff, f_outer)
+        ax_x, delta_x = np.linspace(-width * 1.1, width * 1.1, 51, retstep=True)
+        prof_ball_3d, _ = profrevolve(profball(ax_x, r_ball), ax_x, 2 * r_ball)
+
+        # calculate influence matrix and reduce it
+        inf_mat_red = tb.beinflumatred(
+            tb.beinflumat(ax_x, ax_x, e_eff))
+
+        # solve for pressure and inner force in ball <-> flat contact
+        press, _, f_inner, _ = tb.besolve(prof_ball_3d,
+                                          np.zeros((len(ax_x), len(ax_x))),
+                                          f_outer, inf_mat_red, delta_x,
+                                          delta_x)
+
+        # verify that boundary element solution is equal to analytical solution
+        p_max_hertz = 1.5 * th.phertz(r_eff, r_eff_x, r_eff_x, e_eff, f_inner)
+        self.assertEqual(round(np.amax(press)), round(p_max_hertz))
+
+
 class TestDowsonHamrock(unittest.TestCase):
     """
-    test case methods for tribology methods relatex to Dowson-Hamrock
+    test case methods for tribology methods relate to Dowson-Hamrock
     """
     pass
 
 
 class TestLubrication(unittest.TestCase):
     """
-    test case methods for tribology methods relatex to Lubrication
+    test case methods for tribology methods relate to Lubrication
     """
     pass
 
 
 class TestHertz(unittest.TestCase):
     """
-    test case methods for tribology methods relatex to Hertz contact theory
+    test case methods for tribology methods relate to Hertz contact theory
     """
 
     def test_hertz_mean_pressure_ball(self):

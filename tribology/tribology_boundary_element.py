@@ -39,7 +39,7 @@ def secant(x_list, fx_list):
         return x_list[-1]
 
 
-def influ_mat_coordinate_grid(axis):
+def beinflumatgrid(axis):
     """
     Generate coordinate grid based on axis as required for influence matrix
     generation
@@ -55,7 +55,7 @@ def influ_mat_coordinate_grid(axis):
     return np.absolute(np.subtract(grid, vertical_ax))
 
 
-def influ_mat_reduce(influ_mat):
+def beinflumatred(influ_mat):
     """
     Extract the reduced influence matrix from the complete influence matrix
     :param influ_mat: complete influence matrix
@@ -73,7 +73,7 @@ def influ_mat_reduce(influ_mat):
     return reduced_influence_matrix
 
 
-def boundary_element_influ_mat(x_axis, y_axis, e_eff):
+def beinflumat(x_axis, y_axis, e_eff):
     """
     Generate an influence matrix as required for boundary element contact
     mechanics calculations
@@ -87,10 +87,10 @@ def boundary_element_influ_mat(x_axis, y_axis, e_eff):
     influence_matrix_complete = np.zeros((len_x, len_y, len_x, len_y))
 
     # generate coordinate grids
-    a_factor = (x_axis[-1] - x_axis[0]) / len_x / 2
-    b_factor = y_axis[-1] - y_axis[0] / len_x / 2
-    x_grid = influ_mat_coordinate_grid(x_axis)
-    y_grid = influ_mat_coordinate_grid(y_axis)
+    a_factor = (x_axis[-1] - x_axis[0]) / (len_x - 1) / 2
+    b_factor = (y_axis[-1] - y_axis[0]) / (len_y - 1) / 2
+    x_grid = beinflumatgrid(x_axis)
+    y_grid = beinflumatgrid(y_axis)
 
     # use numexpr to evaluate expressions
     xpa = ne.evaluate('x_grid + a_factor')
@@ -143,10 +143,10 @@ def boundary_element_influ_mat(x_axis, y_axis, e_eff):
                                                   (ymb[j, j_prime])) +
                                       np.multiply(xpa, xpa))))))
 
-    return influence_matrix_complete * e_eff / pi
+    return influence_matrix_complete * 1 / e_eff * 2 / pi
 
 
-def get_displacements(profile, norm_disp):
+def begetd(profile, norm_disp):
     """
     Calculate local elastic displacements of profile
     :param profile: combined profile of two contacting bodies
@@ -158,19 +158,48 @@ def get_displacements(profile, norm_disp):
     return disp
 
 
-def combine_profile(profile_1, profile_2):
+def combineprof(profile_1, profile_2):
     """
     Combine two body profiles for boundary element calculation
     :param profile_1: array-like profile heights
     :param profile_2: array-like profile heights
     :return: negative combined profile heights
     """
-    return -(profile_1 + profile_2)
+    return profile_1 + profile_2
 
 
-def boundary_element_solve_pressure(profile_1, profile_2, outer_force,
-                                    red_influ_mat, delta_x, delta_y,
-                                    norm_disp=0.001, max_offset=0.005):
+def solvepress(red_influ_mat, disp):
+    """
+    solve for pressure distribution
+    :param red_influ_mat: reduced influence matrix
+    :param disp: displacement field
+    :return: pressure field
+    """
+
+    # find negative pressure arguments
+    pressure = spla.gmres(red_influ_mat, disp)[0]
+    p_index = np.zeros(len(pressure))
+    negative_p = np.where(pressure < 0)[0]
+    p_neg = copy.deepcopy(negative_p)
+
+    while len(negative_p) > 0:
+        pressure[p_neg] = 0
+        p_index[p_neg] = 1
+        u_new_reduced = np.delete(disp, [p_neg], axis=0)
+        g_new_reduced = np.delete(red_influ_mat, [p_neg], axis=0)
+        g_new_reduced = np.delete(g_new_reduced, [p_neg], axis=1)
+        if pressure[np.where(p_index == 0)].size > 0:
+            pressure[np.where(p_index == 0)] = \
+                spla.gmres(g_new_reduced, u_new_reduced)[0]
+        negative_p = np.where(pressure < 0)[0]
+        p_neg = np.append(p_neg, negative_p)
+
+    return pressure
+
+
+def besolve(profile_1, profile_2, outer_force,
+            red_influ_mat, delta_x, delta_y,
+            norm_disp=0.1, max_offset=0.005):
     """
     Solve system of equations:
 
@@ -195,32 +224,14 @@ def boundary_element_solve_pressure(profile_1, profile_2, outer_force,
     fx_value = [outer_force]
     pressure = 0
     inner_force = 0
-    profile = combine_profile(profile_1, profile_2)
+    profile = combineprof(profile_1, profile_2)
 
     # while difference between inner forces and outer forces is significant
     while abs(inner_force - outer_force) > max_offset * outer_force:
 
         # update local displacements
-        disp = get_displacements(profile, norm_disp)
-
-        # find negative pressure arguments
-        pressure = spla.gmres(red_influ_mat, disp)[0]
-        p_index = np.zeros(len(pressure))
-        negative_p = np.where(pressure < 0)[0]
-        p_neg = copy.deepcopy(negative_p)
-
-        # remove elements with negative pressure
-        while len(negative_p) > 0:
-            pressure[p_neg] = 0
-            p_index[p_neg] = 1
-            u_new_reduced = np.delete(disp, [p_neg], axis=0)
-            g_new_reduced = np.delete(red_influ_mat, [p_neg], axis=0)
-            g_new_reduced = np.delete(g_new_reduced, [p_neg], axis=1)
-            if pressure[np.where(p_index == 0)].size > 0:
-                pressure[np.where(p_index == 0)] = \
-                    spla.gmres(g_new_reduced, u_new_reduced)[0]
-            negative_p = np.where(pressure < 0)[0]
-            p_neg = np.append(p_neg, negative_p)
+        disp = begetd(profile, norm_disp)
+        pressure = solvepress(red_influ_mat, disp)
 
         # calculate resulting force and adjust displacement for next loop
         pressure = np.reshape(pressure, (profile.shape[0], profile.shape[1]))
@@ -229,5 +240,5 @@ def boundary_element_solve_pressure(profile_1, profile_2, outer_force,
         fx_value = np.append(fx_value, [inner_force - outer_force])
         norm_disp = secant(x_value, fx_value)
 
-    disp = get_displacements(profile, norm_disp)
+    disp = begetd(profile, norm_disp)
     return pressure, disp, inner_force, x_value[-1]

@@ -4,9 +4,52 @@
 Methods related to general tribology
 """
 
-from math import sqrt, acos, cos, sin, pi
+from math import sqrt, acos, cos, sin, pi, floor
 
 import numpy as np
+
+
+def profball(x_axis, r_ball):
+    """
+    Generate a 2D ball profile based on ball radius and ball axis
+    :param x_axis: vector containing coordinate points for which to calculate
+                   profile heights
+    :param r_ball: the radius of the ball
+    :return:
+    """
+    prof = np.array(abs(r_ball) - np.sqrt(r_ball ** 2 - np.power(x_axis, 2)))
+    return prof * np.sign(r_ball)
+
+
+def profrevolve(prof_2d, y_axis, y_diam):
+    """
+    creates a 3d profile by revolving a 2D profile around the central axis of
+    a body
+    :param prof_2d: 2d profile vector containing profile heights
+    :param y_axis: vector containing coordinate points for which to calculate
+                   profile heights in y-direction
+    :param y_diam: diameter around which to revolve prof_2d
+    :return:
+    """
+    len_x = len(prof_2d)
+    len_y = len(y_axis)
+    prof_3d = np.zeros((len_x, len_y))
+    sign_diam = np.sign(y_diam)
+    for i in range(len_x):
+        for j in range(len_y):
+            bracket = (y_diam / 2 - sign_diam * prof_2d[i] ** 2)\
+                      - y_axis[j] ** 2
+            if bracket <= 0:
+                prof_3d[i, j] = abs(y_diam) / 2
+            else:
+                prof_3d[i, j] = abs(y_diam) / 2 - sign_diam * sqrt(bracket)
+    if y_diam > 0:
+        min_prof = prof_3d.min()
+    else:
+        min_prof = prof_3d[round(len_x / 2) - 1, round(len_x / 2) - 1]
+    prof_3d = -(prof_3d - min_prof)
+    y_profile = prof_3d[:, floor(len_y / 2)]
+    return -prof_3d, y_profile
 
 
 def vslide(vel_1, vel_2):
