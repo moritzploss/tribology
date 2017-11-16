@@ -75,6 +75,7 @@ class TestBoundaryElement(unittest.TestCase):
 
         # verify that boundary element solution is equal to analytical solution
         p_max_hertz = 1.5 * th.phertz(r_eff, r_eff_x, r_eff_x, e_eff, f_inner)
+        print(p_max_hertz, np.amax(press))
         self.assertEqual(round(np.amax(press)), round(p_max_hertz))
 
 

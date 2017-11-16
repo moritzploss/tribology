@@ -35,14 +35,14 @@ def profrevolve(prof_2d, y_axis, y_diam):
     len_y = len(y_axis)
     prof_3d = np.zeros((len_x, len_y))
     sign_diam = np.sign(y_diam)
-    for i in range(len_x):
-        for j in range(len_y):
-            bracket = (y_diam / 2 - sign_diam * prof_2d[i] ** 2)\
-                      - y_axis[j] ** 2
+    for i_x in range(len_x):
+        for i_y in range(len_y):
+            bracket = pow((y_diam / 2 - sign_diam * prof_2d[i_x]), 2)\
+                      - pow(y_axis[i_y], 2)
             if bracket <= 0:
-                prof_3d[i, j] = abs(y_diam) / 2
+                prof_3d[i_x, i_y] = abs(y_diam) / 2
             else:
-                prof_3d[i, j] = abs(y_diam) / 2 - sign_diam * sqrt(bracket)
+                prof_3d[i_x, i_y] = abs(y_diam) / 2 - sign_diam * sqrt(bracket)
     if y_diam > 0:
         min_prof = prof_3d.min()
     else:
