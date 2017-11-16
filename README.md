@@ -26,6 +26,8 @@ for more information.
 # version history
 
 #### 0.2.1.dev
+-  Travis CI builds now with Pylint error check for package files.
+Non-package files are not checked. Build fails if Pylint error is found.
 - Python 3.4 and 3.5 builds added to Travis CI (now 3.4, 3.5 and 3.6)
 - change log added to `README.md`
 - function `convpref` renamed to `refix`
