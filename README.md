@@ -10,10 +10,9 @@ The package is currently hosted on github:
 
     https://github.com/moritzploss/tribology
 
-You can also install the package through pip. Currently, the package
-is only available for test purposes:
+You can also install the package through pip:
 
-    pip install --index-url https://test.pypi.org/simple/ tribology
+    pip install tribology
 
 The package is developed by Moritz Ploss at KTH Royal
 Institute of Technology, Stockholm, Sweden. For questions and comments,
