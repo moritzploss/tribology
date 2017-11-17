@@ -31,6 +31,7 @@ for more information.
 
 #### 0.2.2.dev
 Current development version on github
+- docstrings for constants updated
 
 #### 0.2.1
 - Sphinx documentation added to git repo, docs available at https://moritzploss.github.io/tribology

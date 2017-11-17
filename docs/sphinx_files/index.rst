@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Tribology's Documentation!
-=====================================
+Welcome to **Tribology**'s Documentation!
+=========================================
 
 The documentation is currently under construction. The information below is
 incomplete and not formated; this will be fixed soon. In the meantime, I hope

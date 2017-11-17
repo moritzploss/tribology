@@ -63,7 +63,7 @@
           <div class="body" role="main">
             
   <div class="section" id="welcome-to-tribology-s-documentation">
-<h1>Welcome to Tribology’s Documentation!<a class="headerlink" href="#welcome-to-tribology-s-documentation" title="Permalink to this headline">¶</a></h1>
+<h1>Welcome to <strong>Tribology</strong>’s Documentation!<a class="headerlink" href="#welcome-to-tribology-s-documentation" title="Permalink to this headline">¶</a></h1>
 <p>The documentation is currently under construction. The information below is
 incomplete and not formated; this will be fixed soon. In the meantime, I hope
 what you can find below is better than not having any documentation at all.</p>
@@ -90,47 +90,161 @@ convenient:</p>
 <div class="toctree-wrapper compound">
 <span id="document-tribology_constants"></span><div class="section" id="module-tribology_constants">
 <span id="constants-for-tribology"></span><h2>Constants for Tribology<a class="headerlink" href="#module-tribology_constants" title="Permalink to this headline">¶</a></h2>
-<p>Relevant constants for tribology research</p>
+<p>Relevant constants for tribology research. Use, for example, as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># get young&#39;s modulus of steel in units of MPa</span>
+<span class="kn">import</span> <span class="nn">tribology</span> <span class="kn">as</span> <span class="nn">tr</span>
+<span class="n">youngs_modulus_steel</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">YoungsMod</span><span class="o">.</span><span class="n">STEEL</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+</div>
 <dl class="class">
 <dt id="tribology_constants.LubeDens">
 <em class="property">class </em><code class="descclassname">tribology_constants.</code><code class="descname">LubeDens</code><a class="headerlink" href="#tribology_constants.LubeDens" title="Permalink to this definition">¶</a></dt>
-<dd><p>Density in g / ml</p>
+<dd><p>Scalar constants for lubricant density in <span class="math">\(\text{g ml}^{-1}\)</span>.
+Available values are:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">NA_LUBE_KR_015:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">NYNAS_HP_4:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">NYNAS_HP_12:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">NYNAS_T_3:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">NYNAS_T_9:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">NYNAS_T_22:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">SIGMA_ALDRICH_MINERAL_OIL_HEAVY:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="class">
 <dt id="tribology_constants.LubeVisc">
 <em class="property">class </em><code class="descclassname">tribology_constants.</code><code class="descname">LubeVisc</code><a class="headerlink" href="#tribology_constants.LubeVisc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Lubricant viscosity in cSt at 40 and 100 degree C</p>
+<dd><p>Tuple containing kinematic viscosities (in unit of cSt) of lubricants
+at 40 and 100 <span class="math">\(^{\circ}\text{C}\)</span>. The first value in the tuple
+corresponds to the viscosity at 40 <span class="math">\(^{\circ}\text{C}\)</span>, the second
+to 100 <span class="math">\(^{\circ}\text{C}\)</span>. The <strong>TEMPS</strong> value contains the
+reference temperatures (40, 100). Available values are:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">TEMPS:</th><td class="field-body">Tuple containing temperature values of 40 and 100</td>
+</tr>
+<tr class="field-even field"><th class="field-name">NA_LUBE_KR_015:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">NYNAS_HP_4:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">NYNAS_HP_12:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">NYNAS_T_3:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">NYNAS_T_9:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">NYNAS_T_22:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">SIGMA_ALDRICH_MINERAL_OIL_HEAVY:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="class">
 <dt id="tribology_constants.MatDens">
 <em class="property">class </em><code class="descclassname">tribology_constants.</code><code class="descname">MatDens</code><a class="headerlink" href="#tribology_constants.MatDens" title="Permalink to this definition">¶</a></dt>
-<dd><p>Density in kg / m$^3$ at ambient temperature</p>
+<dd><p>Scalar constants for material density in <span class="math">\(\text{kg m}^{-3}\)</span>.
+Available values are:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">STEEL:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">GLASS:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="class">
 <dt id="tribology_constants.PoissonRatio">
 <em class="property">class </em><code class="descclassname">tribology_constants.</code><code class="descname">PoissonRatio</code><a class="headerlink" href="#tribology_constants.PoissonRatio" title="Permalink to this definition">¶</a></dt>
-<dd><p>Poisson ratio data at ambient temperature</p>
+<dd><p>Scalar constants for unitless Poisson ratios. Available values are:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">STEEL:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">GLASS:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">SiN:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="class">
 <dt id="tribology_constants.PressVisc">
 <em class="property">class </em><code class="descclassname">tribology_constants.</code><code class="descname">PressVisc</code><a class="headerlink" href="#tribology_constants.PressVisc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pressure-viscosity coefficients in 1 / Pa at ambient temperature</p>
+<dd><p>Pressure-viscosity coefficients in <span class="math">\(\text{Pa}^{-1}\)</span> at room
+temperature. Available values are:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">ESTER_OIL_GENERIC:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">MINERAL_OIL_GENERIC:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="class">
 <dt id="tribology_constants.RadBall">
 <em class="property">class </em><code class="descclassname">tribology_constants.</code><code class="descname">RadBall</code><a class="headerlink" href="#tribology_constants.RadBall" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constants for ball radii</p>
+<dd><p>Scalar constants for ball radii in units of mm. Available values are:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">TQInch:</th><td class="field-body">3/4 inch</td>
+</tr>
+<tr class="field-even field"><th class="field-name">HInch:</th><td class="field-body">1/2 inch</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Inch:</th><td class="field-body">1 inch</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="class">
 <dt id="tribology_constants.YoungsMod">
 <em class="property">class </em><code class="descclassname">tribology_constants.</code><code class="descname">YoungsMod</code><a class="headerlink" href="#tribology_constants.YoungsMod" title="Permalink to this definition">¶</a></dt>
-<dd><p>Young’s modulus data in MPa at ambient temperature</p>
+<dd><p>Scalar constants for Young’s modulus in units of MPa. Available values are:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">STEEL:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">GLASS:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">SiN:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

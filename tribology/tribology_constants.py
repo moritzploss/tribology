@@ -2,7 +2,13 @@
 
 """
 
-Relevant constants for tribology research
+Relevant constants for tribology research. Use, for example, as follows:
+
+.. code-block:: python
+
+   # get young's modulus of steel in units of MPa
+   import tribology as tr
+   youngs_modulus_steel = tr.YoungsMod.STEEL.value
 
 """
 
@@ -12,7 +18,11 @@ from enum import Enum
 class RadBall(Enum):
     """
 
-    Constants for ball radii
+    Scalar constants for ball radii in units of mm. Available values are:
+
+    :TQInch: 3/4 inch
+    :HInch: 1/2 inch
+    :Inch: 1 inch
 
     """
     TQInch = 25.4 * 3 / 8
@@ -23,18 +33,26 @@ class RadBall(Enum):
 class YoungsMod(Enum):
     """
 
-    Young's modulus data in MPa at ambient temperature
+    Scalar constants for Young's modulus in units of MPa. Available values are:
+
+    :STEEL:
+    :GLASS:
+    :SiN:
 
     """
     STEEL = 210000
     GLASS = 70000
-    SiN = 315
+    SiN = 315000
 
 
 class PoissonRatio(Enum):
     """
 
-    Poisson ratio data at ambient temperature
+    Scalar constants for unitless Poisson ratios. Available values are:
+
+    :STEEL:
+    :GLASS:
+    :SiN:
 
     """
     STEEL = 0.3
@@ -45,7 +63,11 @@ class PoissonRatio(Enum):
 class MatDens(Enum):
     """
 
-    Density in kg / m$^3$ at ambient temperature
+    Scalar constants for material density in :math:`\\text{kg m}^{-3}`.
+    Available values are:
+
+    :STEEL:
+    :GLASS:
 
     """
     STEEL = 7800
@@ -55,7 +77,16 @@ class MatDens(Enum):
 class LubeDens(Enum):
     """
 
-    Density in g / ml
+    Scalar constants for lubricant density in :math:`\\text{g ml}^{-1}`.
+    Available values are:
+
+    :NA_LUBE_KR_015:
+    :NYNAS_HP_4:
+    :NYNAS_HP_12:
+    :NYNAS_T_3:
+    :NYNAS_T_9:
+    :NYNAS_T_22:
+    :SIGMA_ALDRICH_MINERAL_OIL_HEAVY:
 
     """
     NA_LUBE_KR_015 = 0.884
@@ -70,7 +101,21 @@ class LubeDens(Enum):
 class LubeVisc(Enum):
     """
 
-    Lubricant viscosity in cSt at 40 and 100 degree C
+    Tuple containing kinematic viscosities (in unit of cSt) of lubricants
+    at 40 and 100 :math:`^{\\circ}\\text{C}`. The first value in the tuple
+    corresponds to the viscosity at 40 :math:`^{\\circ}\\text{C}`, the second
+    to 100 :math:`^{\\circ}\\text{C}`. The **TEMPS** value contains the
+    reference temperatures (40, 100). Available values are:
+
+    :TEMPS: Tuple containing temperature values of 40 and 100
+
+    :NA_LUBE_KR_015:
+    :NYNAS_HP_4:
+    :NYNAS_HP_12:
+    :NYNAS_T_3:
+    :NYNAS_T_9:
+    :NYNAS_T_22:
+    :SIGMA_ALDRICH_MINERAL_OIL_HEAVY:
 
     """
     TEMPS = (40, 100)
@@ -86,7 +131,11 @@ class LubeVisc(Enum):
 class PressVisc(Enum):
     """
 
-    Pressure-viscosity coefficients in 1 / Pa at ambient temperature
+    Pressure-viscosity coefficients in :math:`\\text{Pa}^{-1}` at room
+    temperature. Available values are:
+
+    :ESTER_OIL_GENERIC:
+    :MINERAL_OIL_GENERIC:
 
     """
     ESTER_OIL_GENERIC = 15 * 10 ** (-9)
