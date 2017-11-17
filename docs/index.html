@@ -321,8 +321,8 @@ profile heights in y-direction</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology.rad_per_s_to_rpm">
-<code class="descclassname">tribology.</code><code class="descname">radpersec2rpm</code><span class="sig-paren">(</span><em>vel</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.rad_per_s_to_rpm" title="Permalink to this definition">¶</a></dt>
+<dt id="tribology.radpersec2rpm">
+<code class="descclassname">tribology.</code><code class="descname">radpersec2rpm</code><span class="sig-paren">(</span><em>vel</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.radpersec2rpm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert from rpm to rad/s</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -402,8 +402,8 @@ profile heights in y-direction</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology.rpm_to_rad_per_s">
-<code class="descclassname">tribology.</code><code class="descname">rpm2radpersec</code><span class="sig-paren">(</span><em>vel</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.rpm_to_rad_per_s" title="Permalink to this definition">¶</a></dt>
+<dt id="tribology.rpm2radpersec">
+<code class="descclassname">tribology.</code><code class="descname">rpm2radpersec</code><span class="sig-paren">(</span><em>vel</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.rpm2radpersec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert from rpm to rad/s</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -658,29 +658,6 @@ initial <em>x</em> value</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_dowson_hamrock.dowson_hamrock_parameters">
-<code class="descclassname">tribology_dowson_hamrock.</code><code class="descname">__dowson_hamrock_parameters</code><span class="sig-paren">(</span><em>r_eff</em>, <em>param_g</em>, <em>param_u</em>, <em>param_w</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowson_hamrock_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>part of dowson-hamrock</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>r_eff</strong> – effective radius</li>
-<li><strong>param_g</strong> – elasticity_parameter</li>
-<li><strong>param_u</strong> – velocity_parameter</li>
-<li><strong>param_w</strong> – load parameter</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ehd parameter</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="tribology_dowson_hamrock.edowham">
 <code class="descclassname">tribology_dowson_hamrock.</code><code class="descname">edowham</code><span class="sig-paren">(</span><em>alpha_p</em>, <em>e_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.edowham" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate elasticity parameter of dowson-hamrock equation</p>
@@ -746,27 +723,6 @@ initial <em>x</em> value</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">half axes and total area</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="tribology_hertz.auxparamshertz">
-<code class="descclassname">tribology_hertz.</code><code class="descname">__auxparamshertz</code><span class="sig-paren">(</span><em>r_eff_x</em>, <em>r_eff_y</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.auxparamshertz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate Hertz parameters required for contact area/pressure calculations</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>r_eff_x</strong> – effective radius in x direction</li>
-<li><strong>r_eff_y</strong> – effective radius in y direction</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dimensionless Hertz parameters</p>
 </td>
 </tr>
 </tbody>
@@ -917,22 +873,6 @@ viscosity at ambient pressure and the pressure-viscosity coefficient</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_lubrication.nuwalther">
-<code class="descclassname">tribology_lubrication.</code><code class="descname">__nuwalther</code><span class="sig-paren">(</span><em>zed</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.nuwalther" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate kinematic viscosity for Walther equation (ASTM D341)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>zed</strong> – z factor</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">kinematic viscosity</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="tribology_lubrication.trheomcone">
 <code class="descclassname">tribology_lubrication.</code><code class="descname">trheomcone</code><span class="sig-paren">(</span><em>eta</em>, <em>alpha</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.trheomcone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate torque based on dynamic viscosity measurement from cone-on-
@@ -1050,22 +990,6 @@ ASTM D341.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">kin. viscosity in cSt at temperature t3</p>
 </td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="tribology_lubrication.zedwalther">
-<code class="descclassname">tribology_lubrication.</code><code class="descname">__zedwalther</code><span class="sig-paren">(</span><em>kin_visc</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.zedwalther" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate z factor for Walther Equation (ASTM D341)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>kin_visc</strong> – kinematic viscosity</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">z factor</td>
 </tr>
 </tbody>
 </table>
