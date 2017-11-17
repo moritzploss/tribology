@@ -29,7 +29,7 @@ The package is developed by Moritz Ploss at KTH Royal
 Institute of Technology, Stockholm, Sweden. For questions and comments,
 please [send an email to Moritz](mailto:moritz.ploss@gmail.com).
 
-The package is provided under an MIT license. See the LICENSE.txt file
+The package is provided under an MIT license. See the `LICENSE.txt` file
 for more information.
 
 # version history
