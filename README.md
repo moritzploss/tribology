@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/moritzploss/tribology.png)](https://travis-ci.org/moritzploss/tribology)
 
-# tribology package
+# tribology
 This package is a collection of methods and classes for tribology
 research and education, including contact mechanics and lubrication
 science. It provides implementations of analytical and numerical
