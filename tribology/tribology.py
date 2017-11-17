@@ -142,7 +142,7 @@ def rball3plates(r_ball, plate_angle=1.5708):
 
     """
     return r_ball * sin((pi - plate_angle) / 2)
-
+np.linspace
 
 def fball3plates(ax_force, plate_angle=1.5708):
     """
@@ -163,10 +163,19 @@ def gfourball(r_1, r_2):
 
     Geometric parameters of 4-ball setup
 
-    :param r_1: radius rotating ball, scalar
-    :param r_2: radius stationary balls, scalar
-    :return: sliding radius (lever arm) on rotating ball, contact angle in rad,
-             scalar
+    Parameters
+    ----------
+    r_1 : scalar
+        The radius of the rotating ball.
+    r_2 : scalar
+        The radius of the (a) stationary ball.
+
+    Returns
+    -------
+    sliding_radius : scalar
+        The sliding radius (lever arm) on the rotating ball.
+    contact_angle : scalar
+        Contact angle between direction of ball normal force and vertical axis.
 
     """
     r_circum_circle = sqrt(3) / 3 * 2 * r_2
