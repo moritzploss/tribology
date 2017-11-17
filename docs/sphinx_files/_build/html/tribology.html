@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Methods for General Tribology &#8212; Tribology  documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Methods Related to Boundary Element Solvers" href="tribology_boundary_element.html" />
+    <link rel="prev" title="Constants for Tribology" href="tribology_constants.html" /> 
+  </head>
+  <body role="document">
+
+
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tribology_boundary_element.html" title="Methods Related to Boundary Element Solvers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tribology_constants.html" title="Constants for Tribology"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tribology_constants.html">Constants for Tribology</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology_boundary_element.html">Methods Related to Boundary Element Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology_dowson_hamrock.html">Methods Related to Dowson-Hamrock Film Thickness Caluclations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology_hertz.html">Methods Related to Hertz Contact Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology_lubrication.html">Methods Related to Lubricants</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tribology.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-tribology">
+<span id="methods-for-general-tribology"></span><h1>Methods for General Tribology<a class="headerlink" href="#module-tribology" title="Permalink to this headline">¶</a></h1>
+<p>Methods related to general tribology</p>
+<dl class="function">
+<dt id="tribology.abbottfirestone">
+<code class="descclassname">tribology.</code><code class="descname">abbottfirestone</code><span class="sig-paren">(</span><em>trace</em>, <em>res=100</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#abbottfirestone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.abbottfirestone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate Abbott-Firestone curve for 2D surface trace</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>trace</strong> &#8211; vector containing surface heights</li>
+<li><strong>res</strong> &#8211; number of discontinuous data steps</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">data baskets (steps) and cumulative distribution
+(x and y data for Abbott-Firestone plot)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.eeff">
+<code class="descclassname">tribology.</code><code class="descname">eeff</code><span class="sig-paren">(</span><em>r_x_1</em>, <em>r_y_1</em>, <em>r_x_2</em>, <em>r_y_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#eeff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.eeff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Effective radii for combination of 2 bodies according to Hertzian
+contact theory
+:param r_x_1: radius of body 1 in x
+:param r_y_1: radius of body 1 in y
+:param r_x_2: radius of body 2 in x
+:param r_y_2: radius of body 2 in y
+:return: effective radius (total) and effective radii in each plane</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.fball3plates">
+<code class="descclassname">tribology.</code><code class="descname">fball3plates</code><span class="sig-paren">(</span><em>ax_force</em>, <em>plate_angle=1.5708</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#fball3plates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.fball3plates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate normal force per contact in ball-on-3-plates setup
+:param ax_force: axial force on rotating ball
+:param plate_angle: plate angle with respect to each other</p>
+<blockquote>
+<div>(default corresponds to 90 degree)</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">normal force per contact</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.ffourball">
+<code class="descclassname">tribology.</code><code class="descname">ffourball</code><span class="sig-paren">(</span><em>r_1</em>, <em>r_2</em>, <em>ax_force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#ffourball"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.ffourball" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate normal force per contact in 4 ball setup
+:param r_1: radius rotating ball
+:param r_2: radius stationary balls
+:param ax_force: axial force on rotating ball
+:return: normal force per contact</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.gfourball">
+<code class="descclassname">tribology.</code><code class="descname">gfourball</code><span class="sig-paren">(</span><em>r_1</em>, <em>r_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#gfourball"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.gfourball" title="Permalink to this definition">¶</a></dt>
+<dd><p>Geometric parameters of 4-ball setup
+:param r_1: radius rotating ball
+:param r_2: radius stationary balls
+:return: sliding radius (lever arm) on rotating ball, contact angle in rad</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.meff">
+<code class="descclassname">tribology.</code><code class="descname">meff</code><span class="sig-paren">(</span><em>e_1</em>, <em>nu_1</em>, <em>e_2</em>, <em>nu_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#meff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.meff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Effective Young&#8217;s modulus according to Hertzian contact theory
+:param e_1: young&#8217;s modulus body 1
+:param nu_1: poisson ratio body 1
+:param e_2: young&#8217;s modulus body 2
+:param nu_2: poisson ratio body 2
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.profball">
+<code class="descclassname">tribology.</code><code class="descname">profball</code><span class="sig-paren">(</span><em>x_axis</em>, <em>r_ball</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#profball"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.profball" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a 2D ball profile based on ball radius and ball axis</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x_axis</strong> &#8211; vector containing coordinate points for which to calculate profile heights</li>
+<li><strong>r_ball</strong> &#8211; the radius of the ball</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vector containing profile heights along x_axis</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.profrevolve">
+<code class="descclassname">tribology.</code><code class="descname">profrevolve</code><span class="sig-paren">(</span><em>prof_2d</em>, <em>y_axis</em>, <em>y_diam</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#profrevolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.profrevolve" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates a 3d profile by revolving a 2D profile around the central axis of
+a body
+:param prof_2d: 2d profile vector containing profile heights
+:param y_axis: vector containing coordinate points for which to calculate</p>
+<blockquote>
+<div>profile heights in y-direction</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y_diam</strong> &#8211; diameter around which to revolve prof_2d</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.rad_per_s_to_rpm">
+<code class="descclassname">tribology.</code><code class="descname">rad_per_s_to_rpm</code><span class="sig-paren">(</span><em>vel</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#rad_per_s_to_rpm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.rad_per_s_to_rpm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert from rpm to rad/s
+:param vel: velocity in rad/s
+:return: velocity in rpm</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.rball3plates">
+<code class="descclassname">tribology.</code><code class="descname">rball3plates</code><span class="sig-paren">(</span><em>r_ball</em>, <em>plate_angle=1.5708</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#rball3plates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.rball3plates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sliding radius (lever arm) for ball-on-3-plates setup
+:param r_ball: radius of rotating ball
+:param plate_angle: plate angle with respect to ball in rad</p>
+<blockquote>
+<div>(default corresponds to 45 degree)</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">sliding radius</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.reff">
+<code class="descclassname">tribology.</code><code class="descname">reff</code><span class="sig-paren">(</span><em>r_1</em>, <em>r_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#reff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.reff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Effective radius according to Hertzian contact theory
+:param r_1: radius 1
+:param r_2: radius 2
+:return: reduced (effective) radius</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.refix">
+<code class="descclassname">tribology.</code><code class="descname">refix</code><span class="sig-paren">(</span><em>value</em>, <em>p_in=''</em>, <em>p_out=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#refix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.refix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert between different SI unit prefixes
+:param value:  value to convert
+:param p_in:  input SI unit prefix
+:param p_out:  output SI unit prefix
+:return:  value converted to new unit prefix</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.rpm_to_rad_per_s">
+<code class="descclassname">tribology.</code><code class="descname">rpm_to_rad_per_s</code><span class="sig-paren">(</span><em>vel</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#rpm_to_rad_per_s"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.rpm_to_rad_per_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert from rpm to rad/s
+:param vel: velocity in rpm
+:return: velocity in rad/s</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.srr">
+<code class="descclassname">tribology.</code><code class="descname">srr</code><span class="sig-paren">(</span><em>vel_1</em>, <em>vel_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#srr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.srr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the slide-to-roll ratio (srr) in a tribological contact
+:param vel_1: velocity 1
+:param vel_2: velocity 2
+:return: slide-to-roll ratio</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.vroll">
+<code class="descclassname">tribology.</code><code class="descname">vroll</code><span class="sig-paren">(</span><em>vel_1</em>, <em>vel_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#vroll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.vroll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the rolling speed in a tribological contact based contact body
+velocities
+:param vel_1:
+:param vel_2:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.vslide">
+<code class="descclassname">tribology.</code><code class="descname">vslide</code><span class="sig-paren">(</span><em>vel_1</em>, <em>vel_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#vslide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.vslide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the sliding speed in a tribological contact based contact body
+velocities
+:param vel_1: velocity 1
+:param vel_2: velocity 2
+:return: sliding speed in contact between body 1 and 2</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tribology_boundary_element.html" title="Methods Related to Boundary Element Solvers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tribology_constants.html" title="Constants for Tribology"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Moritz Ploss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tribology_dowson_hamrock &#8212; Tribology  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+  <body role="document">
+
+
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_constants.html">Constants for Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_boundary_element.html">Methods Related to Boundary Element Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_dowson_hamrock.html">Methods Related to Dowson-Hamrock Film Thickness Caluclations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_hertz.html">Methods Related to Hertz Contact Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tribology_lubrication.html">Methods Related to Lubricants</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for tribology_dowson_hamrock</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Methods related to Dowson-Hamrock film thickness calculations</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="dowson_hamrock_parameters"><a class="viewcode-back" href="../tribology_dowson_hamrock.html#tribology_dowson_hamrock.dowson_hamrock_parameters">[docs]</a><span class="k">def</span> <span class="nf">dowson_hamrock_parameters</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">param_g</span><span class="p">,</span> <span class="n">param_u</span><span class="p">,</span> <span class="n">param_w</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    part of dowson-hamrock</span>
+<span class="sd">    :param r_eff: effective radius</span>
+<span class="sd">    :param param_g: elasticity_parameter</span>
+<span class="sd">    :param param_u: velocity_parameter</span>
+<span class="sd">    :param param_w: load parameter</span>
+<span class="sd">    :return: ehd parameter</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">r_eff</span> <span class="o">*</span> <span class="n">param_g</span> <span class="o">**</span> <span class="mf">0.53</span> <span class="o">*</span> <span class="n">param_u</span> <span class="o">**</span> <span class="mf">0.67</span> <span class="o">*</span> <span class="n">param_w</span> <span class="o">**</span> <span class="o">-</span><span class="mf">0.067</span></div>
+
+
+<div class="viewcode-block" id="edowham"><a class="viewcode-back" href="../tribology_dowson_hamrock.html#tribology_dowson_hamrock.edowham">[docs]</a><span class="k">def</span> <span class="nf">edowham</span><span class="p">(</span><span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    calculate elasticity parameter of dowson-hamrock equation</span>
+<span class="sd">    :param alpha_p: pressure-viscosity coefficient</span>
+<span class="sd">    :param e_eff: effective young&#39;s modulus</span>
+<span class="sd">    :return: elasticity parameter</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">alpha_p</span> <span class="o">*</span> <span class="n">e_eff</span></div>
+
+
+<div class="viewcode-block" id="vdowham"><a class="viewcode-back" href="../tribology_dowson_hamrock.html#tribology_dowson_hamrock.vdowham">[docs]</a><span class="k">def</span> <span class="nf">vdowham</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    calculate velocity parameter of dowson-hamrock equation</span>
+<span class="sd">    :param eta: dynamic viscosity</span>
+<span class="sd">    :param speed: entrainment speed</span>
+<span class="sd">    :param e_eff: effective young&#39;s modulus</span>
+<span class="sd">    :param r_eff: effective radius</span>
+<span class="sd">    :return: velocity parameter</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">speed</span> <span class="o">/</span> <span class="p">(</span><span class="n">e_eff</span> <span class="o">*</span> <span class="n">r_eff</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dowhamline"><a class="viewcode-back" href="../tribology_dowson_hamrock.html#tribology_dowson_hamrock.dowhamline">[docs]</a><span class="k">def</span> <span class="nf">dowhamline</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="n">force</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">l_eff</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate mean film thickness according to Dowson-Hamrock equation.</span>
+<span class="sd">    :param speed: entrainment speed, vector or int/float</span>
+<span class="sd">    :param force: force, vector or int/float</span>
+<span class="sd">    :param e_eff: effective modulus</span>
+<span class="sd">    :param alpha_p: pressure-viscosity coefficient in, int/float</span>
+<span class="sd">    :param eta: dynamic viscosity of lube, int/float</span>
+<span class="sd">    :param r_eff: effective radius</span>
+<span class="sd">    :param l_eff: effective length</span>
+<span class="sd">    :return: mean film thickness, vector or int/float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">param_g</span> <span class="o">=</span> <span class="n">edowham</span><span class="p">(</span><span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">)</span>
+    <span class="n">param_u</span> <span class="o">=</span> <span class="n">vdowham</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">)</span>
+    <span class="n">param_w</span> <span class="o">=</span> <span class="n">force</span> <span class="o">/</span> <span class="p">(</span><span class="n">l_eff</span> <span class="o">*</span> <span class="n">r_eff</span> <span class="o">*</span> <span class="n">e_eff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">2.69</span> <span class="o">*</span> <span class="n">dowson_hamrock_parameters</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">param_g</span><span class="p">,</span> <span class="n">param_u</span><span class="p">,</span> <span class="n">param_w</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dowhampoint"><a class="viewcode-back" href="../tribology_dowson_hamrock.html#tribology_dowson_hamrock.dowhampoint">[docs]</a><span class="k">def</span> <span class="nf">dowhampoint</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="n">force</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">,</span> <span class="n">eta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate mean film thickness according to Dowson-Hamrock equation.</span>
+<span class="sd">    :param speed: entrainment speed, vector or int/float</span>
+<span class="sd">    :param force: force, vector or int/float</span>
+<span class="sd">    :param e_eff: effective modulus in MPa</span>
+<span class="sd">    :param alpha_p: pressure-viscosity coefficient, int/float</span>
+<span class="sd">    :param eta: dynamic viscosity of lube, int/float</span>
+<span class="sd">    :param r_eff: effective radius</span>
+<span class="sd">    :return: mean film thickness, vector or int/float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">param_g</span> <span class="o">=</span> <span class="n">edowham</span><span class="p">(</span><span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">)</span>
+    <span class="n">param_u</span> <span class="o">=</span> <span class="n">vdowham</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">)</span>
+    <span class="n">param_w</span> <span class="o">=</span> <span class="n">force</span> <span class="o">/</span> <span class="p">(</span><span class="n">r_eff</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">e_eff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">1.9</span> <span class="o">*</span> <span class="n">dowson_hamrock_parameters</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">param_g</span><span class="p">,</span> <span class="n">param_u</span><span class="p">,</span> <span class="n">param_w</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Moritz Ploss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

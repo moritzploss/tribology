@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Methods Related to Boundary Element Solvers &#8212; Tribology  documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Methods Related to Dowson-Hamrock Film Thickness Caluclations" href="tribology_dowson_hamrock.html" />
+    <link rel="prev" title="Methods for General Tribology" href="tribology.html" /> 
+  </head>
+  <body role="document">
+
+
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tribology_dowson_hamrock.html" title="Methods Related to Dowson-Hamrock Film Thickness Caluclations"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tribology.html" title="Methods for General Tribology"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tribology_constants.html">Constants for Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Methods Related to Boundary Element Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology_dowson_hamrock.html">Methods Related to Dowson-Hamrock Film Thickness Caluclations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology_hertz.html">Methods Related to Hertz Contact Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tribology_lubrication.html">Methods Related to Lubricants</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tribology_boundary_element.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-tribology_boundary_element">
+<span id="methods-related-to-boundary-element-solvers"></span><h1>Methods Related to Boundary Element Solvers<a class="headerlink" href="#module-tribology_boundary_element" title="Permalink to this headline">¶</a></h1>
+<p>Methods related to boundary element solvers for contact mechanics calculations</p>
+<dl class="function">
+<dt id="tribology_boundary_element.begetd">
+<code class="descclassname">tribology_boundary_element.</code><code class="descname">begetd</code><span class="sig-paren">(</span><em>profile</em>, <em>norm_disp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_boundary_element.html#begetd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_boundary_element.begetd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate local elastic displacements of profile
+:param profile: combined profile of two contacting bodies
+:param norm_disp: global normal elastic displ between contacting bodies
+:return: local normal displacements as a result of global displ norm_displ</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_boundary_element.beinflumat">
+<code class="descclassname">tribology_boundary_element.</code><code class="descname">beinflumat</code><span class="sig-paren">(</span><em>x_axis</em>, <em>y_axis</em>, <em>e_eff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_boundary_element.html#beinflumat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_boundary_element.beinflumat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an influence matrix as required for boundary element contact
+mechanics calculations
+:param x_axis: x-axis of coordinate grid
+:param y_axis: y-axis of coordinate grid
+:param e_eff: effective youngs modulus
+:return: complete influence matrix</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_boundary_element.beinflumatgrid">
+<code class="descclassname">tribology_boundary_element.</code><code class="descname">beinflumatgrid</code><span class="sig-paren">(</span><em>axis</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_boundary_element.html#beinflumatgrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_boundary_element.beinflumatgrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate coordinate grid based on axis as required for influence matrix
+generation
+:param axis: axis to make grid
+:return: grid</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_boundary_element.beinflumatred">
+<code class="descclassname">tribology_boundary_element.</code><code class="descname">beinflumatred</code><span class="sig-paren">(</span><em>influ_mat</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_boundary_element.html#beinflumatred"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_boundary_element.beinflumatred" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the reduced influence matrix from the complete influence matrix
+:param influ_mat: complete influence matrix
+:return: reduced influence matrix</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_boundary_element.besolve">
+<code class="descclassname">tribology_boundary_element.</code><code class="descname">besolve</code><span class="sig-paren">(</span><em>profile_1</em>, <em>profile_2</em>, <em>outer_force</em>, <em>red_influ_mat</em>, <em>delta_x</em>, <em>delta_y</em>, <em>norm_disp=0.1</em>, <em>max_offset=0.005</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_boundary_element.html#besolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_boundary_element.besolve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve system of equations:</p>
+<blockquote>
+<div>[pressure] = [influence matrix]^-1 * [displacement]</div></blockquote>
+<p>Stop solver once inner and outer forces are in equilibrium</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>profile_1</strong> &#8211; array with profile heights of body 1</li>
+<li><strong>profile_2</strong> &#8211; array with profile hights of body 2</li>
+<li><strong>outer_force</strong> &#8211; outer (normal) force on body 1/2</li>
+<li><strong>red_influ_mat</strong> &#8211; reduced influence matrix</li>
+<li><strong>delta_x</strong> &#8211; grid spacing of profile arrays in x-direction</li>
+<li><strong>delta_y</strong> &#8211; grid spacing of profile arrays in y-direction</li>
+<li><strong>norm_disp</strong> &#8211; initial normal elastic deformation to start calculation</li>
+<li><strong>max_offset</strong> &#8211; maximum allowed percentage difference of inner and outer
+force at end of calculation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">local pressure (array), local displacements (array).
+inner force (scalar), global normal displacement (scalar)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_boundary_element.combineprof">
+<code class="descclassname">tribology_boundary_element.</code><code class="descname">combineprof</code><span class="sig-paren">(</span><em>profile_1</em>, <em>profile_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_boundary_element.html#combineprof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_boundary_element.combineprof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine two body profiles for boundary element calculation
+:param profile_1: array-like profile heights
+:param profile_2: array-like profile heights
+:return: negative combined profile heights</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_boundary_element.secant">
+<code class="descclassname">tribology_boundary_element.</code><code class="descname">secant</code><span class="sig-paren">(</span><em>x_list</em>, <em>fx_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_boundary_element.html#secant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_boundary_element.secant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies secant method to find root x of function f(x).
+If not enough (x, f(x)) value pairs are known to apply
+secant method, a new x value is guessed by slightly changing the
+initial x value
+:param x_list: list of function inputs
+:param fx_list: list of function outputs
+:return: estimate of function root</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_boundary_element.solvepress">
+<code class="descclassname">tribology_boundary_element.</code><code class="descname">solvepress</code><span class="sig-paren">(</span><em>red_influ_mat</em>, <em>disp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_boundary_element.html#solvepress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_boundary_element.solvepress" title="Permalink to this definition">¶</a></dt>
+<dd><p>solve for pressure distribution
+:param red_influ_mat: reduced influence matrix
+:param disp: displacement field
+:return: pressure field</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tribology_dowson_hamrock.html" title="Methods Related to Dowson-Hamrock Film Thickness Caluclations"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tribology.html" title="Methods for General Tribology"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Moritz Ploss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

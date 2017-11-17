@@ -1,20 +1,25 @@
-deploy:
-  provider: pypi
-  user: "moritz.ploss"
-  password:
-    secure: "jf0C0OcmLA2x4fw6+J+pIHqzM/q97Rdu1MfxeHf7/dyUKDoE6G8Yyfo9lqMVH7yAkErLLnl7aq5Mr8kWK93LVePq6mH0IVP51/IItS/BhNDJ/Z6Lhtb1yG+wNbhSEuOoCpzgrN9K9VuU90rX9+LvGMqt61o+ycZaYM7MpMCSy2W0CDj1D+eMRuVjV8SN5A6MEQg/ELr7+GasMTkLFMHHDEbt7TzQyYfje9nd5IgviHBhN2ET1poVbbQHLyM68iDA5QiyN4P/zwVpgbhr+F+U+Eg0C9jXJVqi+7tByuYLqQU1Sju/vPmOOQktRStNrPeiOjj9D3P3zJ0x6VlmjEasTPmhW0G8EHf0gzYEKwGU7b/mI8+Wj4+yDusUJuyZ/ix+mF8BdMzsxyLVPwSGWmFqvE75a/si/VzprWl0cGZpb0nb3JQ+7wuBalu/9DWxL/Sia11DsI/eZ6sGgevyxGoAJV2vkQn870NcD5OMHDq5sDsHXuuRs+emKXsNJAb2KEqoWZWERs2BZrd5AEfml3jKl4mGotnDh+TOutb095gfvt1aSOHIUaaBmas1xPOeI9Wc1fF722iB+9L470zBOcot6klbBifS9MvQMgJlvcx7vxZ2TBpWZ6jY2uKri3l77FJQpF7B7k/gEs572iXTMVPElPl7d2xCjeAeDIEENPB9SZw="
-  distributions: "sdist bdist_wheel"
-  on:
-    tags: true
+
+# deploy:
+#  provider: pages
+#  skip_cleanup: true
+#  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+#  on:
+#    branch: master
+
 language: python
 python:
 - '3.4'
 - '3.5'
 - '3.6'
+
 install:
 - pip install .
+- pip install sphinx
+- pip install sphinxjp.themes.dotted
+- pip install sphinxcontrib-fulltoc
 - pip install pylint
 - pip install -r requirements.txt
 script:
 - pytest tribology/tests/tests_tribology.py
 - pylint --rcfile=tribology.pylintrc tribology -E --extension-pkg-whitelist=numpy
+- sphinx-build -b singlehtml docs/sphinx_files/ docs/ -a

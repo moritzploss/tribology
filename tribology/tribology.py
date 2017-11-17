@@ -11,11 +11,13 @@ import numpy as np
 
 def profball(x_axis, r_ball):
     """
+
     Generate a 2D ball profile based on ball radius and ball axis
-    :param x_axis: vector containing coordinate points for which to calculate
-                   profile heights
+
+    :param x_axis: vector containing coordinate points for which to calculate profile heights
     :param r_ball: the radius of the ball
-    :return:
+    :return: vector containing profile heights along x_axis
+
     """
     prof = np.array(abs(r_ball) - np.sqrt(r_ball ** 2 - np.power(x_axis, 2)))
     return prof * np.sign(r_ball)
@@ -171,11 +173,15 @@ def refix(value, p_in='', p_out=''):
 
 def abbottfirestone(trace, res=100):
     """
+
     Calculate Abbott-Firestone curve for 2D surface trace
+
     :param trace: vector containing surface heights
     :param res: number of discontinuous data steps
     :return: data baskets (steps) and cumulative distribution
              (x and y data for Abbott-Firestone plot)
+
+
     """
     baskets = np.linspace(np.amax(trace), np.amin(trace), res)
     cum_dist = []

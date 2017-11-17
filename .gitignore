@@ -62,7 +62,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+# docs/_build/
 
 # PyBuilder
 target/
@@ -105,3 +105,5 @@ ENV/
 
 # files related to package publishing
 .pypirc
+.DS_Store
+
