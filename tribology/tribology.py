@@ -18,12 +18,12 @@ def profball(x_axis, r_ball):
     heights are calculated with reference to the contact point between a ball
     and a flat surface.
 
-    :param x_axis: Vector containing coordinate points for which to calculate
-                   profile heights. Minimum and maximum value in vector must be
-                   within +/- **r_ball**
-    :param r_ball: Radius of the ball
+    :param x_axis: coordinate points for which to calculate profile heights,
+                   vector. Minimum and maximum value in vector must be within
+                   +/- **r_ball**
+    :param r_ball: Radius of the ball, scalar
 
-    :return: Vector containing profile heights along **x_axis**
+    :return: profile heights along **x_axis**, vector
 
     """
     prof = np.array(abs(r_ball) - np.sqrt(r_ball ** 2 - np.power(x_axis, 2)))
@@ -33,14 +33,14 @@ def profball(x_axis, r_ball):
 def profrevolve(prof_2d, y_axis, y_diam):
     """
 
-    creates a 3d profile by revolving a 2D profile around the central axis of
-    a body
+    Creates a 3d profile by revolving a 2D profile around its central axis.
 
-    :param prof_2d: 2d profile vector containing profile heights
-    :param y_axis: vector containing coordinate points for which to calculate
-                   profile heights in y-direction
-    :param y_diam: diameter around which to revolve prof_2d
-    :return:
+    :param prof_2d: 2d profile vector (x-direction) containing profile heights
+    :param y_axis: coordinate points for which to calculate profile heights in
+                   y-direction, vector
+    :param y_diam: diameter of body with respect to **y_axis**, scalar
+    :return: profile heights, array of size :code:`len(prof_2d)` :math:`\\times`
+             :code:`len(y_axis)`
 
     """
     len_x = len(prof_2d)
@@ -67,12 +67,12 @@ def profrevolve(prof_2d, y_axis, y_diam):
 def vslide(vel_1, vel_2):
     """
 
-    Calculate the sliding speed in a tribological contact based contact body
-    velocities
+    Calculate the sliding speed in a tribological contact based on contact body
+    velocities.
 
-    :param vel_1: velocity 1
-    :param vel_2: velocity 2
-    :return: sliding speed in contact between body 1 and 2
+    :param vel_1: contact velocity of body 1, scalar or vector
+    :param vel_2: contact velocity of body 2, scalar or vector
+    :return: sliding speed in contact between body 1 and 2, scalar or vector
 
     """
     return vel_1 - vel_2
@@ -81,12 +81,12 @@ def vslide(vel_1, vel_2):
 def vroll(vel_1, vel_2):
     """
 
-    Calculate the rolling speed in a tribological contact based contact body
-    velocities
+    Calculate the rolling speed in a tribological contact based on contact body
+    velocities.
 
-    :param vel_1:
-    :param vel_2:
-    :return:
+    :param vel_1: contact velocity of body 1, scalar or vector
+    :param vel_2: contact velocity of body 2, scalar or vector
+    :return: sliding speed in contact between body 1 and 2, scalar or vector
 
     """
     return (vel_1 + vel_2) / 2
@@ -95,11 +95,12 @@ def vroll(vel_1, vel_2):
 def srr(vel_1, vel_2):
     """
 
-    Calculate the slide-to-roll ratio (srr) in a tribological contact
+    Calculate the slide-to-roll ratio (srr) in a tribological contact based on
+    contact body velocities.
 
-    :param vel_1: velocity 1
-    :param vel_2: velocity 2
-    :return: slide-to-roll ratio
+    :param vel_1: contact velocity of body 1, scalar or vector
+    :param vel_2: contact velocity of body 2, scalar or vector
+    :return: slide-to-roll ratio in contact, scalar or vector
 
     """
     return vslide(vel_1, vel_2) / vroll(vel_1, vel_2)
@@ -108,10 +109,10 @@ def srr(vel_1, vel_2):
 def radpersec2rpm(vel):
     """
 
-    Convert from rpm to rad/s
+    Convert from rotation per minute (rpm) to radians per second (rad/s)
 
-    :param vel: velocity in rad/s
-    :return: velocity in rpm
+    :param vel: velocity in rad/s, scalar or array
+    :return: velocity in rpm, scalar or array
 
     """
     return 1 / rpm2radpersec(1 / vel)
@@ -120,10 +121,10 @@ def radpersec2rpm(vel):
 def rpm2radpersec(vel):
     """
 
-    Convert from rpm to rad/s
+    Convert from radians per second (rad/s) to rotation per minute (rpm)
 
-    :param vel: velocity in rpm
-    :return: velocity in rad/s
+    :param vel: velocity in rpm, scalar or array
+    :return: velocity in rad/s, scalar or array
 
     """
     return vel / 60 * 2 * pi
@@ -134,10 +135,10 @@ def rball3plates(r_ball, plate_angle=1.5708):
 
     Sliding radius (lever arm) for ball-on-3-plates setup
 
-    :param r_ball: radius of rotating ball
+    :param r_ball: radius of rotating ball, scalar or array
     :param plate_angle: plate angle with respect to ball in rad
-                        (default corresponds to 45 degree)
-    :return: sliding radius
+                        (default corresponds to 45 degree), scalar
+    :return: sliding radius, scalar or array
 
     """
     return r_ball * sin((pi - plate_angle) / 2)
@@ -148,10 +149,10 @@ def fball3plates(ax_force, plate_angle=1.5708):
 
     Calculate normal force per contact in ball-on-3-plates setup
 
-    :param ax_force: axial force on rotating ball
+    :param ax_force: axial force on rotating ball, scalar or array
     :param plate_angle: plate angle with respect to each other
                         (default corresponds to 90 degree)
-    :return: normal force per contact
+    :return: normal force per contact, scalar or array
 
     """
     return ax_force / 3 / cos(plate_angle / 2)
@@ -162,9 +163,10 @@ def gfourball(r_1, r_2):
 
     Geometric parameters of 4-ball setup
 
-    :param r_1: radius rotating ball
-    :param r_2: radius stationary balls
-    :return: sliding radius (lever arm) on rotating ball, contact angle in rad
+    :param r_1: radius rotating ball, scalar
+    :param r_2: radius stationary balls, scalar
+    :return: sliding radius (lever arm) on rotating ball, contact angle in rad,
+             scalar
 
     """
     r_circum_circle = sqrt(3) / 3 * 2 * r_2
