@@ -3,13 +3,14 @@
 # tribology
 This package is a collection of methods and classes for tribology
 research and education, including contact mechanics and lubrication
-science. It provides implementations of empirical and numerical
+science. It provides implementations of analytical and numerical
 calculation routines together with frequently used constants.
 
 The package [documenation](https://moritzploss.github.io/tribology) is
-under construction at the moment and provided in the `/docs` directory.
+under construction at the moment and provided through **GitHub Pages**
+and in the `/docs` directory.
 
-The package is currently hosted on github:
+The **tribology** package is currently hosted on GitHub:
 
     https://github.com/moritzploss/tribology
 
@@ -17,12 +18,16 @@ You can also install the package through pip:
 
     pip install tribology
 
+After installation, it is recommended to import the package and all its
+modules as follows:
+
+    ```python
+    import tribology as tr
+    ```
 
 The package is developed by Moritz Ploss at KTH Royal
 Institute of Technology, Stockholm, Sweden. For questions and comments,
-please contact Moritz at:
-
-    moritz.ploss@gmail.com
+please [email Moritz](mailto:moritz.ploss@gmail.com).
 
 The package is provided under an MIT license. See the LICENSE.txt file
 for more information.
