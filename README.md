@@ -1,12 +1,10 @@
 [![Build Status](https://travis-ci.org/moritzploss/tribology.png)](https://travis-ci.org/moritzploss/tribology)
 
-# tribology
+# tribology package
 This package is a collection of methods and classes for tribology
 research and education, including contact mechanics and lubrication
 science. It provides implementations of analytical and numerical
 calculation routines together with frequently used constants.
-
-
 
 The **tribology** package is currently hosted on GitHub:
 
