@@ -35,7 +35,8 @@ for more information.
 Non-package files are not checked. Build fails if Pylint error is found.
 - Python 3.4 and 3.5 builds added to Travis CI (now 3.4, 3.5 and 3.6)
 - change log added to `README.md`
-- function `convpref` renamed to `refix`
+- various methods renamed
+- helper functions made private
 - classifiers added to `setup.py`
 - demo for boundary element methods added (`demo_ball_on_plate.py`)
 - refactoring

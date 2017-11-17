@@ -39,7 +39,7 @@ def dyn2kin(dyn, density):
     return dyn * density
 
 
-def zedwalther(kin_visc):
+def __zedwalther(kin_visc):
     """
 
     calculate z factor for Walther Equation (ASTM D341)
@@ -53,7 +53,7 @@ def zedwalther(kin_visc):
            10 ** (-1.47 - 1.84 * kin_visc - 0.51 * kin_visc ** 2)
 
 
-def nuwalther(zed):
+def __nuwalther(zed):
     """
 
     calculate kinematic viscosity for Walther equation (ASTM D341)
@@ -88,12 +88,12 @@ def walther(temp_1, nu_1, temp_2, nu_2, temp_3):
     viscs = [nu_1, nu_2]
     thetas = [temp_1 - abs_zero, temp_2 - abs_zero, temp_3 - abs_zero]
 
-    zed = [zedwalther(nu) for nu in viscs]
+    zed = [__zedwalther(nu) for nu in viscs]
     const_a = (lg(lg(zed[0])) - lg(lg(zed[1])) *
                lg(thetas[0]) / lg(thetas[1])) / \
               (1 - lg(thetas[0]) / lg(thetas[1]))
     const_b = (const_a - lg(lg(zed[1]))) / lg(thetas[1])
-    return nuwalther(10 ** 10 ** (const_a - const_b * lg(thetas[2])))
+    return __nuwalther(10 ** 10 ** (const_a - const_b * lg(thetas[2])))
 
 
 def trheomflat(eta, gap_height, omega, r_a):

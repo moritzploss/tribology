@@ -7,7 +7,7 @@ Methods related to Dowson-Hamrock film thickness calculations
 """
 
 
-def dowson_hamrock_parameters(r_eff, param_g, param_u, param_w):
+def __dowson_hamrock_parameters(r_eff, param_g, param_u, param_w):
     """
 
     part of dowson-hamrock
@@ -72,7 +72,7 @@ def dowhamline(speed, force, alpha_p, e_eff, r_eff, eta, l_eff):
     param_g = edowham(alpha_p, e_eff)
     param_u = vdowham(eta, speed, e_eff, r_eff)
     param_w = force / (l_eff * r_eff * e_eff)
-    return 2.69 * dowson_hamrock_parameters(r_eff, param_g, param_u, param_w)
+    return 2.69 * __dowson_hamrock_parameters(r_eff, param_g, param_u, param_w)
 
 
 def dowhampoint(speed, force, alpha_p, e_eff, r_eff, eta):
@@ -93,4 +93,4 @@ def dowhampoint(speed, force, alpha_p, e_eff, r_eff, eta):
     param_g = edowham(alpha_p, e_eff)
     param_u = vdowham(eta, speed, e_eff, r_eff)
     param_w = force / (r_eff ** 2 * e_eff)
-    return 1.9 * dowson_hamrock_parameters(r_eff, param_g, param_u, param_w)
+    return 1.9 * __dowson_hamrock_parameters(r_eff, param_g, param_u, param_w)

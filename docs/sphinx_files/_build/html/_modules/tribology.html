@@ -167,16 +167,16 @@
     <span class="k">return</span> <span class="n">vslide</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">)</span> <span class="o">/</span> <span class="n">vroll</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="rad_per_s_to_rpm"><a class="viewcode-back" href="../tribology.html#tribology.rad_per_s_to_rpm">[docs]</a><span class="k">def</span> <span class="nf">rad_per_s_to_rpm</span><span class="p">(</span><span class="n">vel</span><span class="p">):</span>
+<div class="viewcode-block" id="rad_per_s_to_rpm"><a class="viewcode-back" href="../tribology.html#tribology.rad_per_s_to_rpm">[docs]</a><span class="k">def</span> <span class="nf">radpersec2rpm</span><span class="p">(</span><span class="n">vel</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert from rpm to rad/s</span>
 <span class="sd">    :param vel: velocity in rad/s</span>
 <span class="sd">    :return: velocity in rpm</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">rpm_to_rad_per_s</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">vel</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">rpm2radpersec</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">vel</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="rpm_to_rad_per_s"><a class="viewcode-back" href="../tribology.html#tribology.rpm_to_rad_per_s">[docs]</a><span class="k">def</span> <span class="nf">rpm_to_rad_per_s</span><span class="p">(</span><span class="n">vel</span><span class="p">):</span>
+<div class="viewcode-block" id="rpm_to_rad_per_s"><a class="viewcode-back" href="../tribology.html#tribology.rpm_to_rad_per_s">[docs]</a><span class="k">def</span> <span class="nf">rpm2radpersec</span><span class="p">(</span><span class="n">vel</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert from rpm to rad/s</span>
 <span class="sd">    :param vel: velocity in rpm</span>

@@ -18,10 +18,10 @@ import scipy.sparse.linalg as spla
 def secant(x_list, fx_list):
     """
 
-    Applies secant method to find root x of function f(x).
-    If not enough (x, f(x)) value pairs are known to apply
-    secant method, a new x value is guessed by slightly changing the
-    initial x value
+    Applies secant method to find root *x* of function *f(x)*.
+    If not enough (*x*, *f(x)*) value pairs are available to apply
+    secant method, a new *x* value is guessed by slightly changing the
+    initial *x* value
 
     :param x_list: list of function inputs
     :param fx_list: list of function outputs
@@ -45,11 +45,10 @@ def secant(x_list, fx_list):
         return x_list[-1]
 
 
-def beinflumatgrid(axis):
+def __beinflumatgrid(axis):
     """
 
-    Generate coordinate grid based on axis as required for influence matrix
-    generation
+    Private helper method for influence matrix generation
 
     :param axis: axis to make grid
 
@@ -107,8 +106,8 @@ def beinflumat(x_axis, y_axis, e_eff):
     # generate coordinate grids
     a_factor = (x_axis[-1] - x_axis[0]) / (len_x - 1) / 2
     b_factor = (y_axis[-1] - y_axis[0]) / (len_y - 1) / 2
-    x_grid = beinflumatgrid(x_axis)
-    y_grid = beinflumatgrid(y_axis)
+    x_grid = __beinflumatgrid(x_axis)
+    y_grid = __beinflumatgrid(y_axis)
 
     # use numexpr to evaluate expressions
     xpa = ne.evaluate('x_grid + a_factor')
@@ -164,7 +163,7 @@ def beinflumat(x_axis, y_axis, e_eff):
     return influence_matrix_complete * 1 / e_eff * 2 / pi
 
 
-def begetd(profile, norm_disp):
+def __begetd(profile, norm_disp):
     """
 
     Calculate local elastic displacements of profile
@@ -194,7 +193,7 @@ def combineprof(profile_1, profile_2):
     return profile_1 + profile_2
 
 
-def solvepress(red_influ_mat, disp):
+def __solvepress(red_influ_mat, disp):
     """
 
     solve for pressure distribution
@@ -263,8 +262,8 @@ def besolve(profile_1, profile_2, outer_force,
     while abs(inner_force - outer_force) > max_offset * outer_force:
 
         # update local displacements
-        disp = begetd(profile, norm_disp)
-        pressure = solvepress(red_influ_mat, disp)
+        disp = __begetd(profile, norm_disp)
+        pressure = __solvepress(red_influ_mat, disp)
 
         # calculate resulting force and adjust displacement for next loop
         pressure = np.reshape(pressure, (profile.shape[0], profile.shape[1]))
@@ -273,5 +272,5 @@ def besolve(profile_1, profile_2, outer_force,
         fx_value = np.append(fx_value, [inner_force - outer_force])
         norm_disp = secant(x_value, fx_value)
 
-    disp = begetd(profile, norm_disp)
+    disp = __begetd(profile, norm_disp)
     return pressure, disp, inner_force, x_value[-1]

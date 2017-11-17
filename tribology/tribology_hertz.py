@@ -9,7 +9,7 @@ Methods related to Hertz contact theory
 from math import sqrt, pi, log
 
 
-def auxparamshertz(r_eff_x, r_eff_y):
+def __auxparamshertz(r_eff_x, r_eff_y):
     """
 
     Calculate Hertz parameters required for contact area/pressure calculations
@@ -79,7 +79,7 @@ def ahertz(r_eff, r_eff_x, r_eff_y, e_eff, force):
     :return: half axes and total area
 
     """
-    a_ast, b_ast, _, _ = auxparamshertz(r_eff_x, r_eff_y)
+    a_ast, b_ast, _, _ = __auxparamshertz(r_eff_x, r_eff_y)
     half_axis_a = a_ast * (3 * force * r_eff / e_eff) ** (1 / 3)
     half_axis_b = b_ast * (3 * force * r_eff / e_eff) ** (1 / 3)
     return half_axis_a, half_axis_b, pi * half_axis_a * half_axis_b
@@ -99,7 +99,7 @@ def fhertz(r_eff, r_eff_x, r_eff_y, e_eff, p_critical):
     :return: critical normal force
 
     """
-    a_ast, b_ast, _, _ = auxparamshertz(r_eff_x, r_eff_y)
+    a_ast, b_ast, _, _ = __auxparamshertz(r_eff_x, r_eff_y)
     return (pi * a_ast * b_ast * p_critical) ** 3 * (3 * r_eff / e_eff) ** 2
 
 

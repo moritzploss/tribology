@@ -322,7 +322,7 @@ profile heights in y-direction</li>
 
 <dl class="function">
 <dt id="tribology.rad_per_s_to_rpm">
-<code class="descclassname">tribology.</code><code class="descname">rad_per_s_to_rpm</code><span class="sig-paren">(</span><em>vel</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.rad_per_s_to_rpm" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">tribology.</code><code class="descname">radpersec2rpm</code><span class="sig-paren">(</span><em>vel</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.rad_per_s_to_rpm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert from rpm to rad/s</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -403,7 +403,7 @@ profile heights in y-direction</li>
 
 <dl class="function">
 <dt id="tribology.rpm_to_rad_per_s">
-<code class="descclassname">tribology.</code><code class="descname">rpm_to_rad_per_s</code><span class="sig-paren">(</span><em>vel</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.rpm_to_rad_per_s" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">tribology.</code><code class="descname">rpm2radpersec</code><span class="sig-paren">(</span><em>vel</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.rpm_to_rad_per_s" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert from rpm to rad/s</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -487,27 +487,6 @@ velocities</p>
 <span id="methods-related-to-boundary-element-solvers"></span><h2>Methods Related to Boundary Element Solvers<a class="headerlink" href="#module-tribology_boundary_element" title="Permalink to this headline">¶</a></h2>
 <p>Methods related to boundary element solvers for contact mechanics calculations</p>
 <dl class="function">
-<dt id="tribology_boundary_element.begetd">
-<code class="descclassname">tribology_boundary_element.</code><code class="descname">begetd</code><span class="sig-paren">(</span><em>profile</em>, <em>norm_disp</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.begetd" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate local elastic displacements of profile</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>profile</strong> – combined profile of two contacting bodies</li>
-<li><strong>norm_disp</strong> – global normal elastic displ between contacting bodies</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">local normal displacements as a result of global displ norm_displ</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="tribology_boundary_element.beinflumat">
 <code class="descclassname">tribology_boundary_element.</code><code class="descname">beinflumat</code><span class="sig-paren">(</span><em>x_axis</em>, <em>y_axis</em>, <em>e_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.beinflumat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate an influence matrix as required for boundary element contact
@@ -525,23 +504,6 @@ mechanics calculations</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">complete influence matrix</p>
 </td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="tribology_boundary_element.beinflumatgrid">
-<code class="descclassname">tribology_boundary_element.</code><code class="descname">beinflumatgrid</code><span class="sig-paren">(</span><em>axis</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.beinflumatgrid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate coordinate grid based on axis as required for influence matrix
-generation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> – axis to make grid</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">grid</td>
 </tr>
 </tbody>
 </table>
@@ -619,10 +581,10 @@ inner force (scalar), global normal displacement (scalar)</p>
 <dl class="function">
 <dt id="tribology_boundary_element.secant">
 <code class="descclassname">tribology_boundary_element.</code><code class="descname">secant</code><span class="sig-paren">(</span><em>x_list</em>, <em>fx_list</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.secant" title="Permalink to this definition">¶</a></dt>
-<dd><p>Applies secant method to find root x of function f(x).
-If not enough (x, f(x)) value pairs are known to apply
-secant method, a new x value is guessed by slightly changing the
-initial x value</p>
+<dd><p>Applies secant method to find root <em>x</em> of function <em>f(x)</em>.
+If not enough (<em>x</em>, <em>f(x)</em>) value pairs are available to apply
+secant method, a new <em>x</em> value is guessed by slightly changing the
+initial <em>x</em> value</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -634,27 +596,6 @@ initial x value</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">estimate of function root</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="tribology_boundary_element.solvepress">
-<code class="descclassname">tribology_boundary_element.</code><code class="descname">solvepress</code><span class="sig-paren">(</span><em>red_influ_mat</em>, <em>disp</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.solvepress" title="Permalink to this definition">¶</a></dt>
-<dd><p>solve for pressure distribution</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>red_influ_mat</strong> – reduced influence matrix</li>
-<li><strong>disp</strong> – displacement field</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">pressure field</p>
 </td>
 </tr>
 </tbody>
@@ -718,7 +659,7 @@ initial x value</p>
 
 <dl class="function">
 <dt id="tribology_dowson_hamrock.dowson_hamrock_parameters">
-<code class="descclassname">tribology_dowson_hamrock.</code><code class="descname">dowson_hamrock_parameters</code><span class="sig-paren">(</span><em>r_eff</em>, <em>param_g</em>, <em>param_u</em>, <em>param_w</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowson_hamrock_parameters" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">tribology_dowson_hamrock.</code><code class="descname">__dowson_hamrock_parameters</code><span class="sig-paren">(</span><em>r_eff</em>, <em>param_g</em>, <em>param_u</em>, <em>param_w</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowson_hamrock_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>part of dowson-hamrock</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -813,7 +754,7 @@ initial x value</p>
 
 <dl class="function">
 <dt id="tribology_hertz.auxparamshertz">
-<code class="descclassname">tribology_hertz.</code><code class="descname">auxparamshertz</code><span class="sig-paren">(</span><em>r_eff_x</em>, <em>r_eff_y</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.auxparamshertz" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">tribology_hertz.</code><code class="descname">__auxparamshertz</code><span class="sig-paren">(</span><em>r_eff_x</em>, <em>r_eff_y</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.auxparamshertz" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate Hertz parameters required for contact area/pressure calculations</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -977,7 +918,7 @@ viscosity at ambient pressure and the pressure-viscosity coefficient</p>
 
 <dl class="function">
 <dt id="tribology_lubrication.nuwalther">
-<code class="descclassname">tribology_lubrication.</code><code class="descname">nuwalther</code><span class="sig-paren">(</span><em>zed</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.nuwalther" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">tribology_lubrication.</code><code class="descname">__nuwalther</code><span class="sig-paren">(</span><em>zed</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.nuwalther" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate kinematic viscosity for Walther equation (ASTM D341)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1116,7 +1057,7 @@ ASTM D341.</p>
 
 <dl class="function">
 <dt id="tribology_lubrication.zedwalther">
-<code class="descclassname">tribology_lubrication.</code><code class="descname">zedwalther</code><span class="sig-paren">(</span><em>kin_visc</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.zedwalther" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">tribology_lubrication.</code><code class="descname">__zedwalther</code><span class="sig-paren">(</span><em>kin_visc</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.zedwalther" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate z factor for Walther Equation (ASTM D341)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

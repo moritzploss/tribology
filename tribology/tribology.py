@@ -105,7 +105,7 @@ def srr(vel_1, vel_2):
     return vslide(vel_1, vel_2) / vroll(vel_1, vel_2)
 
 
-def rad_per_s_to_rpm(vel):
+def radpersec2rpm(vel):
     """
 
     Convert from rpm to rad/s
@@ -114,10 +114,10 @@ def rad_per_s_to_rpm(vel):
     :return: velocity in rpm
 
     """
-    return 1 / rpm_to_rad_per_s(1 / vel)
+    return 1 / rpm2radpersec(1 / vel)
 
 
-def rpm_to_rad_per_s(vel):
+def rpm2radpersec(vel):
     """
 
     Convert from rpm to rad/s

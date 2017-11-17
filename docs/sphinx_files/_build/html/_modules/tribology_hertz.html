@@ -89,7 +89,7 @@
 <span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">log</span>
 
 
-<div class="viewcode-block" id="auxparamshertz"><a class="viewcode-back" href="../tribology_hertz.html#tribology_hertz.auxparamshertz">[docs]</a><span class="k">def</span> <span class="nf">auxparamshertz</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">):</span>
+<div class="viewcode-block" id="auxparamshertz"><a class="viewcode-back" href="../tribology_hertz.html#tribology_hertz.auxparamshertz">[docs]</a><span class="k">def</span> <span class="nf">__auxparamshertz</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate Hertz parameters required for contact area/pressure calculations</span>
 <span class="sd">    :param r_eff_x: effective radius in x direction</span>
@@ -147,7 +147,7 @@
 <span class="sd">    :param force: normal load</span>
 <span class="sd">    :return: half axes and total area</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">a_ast</span><span class="p">,</span> <span class="n">b_ast</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">auxparamshertz</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">)</span>
+    <span class="n">a_ast</span><span class="p">,</span> <span class="n">b_ast</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">__auxparamshertz</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">)</span>
     <span class="n">half_axis_a</span> <span class="o">=</span> <span class="n">a_ast</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">force</span> <span class="o">*</span> <span class="n">r_eff</span> <span class="o">/</span> <span class="n">e_eff</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
     <span class="n">half_axis_b</span> <span class="o">=</span> <span class="n">b_ast</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">force</span> <span class="o">*</span> <span class="n">r_eff</span> <span class="o">/</span> <span class="n">e_eff</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">half_axis_a</span><span class="p">,</span> <span class="n">half_axis_b</span><span class="p">,</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">half_axis_a</span> <span class="o">*</span> <span class="n">half_axis_b</span></div>
@@ -163,7 +163,7 @@
 <span class="sd">    :param p_critical: critical mean contact pressure</span>
 <span class="sd">    :return: critical normal force</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">a_ast</span><span class="p">,</span> <span class="n">b_ast</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">auxparamshertz</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">)</span>
+    <span class="n">a_ast</span><span class="p">,</span> <span class="n">b_ast</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">__auxparamshertz</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="n">a_ast</span> <span class="o">*</span> <span class="n">b_ast</span> <span class="o">*</span> <span class="n">p_critical</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">r_eff</span> <span class="o">/</span> <span class="n">e_eff</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span></div>
 
 

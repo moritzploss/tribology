@@ -228,7 +228,7 @@
     <span class="k">return</span> <span class="n">influence_matrix_complete</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">e_eff</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">pi</span></div>
 
 
-<div class="viewcode-block" id="begetd"><a class="viewcode-back" href="../tribology_boundary_element.html#tribology_boundary_element.begetd">[docs]</a><span class="k">def</span> <span class="nf">begetd</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">norm_disp</span><span class="p">):</span>
+<div class="viewcode-block" id="begetd"><a class="viewcode-back" href="../tribology_boundary_element.html#tribology_boundary_element.begetd">[docs]</a><span class="k">def</span> <span class="nf">__begetd</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">norm_disp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate local elastic displacements of profile</span>
 <span class="sd">    :param profile: combined profile of two contacting bodies</span>
@@ -250,7 +250,7 @@
     <span class="k">return</span> <span class="n">profile_1</span> <span class="o">+</span> <span class="n">profile_2</span></div>
 
 
-<div class="viewcode-block" id="solvepress"><a class="viewcode-back" href="../tribology_boundary_element.html#tribology_boundary_element.solvepress">[docs]</a><span class="k">def</span> <span class="nf">solvepress</span><span class="p">(</span><span class="n">red_influ_mat</span><span class="p">,</span> <span class="n">disp</span><span class="p">):</span>
+<div class="viewcode-block" id="solvepress"><a class="viewcode-back" href="../tribology_boundary_element.html#tribology_boundary_element.solvepress">[docs]</a><span class="k">def</span> <span class="nf">__solvepress</span><span class="p">(</span><span class="n">red_influ_mat</span><span class="p">,</span> <span class="n">disp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    solve for pressure distribution</span>
 <span class="sd">    :param red_influ_mat: reduced influence matrix</span>
@@ -312,8 +312,8 @@
     <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">inner_force</span> <span class="o">-</span> <span class="n">outer_force</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_offset</span> <span class="o">*</span> <span class="n">outer_force</span><span class="p">:</span>
 
         <span class="c1"># update local displacements</span>
-        <span class="n">disp</span> <span class="o">=</span> <span class="n">begetd</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">norm_disp</span><span class="p">)</span>
-        <span class="n">pressure</span> <span class="o">=</span> <span class="n">solvepress</span><span class="p">(</span><span class="n">red_influ_mat</span><span class="p">,</span> <span class="n">disp</span><span class="p">)</span>
+        <span class="n">disp</span> <span class="o">=</span> <span class="n">__begetd</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">norm_disp</span><span class="p">)</span>
+        <span class="n">pressure</span> <span class="o">=</span> <span class="n">__solvepress</span><span class="p">(</span><span class="n">red_influ_mat</span><span class="p">,</span> <span class="n">disp</span><span class="p">)</span>
 
         <span class="c1"># calculate resulting force and adjust displacement for next loop</span>
         <span class="n">pressure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">profile</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
@@ -322,7 +322,7 @@
         <span class="n">fx_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fx_value</span><span class="p">,</span> <span class="p">[</span><span class="n">inner_force</span> <span class="o">-</span> <span class="n">outer_force</span><span class="p">])</span>
         <span class="n">norm_disp</span> <span class="o">=</span> <span class="n">secant</span><span class="p">(</span><span class="n">x_value</span><span class="p">,</span> <span class="n">fx_value</span><span class="p">)</span>
 
-    <span class="n">disp</span> <span class="o">=</span> <span class="n">begetd</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">norm_disp</span><span class="p">)</span>
+    <span class="n">disp</span> <span class="o">=</span> <span class="n">__begetd</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">norm_disp</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">disp</span><span class="p">,</span> <span class="n">inner_force</span><span class="p">,</span> <span class="n">x_value</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
 </pre></div>
 
