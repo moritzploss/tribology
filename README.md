@@ -27,7 +27,7 @@ import tribology as tr
 
 The package is developed by Moritz Ploss at KTH Royal
 Institute of Technology, Stockholm, Sweden. For questions and comments,
-please [email Moritz](mailto:moritz.ploss@gmail.com).
+please [send an email Moritz](mailto:moritz.ploss@gmail.com).
 
 The package is provided under an MIT license. See the LICENSE.txt file
 for more information.
