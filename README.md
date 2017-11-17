@@ -6,10 +6,7 @@ research and education, including contact mechanics and lubrication
 science. It provides implementations of analytical and numerical
 calculation routines together with frequently used constants.
 
-The package
-<a href="https://moritzploss.github.io/tribology" target="_blank">
-documenation</a> is provided through GitHub Pages and can be found
-in the `/docs` directory.
+
 
 The **tribology** package is currently hosted on GitHub:
 
@@ -25,6 +22,13 @@ modules as follows:
 ```python
 import tribology as tr
 ```
+
+The package
+<a href="https://moritzploss.github.io/tribology" target="_blank">
+documenation</a> is provided through GitHub Pages and can be found
+in the `/docs` directory. Simple examples of how to use the package are
+provided in the `/demos`
+directory.
 
 The package is developed by Moritz Ploss at KTH Royal
 Institute of Technology, Stockholm, Sweden. For questions and comments,
