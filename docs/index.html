@@ -106,7 +106,7 @@ convenient:</p>
 <dl class="class">
 <dt id="tribology_constants.MatDens">
 <em class="property">class </em><code class="descclassname">tribology_constants.</code><code class="descname">MatDens</code><a class="headerlink" href="#tribology_constants.MatDens" title="Permalink to this definition">¶</a></dt>
-<dd><p>Density in kg / m^3 at ambient temperature</p>
+<dd><p>Density in kg / m$^3$ at ambient temperature</p>
 </dd></dl>
 
 <dl class="class">
@@ -163,27 +163,43 @@ convenient:</p>
 <dt id="tribology.eeff">
 <code class="descclassname">tribology.</code><code class="descname">eeff</code><span class="sig-paren">(</span><em>r_x_1</em>, <em>r_y_1</em>, <em>r_x_2</em>, <em>r_y_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.eeff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Effective radii for combination of 2 bodies according to Hertzian
-contact theory
-:param r_x_1: radius of body 1 in x
-:param r_y_1: radius of body 1 in y
-:param r_x_2: radius of body 2 in x
-:param r_y_2: radius of body 2 in y
-:return: effective radius (total) and effective radii in each plane</p>
+contact theory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r_x_1</strong> – radius of body 1 in x</li>
+<li><strong>r_y_1</strong> – radius of body 1 in y</li>
+<li><strong>r_x_2</strong> – radius of body 2 in x</li>
+<li><strong>r_y_2</strong> – radius of body 2 in y</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">effective radius (total) and effective radii in each plane</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology.fball3plates">
 <code class="descclassname">tribology.</code><code class="descname">fball3plates</code><span class="sig-paren">(</span><em>ax_force</em>, <em>plate_angle=1.5708</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.fball3plates" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate normal force per contact in ball-on-3-plates setup
-:param ax_force: axial force on rotating ball
-:param plate_angle: plate angle with respect to each other</p>
-<blockquote>
-<div>(default corresponds to 90 degree)</div></blockquote>
+<dd><p>Calculate normal force per contact in ball-on-3-plates setup</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">normal force per contact</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ax_force</strong> – axial force on rotating ball</li>
+<li><strong>plate_angle</strong> – plate angle with respect to each other
+(default corresponds to 90 degree)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">normal force per contact</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -192,48 +208,88 @@ contact theory
 <dl class="function">
 <dt id="tribology.ffourball">
 <code class="descclassname">tribology.</code><code class="descname">ffourball</code><span class="sig-paren">(</span><em>r_1</em>, <em>r_2</em>, <em>ax_force</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.ffourball" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate normal force per contact in 4 ball setup
-:param r_1: radius rotating ball
-:param r_2: radius stationary balls
-:param ax_force: axial force on rotating ball
-:return: normal force per contact</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="tribology.gfourball">
-<code class="descclassname">tribology.</code><code class="descname">gfourball</code><span class="sig-paren">(</span><em>r_1</em>, <em>r_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.gfourball" title="Permalink to this definition">¶</a></dt>
-<dd><p>Geometric parameters of 4-ball setup
-:param r_1: radius rotating ball
-:param r_2: radius stationary balls
-:return: sliding radius (lever arm) on rotating ball, contact angle in rad</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="tribology.meff">
-<code class="descclassname">tribology.</code><code class="descname">meff</code><span class="sig-paren">(</span><em>e_1</em>, <em>nu_1</em>, <em>e_2</em>, <em>nu_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.meff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Effective Young’s modulus according to Hertzian contact theory
-:param e_1: young’s modulus body 1
-:param nu_1: poisson ratio body 1
-:param e_2: young’s modulus body 2
-:param nu_2: poisson ratio body 2
-:return:</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="tribology.profball">
-<code class="descclassname">tribology.</code><code class="descname">profball</code><span class="sig-paren">(</span><em>x_axis</em>, <em>r_ball</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.profball" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate a 2D ball profile based on ball radius and ball axis</p>
+<dd><p>Calculate normal force per contact in 4 ball setup</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x_axis</strong> – vector containing coordinate points for which to calculate profile heights</li>
-<li><strong>r_ball</strong> – the radius of the ball</li>
+<li><strong>r_1</strong> – radius rotating ball</li>
+<li><strong>r_2</strong> – radius stationary balls</li>
+<li><strong>ax_force</strong> – axial force on rotating ball</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vector containing profile heights along x_axis</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">normal force per contact</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.gfourball">
+<code class="descclassname">tribology.</code><code class="descname">gfourball</code><span class="sig-paren">(</span><em>r_1</em>, <em>r_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.gfourball" title="Permalink to this definition">¶</a></dt>
+<dd><p>Geometric parameters of 4-ball setup</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r_1</strong> – radius rotating ball</li>
+<li><strong>r_2</strong> – radius stationary balls</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">sliding radius (lever arm) on rotating ball, contact angle in rad</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.meff">
+<code class="descclassname">tribology.</code><code class="descname">meff</code><span class="sig-paren">(</span><em>e_1</em>, <em>nu_1</em>, <em>e_2</em>, <em>nu_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.meff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Effective Young’s modulus according to Hertzian contact theory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>e_1</strong> – young’s modulus body 1</li>
+<li><strong>nu_1</strong> – poisson ratio body 1</li>
+<li><strong>e_2</strong> – young’s modulus body 2</li>
+<li><strong>nu_2</strong> – poisson ratio body 2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.profball">
+<code class="descclassname">tribology.</code><code class="descname">profball</code><span class="sig-paren">(</span><em>x_axis</em>, <em>r_ball</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.profball" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a 2D ball profile based on ball radius and ball axis. Profile
+heights are calculated with reference to the contact point between a ball
+and a flat surface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x_axis</strong> – Vector containing coordinate points for which to calculate
+profile heights. Minimum and maximum value in vector must be
+within +/- <strong>r_ball</strong></li>
+<li><strong>r_ball</strong> – Radius of the ball</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Vector containing profile heights along <strong>x_axis</strong></p>
 </td>
 </tr>
 </tbody>
@@ -244,18 +300,21 @@ contact theory
 <dt id="tribology.profrevolve">
 <code class="descclassname">tribology.</code><code class="descname">profrevolve</code><span class="sig-paren">(</span><em>prof_2d</em>, <em>y_axis</em>, <em>y_diam</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.profrevolve" title="Permalink to this definition">¶</a></dt>
 <dd><p>creates a 3d profile by revolving a 2D profile around the central axis of
-a body
-:param prof_2d: 2d profile vector containing profile heights
-:param y_axis: vector containing coordinate points for which to calculate</p>
-<blockquote>
-<div>profile heights in y-direction</div></blockquote>
+a body</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y_diam</strong> – diameter around which to revolve prof_2d</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>prof_2d</strong> – 2d profile vector containing profile heights</li>
+<li><strong>y_axis</strong> – vector containing coordinate points for which to calculate
+profile heights in y-direction</li>
+<li><strong>y_diam</strong> – diameter around which to revolve prof_2d</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -264,24 +323,36 @@ a body
 <dl class="function">
 <dt id="tribology.rad_per_s_to_rpm">
 <code class="descclassname">tribology.</code><code class="descname">rad_per_s_to_rpm</code><span class="sig-paren">(</span><em>vel</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.rad_per_s_to_rpm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert from rpm to rad/s
-:param vel: velocity in rad/s
-:return: velocity in rpm</p>
+<dd><p>Convert from rpm to rad/s</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vel</strong> – velocity in rad/s</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">velocity in rpm</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology.rball3plates">
 <code class="descclassname">tribology.</code><code class="descname">rball3plates</code><span class="sig-paren">(</span><em>r_ball</em>, <em>plate_angle=1.5708</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.rball3plates" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sliding radius (lever arm) for ball-on-3-plates setup
-:param r_ball: radius of rotating ball
-:param plate_angle: plate angle with respect to ball in rad</p>
-<blockquote>
-<div>(default corresponds to 45 degree)</div></blockquote>
+<dd><p>Sliding radius (lever arm) for ball-on-3-plates setup</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">sliding radius</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r_ball</strong> – radius of rotating ball</li>
+<li><strong>plate_angle</strong> – plate angle with respect to ball in rad
+(default corresponds to 45 degree)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">sliding radius</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -290,57 +361,125 @@ a body
 <dl class="function">
 <dt id="tribology.reff">
 <code class="descclassname">tribology.</code><code class="descname">reff</code><span class="sig-paren">(</span><em>r_1</em>, <em>r_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.reff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Effective radius according to Hertzian contact theory
-:param r_1: radius 1
-:param r_2: radius 2
-:return: reduced (effective) radius</p>
+<dd><p>Effective radius according to Hertzian contact theory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r_1</strong> – radius 1</li>
+<li><strong>r_2</strong> – radius 2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">reduced (effective) radius</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology.refix">
 <code class="descclassname">tribology.</code><code class="descname">refix</code><span class="sig-paren">(</span><em>value</em>, <em>p_in=”</em>, <em>p_out=”</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.refix" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert between different SI unit prefixes
-:param value:  value to convert
-:param p_in:  input SI unit prefix
-:param p_out:  output SI unit prefix
-:return:  value converted to new unit prefix</p>
+<dd><p>Convert between different SI unit prefixes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>value</strong> – value to convert</li>
+<li><strong>p_in</strong> – input SI unit prefix</li>
+<li><strong>p_out</strong> – output SI unit prefix</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">value converted to new unit prefix</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology.rpm_to_rad_per_s">
 <code class="descclassname">tribology.</code><code class="descname">rpm_to_rad_per_s</code><span class="sig-paren">(</span><em>vel</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.rpm_to_rad_per_s" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert from rpm to rad/s
-:param vel: velocity in rpm
-:return: velocity in rad/s</p>
+<dd><p>Convert from rpm to rad/s</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vel</strong> – velocity in rpm</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">velocity in rad/s</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology.srr">
 <code class="descclassname">tribology.</code><code class="descname">srr</code><span class="sig-paren">(</span><em>vel_1</em>, <em>vel_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.srr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the slide-to-roll ratio (srr) in a tribological contact
-:param vel_1: velocity 1
-:param vel_2: velocity 2
-:return: slide-to-roll ratio</p>
+<dd><p>Calculate the slide-to-roll ratio (srr) in a tribological contact</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>vel_1</strong> – velocity 1</li>
+<li><strong>vel_2</strong> – velocity 2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">slide-to-roll ratio</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology.vroll">
 <code class="descclassname">tribology.</code><code class="descname">vroll</code><span class="sig-paren">(</span><em>vel_1</em>, <em>vel_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.vroll" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the rolling speed in a tribological contact based contact body
-velocities
-:param vel_1:
-:param vel_2:
-:return:</p>
+velocities</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>vel_1</strong> – </li>
+<li><strong>vel_2</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology.vslide">
 <code class="descclassname">tribology.</code><code class="descname">vslide</code><span class="sig-paren">(</span><em>vel_1</em>, <em>vel_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.vslide" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the sliding speed in a tribological contact based contact body
-velocities
-:param vel_1: velocity 1
-:param vel_2: velocity 2
-:return: sliding speed in contact between body 1 and 2</p>
+velocities</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>vel_1</strong> – velocity 1</li>
+<li><strong>vel_2</strong> – velocity 2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">sliding speed in contact between body 1 and 2</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -350,38 +489,78 @@ velocities
 <dl class="function">
 <dt id="tribology_boundary_element.begetd">
 <code class="descclassname">tribology_boundary_element.</code><code class="descname">begetd</code><span class="sig-paren">(</span><em>profile</em>, <em>norm_disp</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.begetd" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate local elastic displacements of profile
-:param profile: combined profile of two contacting bodies
-:param norm_disp: global normal elastic displ between contacting bodies
-:return: local normal displacements as a result of global displ norm_displ</p>
+<dd><p>Calculate local elastic displacements of profile</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>profile</strong> – combined profile of two contacting bodies</li>
+<li><strong>norm_disp</strong> – global normal elastic displ between contacting bodies</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">local normal displacements as a result of global displ norm_displ</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_boundary_element.beinflumat">
 <code class="descclassname">tribology_boundary_element.</code><code class="descname">beinflumat</code><span class="sig-paren">(</span><em>x_axis</em>, <em>y_axis</em>, <em>e_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.beinflumat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate an influence matrix as required for boundary element contact
-mechanics calculations
-:param x_axis: x-axis of coordinate grid
-:param y_axis: y-axis of coordinate grid
-:param e_eff: effective youngs modulus
-:return: complete influence matrix</p>
+mechanics calculations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x_axis</strong> – x-axis of coordinate grid</li>
+<li><strong>y_axis</strong> – y-axis of coordinate grid</li>
+<li><strong>e_eff</strong> – effective youngs modulus</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">complete influence matrix</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_boundary_element.beinflumatgrid">
 <code class="descclassname">tribology_boundary_element.</code><code class="descname">beinflumatgrid</code><span class="sig-paren">(</span><em>axis</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.beinflumatgrid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate coordinate grid based on axis as required for influence matrix
-generation
-:param axis: axis to make grid
-:return: grid</p>
+generation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> – axis to make grid</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">grid</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_boundary_element.beinflumatred">
 <code class="descclassname">tribology_boundary_element.</code><code class="descname">beinflumatred</code><span class="sig-paren">(</span><em>influ_mat</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.beinflumatred" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract the reduced influence matrix from the complete influence matrix
-:param influ_mat: complete influence matrix
-:return: reduced influence matrix</p>
+<dd><p>Extract the reduced influence matrix from the complete influence matrix</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>influ_mat</strong> – complete influence matrix</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">reduced influence matrix</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -419,10 +598,22 @@ inner force (scalar), global normal displacement (scalar)</p>
 <dl class="function">
 <dt id="tribology_boundary_element.combineprof">
 <code class="descclassname">tribology_boundary_element.</code><code class="descname">combineprof</code><span class="sig-paren">(</span><em>profile_1</em>, <em>profile_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.combineprof" title="Permalink to this definition">¶</a></dt>
-<dd><p>Combine two body profiles for boundary element calculation
-:param profile_1: array-like profile heights
-:param profile_2: array-like profile heights
-:return: negative combined profile heights</p>
+<dd><p>Combine two body profiles for boundary element calculation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>profile_1</strong> – array-like profile heights</li>
+<li><strong>profile_2</strong> – array-like profile heights</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">negative combined profile heights</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -431,19 +622,43 @@ inner force (scalar), global normal displacement (scalar)</p>
 <dd><p>Applies secant method to find root x of function f(x).
 If not enough (x, f(x)) value pairs are known to apply
 secant method, a new x value is guessed by slightly changing the
-initial x value
-:param x_list: list of function inputs
-:param fx_list: list of function outputs
-:return: estimate of function root</p>
+initial x value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x_list</strong> – list of function inputs</li>
+<li><strong>fx_list</strong> – list of function outputs</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">estimate of function root</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_boundary_element.solvepress">
 <code class="descclassname">tribology_boundary_element.</code><code class="descname">solvepress</code><span class="sig-paren">(</span><em>red_influ_mat</em>, <em>disp</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.solvepress" title="Permalink to this definition">¶</a></dt>
-<dd><p>solve for pressure distribution
-:param red_influ_mat: reduced influence matrix
-:param disp: displacement field
-:return: pressure field</p>
+<dd><p>solve for pressure distribution</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>red_influ_mat</strong> – reduced influence matrix</li>
+<li><strong>disp</strong> – displacement field</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">pressure field</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -453,59 +668,119 @@ initial x value
 <dl class="function">
 <dt id="tribology_dowson_hamrock.dowhamline">
 <code class="descclassname">tribology_dowson_hamrock.</code><code class="descname">dowhamline</code><span class="sig-paren">(</span><em>speed</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em>, <em>l_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowhamline" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate mean film thickness according to Dowson-Hamrock equation.
-:param speed: entrainment speed, vector or int/float
-:param force: force, vector or int/float
-:param e_eff: effective modulus
-:param alpha_p: pressure-viscosity coefficient in, int/float
-:param eta: dynamic viscosity of lube, int/float
-:param r_eff: effective radius
-:param l_eff: effective length
-:return: mean film thickness, vector or int/float</p>
+<dd><p>Calculate mean film thickness according to Dowson-Hamrock equation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>speed</strong> – entrainment speed, vector or int/float</li>
+<li><strong>force</strong> – force, vector or int/float</li>
+<li><strong>e_eff</strong> – effective modulus</li>
+<li><strong>alpha_p</strong> – pressure-viscosity coefficient in, int/float</li>
+<li><strong>eta</strong> – dynamic viscosity of lube, int/float</li>
+<li><strong>r_eff</strong> – effective radius</li>
+<li><strong>l_eff</strong> – effective length</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">mean film thickness, vector or int/float</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_dowson_hamrock.dowhampoint">
 <code class="descclassname">tribology_dowson_hamrock.</code><code class="descname">dowhampoint</code><span class="sig-paren">(</span><em>speed</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowhampoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate mean film thickness according to Dowson-Hamrock equation.
-:param speed: entrainment speed, vector or int/float
-:param force: force, vector or int/float
-:param e_eff: effective modulus in MPa
-:param alpha_p: pressure-viscosity coefficient, int/float
-:param eta: dynamic viscosity of lube, int/float
-:param r_eff: effective radius
-:return: mean film thickness, vector or int/float</p>
+<dd><p>Calculate mean film thickness according to Dowson-Hamrock equation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>speed</strong> – entrainment speed, vector or int/float</li>
+<li><strong>force</strong> – force, vector or int/float</li>
+<li><strong>e_eff</strong> – effective modulus in MPa</li>
+<li><strong>alpha_p</strong> – pressure-viscosity coefficient, int/float</li>
+<li><strong>eta</strong> – dynamic viscosity of lube, int/float</li>
+<li><strong>r_eff</strong> – effective radius</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">mean film thickness, vector or int/float</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_dowson_hamrock.dowson_hamrock_parameters">
 <code class="descclassname">tribology_dowson_hamrock.</code><code class="descname">dowson_hamrock_parameters</code><span class="sig-paren">(</span><em>r_eff</em>, <em>param_g</em>, <em>param_u</em>, <em>param_w</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowson_hamrock_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>part of dowson-hamrock
-:param r_eff: effective radius
-:param param_g: elasticity_parameter
-:param param_u: velocity_parameter
-:param param_w: load parameter
-:return: ehd parameter</p>
+<dd><p>part of dowson-hamrock</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r_eff</strong> – effective radius</li>
+<li><strong>param_g</strong> – elasticity_parameter</li>
+<li><strong>param_u</strong> – velocity_parameter</li>
+<li><strong>param_w</strong> – load parameter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ehd parameter</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_dowson_hamrock.edowham">
 <code class="descclassname">tribology_dowson_hamrock.</code><code class="descname">edowham</code><span class="sig-paren">(</span><em>alpha_p</em>, <em>e_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.edowham" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate elasticity parameter of dowson-hamrock equation
-:param alpha_p: pressure-viscosity coefficient
-:param e_eff: effective young’s modulus
-:return: elasticity parameter</p>
+<dd><p>calculate elasticity parameter of dowson-hamrock equation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>alpha_p</strong> – pressure-viscosity coefficient</li>
+<li><strong>e_eff</strong> – effective young’s modulus</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">elasticity parameter</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_dowson_hamrock.vdowham">
 <code class="descclassname">tribology_dowson_hamrock.</code><code class="descname">vdowham</code><span class="sig-paren">(</span><em>eta</em>, <em>speed</em>, <em>e_eff</em>, <em>r_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.vdowham" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate velocity parameter of dowson-hamrock equation
-:param eta: dynamic viscosity
-:param speed: entrainment speed
-:param e_eff: effective young’s modulus
-:param r_eff: effective radius
-:return: velocity parameter</p>
+<dd><p>calculate velocity parameter of dowson-hamrock equation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>eta</strong> – dynamic viscosity</li>
+<li><strong>speed</strong> – entrainment speed</li>
+<li><strong>e_eff</strong> – effective young’s modulus</li>
+<li><strong>r_eff</strong> – effective radius</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">velocity parameter</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -515,60 +790,120 @@ initial x value
 <dl class="function">
 <dt id="tribology_hertz.ahertz">
 <code class="descclassname">tribology_hertz.</code><code class="descname">ahertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.ahertz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate Hertzian contact area half-axis
-:param r_eff: effective radius of contact bodies
-:param r_eff_x: effective radius in x direction
-:param r_eff_y: effective radius in y direction
-:param e_eff: effective modulus
-:param force: normal load
-:return: half axes and total area</p>
+<dd><p>Calculate Hertzian contact area half-axis</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r_eff</strong> – effective radius of contact bodies</li>
+<li><strong>r_eff_x</strong> – effective radius in x direction</li>
+<li><strong>r_eff_y</strong> – effective radius in y direction</li>
+<li><strong>e_eff</strong> – effective modulus</li>
+<li><strong>force</strong> – normal load</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">half axes and total area</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_hertz.auxparamshertz">
 <code class="descclassname">tribology_hertz.</code><code class="descname">auxparamshertz</code><span class="sig-paren">(</span><em>r_eff_x</em>, <em>r_eff_y</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.auxparamshertz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate Hertz parameters required for contact area/pressure calculations
-:param r_eff_x: effective radius in x direction
-:param r_eff_y: effective radius in y direction
-:return: dimensionless Hertz parameters</p>
+<dd><p>Calculate Hertz parameters required for contact area/pressure calculations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r_eff_x</strong> – effective radius in x direction</li>
+<li><strong>r_eff_y</strong> – effective radius in y direction</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dimensionless Hertz parameters</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_hertz.dhertz">
 <code class="descclassname">tribology_hertz.</code><code class="descname">dhertz</code><span class="sig-paren">(</span><em>e_eff</em>, <em>r_x_1</em>, <em>r_y_1</em>, <em>r_x_2</em>, <em>r_y_2</em>, <em>force</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.dhertz" title="Permalink to this definition">¶</a></dt>
 <dd><p>Elastic displacement in normal direction for arbitrary bodies according to
-hertz contact theory
-:param e_eff: effective young’s modulus in MPa
-:param r_x_1: radius body 1 in x direction in mm
-:param r_y_1: radius body 1 in y direction in mm
-:param r_x_2: radius body 2 in x direction in mm
-:param r_y_2: radius body 2 in y direction in mm
-:param force: normal force in N
-:return: combined normal displacement in mm</p>
+hertz contact theory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>e_eff</strong> – effective young’s modulus in MPa</li>
+<li><strong>r_x_1</strong> – radius body 1 in x direction in mm</li>
+<li><strong>r_y_1</strong> – radius body 1 in y direction in mm</li>
+<li><strong>r_x_2</strong> – radius body 2 in x direction in mm</li>
+<li><strong>r_y_2</strong> – radius body 2 in y direction in mm</li>
+<li><strong>force</strong> – normal force in N</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">combined normal displacement in mm</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_hertz.fhertz">
 <code class="descclassname">tribology_hertz.</code><code class="descname">fhertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>p_critical</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.fhertz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate load carrying capacity of Hertzian contact
-:param r_eff: effective radius of contact bodies
-:param r_eff_x: effective radius in x direction
-:param r_eff_y: effective radius in y direction
-:param e_eff: effective modulus
-:param p_critical: critical mean contact pressure
-:return: critical normal force</p>
+<dd><p>Calculate load carrying capacity of Hertzian contact</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r_eff</strong> – effective radius of contact bodies</li>
+<li><strong>r_eff_x</strong> – effective radius in x direction</li>
+<li><strong>r_eff_y</strong> – effective radius in y direction</li>
+<li><strong>e_eff</strong> – effective modulus</li>
+<li><strong>p_critical</strong> – critical mean contact pressure</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">critical normal force</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_hertz.phertz">
 <code class="descclassname">tribology_hertz.</code><code class="descname">phertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.phertz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate mean contact pressure in Hertzian contact
-:param r_eff: effective radius of contact bodies
-:param r_eff_x: effective radius in x direction
-:param r_eff_y: effective radius in y direction
-:param e_eff: effective modulus
-:param force: normal force
-:return: mean contact pressure</p>
+<dd><p>Calculate mean contact pressure in Hertzian contact</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r_eff</strong> – effective radius of contact bodies</li>
+<li><strong>r_eff_x</strong> – effective radius in x direction</li>
+<li><strong>r_eff_y</strong> – effective radius in y direction</li>
+<li><strong>e_eff</strong> – effective modulus</li>
+<li><strong>force</strong> – normal force</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">mean contact pressure</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -579,86 +914,178 @@ hertz contact theory
 <dt id="tribology_lubrication.barus">
 <code class="descclassname">tribology_lubrication.</code><code class="descname">barus</code><span class="sig-paren">(</span><em>eta_0</em>, <em>alpha_p</em>, <em>pressure</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.barus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate dynamic viscosity at a given pressure based on the dynamic
-viscosity at ambient pressure and the pressure-viscosity coefficient
-:param eta_0: dynamic viscosity at ambient pressure
-:param alpha_p: pressure-viscosity coefficient
-:param pressure: pressure of interest
-:return: dynamic viscosity at pressure of interest</p>
+viscosity at ambient pressure and the pressure-viscosity coefficient</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>eta_0</strong> – dynamic viscosity at ambient pressure</li>
+<li><strong>alpha_p</strong> – pressure-viscosity coefficient</li>
+<li><strong>pressure</strong> – pressure of interest</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dynamic viscosity at pressure of interest</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_lubrication.dyn2kin">
 <code class="descclassname">tribology_lubrication.</code><code class="descname">dyn2kin</code><span class="sig-paren">(</span><em>dyn</em>, <em>density</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.dyn2kin" title="Permalink to this definition">¶</a></dt>
-<dd><p>dynamic to kinematic viscosity
-:param dyn: dynamic viscosity
-:param density: density
-:return: kinematic viscosity</p>
+<dd><p>dynamic to kinematic viscosity</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dyn</strong> – dynamic viscosity</li>
+<li><strong>density</strong> – density</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">kinematic viscosity</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_lubrication.kin2dyn">
 <code class="descclassname">tribology_lubrication.</code><code class="descname">kin2dyn</code><span class="sig-paren">(</span><em>kin</em>, <em>density</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.kin2dyn" title="Permalink to this definition">¶</a></dt>
-<dd><p>kinematic to dynamic viscosity
-:param kin: kinematic viscosity
-:param density: density
-:return: dynamic viscosity</p>
+<dd><p>kinematic to dynamic viscosity</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>kin</strong> – kinematic viscosity</li>
+<li><strong>density</strong> – density</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dynamic viscosity</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_lubrication.nuwalther">
 <code class="descclassname">tribology_lubrication.</code><code class="descname">nuwalther</code><span class="sig-paren">(</span><em>zed</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.nuwalther" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate kinematic viscosity for Walther equation (ASTM D341)
-:param zed: z factor
-:return: kinematic viscosity</p>
+<dd><p>calculate kinematic viscosity for Walther equation (ASTM D341)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>zed</strong> – z factor</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">kinematic viscosity</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_lubrication.trheomcone">
 <code class="descclassname">tribology_lubrication.</code><code class="descname">trheomcone</code><span class="sig-paren">(</span><em>eta</em>, <em>alpha</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.trheomcone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate torque based on dynamic viscosity measurement from cone-on-
-plate rheometer
-:param eta: dinamic viscosity
-:param alpha: cone angle
-:param omega: angular velocity
-:param r_a: cone outer radius
-:return: torque</p>
+plate rheometer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>eta</strong> – dinamic viscosity</li>
+<li><strong>alpha</strong> – cone angle</li>
+<li><strong>omega</strong> – angular velocity</li>
+<li><strong>r_a</strong> – cone outer radius</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">torque</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_lubrication.trheomflat">
 <code class="descclassname">tribology_lubrication.</code><code class="descname">trheomflat</code><span class="sig-paren">(</span><em>eta</em>, <em>gap_height</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.trheomflat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate torque based on dynamic viscosity measurement from plate-on-
-plate rheometer
-:param eta: dynamic viscosity
-:param gap_height: distance between plates
-:param omega: angular velocity
-:param r_a: cone outer radius
-:return: torque</p>
+plate rheometer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>eta</strong> – dynamic viscosity</li>
+<li><strong>gap_height</strong> – distance between plates</li>
+<li><strong>omega</strong> – angular velocity</li>
+<li><strong>r_a</strong> – cone outer radius</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">torque</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_lubrication.viscrheomcone">
 <code class="descclassname">tribology_lubrication.</code><code class="descname">viscrheomcone</code><span class="sig-paren">(</span><em>torque</em>, <em>alpha</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.viscrheomcone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the dynamic viscosity based on torque measurement from cone-on-
-plate rheometer
-:param torque: measured torque
-:param alpha: cone angle
-:param omega: angular velocity
-:param r_a: cone outer radius
-:return: dynamic viscosity</p>
+plate rheometer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>torque</strong> – measured torque</li>
+<li><strong>alpha</strong> – cone angle</li>
+<li><strong>omega</strong> – angular velocity</li>
+<li><strong>r_a</strong> – cone outer radius</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dynamic viscosity</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_lubrication.viscrheomflat">
 <code class="descclassname">tribology_lubrication.</code><code class="descname">viscrheomflat</code><span class="sig-paren">(</span><em>torque</em>, <em>gap_height</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.viscrheomflat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the dynamic viscosity based on torque measurement from plate-on-
-plate rheometer
-:param torque: measured torque
-:param gap_height: distance between plates
-:param alpha: cone angle
-:param omega: angular velocity
-:param r_a: cone outer radius
-:return: dynamic viscosity</p>
+plate rheometer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>torque</strong> – measured torque</li>
+<li><strong>gap_height</strong> – distance between plates</li>
+<li><strong>alpha</strong> – cone angle</li>
+<li><strong>omega</strong> – angular velocity</li>
+<li><strong>r_a</strong> – cone outer radius</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dynamic viscosity</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -666,21 +1093,41 @@ plate rheometer
 <code class="descclassname">tribology_lubrication.</code><code class="descname">walther</code><span class="sig-paren">(</span><em>temp_1</em>, <em>nu_1</em>, <em>temp_2</em>, <em>nu_2</em>, <em>temp_3</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.walther" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates kinematic viscosity at temperature temp_3 based on kin.
 viscosities at temperatures temp_1 and tempo_2. Equations according to
-ASTM D341.
-:param temp_1: temperature in deg C
-:param nu_1: kin. viscosity at t1 in cSt
-:param temp_2: temperature in deg C
-:param nu_2: kin. viscosity at t2 in cSt
-:param temp_3: temperature of interest, in deg C
-:return: kin. viscosity in cSt at temperature t3</p>
+ASTM D341.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>temp_1</strong> – temperature in deg C</li>
+<li><strong>nu_1</strong> – kin. viscosity at t1 in cSt</li>
+<li><strong>temp_2</strong> – temperature in deg C</li>
+<li><strong>nu_2</strong> – kin. viscosity at t2 in cSt</li>
+<li><strong>temp_3</strong> – temperature of interest, in deg C</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">kin. viscosity in cSt at temperature t3</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="tribology_lubrication.zedwalther">
 <code class="descclassname">tribology_lubrication.</code><code class="descname">zedwalther</code><span class="sig-paren">(</span><em>kin_visc</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.zedwalther" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate z factor for Walther Equation (ASTM D341)
-:param kin_visc: kinematic viscosity
-:return: z factor</p>
+<dd><p>calculate z factor for Walther Equation (ASTM D341)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>kin_visc</strong> – kinematic viscosity</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">z factor</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

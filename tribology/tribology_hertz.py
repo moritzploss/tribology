@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
+
 Methods related to Hertz contact theory
+
 """
 
 from math import sqrt, pi, log
@@ -9,10 +11,14 @@ from math import sqrt, pi, log
 
 def auxparamshertz(r_eff_x, r_eff_y):
     """
+
     Calculate Hertz parameters required for contact area/pressure calculations
+
     :param r_eff_x: effective radius in x direction
     :param r_eff_y: effective radius in y direction
+
     :return: dimensionless Hertz parameters
+
     """
     if r_eff_x == 0 or r_eff_y == 0:
         param_lambda = 0
@@ -28,15 +34,19 @@ def auxparamshertz(r_eff_x, r_eff_y):
 
 def dhertz(e_eff, r_x_1, r_y_1, r_x_2, r_y_2, force):
     """
+
     Elastic displacement in normal direction for arbitrary bodies according to
     hertz contact theory
+
     :param e_eff: effective young's modulus in MPa
     :param r_x_1: radius body 1 in x direction in mm
     :param r_y_1: radius body 1 in y direction in mm
     :param r_x_2: radius body 2 in x direction in mm
     :param r_y_2: radius body 2 in y direction in mm
     :param force: normal force in N
+
     :return: combined normal displacement in mm
+
     """
     apb = 0.5 * (1 / r_x_1 + 1 / r_y_1 + 1 / r_x_2 + 1 / r_y_2)
     bma = 0.5 * sqrt((1 / r_x_1 - 1 / r_y_1) ** 2 +
@@ -57,13 +67,17 @@ def dhertz(e_eff, r_x_1, r_y_1, r_x_2, r_y_2, force):
 
 def ahertz(r_eff, r_eff_x, r_eff_y, e_eff, force):
     """
+
     Calculate Hertzian contact area half-axis
+
     :param r_eff: effective radius of contact bodies
     :param r_eff_x: effective radius in x direction
     :param r_eff_y: effective radius in y direction
     :param e_eff: effective modulus
     :param force: normal load
+
     :return: half axes and total area
+
     """
     a_ast, b_ast, _, _ = auxparamshertz(r_eff_x, r_eff_y)
     half_axis_a = a_ast * (3 * force * r_eff / e_eff) ** (1 / 3)
@@ -73,13 +87,17 @@ def ahertz(r_eff, r_eff_x, r_eff_y, e_eff, force):
 
 def fhertz(r_eff, r_eff_x, r_eff_y, e_eff, p_critical):
     """
+
     Calculate load carrying capacity of Hertzian contact
+
     :param r_eff: effective radius of contact bodies
     :param r_eff_x: effective radius in x direction
     :param r_eff_y: effective radius in y direction
     :param e_eff: effective modulus
     :param p_critical: critical mean contact pressure
+
     :return: critical normal force
+
     """
     a_ast, b_ast, _, _ = auxparamshertz(r_eff_x, r_eff_y)
     return (pi * a_ast * b_ast * p_critical) ** 3 * (3 * r_eff / e_eff) ** 2
@@ -87,13 +105,17 @@ def fhertz(r_eff, r_eff_x, r_eff_y, e_eff, p_critical):
 
 def phertz(r_eff, r_eff_x, r_eff_y, e_eff, force):
     """
+
     Calculate mean contact pressure in Hertzian contact
+
     :param r_eff: effective radius of contact bodies
     :param r_eff_x: effective radius in x direction
     :param r_eff_y: effective radius in y direction
     :param e_eff: effective modulus
     :param force: normal force
+
     :return: mean contact pressure
+
     """
     _, _, area = ahertz(r_eff, r_eff_x, r_eff_y, e_eff, force)
     return force / area

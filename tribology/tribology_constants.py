@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
+
 Relevant constants for tribology research
+
 """
 
 from enum import Enum
@@ -9,7 +11,9 @@ from enum import Enum
 
 class RadBall(Enum):
     """
+
     Constants for ball radii
+
     """
     TQInch = 25.4 * 3 / 8
     HInch = 25.4 / 4
@@ -18,7 +22,9 @@ class RadBall(Enum):
 
 class YoungsMod(Enum):
     """
+
     Young's modulus data in MPa at ambient temperature
+
     """
     STEEL = 210000
     GLASS = 70000
@@ -27,7 +33,9 @@ class YoungsMod(Enum):
 
 class PoissonRatio(Enum):
     """
+
     Poisson ratio data at ambient temperature
+
     """
     STEEL = 0.3
     GLASS = 0.22
@@ -36,7 +44,9 @@ class PoissonRatio(Enum):
 
 class MatDens(Enum):
     """
-    Density in kg / m^3 at ambient temperature
+
+    Density in kg / m$^3$ at ambient temperature
+
     """
     STEEL = 7800
     SiN = 3200
@@ -44,7 +54,9 @@ class MatDens(Enum):
 
 class LubeDens(Enum):
     """
+
     Density in g / ml
+
     """
     NA_LUBE_KR_015 = 0.884
     NYNAS_HP_4 = 0.852
@@ -57,7 +69,9 @@ class LubeDens(Enum):
 
 class LubeVisc(Enum):
     """
+
     Lubricant viscosity in cSt at 40 and 100 degree C
+
     """
     TEMPS = (40, 100)
     NA_LUBE_KR_015 = (114.0, 13.5)
@@ -71,7 +85,9 @@ class LubeVisc(Enum):
 
 class PressVisc(Enum):
     """
+
     Pressure-viscosity coefficients in 1 / Pa at ambient temperature
+
     """
     ESTER_OIL_GENERIC = 15 * 10 ** (-9)
     MINERAL_OIL_GENERIC = 30 * 10 ** (-9)
