@@ -40,6 +40,9 @@ for more information.
 #### 0.2.2.dev
 Current development version on github
 - docstrings for module `tribology` changed to numpy format and refactored
+- function `eeff` renamed to `reff`
+- function `meff` renamed to `eeff`
+- helper functions made private
 
 #### 0.2.1
 - Sphinx documentation added to git repo, docs available at https://moritzploss.github.io/tribology
