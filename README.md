@@ -21,9 +21,9 @@ You can also install the package through pip:
 After installation, it is recommended to import the package and all its
 modules as follows:
 
-    ```python
-    import tribology as tr
-    ```
+```python
+import tribology as tr
+```
 
 The package is developed by Moritz Ploss at KTH Royal
 Institute of Technology, Stockholm, Sweden. For questions and comments,
