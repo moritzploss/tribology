@@ -2,7 +2,7 @@
 
 """
 
-Methods related to general tribology
+The methods in this module are related to tribology in general.
 
 """
 
@@ -14,54 +14,71 @@ import numpy as np
 def profball(x_axis, r_ball):
     """
 
-    Generate a 2D ball profile based on ball radius and ball axis. Profile
-    heights are calculated with reference to the contact point between a ball
-    and a flat surface.
+    Create a 1D ball profile along a central axis.
 
-    :param x_axis: coordinate points for which to calculate profile heights,
-                   vector. Minimum and maximum value in vector must be within
-                   +/- **r_ball**
-    :param r_ball: Radius of the ball, scalar
+    Parameters
+    ----------
+    x_axis: ndarray
+        The coordinate points for which to calculate profile heights. Minimum
+        and maximum value must be within +/- **r_ball**.
+    r_ball: scalar
+        The radius of the ball.
 
-    :return: profile heights along **x_axis**, vector
+    Returns
+    -------
+    prof_heights: ndarray
+        The profile heights along the **x_axis**.
 
     """
     prof = np.array(abs(r_ball) - np.sqrt(r_ball ** 2 - np.power(x_axis, 2)))
-    return prof * np.sign(r_ball)
+    prof_heights = prof * np.sign(r_ball)
+    return prof_heights
 
 
-def profrevolve(prof_2d, y_axis, y_diam):
+def profrevolve(prof_1d, y_axis, y_diam):
     """
 
-    Creates a 3d profile by revolving a 2D profile around its central axis.
+    Create a 2D surface (profile heights) by revolving a 1D profile around a
+    central axis.
 
-    :param prof_2d: 2d profile vector (x-direction) containing profile heights
-    :param y_axis: coordinate points for which to calculate profile heights in
-                   y-direction, vector
-    :param y_diam: diameter of body with respect to **y_axis**, scalar
-    :return: profile heights, array of size :code:`len(prof_2d)` :math:`\\times`
-             :code:`len(y_axis)`
+    Parameters
+    ----------
+    prof_1d: ndarray
+        The profile heights along the central (x) axis of the surface.
+    y_axis: ndarray
+        The y-axis of the surface.
+    y_diam: scalar
+        The maximum diameter of the surface along its y-axis.
+
+    Returns
+    -------
+    prof_2d: ndarray
+        The surface heights of the profile. The array size is
+        :code:`len(prof_2d)` :math:`\\times` :code:`len(y_axis)`
+    y_profile: ndarray
+        The profile heights along the y-direction of the surface at the central
+        element of the x-axis.
 
     """
-    len_x = len(prof_2d)
+    len_x = len(prof_1d)
     len_y = len(y_axis)
-    prof_3d = np.zeros((len_x, len_y))
+    prof_2d = np.zeros((len_x, len_y))
     sign_diam = np.sign(y_diam)
     for i_x in range(len_x):
         for i_y in range(len_y):
-            bracket = pow((y_diam / 2 - sign_diam * prof_2d[i_x]), 2)\
+            bracket = pow((y_diam / 2 - sign_diam * prof_1d[i_x]), 2)\
                       - pow(y_axis[i_y], 2)
             if bracket <= 0:
-                prof_3d[i_x, i_y] = abs(y_diam) / 2
+                prof_2d[i_x, i_y] = abs(y_diam) / 2
             else:
-                prof_3d[i_x, i_y] = abs(y_diam) / 2 - sign_diam * sqrt(bracket)
+                prof_2d[i_x, i_y] = abs(y_diam) / 2 - sign_diam * sqrt(bracket)
     if y_diam > 0:
-        min_prof = prof_3d.min()
+        min_prof = prof_2d.min()
     else:
-        min_prof = prof_3d[round(len_x / 2) - 1, round(len_x / 2) - 1]
-    prof_3d = -(prof_3d - min_prof)
-    y_profile = prof_3d[:, floor(len_y / 2)]
-    return -prof_3d, y_profile
+        min_prof = prof_2d[round(len_x / 2) - 1, round(len_x / 2) - 1]
+    prof_2d = (prof_2d - min_prof)
+    y_profile = prof_2d[:, floor(len_y / 2)]
+    return prof_2d, y_profile
 
 
 def vslide(vel_1, vel_2):
@@ -70,12 +87,21 @@ def vslide(vel_1, vel_2):
     Calculate the sliding speed in a tribological contact based on contact body
     velocities.
 
-    :param vel_1: contact velocity of body 1, scalar or vector
-    :param vel_2: contact velocity of body 2, scalar or vector
-    :return: sliding speed in contact between body 1 and 2, scalar or vector
+    Parameters
+    ----------
+    vel_1: ndarray, scalar
+        The contact velocity of body 1.
+    vel_2: ndarray, scalar
+        The contact velocity of body 2
+
+    Returns
+    -------
+    vel_slide: ndarray, scalar
+        The sliding velocity in the tribological contact.
 
     """
-    return vel_1 - vel_2
+    vel_slide = vel_1 - vel_2
+    return vel_slide
 
 
 def vroll(vel_1, vel_2):
@@ -84,78 +110,134 @@ def vroll(vel_1, vel_2):
     Calculate the rolling speed in a tribological contact based on contact body
     velocities.
 
-    :param vel_1: contact velocity of body 1, scalar or vector
-    :param vel_2: contact velocity of body 2, scalar or vector
-    :return: sliding speed in contact between body 1 and 2, scalar or vector
+    Parameters
+    ----------
+    vel_1: ndarray, scalar
+        The contact velocity of body 1.
+    vel_2: ndarray, scalar
+        The contact velocity of body 2
+
+    Returns
+    -------
+    vel_roll: ndarray, scalar
+        The rolling velocity in the tribological contact.
 
     """
-    return (vel_1 + vel_2) / 2
+    vel_roll = (vel_1 + vel_2) / 2
+    return vel_roll
 
 
 def srr(vel_1, vel_2):
     """
 
-    Calculate the slide-to-roll ratio (srr) in a tribological contact based on
+    Calculate the slide-to-roll ratio (SRR) in a tribological contact based on
     contact body velocities.
 
-    :param vel_1: contact velocity of body 1, scalar or vector
-    :param vel_2: contact velocity of body 2, scalar or vector
-    :return: slide-to-roll ratio in contact, scalar or vector
+    Parameters
+    ----------
+    vel_1: ndarray, scalar
+        The contact velocity of body 1.
+    vel_2: ndarray, scalar
+        The contact velocity of body 2
+
+    Returns
+    -------
+    srr: ndarray, scalar
+        The slide-to-roll ratio in the tribological contact.
 
     """
-    return vslide(vel_1, vel_2) / vroll(vel_1, vel_2)
+    srr = vslide(vel_1, vel_2) / vroll(vel_1, vel_2)
+    return srr
 
 
-def radpersec2rpm(vel):
+def radpersec2rpm(vel_rad_per_sec):
     """
 
-    Convert from rotation per minute (rpm) to radians per second (rad/s)
-
-    :param vel: velocity in rad/s, scalar or array
-    :return: velocity in rpm, scalar or array
-
-    """
-    return 1 / rpm2radpersec(1 / vel)
+    Convert velocity from rotations per minute (rpm) to radians per second
+    (rad/s).
 
 
-def rpm2radpersec(vel):
-    """
+    Parameters
+    ----------
+    vel_rad_per_sec: ndarray, scalar
+        The velcity in radians per second.
 
-    Convert from radians per second (rad/s) to rotation per minute (rpm)
-
-    :param vel: velocity in rpm, scalar or array
-    :return: velocity in rad/s, scalar or array
+    Returns
+    -------
+    vel_rpm: ndarray, scalar
+        The velocity in rotations per minute.
 
     """
-    return vel / 60 * 2 * pi
+    vel_rpm = 1 / rpm2radpersec(1 / vel_rad_per_sec)
+    return vel_rpm
+
+
+def rpm2radpersec(vel_rpm):
+    """
+
+     Convert velocity from radians per second (rad/s) to rotations per minute
+     (rpm).
+
+
+     Parameters
+     ----------
+     vel_rpm: ndarray, scalar
+         The velcity in rotations per minute.
+
+     Returns
+     -------
+     vel_rad_per_sec: ndarray, scalar
+         The velocity in radians per second.
+
+     """
+    vel_rad_per_sec = vel_rpm / 60 * 2 * pi
+    return vel_rad_per_sec
 
 
 def rball3plates(r_ball, plate_angle=1.5708):
     """
 
-    Sliding radius (lever arm) for ball-on-3-plates setup
+    Calculate the sliding radius (lever arm) for a ball-on-3-plates test setup.
 
-    :param r_ball: radius of rotating ball, scalar or array
-    :param plate_angle: plate angle with respect to ball in rad
-                        (default corresponds to 45 degree), scalar
-    :return: sliding radius, scalar or array
+    Parameters
+    ----------
+    r_ball: ndarray, scalar
+        The radius of the ball.
+    plate_angle: ndarray, scalar, optional
+        The plate angle in radians, measured with respect to the rotational
+        axis of the ball. Default value corresponds to 45 degree.
+
+    Returns
+    -------
+    r_slide: ndarray, scalar
+        The sliding radius.
 
     """
-    return r_ball * sin((pi - plate_angle) / 2)
-np.linspace
+    r_slide = r_ball * np.sin((pi - plate_angle) / 2)
+    return r_slide
+
 
 def fball3plates(ax_force, plate_angle=1.5708):
     """
 
-    Calculate normal force per contact in ball-on-3-plates setup
+    Calculate the normal force per contact in ball-on-3-plates setup.
 
-    :param ax_force: axial force on rotating ball, scalar or array
-    :param plate_angle: plate angle with respect to each other
-                        (default corresponds to 90 degree)
-    :return: normal force per contact, scalar or array
+    Parameters
+    ----------
+    ax_force: ndarray, scalar
+        The force acting along the rotational axis of the ball (axial force).
+    plate_angle: ndarray, scalar, optional
+        The plate angle in radians, measured with respect to the rotational
+        axis of the ball. Default value corresponds to 45 degree.
+
+    Returns
+    -------
+    norm_force:
+        The normal force acting in each ball-plate contact.
 
     """
-    return ax_force / 3 / cos(plate_angle / 2)
+    norm_force = ax_force / 3 / np.cos(plate_angle / 2)
+    return norm_force
 
 
 def gfourball(r_1, r_2):
@@ -187,29 +269,64 @@ def gfourball(r_1, r_2):
 def ffourball(r_1, r_2, ax_force):
     """
 
-    Calculate normal force per contact in 4 ball setup
+    Calculate the normal force per contact in a 4-ball test setup.
 
-    :param r_1: radius rotating ball
-    :param r_2: radius stationary balls
-    :param ax_force: axial force on rotating ball
+    Parameters
+    ----------
+    r_1:
+        The radius of the rotating ball.
+    r_2:
+        The radius of the stationary balls.
+    ax_force:
+        The force acting along the rotational axis of the rotating ball.
 
-    :return: normal force per contact
+    Returns
+    -------
+    norm_force: ndarray, scalar
+        The normal force in a single ball-ball contact.
 
     """
     _, contact_angle = gfourball(r_1, r_2)
-    return ax_force / sin(contact_angle) / 3
+    norm_force = ax_force / sin(contact_angle) / 3
+    return norm_force
 
 
-def refix(value, p_in='', p_out=''):
+def refix(val, p_in="", p_out=""):
     """
 
-    Convert between different SI unit prefixes
+    Convert between different SI unit prefixes. Available options are:
 
-    :param value:  value to convert
-    :param p_in:  input SI unit prefix
-    :param p_out:  output SI unit prefix
+    :code:`'T'`   Terra
 
-    :return:  value converted to new unit prefix
+    :code:`'G'` Giga
+
+    :code:`'M'` Mega
+
+    :code:`'k'` Kilo
+
+    :code:`'m'` Milli
+
+    :code:`'mu'` Micro
+
+    :code:`'n'` Nano
+
+    :code:`'p'` Pico
+
+    Parameters
+    ----------
+    val: scalar
+        The value for which to convert the unit prefix.
+    p_in: any of the above, optional
+        The current prefix of :code:`val`. If :code:`p_in` is undefined,
+        :code:`val` has no SI unit prefix.
+    p_out: any of the above, optional
+        The prefix of :code:`val_refix` after the conversion.  If :code:`p_in`
+        is undefined, :code:`val_refix` has no SI unit prefix.
+
+    Returns
+    -------
+    val_refix: scalar
+        The value in units of prefix :code:`p_out`.
 
     """
     prefix = {'p': 10 ** -12,
@@ -221,64 +338,100 @@ def refix(value, p_in='', p_out=''):
               'M': 10 ** 6,
               'G': 10 ** 9,
               'T': 10 ** 12}
-    return value * prefix[p_in] / prefix[p_out]
+    val_refix = val * prefix[p_in] / prefix[p_out]
+    return val_refix
 
 
 def abbottfirestone(trace, res=100):
     """
 
-    Calculate Abbott-Firestone curve for 2D surface trace
+    Calculate the Abbott-Firestone curve for a 1D surface trace.
 
-    :param trace: vector containing surface heights
-    :param res: number of discontinuous data steps
+    Parameters
+    ----------
+    trace: ndarray
+        The surface heights of the 1D trace.
+    res: int, optional.
+        The number of bins for the calculation of the surface height
+        probability distribution.
 
-    :return: data baskets (steps) and cumulative distribution
-             (x and y data for Abbott-Firestone plot)
+    Returns
+    -------
+    bins: ndarray
+        The bins used for the calculation of the surface height
+        probability distribution (= x-axis data for Abbott-Firestone plot).
+    prob_dist: ndarray
+        The probability distribution of the surface (= y-axis data for Abbott-
+        Firestone plot).
 
     """
-    baskets = np.linspace(np.amax(trace), np.amin(trace), res)
-    cum_dist = []
-    for basket in baskets:
-        cum_dist.append(len(np.where(trace >= basket)[0]) / len(trace) * res)
-    return baskets, cum_dist
+    bins = np.linspace(np.amax(trace), np.amin(trace), res)
+    prob_dist = []
+    for each_bin in bins:
+        prob_dist.append(len(np.where(trace >= each_bin)[0]) / len(trace) * res)
+    return bins, prob_dist
 
 
-def reff(r_1, r_2):
+def __rred(r_1, r_2):
     """
 
-    Effective radius according to Hertzian contact theory
+    Calculate the reduced (effective) radius of two radii according to Hertzian
+    contact theory.
 
-    :param r_1: radius 1
-    :param r_2: radius 2
+    Parameters
+    ----------
+    r_1: scalar
+        The first radius.
+    r_2: scalar
+        The second radius.
 
-    :return: reduced (effective) radius
+    Returns
+    -------
+    r_red: scalar
+        The reduced (effective) radius.
 
     """
     if (r_1 == 0 or abs(r_1) == float('inf')) and r_2 != 0:
-        return r_2
+        r_red =  r_2
     elif (r_2 == 0 or abs(r_2) == float('inf')) and r_1 != 0:
-        return r_1
+        r_red = r_1
     elif (r_1 == 0 or abs(r_1) == float('inf')) and \
             (r_2 == 0 or abs(r_2) == float('inf')):
-        return 0
+        r_red = 0
     elif r_1 == -r_2:
-        return 0
+        r_red = 0
     else:
-        return 1 / (1 / r_1 + 1 / r_2)
+        r_red = 1 / (1 / r_1 + 1 / r_2)
+    return r_red
 
 
-def eeff(r_x_1, r_y_1, r_x_2, r_y_2, ):
+def reff(r_x_1, r_y_1, r_x_2, r_y_2, ):
     """
 
-    Effective radii for combination of 2 bodies according to Hertzian
-    contact theory
+    Calculate the effective radii for two bodies according to Hertzian contact
+    theory. It is assumed that the two major axis of each body (x- and y-axis)
+    are perpendicular to each other and that the x and y axes of both bodies are
+    aligned.
 
-    :param r_x_1: radius of body 1 in x
-    :param r_y_1: radius of body 1 in y
-    :param r_x_2: radius of body 2 in x
-    :param r_y_2: radius of body 2 in y
+    Parameters
+    ----------
+    r_x_1: scalar
+        The radius of body 1 in direction 1 (x).
+    r_y_1: scalar
+        The radius of body 1 in direction 2 (y).
+    r_x_2: scalar
+        The radius of body 2 in direction 1 (x).
+    r_y_2: scalar
+        The radius of body 2 in direction 2 (y).
 
-    :return: effective radius (total) and effective radii in each plane
+    Returns
+    -------
+    r_eff: scalar
+        The effective radius.
+    r_eff_x: scalar
+        The effective radius in x-direction.
+    r_eff_y: scalar
+        The effective radius in y-direction.
 
     """
     recip_radius = []
@@ -288,25 +441,37 @@ def eeff(r_x_1, r_y_1, r_x_2, r_y_2, ):
         else:
             recip_radius.append(1 / radius)
 
-    r_eff_x = reff(r_x_1, r_x_2)
-    r_eff_y = reff(r_y_1, r_y_2)
-    return reff(r_eff_x, r_eff_y), r_eff_x, r_eff_y
+    r_eff_x = __rred(r_x_1, r_x_2)
+    r_eff_y = __rred(r_y_1, r_y_2)
+    r_eff = __rred(r_eff_x, r_eff_y)
+    return r_eff, r_eff_x, r_eff_y
 
 
-def meff(e_1, nu_1, e_2, nu_2):
+def eeff(e_1, nu_1, e_2, nu_2):
     """
 
-    Effective Young's modulus according to Hertzian contact theory
+    Calculate the effective (Young's) modulus of two contact bodies according
+    to Hertzian contact theory.
 
-    :param e_1: young's modulus body 1
-    :param nu_1: poisson ratio body 1
-    :param e_2: young's modulus body 2
-    :param nu_2: poisson ratio body 2
+    Parameters
+    ----------
+    e_1: ndarray, scalar
+        The Young's modulus of contact body 1.
+    nu_1: ndarray, scalar
+        The Poisson ratio of contact body 1.
+    e_2: ndarray, scalar
+        The Young's modulus of contact body 2.
+    nu_2: ndarray, scalar
+        The Poisson ratio of contact body 1.
 
-    :return:
+    Returns
+    -------
+    e_eff: scalar
+        The effective modulus.
 
     """
-    return 1 / ((1 - nu_1 ** 2) / (2 * e_1) + (1 - nu_2 ** 2) / (2 * e_2))
+    e_eff = 1 / ((1 - nu_1 ** 2) / (2 * e_1) + (1 - nu_2 ** 2) / (2 * e_2))
+    return e_eff
 
 
 if __name__ == "__main__":

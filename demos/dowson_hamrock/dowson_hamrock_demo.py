@@ -51,11 +51,11 @@ def dowson_hamrock_demo():
     dyn_temp = tr.refix(tr.kin2dyn(kin_temp, density), 'm', 'M')
 
     # calculate effective modulus and radius
-    e_eff = tr.meff(tr.YoungsMod.STEEL.value,
+    e_eff = tr.eeff(tr.YoungsMod.STEEL.value,
                     tr.PoissonRatio.STEEL.value,
                     tr.YoungsMod.GLASS.value,
                     tr.PoissonRatio.GLASS.value)
-    r_eff, _, _ = tr.eeff(tr.RadBall.TQInch.value, 0, 0, 0)
+    r_eff, _, _ = tr.reff(tr.RadBall.TQInch.value, 0, 0, 0)
 
     # calculate and plot film thickness
     film_calc = tr.dowhampoint(speeds, loads, alpha_p, e_eff, r_eff,

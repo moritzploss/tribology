@@ -1,5 +1,5 @@
-Methods for General Tribology
-==============================
+Methods for Tribology in General
+================================
 
 .. automodule:: tribology
    :members:

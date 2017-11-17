@@ -8,7 +8,7 @@ import unittest
 
 import numpy as np
 
-from ..tribology import meff, eeff, profball, profrevolve
+from ..tribology import eeff, reff, profball, profrevolve
 from .. import tribology_hertz as th
 from .. import tribology_lubrication as tl
 from .. import tribology_boundary_element as tb
@@ -35,14 +35,14 @@ class TestTribology(unittest.TestCase):
         """
         base test for meff method using steel data
         """
-        e_eff = meff(210000, 0.3, 210000, 0.3)
+        e_eff = eeff(210000, 0.3, 210000, 0.3)
         self.assertEqual(round(e_eff), 230769)
 
     def test_effective_radii_basic(self):
         """
         base test for eeff method
         """
-        r_eff, r_eff_x, r_eff_y = eeff(6, 0, float('inf'), 3)
+        r_eff, r_eff_x, r_eff_y = reff(6, 0, float('inf'), 3)
         self.assertEqual([r_eff, r_eff_x, r_eff_y], [2, 6, 3])
 
 
@@ -57,8 +57,8 @@ class TestBoundaryElement(unittest.TestCase):
         # inputs for steel ball geometry in contact with steel flat
         r_ball = 6.35
         f_outer = 10
-        e_eff = meff(210000, 0.3, 210000, 0.3)
-        r_eff, r_eff_x, _ = eeff(r_ball, r_ball, 0, 0)
+        e_eff = eeff(210000, 0.3, 210000, 0.3)
+        r_eff, r_eff_x, _ = reff(r_ball, r_ball, 0, 0)
 
         # create 3d profile for ball
         width, _, _ = th.ahertz(r_eff, r_eff_x, r_eff_x, e_eff, f_outer)
@@ -104,8 +104,8 @@ class TestHertz(unittest.TestCase):
         """
         base test for phertz
         """
-        e_eff = meff(210000, 0.3, 210000, 0.3)
-        r_eff, r_eff_x, r_eff_y = eeff(6.35, 6.35, 0, 0)
+        e_eff = eeff(210000, 0.3, 210000, 0.3)
+        r_eff, r_eff_x, r_eff_y = reff(6.35, 6.35, 0, 0)
         p_mean = th.phertz(r_eff, r_eff_x, r_eff_y, e_eff, 10)
         self.assertEqual(round(p_mean), 574)
 
@@ -113,8 +113,8 @@ class TestHertz(unittest.TestCase):
         """
         base test for fhertz
         """
-        e_eff = meff(210000, 0.3, 210000, 0.3)
-        r_eff, r_eff_x, r_eff_y = eeff(6.35, 6.35, 0, 0)
+        e_eff = eeff(210000, 0.3, 210000, 0.3)
+        r_eff, r_eff_x, r_eff_y = reff(6.35, 6.35, 0, 0)
         f_crit = th.fhertz(r_eff, r_eff_x, r_eff_y, e_eff, 574)
         self.assertEqual(round(f_crit, 2), 9.99)
 
@@ -122,8 +122,8 @@ class TestHertz(unittest.TestCase):
         """
         base test for ahertz
         """
-        e_eff = meff(210000, 0.3, 210000, 0.3)
-        r_eff, r_eff_x, r_eff_y = eeff(15, 0, 0, 10)
+        e_eff = eeff(210000, 0.3, 210000, 0.3)
+        r_eff, r_eff_x, r_eff_y = reff(15, 0, 0, 10)
         ax_a, ax_b, area = th.ahertz(r_eff, r_eff_x, r_eff_y, e_eff,
                                      100)
         rounded = [round(var, 3) for var in (ax_a, ax_b, area)]

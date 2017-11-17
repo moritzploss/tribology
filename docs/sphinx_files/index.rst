@@ -10,16 +10,22 @@ The documentation is currently under construction. The information below is
 incomplete and not formated; this will be fixed soon. In the meantime, I hope
 what you can find below is better than not having any documentation at all.
 
+You can install the tribology package using pip:
+
+.. code-block:: python
+
+   pip install tribology
+
 It is generally recommended to :code:`import` the tribology package as follows:
 
 .. code-block:: python
 
    import tribology as tr
 
-This will import all modules in the tribology package and you can use the below
-methods and classes without the module name (numpy style), i.e., the two version
-of the following code have the same effect, but the first one is probably more
-convenient:
+This will import all package modules. After that, you can use the below
+methods and classes without the module name (numpy style). That means that the
+two version of the following code have the same effect, but the first one is
+probably more convenient:
 
 .. code-block:: python
 
@@ -39,12 +45,12 @@ convenient:
    :maxdepth: 2
    :caption: Table of Contents:
 
-   tribology_constants.rst
    tribology.rst
    tribology_boundary_element.rst
    tribology_dowson_hamrock.rst
    tribology_hertz.rst
    tribology_lubrication.rst
+   tribology_constants.rst
 
 
 Indices and tables

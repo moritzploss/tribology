@@ -43,9 +43,9 @@ def demo_ball_on_plate():
     # inputs for steel ball geometry in contact with steel flat
     r_ball = tr.RadBall.HInch.value
     f_outer = 10
-    e_eff = tr.meff(tr.YoungsMod.STEEL.value, tr.PoissonRatio.STEEL.value,
+    e_eff = tr.eeff(tr.YoungsMod.STEEL.value, tr.PoissonRatio.STEEL.value,
                     tr.YoungsMod.STEEL.value, tr.PoissonRatio.STEEL.value)
-    r_eff, r_eff_x, _ = tr.eeff(r_ball, r_ball, 0, 0)
+    r_eff, r_eff_x, _ = tr.reff(r_ball, r_ball, 0, 0)
 
     # create 3d profile for ball and flat plate. calculate Hertz contact width
     # first and use result to determine grid size for boundary element solution
