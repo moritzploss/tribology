@@ -28,11 +28,11 @@ convenient:
 
    # without explicit module import
    import tribology as tr
-   inf_mat = tr.beinflumat(x_axis, y_axis, e_eff)
+   inf_mat = tr.beinflumat(...)
 
    # with explicit module import
    from tribology import tribology_boundary_element as tbe
-   inf_mat = tbe.beinflumat(x_axis, y_axis, e_eff)
+   inf_mat = tbe.beinflumat(...)
 
 
 .. toctree::
