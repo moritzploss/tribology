@@ -7,7 +7,7 @@ science. It provides implementations of empirical and numerical
 calculation routines together with frequently used constants.
 
 The package [documenation](https://moritzploss.github.io/tribology) is
-provided in the `/docs` directory.
+under construction at the moment and provided in the `/docs` directory.
 
 The package is currently hosted on github:
 
