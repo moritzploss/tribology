@@ -5,9 +5,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
     <title>Tribology documentation</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
   </head>
@@ -59,8 +62,31 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="welcome-to-tribology">
-<h1>Welcome to Tribology!<a class="headerlink" href="#welcome-to-tribology" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="welcome-to-tribology-s-documentation">
+<h1>Welcome to Tribology’s Documentation!<a class="headerlink" href="#welcome-to-tribology-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>The documentation is currently under construction. The information below is
+incomplete and not formated; this will be fixed soon. In the meantime, I hope
+what you can find below is better than not having any documentation at all.</p>
+<p>It is generally recommended to <code class="code docutils literal"><span class="pre">import</span></code> the tribology package as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tribology</span> <span class="kn">as</span> <span class="nn">tr</span>
+</pre></div>
+</div>
+<p>This will import all modules in the tribology package and you can use the below
+methods and classes without the module name (numpy style), i.e., the two version
+of the following code have the same effect, but the first one is probably more
+convenient:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># this code imports the beinflumat method from the</span>
+<span class="c1"># tribology_boundary_element module of the tribology package</span>
+
+<span class="c1"># without explicit module import</span>
+<span class="kn">import</span> <span class="nn">tribology</span> <span class="kn">as</span> <span class="nn">tr</span>
+<span class="n">inf_mat</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">beinflumat</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">y_axis</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">)</span>
+
+<span class="c1"># with explicit module import</span>
+<span class="kn">from</span> <span class="nn">tribology</span> <span class="kn">import</span> <span class="n">tribology_boundary_element</span> <span class="k">as</span> <span class="n">tbe</span>
+<span class="n">inf_mat</span> <span class="o">=</span> <span class="n">tbe</span><span class="o">.</span><span class="n">beinflumat</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">y_axis</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="toctree-wrapper compound">
 <span id="document-tribology_constants"></span><div class="section" id="module-tribology_constants">
 <span id="constants-for-tribology"></span><h2>Constants for Tribology<a class="headerlink" href="#module-tribology_constants" title="Permalink to this headline">¶</a></h2>
@@ -272,7 +298,7 @@ a body
 
 <dl class="function">
 <dt id="tribology.refix">
-<code class="descclassname">tribology.</code><code class="descname">refix</code><span class="sig-paren">(</span><em>value</em>, <em>p_in=''</em>, <em>p_out=''</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.refix" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">tribology.</code><code class="descname">refix</code><span class="sig-paren">(</span><em>value</em>, <em>p_in=”</em>, <em>p_out=”</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.refix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert between different SI unit prefixes
 :param value:  value to convert
 :param p_in:  input SI unit prefix
@@ -685,7 +711,7 @@ ASTM D341.
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Moritz Ploss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.2.
     </div>
   </body>
 </html>

@@ -30,7 +30,7 @@ for more information.
 # version history
 
 #### 0.2.1.dev
-- Sphinx documentation added to git repo
+- Sphinx documentation added to git repo, docs available at https://moritzploss.github.io/tribology
 -  Travis CI builds now with Pylint error check for package files.
 Non-package files are not checked. Build fails if Pylint error is found.
 - Python 3.4 and 3.5 builds added to Travis CI (now 3.4, 3.5 and 3.6)
