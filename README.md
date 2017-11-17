@@ -6,9 +6,10 @@ research and education, including contact mechanics and lubrication
 science. It provides implementations of analytical and numerical
 calculation routines together with frequently used constants.
 
-The package [documenation](https://moritzploss.github.io/tribology) is
-under construction at the moment and provided through **GitHub Pages**
-and in the `/docs` directory.
+The package
+<a href="https://moritzploss.github.io/tribology" target="_blank">
+documenation</a> is provided through GitHub Pages and can be found
+in the `/docs` directory.
 
 The **tribology** package is currently hosted on GitHub:
 
