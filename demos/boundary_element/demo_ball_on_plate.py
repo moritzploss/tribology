@@ -1,5 +1,7 @@
 """
-Short demonstration of how to use boundary element methods
+
+Short demonstration of how to use methods related to boundary element theory.
+
 """
 
 import tribology as tr
@@ -11,11 +13,9 @@ from mpl_toolkits.mplot3d import Axes3D
 
 def plot_results(ax_x, ax_y, press):
     """
-    Plot 3D pressure distribution
-    :param ax_x: contact body x axis, vector
-    :param ax_y: contact body y axis, vector
-    :param press: pressure field, 2d array
-    :return: None
+
+    Plot the 3D pressure distribution.
+
     """
 
     # generate plot grid
@@ -34,11 +34,12 @@ def plot_results(ax_x, ax_y, press):
 
 def demo_ball_on_plate():
     """
+
     Short demo function to show how to use the tribology package for boundary
     element codes. The code below calculates the contact pressure between a
     1/2 inch steel ball in contact with a flat steel plate. The normal force
     is 10 N; the grid size is 51 x 41 in x and y direction respectively.
-    :return: None
+
     """
     # inputs for steel ball geometry in contact with steel flat
     r_ball = tr.RadBall.HInch.value

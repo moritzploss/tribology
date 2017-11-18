@@ -146,8 +146,8 @@ def srr(vel_1, vel_2):
         The slide-to-roll ratio in the tribological contact.
 
     """
-    srr = vslide(vel_1, vel_2) / vroll(vel_1, vel_2)
-    return srr
+    val_srr = vslide(vel_1, vel_2) / vroll(vel_1, vel_2)
+    return val_srr
 
 
 def radpersec2rpm(vel_rad_per_sec):

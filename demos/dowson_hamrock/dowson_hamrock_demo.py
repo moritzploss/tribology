@@ -1,5 +1,7 @@
 """
-Short demonstration of how to use dowson-hamrock equation for point contact
+
+Short demonstration of how to use dowson-hamrock equation for point contact.
+
 """
 
 import tribology as tr
@@ -10,11 +12,9 @@ import matplotlib.pyplot as plt
 
 def plot_results(films, film_calc, speeds):
     """
-    plot calculated and measured data in loglog plot
-    :param films: measured film data, vector, nm
-    :param film_calc: calculated film data, vector, nm
-    :param speeds: entrainment speeds, mm/s
-    :return: None
+
+    Plot the calculated and measured data in a loglog plot.
+
     """
     plt.figure()
     plt.loglog(speeds, films, 'ko', label='measured', color='black')
@@ -29,9 +29,10 @@ def plot_results(films, film_calc, speeds):
 
 def dowson_hamrock_demo():
     """
+
     Short demo function to show how to use tribology toolbox for dowson-hamrock
     film thickness calculation. EHD input data file in npz-format required.
-    :return: None
+
     """
     # load data
     database = np.load('demo_ehd_data.npz')
