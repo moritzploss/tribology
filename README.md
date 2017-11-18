@@ -37,9 +37,14 @@ for more information.
 
 # version history
 
-#### 0.2.2.dev
+
+#### 0.2.3.dev
+
 Current development version on GitHub.
 
+#### 0.2.2
+
+- html documentation now with multi-page structure
 - docstrings changed to numpy format and refactored
 - functions `eeff` and `reff` moved to `tribology_hertz` module
 - function `eeff` renamed to `reff`
