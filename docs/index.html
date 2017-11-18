@@ -76,14 +76,13 @@
             
             
               <!-- Local TOC -->
-              <div class="local-toc"><p class="caption"><span class="caption-text">Table of Contents:</span></p>
+              <div class="local-toc"><p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="index.html#document-tribology">Methods for Tribology in General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html#document-tribology_boundary_element">Methods Related to Boundary Element Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html#document-tribology_dowson_hamrock">Methods Related to Dowson-Hamrock Film Thickness Caluclations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html#document-tribology_hertz">Methods Related to Hertz Contact Theory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html#document-tribology_lubrication">Methods Related to Lubricants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html#document-tribology_constants">Constants for Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-sec_general_tribology">Tribology in General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-sec_contact_mechanics">Contact Mechanics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-sec_ehd_lubrication">EHD Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-sec_lubricants">Lubricants and Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-sec_constants">Constants</a></li>
 </ul>
 </div>
             
@@ -166,8 +165,11 @@ methods without ever worrying about modules:</p>
 <p>Alternatively, you can perform module level imports for certain methods and
 classes. Please see below for more information on available modules.</p>
 <div class="toctree-wrapper compound">
+<span id="document-sec_general_tribology"></span><div class="section" id="tribology-in-general">
+<h2>Tribology in General<a class="headerlink" href="#tribology-in-general" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
 <span id="document-tribology"></span><div class="section" id="methods-for-tribology-in-general">
-<h2>Methods for Tribology in General<a class="headerlink" href="#methods-for-tribology-in-general" title="Permalink to this headline">¶</a></h2>
+<h3>Methods for Tribology in General<a class="headerlink" href="#methods-for-tribology-in-general" title="Permalink to this headline">¶</a></h3>
 <p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">tribology</span></code> module of the
 package.</p>
 <span class="target" id="module-tribology"></span><p>The methods in this module are related to tribology in general.</p>
@@ -502,9 +504,14 @@ velocities.</p>
 </dd></dl>
 
 </div>
-<span id="document-tribology_boundary_element"></span><div class="section" id="methods-related-to-boundary-element-solvers">
-<h2>Methods Related to Boundary Element Solvers<a class="headerlink" href="#methods-related-to-boundary-element-solvers" title="Permalink to this headline">¶</a></h2>
-<p>All of the below methods ca be found in the <code class="code docutils literal"><span class="pre">tribology_boundary_element</span></code>
+</div>
+</div>
+<span id="document-sec_contact_mechanics"></span><div class="section" id="contact-mechanics">
+<h2>Contact Mechanics<a class="headerlink" href="#contact-mechanics" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<span id="document-tribology_boundary_element"></span><div class="section" id="boundary-element-theory">
+<h3>Boundary Element Theory<a class="headerlink" href="#boundary-element-theory" title="Permalink to this headline">¶</a></h3>
+<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">tribology_boundary_element</span></code>
 module of the package.</p>
 <span class="target" id="module-tribology_boundary_element"></span><p>This module contains methods related to boundary element solvers for contact
 mechanics calculations. Please see the <code class="code docutils literal"><span class="pre">/demo</span></code> directory for minimum
@@ -608,126 +615,9 @@ to determine when solver has completed).</li>
 </dd></dl>
 
 </div>
-<span id="document-tribology_dowson_hamrock"></span><div class="section" id="methods-related-to-dowson-hamrock-film-thickness-caluclations">
-<h2>Methods Related to Dowson-Hamrock Film Thickness Caluclations<a class="headerlink" href="#methods-related-to-dowson-hamrock-film-thickness-caluclations" title="Permalink to this headline">¶</a></h2>
-<p>All of the below methods ca be found in the <code class="code docutils literal"><span class="pre">tribology_dowson_hamrock</span></code>
-module of the package.</p>
-<span class="target" id="module-tribology_dowson_hamrock"></span><p>Methods related to Dowson-Hamrock film thickness calculations</p>
-<dl class="function">
-<dt id="tribology_dowson_hamrock.dowhamline">
-<code class="descname">dowhamline</code><span class="sig-paren">(</span><em>vel_entrain</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em>, <em>l_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowhamline" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the mean film thickness in a line contact according to
-Dowson-Hamrock.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>vel_entrain</strong> (<em>ndarray, scalar</em>) &#8211; The entrainment velocity of the contact problem.</li>
-<li><strong>force</strong> (<em>ndarray, scalar</em>) &#8211; The normal force in the contact.</li>
-<li><strong>alpha_p</strong> (<em>ndarray, scalar</em>) &#8211; The pressure-viscosity coefficient of the lubricant.</li>
-<li><strong>e_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective modulus of the contact problem.</li>
-<li><strong>r_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective radius of the contact problem.</li>
-<li><strong>eta</strong> (<em>ndarray, scalar</em>) &#8211; The dynamic viscosity of the lubricant.</li>
-<li><strong>l_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective length of the contact.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>h_0</strong> &#8211; The central lubricating film thickness in the contact.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="tribology_dowson_hamrock.dowhampoint">
-<code class="descname">dowhampoint</code><span class="sig-paren">(</span><em>vel_entrain</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowhampoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the mean film thickness in a point contact according to
-Dowson-Hamrock.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>vel_entrain</strong> (<em>ndarray, scalar</em>) &#8211; The entrainment velocity of the contact problem.</li>
-<li><strong>force</strong> (<em>ndarray, scalar</em>) &#8211; The normal force in the contact.</li>
-<li><strong>alpha_p</strong> (<em>ndarray, scalar</em>) &#8211; The pressure-viscosity coefficient of the lubricant.</li>
-<li><strong>e_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective modulus of the contact problem.</li>
-<li><strong>r_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective radius of the contact problem.</li>
-<li><strong>eta</strong> (<em>ndarray, scalar</em>) &#8211; The dynamic viscosity of the lubricant.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>h_0</strong> &#8211; The central lubricating film thickness in the contact.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="tribology_dowson_hamrock.edowham">
-<code class="descname">edowham</code><span class="sig-paren">(</span><em>alpha_p</em>, <em>e_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.edowham" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the elasticity parameter of the contact problem according to
-Dowson-Hamrock.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>alpha_p</strong> (<em>ndarray, scalar</em>) &#8211; The pressure-viscosity coefficient of the lubricant.</li>
-<li><strong>e_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective modulus of the contact problem.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>param_elasticity</strong> &#8211; The elasticity parameter of the contact problem.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="tribology_dowson_hamrock.vdowham">
-<code class="descname">vdowham</code><span class="sig-paren">(</span><em>eta</em>, <em>vel_entrain</em>, <em>e_eff</em>, <em>r_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.vdowham" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the velocity parameter of the contact problem according to
-Dowson-Hamrock.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>eta</strong> (<em>ndarray, scalar</em>) &#8211; The dynamic viscosity of the lubricant.</li>
-<li><strong>vel_entrain</strong> (<em>ndarray, scalar</em>) &#8211; The entrainment velocity of the contact problem.</li>
-<li><strong>e_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective modulus of the contact problem.</li>
-<li><strong>r_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective radius of the contact problem.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>param_velocity</strong> &#8211; The velocity parameter of the contact problem.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div>
-<span id="document-tribology_hertz"></span><div class="section" id="methods-related-to-hertz-contact-theory">
-<h2>Methods Related to Hertz Contact Theory<a class="headerlink" href="#methods-related-to-hertz-contact-theory" title="Permalink to this headline">¶</a></h2>
-<p>All of the below methods ca be found in the <code class="code docutils literal"><span class="pre">tribology_hertz</span></code>
+<span id="document-tribology_hertz"></span><div class="section" id="hertzian-contact-theory">
+<h3>Hertzian Contact Theory<a class="headerlink" href="#hertzian-contact-theory" title="Permalink to this headline">¶</a></h3>
+<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">tribology_hertz</span></code>
 module of the package.</p>
 <span class="target" id="module-tribology_hertz"></span><p>Methods related to Hertz contact theory</p>
 <dl class="function">
@@ -902,9 +792,136 @@ aligned.</p>
 </dd></dl>
 
 </div>
-<span id="document-tribology_lubrication"></span><div class="section" id="methods-related-to-lubricants">
-<h2>Methods Related to Lubricants<a class="headerlink" href="#methods-related-to-lubricants" title="Permalink to this headline">¶</a></h2>
-<p>All of the below methods ca be found in the <code class="code docutils literal"><span class="pre">tribology_lubrication</span></code>
+</div>
+</div>
+<span id="document-sec_ehd_lubrication"></span><div class="section" id="ehd-lubrication">
+<h2>EHD Lubrication<a class="headerlink" href="#ehd-lubrication" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<span id="document-tribology_dowson_hamrock"></span><div class="section" id="dowson-hamrock-film-thickness">
+<h3>Dowson-Hamrock Film Thickness<a class="headerlink" href="#dowson-hamrock-film-thickness" title="Permalink to this headline">¶</a></h3>
+<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">tribology_dowson_hamrock</span></code>
+module of the package.</p>
+<span class="target" id="module-tribology_dowson_hamrock"></span><p>Methods related to Dowson-Hamrock film thickness calculations</p>
+<dl class="function">
+<dt id="tribology_dowson_hamrock.dowhamline">
+<code class="descname">dowhamline</code><span class="sig-paren">(</span><em>vel_entrain</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em>, <em>l_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowhamline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the mean film thickness in a line contact according to
+Dowson-Hamrock.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>vel_entrain</strong> (<em>ndarray, scalar</em>) &#8211; The entrainment velocity of the contact problem.</li>
+<li><strong>force</strong> (<em>ndarray, scalar</em>) &#8211; The normal force in the contact.</li>
+<li><strong>alpha_p</strong> (<em>ndarray, scalar</em>) &#8211; The pressure-viscosity coefficient of the lubricant.</li>
+<li><strong>e_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective modulus of the contact problem.</li>
+<li><strong>r_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective radius of the contact problem.</li>
+<li><strong>eta</strong> (<em>ndarray, scalar</em>) &#8211; The dynamic viscosity of the lubricant.</li>
+<li><strong>l_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective length of the contact.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>h_0</strong> &#8211; The central lubricating film thickness in the contact.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_dowson_hamrock.dowhampoint">
+<code class="descname">dowhampoint</code><span class="sig-paren">(</span><em>vel_entrain</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowhampoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the mean film thickness in a point contact according to
+Dowson-Hamrock.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>vel_entrain</strong> (<em>ndarray, scalar</em>) &#8211; The entrainment velocity of the contact problem.</li>
+<li><strong>force</strong> (<em>ndarray, scalar</em>) &#8211; The normal force in the contact.</li>
+<li><strong>alpha_p</strong> (<em>ndarray, scalar</em>) &#8211; The pressure-viscosity coefficient of the lubricant.</li>
+<li><strong>e_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective modulus of the contact problem.</li>
+<li><strong>r_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective radius of the contact problem.</li>
+<li><strong>eta</strong> (<em>ndarray, scalar</em>) &#8211; The dynamic viscosity of the lubricant.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>h_0</strong> &#8211; The central lubricating film thickness in the contact.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_dowson_hamrock.edowham">
+<code class="descname">edowham</code><span class="sig-paren">(</span><em>alpha_p</em>, <em>e_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.edowham" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the elasticity parameter of the contact problem according to
+Dowson-Hamrock.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>alpha_p</strong> (<em>ndarray, scalar</em>) &#8211; The pressure-viscosity coefficient of the lubricant.</li>
+<li><strong>e_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective modulus of the contact problem.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>param_elasticity</strong> &#8211; The elasticity parameter of the contact problem.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_dowson_hamrock.vdowham">
+<code class="descname">vdowham</code><span class="sig-paren">(</span><em>eta</em>, <em>vel_entrain</em>, <em>e_eff</em>, <em>r_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.vdowham" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the velocity parameter of the contact problem according to
+Dowson-Hamrock.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>eta</strong> (<em>ndarray, scalar</em>) &#8211; The dynamic viscosity of the lubricant.</li>
+<li><strong>vel_entrain</strong> (<em>ndarray, scalar</em>) &#8211; The entrainment velocity of the contact problem.</li>
+<li><strong>e_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective modulus of the contact problem.</li>
+<li><strong>r_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective radius of the contact problem.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>param_velocity</strong> &#8211; The velocity parameter of the contact problem.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+</div>
+<span id="document-sec_lubricants"></span><div class="section" id="lubricants-and-lubrication">
+<h2>Lubricants and Lubrication<a class="headerlink" href="#lubricants-and-lubrication" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<span id="document-tribology_lubrication"></span><div class="section" id="lubricants-and-lubrication">
+<h3>Lubricants and Lubrication<a class="headerlink" href="#lubricants-and-lubrication" title="Permalink to this headline">¶</a></h3>
+<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">tribology_lubrication</span></code>
 module of the package.</p>
 <span class="target" id="module-tribology_lubrication"></span><p>Methods related to lubricants and lubrication</p>
 <dl class="function">
@@ -1122,9 +1139,14 @@ kinematic viscosity.</li>
 </dd></dl>
 
 </div>
+</div>
+</div>
+<span id="document-sec_constants"></span><div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
 <span id="document-tribology_constants"></span><div class="section" id="constants-for-tribology">
-<h2>Constants for Tribology<a class="headerlink" href="#constants-for-tribology" title="Permalink to this headline">¶</a></h2>
-<p>All of the below classes ca be found in the <code class="code docutils literal"><span class="pre">tribology_constants</span></code>
+<h3>Constants for Tribology<a class="headerlink" href="#constants-for-tribology" title="Permalink to this headline">¶</a></h3>
+<p>All of the below classes can be found in the <code class="code docutils literal"><span class="pre">tribology_constants</span></code>
 module of the package.</p>
 <span class="target" id="module-tribology_constants"></span><p>Relevant constants for tribology research. Use, for example, as follows:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># get young&#39;s modulus of steel in units of MPa</span>
@@ -1283,6 +1305,8 @@ temperature. Available values are:</p>
 </table>
 </dd></dl>
 
+</div>
+</div>
 </div>
 </div>
 </div>

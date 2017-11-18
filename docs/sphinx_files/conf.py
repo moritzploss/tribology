@@ -103,7 +103,7 @@ todo_include_todos = True
 html_theme = "sphinx_rtd_theme"
 
 html_sidebars = {
-   '**': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
+   '**': ['localtoc.html', 'sourcelink.html', 'searchbox.html'],
    'using/windows': ['windowssidebar.html', 'searchbox.html'],
 }
 

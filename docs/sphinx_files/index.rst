@@ -32,15 +32,14 @@ Alternatively, you can perform module level imports for certain methods and
 classes. Please see below for more information on available modules.
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Table of Contents:
+   :maxdepth: 3
+   :caption: Contents:
 
-   tribology.rst
-   tribology_boundary_element.rst
-   tribology_dowson_hamrock.rst
-   tribology_hertz.rst
-   tribology_lubrication.rst
-   tribology_constants.rst
+   sec_general_tribology.rst
+   sec_contact_mechanics.rst
+   sec_ehd_lubrication.rst
+   sec_lubricants.rst
+   sec_constants.rst
 
 
 Indices and tables
