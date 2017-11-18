@@ -170,7 +170,7 @@ package.</p>
 <span class="target" id="module-tribology"></span><p>The methods in this module are related to tribology in general.</p>
 <dl class="function">
 <dt id="tribology.abbottfirestone">
-<code class="descname">abbottfirestone</code><span class="sig-paren">(</span><em>trace</em>, <em>res=100</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.abbottfirestone" title="Permalink to this definition">¶</a></dt>
+<code class="descname">abbottfirestone</code><span class="sig-paren">(</span><em>trace</em>, <em>num_bins=100</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.abbottfirestone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the Abbott-Firestone curve for a 1D profile trace.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -178,7 +178,7 @@ package.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>trace</strong> (<em>ndarray</em>) &#8211; The profile heights of the 1D trace.</li>
-<li><strong>res</strong> (<em>int, optional</em>) &#8211; The number of bins for the calculation of the profile height
+<li><strong>num_bins</strong> (<em>positive int, optional</em>) &#8211; The number of bins for the calculation of the profile height
 probability distribution.</li>
 </ul>
 </td>
@@ -670,24 +670,28 @@ module of the package.</p>
 <span class="target" id="module-tribology_dowson_hamrock"></span><p>Methods related to Dowson-Hamrock film thickness calculations</p>
 <dl class="function">
 <dt id="tribology_dowson_hamrock.dowhamline">
-<code class="descname">dowhamline</code><span class="sig-paren">(</span><em>speed</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em>, <em>l_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowhamline" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate mean film thickness according to Dowson-Hamrock equation.</p>
+<code class="descname">dowhamline</code><span class="sig-paren">(</span><em>vel_entrain</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em>, <em>l_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowhamline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the mean film thickness in a line contact according to
+Dowson-Hamrock.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>speed</strong> &#8211; entrainment speed, vector or int/float</li>
-<li><strong>force</strong> &#8211; force, vector or int/float</li>
-<li><strong>e_eff</strong> &#8211; effective modulus</li>
-<li><strong>alpha_p</strong> &#8211; pressure-viscosity coefficient in, int/float</li>
-<li><strong>eta</strong> &#8211; dynamic viscosity of lube, int/float</li>
-<li><strong>r_eff</strong> &#8211; effective radius</li>
-<li><strong>l_eff</strong> &#8211; effective length</li>
+<li><strong>vel_entrain</strong> (<em>ndarray, scalar</em>) &#8211; The entrainment velocity of the contact problem.</li>
+<li><strong>force</strong> (<em>ndarray, scalar</em>) &#8211; The normal force in the contact.</li>
+<li><strong>alpha_p</strong> (<em>ndarray, scalar</em>) &#8211; The pressure-viscosity coefficient of the lubricant.</li>
+<li><strong>e_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective modulus of the contact problem.</li>
+<li><strong>r_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective radius of the contact problem.</li>
+<li><strong>eta</strong> (<em>ndarray, scalar</em>) &#8211; The dynamic viscosity of the lubricant.</li>
+<li><strong>l_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective length of the contact.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">mean film thickness, vector or int/float</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>h_0</strong> &#8211; The central lubricating film thickness in the contact.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
 </td>
 </tr>
 </tbody>
@@ -696,23 +700,27 @@ module of the package.</p>
 
 <dl class="function">
 <dt id="tribology_dowson_hamrock.dowhampoint">
-<code class="descname">dowhampoint</code><span class="sig-paren">(</span><em>speed</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowhampoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate mean film thickness according to Dowson-Hamrock equation.</p>
+<code class="descname">dowhampoint</code><span class="sig-paren">(</span><em>vel_entrain</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowhampoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the mean film thickness in a point contact according to
+Dowson-Hamrock.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>speed</strong> &#8211; entrainment speed, vector or int/float</li>
-<li><strong>force</strong> &#8211; force, vector or int/float</li>
-<li><strong>e_eff</strong> &#8211; effective modulus in MPa</li>
-<li><strong>alpha_p</strong> &#8211; pressure-viscosity coefficient, int/float</li>
-<li><strong>eta</strong> &#8211; dynamic viscosity of lube, int/float</li>
-<li><strong>r_eff</strong> &#8211; effective radius</li>
+<li><strong>vel_entrain</strong> (<em>ndarray, scalar</em>) &#8211; The entrainment velocity of the contact problem.</li>
+<li><strong>force</strong> (<em>ndarray, scalar</em>) &#8211; The normal force in the contact.</li>
+<li><strong>alpha_p</strong> (<em>ndarray, scalar</em>) &#8211; The pressure-viscosity coefficient of the lubricant.</li>
+<li><strong>e_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective modulus of the contact problem.</li>
+<li><strong>r_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective radius of the contact problem.</li>
+<li><strong>eta</strong> (<em>ndarray, scalar</em>) &#8211; The dynamic viscosity of the lubricant.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">mean film thickness, vector or int/float</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>h_0</strong> &#8211; The central lubricating film thickness in the contact.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
 </td>
 </tr>
 </tbody>
@@ -722,18 +730,22 @@ module of the package.</p>
 <dl class="function">
 <dt id="tribology_dowson_hamrock.edowham">
 <code class="descname">edowham</code><span class="sig-paren">(</span><em>alpha_p</em>, <em>e_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.edowham" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate elasticity parameter of dowson-hamrock equation</p>
+<dd><p>Calculate the elasticity parameter of the contact problem according to
+Dowson-Hamrock.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>alpha_p</strong> &#8211; pressure-viscosity coefficient</li>
-<li><strong>e_eff</strong> &#8211; effective young&#8217;s modulus</li>
+<li><strong>alpha_p</strong> (<em>ndarray, scalar</em>) &#8211; The pressure-viscosity coefficient of the lubricant.</li>
+<li><strong>e_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective modulus of the contact problem.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">elasticity parameter</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>param_elasticity</strong> &#8211; The elasticity parameter of the contact problem.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
 </td>
 </tr>
 </tbody>
@@ -742,21 +754,25 @@ module of the package.</p>
 
 <dl class="function">
 <dt id="tribology_dowson_hamrock.vdowham">
-<code class="descname">vdowham</code><span class="sig-paren">(</span><em>eta</em>, <em>speed</em>, <em>e_eff</em>, <em>r_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.vdowham" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate velocity parameter of dowson-hamrock equation</p>
+<code class="descname">vdowham</code><span class="sig-paren">(</span><em>eta</em>, <em>vel_entrain</em>, <em>e_eff</em>, <em>r_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.vdowham" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the velocity parameter of the contact problem according to
+Dowson-Hamrock.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>eta</strong> &#8211; dynamic viscosity</li>
-<li><strong>speed</strong> &#8211; entrainment speed</li>
-<li><strong>e_eff</strong> &#8211; effective young&#8217;s modulus</li>
-<li><strong>r_eff</strong> &#8211; effective radius</li>
+<li><strong>eta</strong> (<em>ndarray, scalar</em>) &#8211; The dynamic viscosity of the lubricant.</li>
+<li><strong>vel_entrain</strong> (<em>ndarray, scalar</em>) &#8211; The entrainment velocity of the contact problem.</li>
+<li><strong>e_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective modulus of the contact problem.</li>
+<li><strong>r_eff</strong> (<em>ndarray, scalar</em>) &#8211; The effective radius of the contact problem.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">velocity parameter</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>param_velocity</strong> &#8211; The velocity parameter of the contact problem.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
 </td>
 </tr>
 </tbody>

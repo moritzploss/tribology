@@ -40,6 +40,7 @@ for more information.
 #### 0.2.2.dev
 Current development version on GitHub.
 
+- docstrings for module `tribology_dowson_hamrock` changed to numpy format and refactored
 - docstrings for module `tribology_boundary_element` changed to numpy format and refactored
 - docstrings for module `tribology` changed to numpy format and refactored
 - function `eeff` renamed to `reff`

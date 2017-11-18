@@ -342,7 +342,7 @@ def refix(val, p_in="", p_out=""):
     return val_refix
 
 
-def abbottfirestone(trace, res=100):
+def abbottfirestone(trace, num_bins=100):
     """
 
     Calculate the Abbott-Firestone curve for a 1D profile trace.
@@ -351,7 +351,7 @@ def abbottfirestone(trace, res=100):
     ----------
     trace: ndarray
         The profile heights of the 1D trace.
-    res: int, optional
+    num_bins: positive int, optional
         The number of bins for the calculation of the profile height
         probability distribution.
 
@@ -365,10 +365,10 @@ def abbottfirestone(trace, res=100):
         Firestone plot).
 
     """
-    bins = np.linspace(np.amax(trace), np.amin(trace), res)
+    bins = np.linspace(np.amax(trace), np.amin(trace), num_bins)
     prob_dist = []
     for each_bin in bins:
-        prob_dist.append(len(np.where(trace >= each_bin)[0]) / len(trace) * res)
+        prob_dist.append(len(np.where(trace >= each_bin)[0]) / len(trace) * num_bins)
     return bins, prob_dist
 
 

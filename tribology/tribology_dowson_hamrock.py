@@ -10,87 +10,147 @@ Methods related to Dowson-Hamrock film thickness calculations
 def __dowson_hamrock_parameters(r_eff, param_g, param_u, param_w):
     """
 
-    part of dowson-hamrock
+     Calculate the EHD-parameter for Dowson-Hamrock film thickness calculations.
+     The name EHD-parameter is used within the tribology package to refer to
+     what is calculated below; this parameter is not officially defined by
+     Dowson-Hamrock.
 
-    :param r_eff: effective radius
-    :param param_g: elasticity_parameter
-    :param param_u: velocity_parameter
-    :param param_w: load parameter
+    Parameters
+    ----------
+    r_eff: scalar
+        The effective radius of the contact problem.
+    param_g: scalar
+        The elasticity parameter of the contact problem.
+    param_u: scalar
+        The velocity parameter of the contact problem.
+    param_w: scalar
+        The load parameter of the contact problem.
 
-    :return: ehd parameter
+    Returns
+    -------
+    param_ehd: scalar
+        The EHD parameter of the contact problem.
 
     """
-    return r_eff * param_g ** 0.53 * param_u ** 0.67 * param_w ** -0.067
+    param_ehd = r_eff * param_g ** 0.53 * param_u ** 0.67 * param_w ** -0.067
+    return param_ehd
 
 
 def edowham(alpha_p, e_eff):
     """
 
-    calculate elasticity parameter of dowson-hamrock equation
+    Calculate the elasticity parameter of the contact problem according to
+    Dowson-Hamrock.
 
-    :param alpha_p: pressure-viscosity coefficient
-    :param e_eff: effective young's modulus
+    Parameters
+    ----------
+    alpha_p: ndarray, scalar
+        The pressure-viscosity coefficient of the lubricant.
+    e_eff: ndarray, scalar
+        The effective modulus of the contact problem.
 
-    :return: elasticity parameter
-
-    """
-    return alpha_p * e_eff
-
-
-def vdowham(eta, speed, e_eff, r_eff):
-    """
-
-    calculate velocity parameter of dowson-hamrock equation
-
-    :param eta: dynamic viscosity
-    :param speed: entrainment speed
-    :param e_eff: effective young's modulus
-    :param r_eff: effective radius
-
-    :return: velocity parameter
+    Returns
+    -------
+    param_elasticity: ndarray, scalar
+        The elasticity parameter of the contact problem.
 
     """
-    return eta * speed / (e_eff * r_eff)
+    param_elasticity = alpha_p * e_eff
+    return param_elasticity
 
 
-def dowhamline(speed, force, alpha_p, e_eff, r_eff, eta, l_eff):
+def vdowham(eta, vel_entrain, e_eff, r_eff):
     """
 
-    Calculate mean film thickness according to Dowson-Hamrock equation.
+    Calculate the velocity parameter of the contact problem according to
+    Dowson-Hamrock.
 
-    :param speed: entrainment speed, vector or int/float
-    :param force: force, vector or int/float
-    :param e_eff: effective modulus
-    :param alpha_p: pressure-viscosity coefficient in, int/float
-    :param eta: dynamic viscosity of lube, int/float
-    :param r_eff: effective radius
-    :param l_eff: effective length
+    Parameters
+    ----------
+    eta: ndarray, scalar
+        The dynamic viscosity of the lubricant.
+    vel_entrain: ndarray, scalar
+        The entrainment velocity of the contact problem.
+    e_eff: ndarray, scalar
+        The effective modulus of the contact problem.
+    r_eff: ndarray, scalar
+        The effective radius of the contact problem.
 
-    :return: mean film thickness, vector or int/float
+    Returns
+    -------
+    param_velocity: ndarray, scalar
+        The velocity parameter of the contact problem.
+
+    """
+    param_velocity = eta * vel_entrain / (e_eff * r_eff)
+    return param_velocity
+
+
+def dowhamline(vel_entrain, force, alpha_p, e_eff, r_eff, eta, l_eff):
+    """
+
+    Calculate the mean film thickness in a line contact according to
+    Dowson-Hamrock.
+
+    Parameters
+    ----------
+    vel_entrain: ndarray, scalar
+        The entrainment velocity of the contact problem.
+    force: ndarray, scalar
+        The normal force in the contact.
+    alpha_p: ndarray, scalar
+        The pressure-viscosity coefficient of the lubricant.
+    e_eff: ndarray, scalar
+        The effective modulus of the contact problem.
+    r_eff: ndarray, scalar
+        The effective radius of the contact problem.
+    eta: ndarray, scalar
+        The dynamic viscosity of the lubricant.
+    l_eff: ndarray, scalar
+        The effective length of the contact.
+
+    Returns
+    -------
+    h_0: ndarray, scalar
+        The central lubricating film thickness in the contact.
 
     """
     param_g = edowham(alpha_p, e_eff)
-    param_u = vdowham(eta, speed, e_eff, r_eff)
+    param_u = vdowham(eta, vel_entrain, e_eff, r_eff)
     param_w = force / (l_eff * r_eff * e_eff)
-    return 2.69 * __dowson_hamrock_parameters(r_eff, param_g, param_u, param_w)
+    h_0 = 2.69 * __dowson_hamrock_parameters(r_eff, param_g, param_u, param_w)
+    return h_0
 
 
-def dowhampoint(speed, force, alpha_p, e_eff, r_eff, eta):
+def dowhampoint(vel_entrain, force, alpha_p, e_eff, r_eff, eta):
     """
 
-    Calculate mean film thickness according to Dowson-Hamrock equation.
+    Calculate the mean film thickness in a point contact according to
+    Dowson-Hamrock.
 
-    :param speed: entrainment speed, vector or int/float
-    :param force: force, vector or int/float
-    :param e_eff: effective modulus in MPa
-    :param alpha_p: pressure-viscosity coefficient, int/float
-    :param eta: dynamic viscosity of lube, int/float
-    :param r_eff: effective radius
+    Parameters
+    ----------
+    vel_entrain: ndarray, scalar
+        The entrainment velocity of the contact problem.
+    force: ndarray, scalar
+        The normal force in the contact.
+    alpha_p: ndarray, scalar
+        The pressure-viscosity coefficient of the lubricant.
+    e_eff: ndarray, scalar
+        The effective modulus of the contact problem.
+    r_eff: ndarray, scalar
+        The effective radius of the contact problem.
+    eta: ndarray, scalar
+        The dynamic viscosity of the lubricant.
 
-    :return: mean film thickness, vector or int/float
+    Returns
+    -------
+    h_0: ndarray, scalar
+        The central lubricating film thickness in the contact.
 
     """
     param_g = edowham(alpha_p, e_eff)
-    param_u = vdowham(eta, speed, e_eff, r_eff)
+    param_u = vdowham(eta, vel_entrain, e_eff, r_eff)
     param_w = force / (r_eff ** 2 * e_eff)
-    return 1.9 * __dowson_hamrock_parameters(r_eff, param_g, param_u, param_w)
+    h_0 = 1.9 * __dowson_hamrock_parameters(r_eff, param_g, param_u, param_w)
+    return h_0
