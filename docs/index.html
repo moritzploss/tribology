@@ -200,33 +200,6 @@ Firestone plot).</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology.eeff">
-<code class="descname">eeff</code><span class="sig-paren">(</span><em>e_1</em>, <em>nu_1</em>, <em>e_2</em>, <em>nu_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.eeff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the effective (Young&#8217;s) modulus of two contact bodies according
-to Hertzian contact theory.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>e_1</strong> (<em>ndarray, scalar</em>) &#8211; The Young&#8217;s modulus of contact body 1.</li>
-<li><strong>nu_1</strong> (<em>ndarray, scalar</em>) &#8211; The Poisson ratio of contact body 1.</li>
-<li><strong>e_2</strong> (<em>ndarray, scalar</em>) &#8211; The Young&#8217;s modulus of contact body 2.</li>
-<li><strong>nu_2</strong> (<em>ndarray, scalar</em>) &#8211; The Poisson ratio of contact body 1.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>e_eff</strong> &#8211; The effective modulus.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="tribology.fball3plates">
 <code class="descname">fball3plates</code><span class="sig-paren">(</span><em>ax_force</em>, <em>plate_angle=1.5708</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.fball3plates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the normal force per contact in ball-on-3-plates setup.</p>
@@ -393,37 +366,6 @@ axis of the ball. Default value corresponds to 45 degree.</li>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="tribology.reff">
-<code class="descname">reff</code><span class="sig-paren">(</span><em>r_x_1</em>, <em>r_y_1</em>, <em>r_x_2</em>, <em>r_y_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.reff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the effective radii for two bodies according to Hertzian contact
-theory. It is assumed that the two major axis of each body (x- and y-axis)
-are perpendicular to each other and that the x and y axes of both bodies are
-aligned.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>r_x_1</strong> (<em>scalar</em>) &#8211; The radius of body 1 in direction 1 (x).</li>
-<li><strong>r_y_1</strong> (<em>scalar</em>) &#8211; The radius of body 1 in direction 2 (y).</li>
-<li><strong>r_x_2</strong> (<em>scalar</em>) &#8211; The radius of body 2 in direction 1 (x).</li>
-<li><strong>r_y_2</strong> (<em>scalar</em>) &#8211; The radius of body 2 in direction 2 (y).</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>r_eff</strong> (<em>scalar</em>) &#8211; The effective radius.</li>
-<li><strong>r_eff_x</strong> (<em>scalar</em>) &#8211; The effective radius in x-direction.</li>
-<li><strong>r_eff_y</strong> (<em>scalar</em>) &#8211; The effective radius in y-direction.</li>
-</ul>
-</p>
 </td>
 </tr>
 </tbody>
@@ -847,6 +789,33 @@ to Hertzian contact theory.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="tribology_hertz.eeff">
+<code class="descname">eeff</code><span class="sig-paren">(</span><em>e_1</em>, <em>nu_1</em>, <em>e_2</em>, <em>nu_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.eeff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the effective (Young&#8217;s) modulus of two contact bodies according
+to Hertzian contact theory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>e_1</strong> (<em>ndarray, scalar</em>) &#8211; The Young&#8217;s modulus of contact body 1.</li>
+<li><strong>nu_1</strong> (<em>ndarray, scalar</em>) &#8211; The Poisson ratio of contact body 1.</li>
+<li><strong>e_2</strong> (<em>ndarray, scalar</em>) &#8211; The Young&#8217;s modulus of contact body 2.</li>
+<li><strong>nu_2</strong> (<em>ndarray, scalar</em>) &#8211; The Poisson ratio of contact body 1.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>e_eff</strong> &#8211; The effective modulus.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="tribology_hertz.fhertz">
 <code class="descname">fhertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>p_critical</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.fhertz" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the load carrying capacity of a Hertzian contact.</p>
@@ -895,6 +864,37 @@ without plastic deformation.</li>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology_hertz.reff">
+<code class="descname">reff</code><span class="sig-paren">(</span><em>r_x_1</em>, <em>r_y_1</em>, <em>r_x_2</em>, <em>r_y_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.reff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the effective radii for two bodies according to Hertzian contact
+theory. It is assumed that the two major axis of each body (x- and y-axis)
+are perpendicular to each other and that the x and y axes of both bodies are
+aligned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r_x_1</strong> (<em>scalar</em>) &#8211; The radius of body 1 in direction 1 (x).</li>
+<li><strong>r_y_1</strong> (<em>scalar</em>) &#8211; The radius of body 1 in direction 2 (y).</li>
+<li><strong>r_x_2</strong> (<em>scalar</em>) &#8211; The radius of body 2 in direction 1 (x).</li>
+<li><strong>r_y_2</strong> (<em>scalar</em>) &#8211; The radius of body 2 in direction 2 (y).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>r_eff</strong> (<em>scalar</em>) &#8211; The effective radius.</li>
+<li><strong>r_eff_x</strong> (<em>scalar</em>) &#8211; The effective radius in x-direction.</li>
+<li><strong>r_eff_y</strong> (<em>scalar</em>) &#8211; The effective radius in y-direction.</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
