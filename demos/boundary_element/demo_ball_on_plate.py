@@ -17,7 +17,6 @@ def plot_results(ax_x, ax_y, press):
     Plot the 3D pressure distribution.
 
     """
-
     # generate plot grid
     x_grid, y_grid = np.meshgrid(ax_x, ax_y, indexing='ij')
 
