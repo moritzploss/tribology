@@ -316,10 +316,10 @@ def refix(val, p_in="", p_out=""):
     ----------
     val: scalar
         The value for which to convert the unit prefix.
-    p_in: any of the above, optional
+    p_in: string, any of the above, optional
         The current prefix of :code:`val`. If :code:`p_in` is undefined,
         :code:`val` has no SI unit prefix.
-    p_out: any of the above, optional
+    p_out: string, any of the above, optional
         The prefix of :code:`val_refix` after the conversion.  If :code:`p_in`
         is undefined, :code:`val_refix` has no SI unit prefix.
 
@@ -345,23 +345,23 @@ def refix(val, p_in="", p_out=""):
 def abbottfirestone(trace, res=100):
     """
 
-    Calculate the Abbott-Firestone curve for a 1D surface trace.
+    Calculate the Abbott-Firestone curve for a 1D profile trace.
 
     Parameters
     ----------
     trace: ndarray
-        The surface heights of the 1D trace.
-    res: int, optional.
-        The number of bins for the calculation of the surface height
+        The profile heights of the 1D trace.
+    res: int, optional
+        The number of bins for the calculation of the profile height
         probability distribution.
 
     Returns
     -------
     bins: ndarray
-        The bins used for the calculation of the surface height
+        The bins used for the calculation of the profile height
         probability distribution (= x-axis data for Abbott-Firestone plot).
     prob_dist: ndarray
-        The probability distribution of the surface (= y-axis data for Abbott-
+        The probability distribution of the profile (= y-axis data for Abbott-
         Firestone plot).
 
     """

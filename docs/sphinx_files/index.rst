@@ -16,30 +16,16 @@ You can install the tribology package using pip:
 
    pip install tribology
 
-It is generally recommended to :code:`import` the tribology package as follows:
+It is generally recommended to :code:`import` the tribology package as follows.
+This will import all modules of the package and you can use all classes and
+methods without ever worrying about modules:
 
 .. code-block:: python
 
    import tribology as tr
 
-This will import all package modules. After that, you can use the below
-methods and classes without the module name (numpy style). That means that the
-two version of the following code have the same effect, but the first one is
-probably more convenient:
-
-.. code-block:: python
-
-   # this code imports the beinflumat method from the
-   # tribology_boundary_element module of the tribology package
-
-   # without explicit module import
-   import tribology as tr
-   inf_mat = tr.beinflumat(...)
-
-   # with explicit module import
-   from tribology import tribology_boundary_element as tbe
-   inf_mat = tbe.beinflumat(...)
-
+Alternatively, you can perform module level imports for certain methods and
+classes. Please see below for more information on available modules.
 
 .. toctree::
    :maxdepth: 2

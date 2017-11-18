@@ -154,49 +154,39 @@ what you can find below is better than not having any documentation at all.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tribology</span>
 </pre></div>
 </div>
-<p>It is generally recommended to <code class="code docutils literal"><span class="pre">import</span></code> the tribology package as follows:</p>
+<p>It is generally recommended to <code class="code docutils literal"><span class="pre">import</span></code> the tribology package as follows.
+This will import all modules of the package and you can use all classes and
+methods without ever worrying about modules:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tribology</span> <span class="kn">as</span> <span class="nn">tr</span>
 </pre></div>
 </div>
-<p>This will import all package modules. After that, you can use the below
-methods and classes without the module name (numpy style). That means that the
-two version of the following code have the same effect, but the first one is
-probably more convenient:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># this code imports the beinflumat method from the</span>
-<span class="c1"># tribology_boundary_element module of the tribology package</span>
-
-<span class="c1"># without explicit module import</span>
-<span class="kn">import</span> <span class="nn">tribology</span> <span class="kn">as</span> <span class="nn">tr</span>
-<span class="n">inf_mat</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">beinflumat</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-
-<span class="c1"># with explicit module import</span>
-<span class="kn">from</span> <span class="nn">tribology</span> <span class="kn">import</span> <span class="n">tribology_boundary_element</span> <span class="k">as</span> <span class="n">tbe</span>
-<span class="n">inf_mat</span> <span class="o">=</span> <span class="n">tbe</span><span class="o">.</span><span class="n">beinflumat</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>Alternatively, you can perform module level imports for certain methods and
+classes. Please see below for more information on available modules.</p>
 <div class="toctree-wrapper compound">
-<span id="document-tribology"></span><div class="section" id="module-tribology">
-<span id="methods-for-tribology-in-general"></span><h2>Methods for Tribology in General<a class="headerlink" href="#module-tribology" title="Permalink to this headline">¶</a></h2>
-<p>The methods in this module are related to tribology in general.</p>
+<span id="document-tribology"></span><div class="section" id="methods-for-tribology-in-general">
+<h2>Methods for Tribology in General<a class="headerlink" href="#methods-for-tribology-in-general" title="Permalink to this headline">¶</a></h2>
+<p>All of the below methods ca be found in the <code class="code docutils literal"><span class="pre">tribology</span></code> module of the
+package.</p>
+<span class="target" id="module-tribology"></span><p>The methods in this module are related to tribology in general.</p>
 <dl class="function">
 <dt id="tribology.abbottfirestone">
 <code class="descname">abbottfirestone</code><span class="sig-paren">(</span><em>trace</em>, <em>res=100</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.abbottfirestone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the Abbott-Firestone curve for a 1D surface trace.</p>
+<dd><p>Calculate the Abbott-Firestone curve for a 1D profile trace.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>trace</strong> (<em>ndarray</em>) &#8211; The surface heights of the 1D trace.</li>
-<li><strong>res</strong> (<em>int, optional.</em>) &#8211; The number of bins for the calculation of the surface height
+<li><strong>trace</strong> (<em>ndarray</em>) &#8211; The profile heights of the 1D trace.</li>
+<li><strong>res</strong> (<em>int, optional</em>) &#8211; The number of bins for the calculation of the profile height
 probability distribution.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>bins</strong> (<em>ndarray</em>) &#8211; The bins used for the calculation of the surface height
+<li><strong>bins</strong> (<em>ndarray</em>) &#8211; The bins used for the calculation of the profile height
 probability distribution (= x-axis data for Abbott-Firestone plot).</li>
-<li><strong>prob_dist</strong> (<em>ndarray</em>) &#8211; The probability distribution of the surface (= y-axis data for Abbott-
+<li><strong>prob_dist</strong> (<em>ndarray</em>) &#8211; The probability distribution of the profile (= y-axis data for Abbott-
 Firestone plot).</li>
 </ul>
 </p>
@@ -455,9 +445,9 @@ aligned.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>val</strong> (<em>scalar</em>) &#8211; The value for which to convert the unit prefix.</li>
-<li><strong>p_in</strong> (<em>any of the above, optional</em>) &#8211; The current prefix of <code class="code docutils literal"><span class="pre">val</span></code>. If <code class="code docutils literal"><span class="pre">p_in</span></code> is undefined,
+<li><strong>p_in</strong> (<em>string, any of the above, optional</em>) &#8211; The current prefix of <code class="code docutils literal"><span class="pre">val</span></code>. If <code class="code docutils literal"><span class="pre">p_in</span></code> is undefined,
 <code class="code docutils literal"><span class="pre">val</span></code> has no SI unit prefix.</li>
-<li><strong>p_out</strong> (<em>any of the above, optional</em>) &#8211; The prefix of <code class="code docutils literal"><span class="pre">val_refix</span></code> after the conversion.  If <code class="code docutils literal"><span class="pre">p_in</span></code>
+<li><strong>p_out</strong> (<em>string, any of the above, optional</em>) &#8211; The prefix of <code class="code docutils literal"><span class="pre">val_refix</span></code> after the conversion.  If <code class="code docutils literal"><span class="pre">p_in</span></code>
 is undefined, <code class="code docutils literal"><span class="pre">val_refix</span></code> has no SI unit prefix.</li>
 </ul>
 </td>
@@ -567,26 +557,36 @@ velocities.</p>
 </dd></dl>
 
 </div>
-<span id="document-tribology_boundary_element"></span><div class="section" id="module-tribology_boundary_element">
-<span id="methods-related-to-boundary-element-solvers"></span><h2>Methods Related to Boundary Element Solvers<a class="headerlink" href="#module-tribology_boundary_element" title="Permalink to this headline">¶</a></h2>
-<p>Methods related to boundary element solvers for contact mechanics calculations</p>
+<span id="document-tribology_boundary_element"></span><div class="section" id="methods-related-to-boundary-element-solvers">
+<h2>Methods Related to Boundary Element Solvers<a class="headerlink" href="#methods-related-to-boundary-element-solvers" title="Permalink to this headline">¶</a></h2>
+<p>All of the below methods ca be found in the <code class="code docutils literal"><span class="pre">tribology_boundary_element</span></code>
+module of the package.</p>
+<span class="target" id="module-tribology_boundary_element"></span><p>This module contains methods related to boundary element solvers for contact
+mechanics calculations. Please see the <code class="code docutils literal"><span class="pre">/demo</span></code> directory for minimum
+examples of how to combine the below methods to perform contact mechanics
+calculations.</p>
 <dl class="function">
 <dt id="tribology_boundary_element.beinflumat">
 <code class="descname">beinflumat</code><span class="sig-paren">(</span><em>x_axis</em>, <em>y_axis</em>, <em>e_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.beinflumat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate an influence matrix as required for boundary element contact
-mechanics calculations</p>
+<dd><p>Generate a complete influence coefficient matrix as required for boundary
+element contact mechanics calculations.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x_axis</strong> &#8211; x-axis of coordinate grid</li>
-<li><strong>y_axis</strong> &#8211; y-axis of coordinate grid</li>
-<li><strong>e_eff</strong> &#8211; effective youngs modulus</li>
+<li><strong>x_axis</strong> (<em>ndarray</em>) &#8211; The x-axis values of the coordinate grid.</li>
+<li><strong>y_axis</strong> (<em>ndarray</em>) &#8211; The y-axis values of the coordinate grid.</li>
+<li><strong>e_eff</strong> (<em>scalar</em>) &#8211; The effective modulus of the contact bodies.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">complete influence matrix</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>infl_mat</strong> &#8211; The complete four-dimensional influence coefficient matrix of size
+<code class="docutils literal"><span class="pre">len(x_axis)</span></code> <span class="math">\(\times\)</span> <code class="docutils literal"><span class="pre">len(y_axis)</span></code> <span class="math">\(\times\)</span>
+<code class="docutils literal"><span class="pre">len(x_axis)</span></code> <span class="math">\(\times\)</span> <code class="docutils literal"><span class="pre">len(y_axis)</span></code>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
 </td>
 </tr>
 </tbody>
@@ -596,14 +596,19 @@ mechanics calculations</p>
 <dl class="function">
 <dt id="tribology_boundary_element.beinflumatred">
 <code class="descname">beinflumatred</code><span class="sig-paren">(</span><em>influ_mat</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.beinflumatred" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract the reduced influence matrix from the complete influence matrix</p>
+<dd><p>Calculate a reduced influence coefficient matrix from a complete influence
+coefficient matrix.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>influ_mat</strong> &#8211; complete influence matrix</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>influ_mat</strong> (<em>ndarray</em>) &#8211; The complete influence coefficient matrix.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">reduced influence matrix</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>reduced_influ_mat</strong> &#8211; The reduced influence coefficient matrix. The matrix is square and of
+order <code class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">np.shape(influ_mat)[0]</span></code> <span class="math">\(\times\)</span>
+<code class="docutils literal"><span class="pre">np.shape(influ_mat)[1]</span></code>.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
 </tr>
 </tbody>
 </table>
@@ -612,74 +617,45 @@ mechanics calculations</p>
 <dl class="function">
 <dt id="tribology_boundary_element.besolve">
 <code class="descname">besolve</code><span class="sig-paren">(</span><em>profile_1</em>, <em>profile_2</em>, <em>outer_force</em>, <em>red_influ_mat</em>, <em>delta_x</em>, <em>delta_y</em>, <em>norm_disp=0.1</em>, <em>max_offset=0.005</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.besolve" title="Permalink to this definition">¶</a></dt>
-<dd><p>Solve system of equations:</p>
+<dd><p>Solve a system of linear equations to find the pressure and displacement
+distribution in a boundary element contact problem:</p>
 <blockquote>
-<div>[pressure] = [influence matrix]^-1 * [displacement]</div></blockquote>
-<p>Stop solver once inner and outer forces are in equilibrium</p>
+<div><span class="math">\([\text{pressure}] = [\text{reduced influence matrix}]^{-1}
+\cdot [\text{displacement}]\)</span></div></blockquote>
+<p>The start value for the relative normal displacement is defined by the
+<code class="docutils literal"><span class="pre">norm_disp</span></code> parameter. The default value corresponds to 0.1 units of
+length. If the start value of the normal displacement is close to the
+equilibrium displacement, the calculation time may be reduced significantly.</p>
+<p>The solver stops once inner and outer forces are in equilibrium. The maximum
+allowed discrepancy between inner and outer forces is defined by the
+<code class="docutils literal"><span class="pre">max_offset</span></code> parameter. The default value corresponds to 0.5 %.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>profile_1</strong> &#8211; array with profile heights of body 1</li>
-<li><strong>profile_2</strong> &#8211; array with profile hights of body 2</li>
-<li><strong>outer_force</strong> &#8211; outer (normal) force on body 1/2</li>
-<li><strong>red_influ_mat</strong> &#8211; reduced influence matrix</li>
-<li><strong>delta_x</strong> &#8211; grid spacing of profile arrays in x-direction</li>
-<li><strong>delta_y</strong> &#8211; grid spacing of profile arrays in y-direction</li>
-<li><strong>norm_disp</strong> &#8211; initial normal elastic deformation to start calculation</li>
-<li><strong>max_offset</strong> &#8211; maximum allowed percentage difference of inner and outer
-force at end of calculation</li>
+<li><strong>profile_1</strong> (<em>ndarray</em>) &#8211; A matrix containing the profile heights of body 1.</li>
+<li><strong>profile_2</strong> (<em>ndarray</em>) &#8211; A matrix containing the profile heights of body 2. The matrix must have
+the same size and grid spacing (in unit length) as <code class="docutils literal"><span class="pre">profile_1</span></code>.</li>
+<li><strong>outer_force</strong> (<em>scalar</em>) &#8211; The (outer) normal force acting on the contact.</li>
+<li><strong>red_influ_mat</strong> (<em>ndarray</em>) &#8211; The reduced influence matrix calculated using the <code class="docutils literal"><span class="pre">beinflumatred</span></code>
+method.</li>
+<li><strong>delta_x</strong> (<em>scalar</em>) &#8211; The grid spacing of the profile matrices in unit length in x-direction.</li>
+<li><strong>delta_y</strong> (<em>scalar</em>) &#8211; The grid spacing of the profile matrices in unit length in y-direction.</li>
+<li><strong>norm_disp</strong> (<em>scalar</em>) &#8211; The initial normal elastic deformation in unit length used to start the
+solver.</li>
+<li><strong>max_offset</strong> (<em>scalar</em>) &#8211; The maximum allowed percentage difference of inner and outer force (used
+to determine when solver has completed).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">local pressure (array), local displacements (array).
-inner force (scalar), global normal displacement (scalar)</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="tribology_boundary_element.combineprof">
-<code class="descname">combineprof</code><span class="sig-paren">(</span><em>profile_1</em>, <em>profile_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.combineprof" title="Permalink to this definition">¶</a></dt>
-<dd><p>Combine two body profiles for boundary element calculation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>profile_1</strong> &#8211; array-like profile heights</li>
-<li><strong>profile_2</strong> &#8211; array-like profile heights</li>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>pressure</strong> (<em>ndarray</em>) &#8211; The contact pressure field in the contact.</li>
+<li><strong>disp</strong> (<em>ndarray</em>) &#8211; The combined normal displacement field for contact body 1 and 2.</li>
+<li><strong>inner_force</strong> (<em>scalar</em>) &#8211; The sum over all inner forces.</li>
+<li><strong>norm_disp</strong> (<em>scalar</em>) &#8211; The normal elastic equilibrium displacement.</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">negative combined profile heights</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="tribology_boundary_element.secant">
-<code class="descname">secant</code><span class="sig-paren">(</span><em>x_list</em>, <em>fx_list</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_boundary_element.secant" title="Permalink to this definition">¶</a></dt>
-<dd><p>Applies secant method to find root <em>x</em> of function <em>f(x)</em>.
-If not enough (<em>x</em>, <em>f(x)</em>) value pairs are available to apply
-secant method, a new <em>x</em> value is guessed by slightly changing the
-initial <em>x</em> value</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x_list</strong> &#8211; list of function inputs</li>
-<li><strong>fx_list</strong> &#8211; list of function outputs</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">estimate of function root</p>
+</p>
 </td>
 </tr>
 </tbody>
@@ -687,9 +663,11 @@ initial <em>x</em> value</p>
 </dd></dl>
 
 </div>
-<span id="document-tribology_dowson_hamrock"></span><div class="section" id="module-tribology_dowson_hamrock">
-<span id="methods-related-to-dowson-hamrock-film-thickness-caluclations"></span><h2>Methods Related to Dowson-Hamrock Film Thickness Caluclations<a class="headerlink" href="#module-tribology_dowson_hamrock" title="Permalink to this headline">¶</a></h2>
-<p>Methods related to Dowson-Hamrock film thickness calculations</p>
+<span id="document-tribology_dowson_hamrock"></span><div class="section" id="methods-related-to-dowson-hamrock-film-thickness-caluclations">
+<h2>Methods Related to Dowson-Hamrock Film Thickness Caluclations<a class="headerlink" href="#methods-related-to-dowson-hamrock-film-thickness-caluclations" title="Permalink to this headline">¶</a></h2>
+<p>All of the below methods ca be found in the <code class="code docutils literal"><span class="pre">tribology_dowson_hamrock</span></code>
+module of the package.</p>
+<span class="target" id="module-tribology_dowson_hamrock"></span><p>Methods related to Dowson-Hamrock film thickness calculations</p>
 <dl class="function">
 <dt id="tribology_dowson_hamrock.dowhamline">
 <code class="descname">dowhamline</code><span class="sig-paren">(</span><em>speed</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em>, <em>l_eff</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_dowson_hamrock.dowhamline" title="Permalink to this definition">¶</a></dt>
@@ -786,9 +764,11 @@ initial <em>x</em> value</p>
 </dd></dl>
 
 </div>
-<span id="document-tribology_hertz"></span><div class="section" id="module-tribology_hertz">
-<span id="methods-related-to-hertz-contact-theory"></span><h2>Methods Related to Hertz Contact Theory<a class="headerlink" href="#module-tribology_hertz" title="Permalink to this headline">¶</a></h2>
-<p>Methods related to Hertz contact theory</p>
+<span id="document-tribology_hertz"></span><div class="section" id="methods-related-to-hertz-contact-theory">
+<h2>Methods Related to Hertz Contact Theory<a class="headerlink" href="#methods-related-to-hertz-contact-theory" title="Permalink to this headline">¶</a></h2>
+<p>All of the below methods ca be found in the <code class="code docutils literal"><span class="pre">tribology_hertz</span></code>
+module of the package.</p>
+<span class="target" id="module-tribology_hertz"></span><p>Methods related to Hertz contact theory</p>
 <dl class="function">
 <dt id="tribology_hertz.ahertz">
 <code class="descname">ahertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.ahertz" title="Permalink to this definition">¶</a></dt>
@@ -888,9 +868,11 @@ hertz contact theory</p>
 </dd></dl>
 
 </div>
-<span id="document-tribology_lubrication"></span><div class="section" id="module-tribology_lubrication">
-<span id="methods-related-to-lubricants"></span><h2>Methods Related to Lubricants<a class="headerlink" href="#module-tribology_lubrication" title="Permalink to this headline">¶</a></h2>
-<p>Methods related to lubricants and lubrication</p>
+<span id="document-tribology_lubrication"></span><div class="section" id="methods-related-to-lubricants">
+<h2>Methods Related to Lubricants<a class="headerlink" href="#methods-related-to-lubricants" title="Permalink to this headline">¶</a></h2>
+<p>All of the below methods ca be found in the <code class="code docutils literal"><span class="pre">tribology_lubrication</span></code>
+module of the package.</p>
+<span class="target" id="module-tribology_lubrication"></span><p>Methods related to lubricants and lubrication</p>
 <dl class="function">
 <dt id="tribology_lubrication.barus">
 <code class="descname">barus</code><span class="sig-paren">(</span><em>eta_0</em>, <em>alpha_p</em>, <em>pressure</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.barus" title="Permalink to this definition">¶</a></dt>
@@ -1080,9 +1062,11 @@ ASTM D341.</p>
 </dd></dl>
 
 </div>
-<span id="document-tribology_constants"></span><div class="section" id="module-tribology_constants">
-<span id="constants-for-tribology"></span><h2>Constants for Tribology<a class="headerlink" href="#module-tribology_constants" title="Permalink to this headline">¶</a></h2>
-<p>Relevant constants for tribology research. Use, for example, as follows:</p>
+<span id="document-tribology_constants"></span><div class="section" id="constants-for-tribology">
+<h2>Constants for Tribology<a class="headerlink" href="#constants-for-tribology" title="Permalink to this headline">¶</a></h2>
+<p>All of the below classes ca be found in the <code class="code docutils literal"><span class="pre">tribology_constants</span></code>
+module of the package.</p>
+<span class="target" id="module-tribology_constants"></span><p>Relevant constants for tribology research. Use, for example, as follows:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># get young&#39;s modulus of steel in units of MPa</span>
 <span class="kn">import</span> <span class="nn">tribology</span> <span class="kn">as</span> <span class="nn">tr</span>
 <span class="n">youngs_modulus_steel</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">YoungsMod</span><span class="o">.</span><span class="n">STEEL</span><span class="o">.</span><span class="n">value</span>

@@ -2,7 +2,10 @@
 
 """
 
-Methods related to boundary element solvers for contact mechanics calculations
+This module contains methods related to boundary element solvers for contact
+mechanics calculations. Please see the :code:`/demo` directory for minimum
+examples of how to combine the below methods to perform contact mechanics
+calculations.
 
 """
 
@@ -15,7 +18,7 @@ import numpy as np
 import scipy.sparse.linalg as spla
 
 
-def secant(x_list, fx_list):
+def __secant(x_list, fx_list):
     """
 
     Applies secant method to find root *x* of function *f(x)*.
@@ -23,10 +26,18 @@ def secant(x_list, fx_list):
     secant method, a new *x* value is guessed by slightly changing the
     initial *x* value
 
-    :param x_list: list of function inputs
-    :param fx_list: list of function outputs
+    Parameters
+    ----------
+    x_list: ndarray, list
+        A list of known function inputs (x-values).
+    fx_list: ndarray, list
+        A list of known function outputs corresponding to the function inputs
+        in ``x_list``.
 
-    :return: estimate of function root
+    Returns
+    -------
+    x: scalar
+        An estimate of the root of function f(x).
 
     """
     if fx_list[-1] != 0:
@@ -48,11 +59,18 @@ def secant(x_list, fx_list):
 def __beinflumatgrid(axis):
     """
 
-    Private helper method for influence matrix generation
+    Private helper method for influence matrix generation. Generates a grid
+    that is required for the generation of an influence matrix.
 
-    :param axis: axis to make grid
+    Parameters
+    ----------
+    axis: ndarray
+        An axis of the elastic half space.
 
-    :return: grid
+    Returns
+    -------
+    infl_mat_grid: ndarray
+        A grid for influence matrix generation.
 
     """
     len_axis = len(axis)
@@ -61,42 +79,62 @@ def __beinflumatgrid(axis):
     vertical_ax = np.zeros((len_axis, 1))
     vertical_ax[:, 0] = axis
     grid = np.repeat(vec, len_axis, axis=0)
-    return np.absolute(np.subtract(grid, vertical_ax))
+    infl_mat_grid = np.absolute(np.subtract(grid, vertical_ax))
+    return infl_mat_grid
 
 
 def beinflumatred(influ_mat):
     """
 
-    Extract the reduced influence matrix from the complete influence matrix
+    Calculate a reduced influence coefficient matrix from a complete influence
+    coefficient matrix.
 
-    :param influ_mat: complete influence matrix
+    Parameters
+    ----------
+    influ_mat: ndarray
+        The complete influence coefficient matrix.
 
-    :return: reduced influence matrix
+    Returns
+    -------
+    reduced_influ_mat: ndarray
+        The reduced influence coefficient matrix. The matrix is square and of
+        order ``n = np.shape(influ_mat)[0]`` :math:`\\times`
+        ``np.shape(influ_mat)[1]``.
 
     """
     shape_mat = np.shape(influ_mat)
     len_mat = shape_mat[0] * shape_mat[1]
-    reduced_influence_matrix = np.zeros((len_mat, len_mat))
+    reduced_influ_mat = np.zeros((len_mat, len_mat))
     counter = 0
     for i in range(0, shape_mat[0]):
         for j in range(0, shape_mat[1]):
-            reduced_influence_matrix[counter, :] = \
+            reduced_influ_mat[counter, :] = \
                 np.reshape(influ_mat[i, j, :, :], len_mat)
             counter += 1
-    return reduced_influence_matrix
+    return reduced_influ_mat
 
 
 def beinflumat(x_axis, y_axis, e_eff):
     """
 
-    Generate an influence matrix as required for boundary element contact
-    mechanics calculations
+    Generate a complete influence coefficient matrix as required for boundary
+    element contact mechanics calculations.
 
-    :param x_axis: x-axis of coordinate grid
-    :param y_axis: y-axis of coordinate grid
-    :param e_eff: effective youngs modulus
+    Parameters
+    ----------
+    x_axis: ndarray
+        The x-axis values of the coordinate grid.
+    y_axis: ndarray
+        The y-axis values of the coordinate grid.
+    e_eff: scalar
+        The effective modulus of the contact bodies.
 
-    :return: complete influence matrix
+    Returns
+    -------
+    infl_mat: ndarray
+        The complete four-dimensional influence coefficient matrix of size
+        ``len(x_axis)`` :math:`\\times` ``len(y_axis)`` :math:`\\times`
+        ``len(x_axis)`` :math:`\\times` ``len(y_axis)``.
 
     """
     len_x = len(x_axis)
@@ -160,18 +198,26 @@ def beinflumat(x_axis, y_axis, e_eff):
                                                   (ymb[j, j_prime])) +
                                       np.multiply(xpa, xpa))))))
 
-    return influence_matrix_complete * 1 / e_eff * 2 / pi
+    infl_mat = influence_matrix_complete * 1 / e_eff * 2 / pi
+    return infl_mat
 
 
 def __begetd(profile, norm_disp):
     """
 
-    Calculate local elastic displacements of profile
+    Parameters
+    ----------
+    profile: ndarray
+        The combined profiles of two contact bodies.
+    norm_disp: scalar
+        The normal elastic displacement (interference) of the two contact
+        bodies.
 
-    :param profile: combined profile of two contacting bodies
-    :param norm_disp: global normal elastic displ between contacting bodies
-
-    :return: local normal displacements as a result of global displ norm_displ
+    Returns
+    -------
+    disp: ndarray
+        A displacement field containing the combined local elastic displacements
+        of both contact bodies.
 
     """
     displ_field = np.subtract(np.ones(profile.shape) * norm_disp, profile)
@@ -179,29 +225,23 @@ def __begetd(profile, norm_disp):
     return disp
 
 
-def combineprof(profile_1, profile_2):
-    """
-
-    Combine two body profiles for boundary element calculation
-
-    :param profile_1: array-like profile heights
-    :param profile_2: array-like profile heights
-
-    :return: negative combined profile heights
-
-    """
-    return profile_1 + profile_2
-
-
 def __solvepress(red_influ_mat, disp):
     """
 
-    solve for pressure distribution
+    Solve for pressure distribution by removing negative pressure elements from
+    the pressure matrix.
 
-    :param red_influ_mat: reduced influence matrix
-    :param disp: displacement field
+    Parameters
+    ----------
+    red_influ_mat: ndarray
+        The recued influence matrix of the contact problem.
+    disp: ndarray
+        The (combined) displacement field of the contact problem.
 
-    :return: pressure field
+    Returns
+    -------
+    pressure: ndarray
+        The pressure field of the contact problem.
 
     """
 
@@ -231,24 +271,54 @@ def besolve(profile_1, profile_2, outer_force,
             norm_disp=0.1, max_offset=0.005):
     """
 
-    Solve system of equations:
+    Solve a system of linear equations to find the pressure and displacement
+    distribution in a boundary element contact problem:
 
-        [pressure] = [influence matrix]^-1 * [displacement]
+        :math:`[\\text{pressure}] = [\\text{reduced influence matrix}]^{-1}
+        \\cdot [\\text{displacement}]`
 
-    Stop solver once inner and outer forces are in equilibrium
+    The start value for the relative normal displacement is defined by the
+    ``norm_disp`` parameter. The default value corresponds to 0.1 units of
+    length. If the start value of the normal displacement is close to the
+    equilibrium displacement, the calculation time may be reduced significantly.
 
-    :param profile_1: array with profile heights of body 1
-    :param profile_2: array with profile hights of body 2
-    :param outer_force: outer (normal) force on body 1/2
-    :param red_influ_mat: reduced influence matrix
-    :param delta_x: grid spacing of profile arrays in x-direction
-    :param delta_y: grid spacing of profile arrays in y-direction
-    :param norm_disp: initial normal elastic deformation to start calculation
-    :param max_offset: maximum allowed percentage difference of inner and outer
-                       force at end of calculation
+    The solver stops once inner and outer forces are in equilibrium. The maximum
+    allowed discrepancy between inner and outer forces is defined by the
+    ``max_offset`` parameter. The default value corresponds to 0.5 %.
 
-    :return: local pressure (array), local displacements (array).
-             inner force (scalar), global normal displacement (scalar)
+    Parameters
+    ----------
+    profile_1: ndarray
+        A matrix containing the profile heights of body 1.
+    profile_2: ndarray
+        A matrix containing the profile heights of body 2. The matrix must have
+        the same size and grid spacing (in unit length) as ``profile_1``.
+    outer_force: scalar
+        The (outer) normal force acting on the contact.
+    red_influ_mat: ndarray
+        The reduced influence matrix calculated using the ``beinflumatred``
+        method.
+    delta_x: scalar
+        The grid spacing of the profile matrices in unit length in x-direction.
+    delta_y: scalar
+        The grid spacing of the profile matrices in unit length in y-direction.
+    norm_disp: scalar
+        The initial normal elastic deformation in unit length used to start the
+        solver.
+    max_offset: scalar
+        The maximum allowed percentage difference of inner and outer force (used
+        to determine when solver has completed).
+
+    Returns
+    -------
+    pressure: ndarray
+        The contact pressure field in the contact.
+    disp: ndarray
+        The combined normal displacement field for contact body 1 and 2.
+    inner_force: scalar
+        The sum over all inner forces.
+    norm_disp: scalar
+        The normal elastic equilibrium displacement.
 
     """
     # initialise variables
@@ -256,7 +326,7 @@ def besolve(profile_1, profile_2, outer_force,
     fx_value = [outer_force]
     pressure = 0
     inner_force = 0
-    profile = combineprof(profile_1, profile_2)
+    profile = profile_1 + profile_2
 
     # while difference between inner forces and outer forces is significant
     while abs(inner_force - outer_force) > max_offset * outer_force:
@@ -270,7 +340,7 @@ def besolve(profile_1, profile_2, outer_force,
         inner_force = sum(sum(np.multiply(delta_x * delta_y, pressure)))
         x_value = np.append(x_value, [norm_disp])
         fx_value = np.append(fx_value, [inner_force - outer_force])
-        norm_disp = secant(x_value, fx_value)
+        norm_disp = __secant(x_value, fx_value)
 
     disp = __begetd(profile, norm_disp)
-    return pressure, disp, inner_force, x_value[-1]
+    return pressure, disp, inner_force, norm_disp
