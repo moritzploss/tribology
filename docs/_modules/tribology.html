@@ -1,0 +1,600 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tribology &mdash; Tribology  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Tribology  documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Tribology
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sec_general_tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_contact_mechanics.html">Contact Mechanics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_ehd_lubrication.html">EHD Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_lubricants.html">Lubricants and Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_constants.html">Constants for Tribology</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Tribology</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>tribology</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tribology</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">The methods in this module are related to tribology in general.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">acos</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">floor</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="profball"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.profball">[docs]</a><span class="k">def</span> <span class="nf">profball</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">r_ball</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Create a 1D ball profile along a central axis.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x_axis: ndarray</span>
+<span class="sd">        The coordinate points for which to calculate profile heights. Minimum</span>
+<span class="sd">        and maximum value must be within +/- **r_ball**.</span>
+<span class="sd">    r_ball: scalar</span>
+<span class="sd">        The radius of the ball.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    prof_heights: ndarray</span>
+<span class="sd">        The profile heights along the **x_axis**.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prof</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">r_ball</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r_ball</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+    <span class="n">prof_heights</span> <span class="o">=</span> <span class="n">prof</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">r_ball</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">prof_heights</span></div>
+
+
+<div class="viewcode-block" id="profrevolve"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.profrevolve">[docs]</a><span class="k">def</span> <span class="nf">profrevolve</span><span class="p">(</span><span class="n">prof_1d</span><span class="p">,</span> <span class="n">y_axis</span><span class="p">,</span> <span class="n">y_diam</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Create a 2D surface (profile heights) by revolving a 1D profile around a</span>
+<span class="sd">    central axis.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    prof_1d: ndarray</span>
+<span class="sd">        The profile heights along the central (x) axis of the surface.</span>
+<span class="sd">    y_axis: ndarray</span>
+<span class="sd">        The y-axis of the surface.</span>
+<span class="sd">    y_diam: scalar</span>
+<span class="sd">        The maximum diameter of the surface along its y-axis.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    prof_2d: ndarray</span>
+<span class="sd">        The surface heights of the profile. The array size is</span>
+<span class="sd">        :code:`len(prof_2d)` :math:`\\times` :code:`len(y_axis)`</span>
+<span class="sd">    y_profile: ndarray</span>
+<span class="sd">        The profile heights along the y-direction of the surface at the central</span>
+<span class="sd">        element of the x-axis.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">len_x</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">prof_1d</span><span class="p">)</span>
+    <span class="n">len_y</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_axis</span><span class="p">)</span>
+    <span class="n">prof_2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">len_x</span><span class="p">,</span> <span class="n">len_y</span><span class="p">))</span>
+    <span class="n">sign_diam</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">y_diam</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i_x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_x</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i_y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_y</span><span class="p">):</span>
+            <span class="n">bracket</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">((</span><span class="n">y_diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">sign_diam</span> <span class="o">*</span> <span class="n">prof_1d</span><span class="p">[</span><span class="n">i_x</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>\
+                      <span class="o">-</span> <span class="nb">pow</span><span class="p">(</span><span class="n">y_axis</span><span class="p">[</span><span class="n">i_y</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">bracket</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">prof_2d</span><span class="p">[</span><span class="n">i_x</span><span class="p">,</span> <span class="n">i_y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y_diam</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prof_2d</span><span class="p">[</span><span class="n">i_x</span><span class="p">,</span> <span class="n">i_y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y_diam</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">sign_diam</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">bracket</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">y_diam</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">min_prof</span> <span class="o">=</span> <span class="n">prof_2d</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">min_prof</span> <span class="o">=</span> <span class="n">prof_2d</span><span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">len_x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">len_x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">prof_2d</span> <span class="o">=</span> <span class="p">(</span><span class="n">prof_2d</span> <span class="o">-</span> <span class="n">min_prof</span><span class="p">)</span>
+    <span class="n">y_profile</span> <span class="o">=</span> <span class="n">prof_2d</span><span class="p">[:,</span> <span class="n">floor</span><span class="p">(</span><span class="n">len_y</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">prof_2d</span><span class="p">,</span> <span class="n">y_profile</span></div>
+
+
+<div class="viewcode-block" id="vslide"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.vslide">[docs]</a><span class="k">def</span> <span class="nf">vslide</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the sliding speed in a tribological contact based on contact body</span>
+<span class="sd">    velocities.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    vel_1: ndarray, scalar</span>
+<span class="sd">        The contact velocity of body 1.</span>
+<span class="sd">    vel_2: ndarray, scalar</span>
+<span class="sd">        The contact velocity of body 2</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    vel_slide: ndarray, scalar</span>
+<span class="sd">        The sliding velocity in the tribological contact.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vel_slide</span> <span class="o">=</span> <span class="n">vel_1</span> <span class="o">-</span> <span class="n">vel_2</span>
+    <span class="k">return</span> <span class="n">vel_slide</span></div>
+
+
+<div class="viewcode-block" id="vroll"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.vroll">[docs]</a><span class="k">def</span> <span class="nf">vroll</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the rolling speed in a tribological contact based on contact body</span>
+<span class="sd">    velocities.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    vel_1: ndarray, scalar</span>
+<span class="sd">        The contact velocity of body 1.</span>
+<span class="sd">    vel_2: ndarray, scalar</span>
+<span class="sd">        The contact velocity of body 2</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    vel_roll: ndarray, scalar</span>
+<span class="sd">        The rolling velocity in the tribological contact.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vel_roll</span> <span class="o">=</span> <span class="p">(</span><span class="n">vel_1</span> <span class="o">+</span> <span class="n">vel_2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">vel_roll</span></div>
+
+
+<div class="viewcode-block" id="srr"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.srr">[docs]</a><span class="k">def</span> <span class="nf">srr</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the slide-to-roll ratio (SRR) in a tribological contact based on</span>
+<span class="sd">    contact body velocities.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    vel_1: ndarray, scalar</span>
+<span class="sd">        The contact velocity of body 1.</span>
+<span class="sd">    vel_2: ndarray, scalar</span>
+<span class="sd">        The contact velocity of body 2</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    srr: ndarray, scalar</span>
+<span class="sd">        The slide-to-roll ratio in the tribological contact.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">srr</span> <span class="o">=</span> <span class="n">vslide</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">)</span> <span class="o">/</span> <span class="n">vroll</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">srr</span></div>
+
+
+<div class="viewcode-block" id="radpersec2rpm"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.radpersec2rpm">[docs]</a><span class="k">def</span> <span class="nf">radpersec2rpm</span><span class="p">(</span><span class="n">vel_rad_per_sec</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Convert velocity from rotations per minute (rpm) to radians per second</span>
+<span class="sd">    (rad/s).</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    vel_rad_per_sec: ndarray, scalar</span>
+<span class="sd">        The velcity in radians per second.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    vel_rpm: ndarray, scalar</span>
+<span class="sd">        The velocity in rotations per minute.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vel_rpm</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">rpm2radpersec</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">vel_rad_per_sec</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">vel_rpm</span></div>
+
+
+<div class="viewcode-block" id="rpm2radpersec"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.rpm2radpersec">[docs]</a><span class="k">def</span> <span class="nf">rpm2radpersec</span><span class="p">(</span><span class="n">vel_rpm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">     Convert velocity from radians per second (rad/s) to rotations per minute</span>
+<span class="sd">     (rpm).</span>
+
+
+<span class="sd">     Parameters</span>
+<span class="sd">     ----------</span>
+<span class="sd">     vel_rpm: ndarray, scalar</span>
+<span class="sd">         The velcity in rotations per minute.</span>
+
+<span class="sd">     Returns</span>
+<span class="sd">     -------</span>
+<span class="sd">     vel_rad_per_sec: ndarray, scalar</span>
+<span class="sd">         The velocity in radians per second.</span>
+
+<span class="sd">     &quot;&quot;&quot;</span>
+    <span class="n">vel_rad_per_sec</span> <span class="o">=</span> <span class="n">vel_rpm</span> <span class="o">/</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span>
+    <span class="k">return</span> <span class="n">vel_rad_per_sec</span></div>
+
+
+<div class="viewcode-block" id="rball3plates"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.rball3plates">[docs]</a><span class="k">def</span> <span class="nf">rball3plates</span><span class="p">(</span><span class="n">r_ball</span><span class="p">,</span> <span class="n">plate_angle</span><span class="o">=</span><span class="mf">1.5708</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the sliding radius (lever arm) for a ball-on-3-plates test setup.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_ball: ndarray, scalar</span>
+<span class="sd">        The radius of the ball.</span>
+<span class="sd">    plate_angle: ndarray, scalar, optional</span>
+<span class="sd">        The plate angle in radians, measured with respect to the rotational</span>
+<span class="sd">        axis of the ball. Default value corresponds to 45 degree.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    r_slide: ndarray, scalar</span>
+<span class="sd">        The sliding radius.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">r_slide</span> <span class="o">=</span> <span class="n">r_ball</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">((</span><span class="n">pi</span> <span class="o">-</span> <span class="n">plate_angle</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r_slide</span></div>
+
+
+<div class="viewcode-block" id="fball3plates"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.fball3plates">[docs]</a><span class="k">def</span> <span class="nf">fball3plates</span><span class="p">(</span><span class="n">ax_force</span><span class="p">,</span> <span class="n">plate_angle</span><span class="o">=</span><span class="mf">1.5708</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the normal force per contact in ball-on-3-plates setup.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ax_force: ndarray, scalar</span>
+<span class="sd">        The force acting along the rotational axis of the ball (axial force).</span>
+<span class="sd">    plate_angle: ndarray, scalar, optional</span>
+<span class="sd">        The plate angle in radians, measured with respect to the rotational</span>
+<span class="sd">        axis of the ball. Default value corresponds to 45 degree.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    norm_force:</span>
+<span class="sd">        The normal force acting in each ball-plate contact.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">norm_force</span> <span class="o">=</span> <span class="n">ax_force</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">plate_angle</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">norm_force</span></div>
+
+
+<div class="viewcode-block" id="gfourball"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.gfourball">[docs]</a><span class="k">def</span> <span class="nf">gfourball</span><span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">r_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Geometric parameters of 4-ball setup</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_1 : scalar</span>
+<span class="sd">        The radius of the rotating ball.</span>
+<span class="sd">    r_2 : scalar</span>
+<span class="sd">        The radius of the (a) stationary ball.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    sliding_radius : scalar</span>
+<span class="sd">        The sliding radius (lever arm) on the rotating ball.</span>
+<span class="sd">    contact_angle : scalar</span>
+<span class="sd">        Contact angle between direction of ball normal force and vertical axis.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">r_circum_circle</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r_2</span>
+    <span class="n">contact_angle</span> <span class="o">=</span> <span class="n">acos</span><span class="p">(</span><span class="n">r_circum_circle</span> <span class="o">/</span> <span class="p">(</span><span class="n">r_1</span> <span class="o">+</span> <span class="n">r_2</span><span class="p">))</span>
+    <span class="n">sliding_radius</span> <span class="o">=</span> <span class="n">r_circum_circle</span> <span class="o">-</span> <span class="n">r_2</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">contact_angle</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sliding_radius</span><span class="p">,</span> <span class="n">contact_angle</span></div>
+
+
+<div class="viewcode-block" id="ffourball"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.ffourball">[docs]</a><span class="k">def</span> <span class="nf">ffourball</span><span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">r_2</span><span class="p">,</span> <span class="n">ax_force</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the normal force per contact in a 4-ball test setup.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_1:</span>
+<span class="sd">        The radius of the rotating ball.</span>
+<span class="sd">    r_2:</span>
+<span class="sd">        The radius of the stationary balls.</span>
+<span class="sd">    ax_force:</span>
+<span class="sd">        The force acting along the rotational axis of the rotating ball.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    norm_force: ndarray, scalar</span>
+<span class="sd">        The normal force in a single ball-ball contact.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">contact_angle</span> <span class="o">=</span> <span class="n">gfourball</span><span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">r_2</span><span class="p">)</span>
+    <span class="n">norm_force</span> <span class="o">=</span> <span class="n">ax_force</span> <span class="o">/</span> <span class="n">sin</span><span class="p">(</span><span class="n">contact_angle</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+    <span class="k">return</span> <span class="n">norm_force</span></div>
+
+
+<div class="viewcode-block" id="refix"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.refix">[docs]</a><span class="k">def</span> <span class="nf">refix</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">p_in</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">p_out</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Convert between different SI unit prefixes. Available options are:</span>
+
+<span class="sd">    :code:`&#39;T&#39;`   Terra</span>
+
+<span class="sd">    :code:`&#39;G&#39;` Giga</span>
+
+<span class="sd">    :code:`&#39;M&#39;` Mega</span>
+
+<span class="sd">    :code:`&#39;k&#39;` Kilo</span>
+
+<span class="sd">    :code:`&#39;m&#39;` Milli</span>
+
+<span class="sd">    :code:`&#39;mu&#39;` Micro</span>
+
+<span class="sd">    :code:`&#39;n&#39;` Nano</span>
+
+<span class="sd">    :code:`&#39;p&#39;` Pico</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    val: scalar</span>
+<span class="sd">        The value for which to convert the unit prefix.</span>
+<span class="sd">    p_in: string, any of the above, optional</span>
+<span class="sd">        The current prefix of :code:`val`. If :code:`p_in` is undefined,</span>
+<span class="sd">        :code:`val` has no SI unit prefix.</span>
+<span class="sd">    p_out: string, any of the above, optional</span>
+<span class="sd">        The prefix of :code:`val_refix` after the conversion.  If :code:`p_in`</span>
+<span class="sd">        is undefined, :code:`val_refix` has no SI unit prefix.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    val_refix: scalar</span>
+<span class="sd">        The value in units of prefix :code:`p_out`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;p&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span>
+              <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="o">-</span><span class="mi">9</span><span class="p">,</span>
+              <span class="s1">&#39;mu&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span>
+              <span class="s1">&#39;m&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span>
+              <span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="o">-</span><span class="mi">0</span><span class="p">,</span>
+              <span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span>
+              <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">6</span><span class="p">,</span>
+              <span class="s1">&#39;G&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">9</span><span class="p">,</span>
+              <span class="s1">&#39;T&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">12</span><span class="p">}</span>
+    <span class="n">val_refix</span> <span class="o">=</span> <span class="n">val</span> <span class="o">*</span> <span class="n">prefix</span><span class="p">[</span><span class="n">p_in</span><span class="p">]</span> <span class="o">/</span> <span class="n">prefix</span><span class="p">[</span><span class="n">p_out</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">val_refix</span></div>
+
+
+<div class="viewcode-block" id="abbottfirestone"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.abbottfirestone">[docs]</a><span class="k">def</span> <span class="nf">abbottfirestone</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">num_bins</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the Abbott-Firestone curve for a 1D profile trace.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    trace: ndarray</span>
+<span class="sd">        The profile heights of the 1D trace.</span>
+<span class="sd">    num_bins: positive int, optional</span>
+<span class="sd">        The number of bins for the calculation of the profile height</span>
+<span class="sd">        probability distribution.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bins: ndarray</span>
+<span class="sd">        The bins used for the calculation of the profile height</span>
+<span class="sd">        probability distribution (= x-axis data for Abbott-Firestone plot).</span>
+<span class="sd">    prob_dist: ndarray</span>
+<span class="sd">        The probability distribution of the profile (= y-axis data for Abbott-</span>
+<span class="sd">        Firestone plot).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">trace</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">trace</span><span class="p">),</span> <span class="n">num_bins</span><span class="p">)</span>
+    <span class="n">prob_dist</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">each_bin</span> <span class="ow">in</span> <span class="n">bins</span><span class="p">:</span>
+        <span class="n">prob_dist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">trace</span> <span class="o">&gt;=</span> <span class="n">each_bin</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span> <span class="o">*</span> <span class="n">num_bins</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">bins</span><span class="p">,</span> <span class="n">prob_dist</span></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Moritz Ploss.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

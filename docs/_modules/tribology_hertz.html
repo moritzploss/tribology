@@ -1,0 +1,511 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tribology_hertz &mdash; Tribology  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Tribology  documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Tribology
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sec_general_tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_contact_mechanics.html">Contact Mechanics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_ehd_lubrication.html">EHD Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_lubricants.html">Lubricants and Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_constants.html">Constants for Tribology</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Tribology</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>tribology_hertz</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tribology_hertz</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">Methods related to Hertz contact theory</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">log</span>
+
+
+<span class="k">def</span> <span class="nf">__rred</span><span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">r_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the reduced (effective) radius of two radii according to Hertzian</span>
+<span class="sd">    contact theory.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_1: scalar</span>
+<span class="sd">        The first radius.</span>
+<span class="sd">    r_2: scalar</span>
+<span class="sd">        The second radius.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    r_red: scalar</span>
+<span class="sd">        The reduced (effective) radius.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">r_1</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">r_1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">r_2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">r_red</span> <span class="o">=</span>  <span class="n">r_2</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">r_2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">r_2</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">r_1</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">r_red</span> <span class="o">=</span> <span class="n">r_1</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">r_1</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">r_1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">))</span> <span class="ow">and</span> \
+            <span class="p">(</span><span class="n">r_2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">r_2</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)):</span>
+        <span class="n">r_red</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="n">r_1</span> <span class="o">==</span> <span class="o">-</span><span class="n">r_2</span><span class="p">:</span>
+        <span class="n">r_red</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">r_red</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">r_1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r_red</span>
+
+
+<div class="viewcode-block" id="reff"><a class="viewcode-back" href="../sec_contact_mechanics.html#tribology_hertz.reff">[docs]</a><span class="k">def</span> <span class="nf">reff</span><span class="p">(</span><span class="n">r_x_1</span><span class="p">,</span> <span class="n">r_y_1</span><span class="p">,</span> <span class="n">r_x_2</span><span class="p">,</span> <span class="n">r_y_2</span><span class="p">,</span> <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the effective radii for two bodies according to Hertzian contact</span>
+<span class="sd">    theory. It is assumed that the two major axis of each body (x- and y-axis)</span>
+<span class="sd">    are perpendicular to each other and that the x and y axes of both bodies are</span>
+<span class="sd">    aligned.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_x_1: scalar</span>
+<span class="sd">        The radius of body 1 in direction 1 (x).</span>
+<span class="sd">    r_y_1: scalar</span>
+<span class="sd">        The radius of body 1 in direction 2 (y).</span>
+<span class="sd">    r_x_2: scalar</span>
+<span class="sd">        The radius of body 2 in direction 1 (x).</span>
+<span class="sd">    r_y_2: scalar</span>
+<span class="sd">        The radius of body 2 in direction 2 (y).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    r_eff: scalar</span>
+<span class="sd">        The effective radius.</span>
+<span class="sd">    r_eff_x: scalar</span>
+<span class="sd">        The effective radius in x-direction.</span>
+<span class="sd">    r_eff_y: scalar</span>
+<span class="sd">        The effective radius in y-direction.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">recip_radius</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">radius</span> <span class="ow">in</span> <span class="p">[</span><span class="n">r_x_1</span><span class="p">,</span> <span class="n">r_y_1</span><span class="p">,</span> <span class="n">r_x_2</span><span class="p">,</span> <span class="n">r_y_2</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">radius</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">recip_radius</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">recip_radius</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">radius</span><span class="p">)</span>
+
+    <span class="n">r_eff_x</span> <span class="o">=</span> <span class="n">__rred</span><span class="p">(</span><span class="n">r_x_1</span><span class="p">,</span> <span class="n">r_x_2</span><span class="p">)</span>
+    <span class="n">r_eff_y</span> <span class="o">=</span> <span class="n">__rred</span><span class="p">(</span><span class="n">r_y_1</span><span class="p">,</span> <span class="n">r_y_2</span><span class="p">)</span>
+    <span class="n">r_eff</span> <span class="o">=</span> <span class="n">__rred</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r_eff</span><span class="p">,</span> <span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span></div>
+
+
+<div class="viewcode-block" id="eeff"><a class="viewcode-back" href="../sec_contact_mechanics.html#tribology_hertz.eeff">[docs]</a><span class="k">def</span> <span class="nf">eeff</span><span class="p">(</span><span class="n">e_1</span><span class="p">,</span> <span class="n">nu_1</span><span class="p">,</span> <span class="n">e_2</span><span class="p">,</span> <span class="n">nu_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the effective (Young&#39;s) modulus of two contact bodies according</span>
+<span class="sd">    to Hertzian contact theory.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    e_1: ndarray, scalar</span>
+<span class="sd">        The Young&#39;s modulus of contact body 1.</span>
+<span class="sd">    nu_1: ndarray, scalar</span>
+<span class="sd">        The Poisson ratio of contact body 1.</span>
+<span class="sd">    e_2: ndarray, scalar</span>
+<span class="sd">        The Young&#39;s modulus of contact body 2.</span>
+<span class="sd">    nu_2: ndarray, scalar</span>
+<span class="sd">        The Poisson ratio of contact body 1.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    e_eff: scalar</span>
+<span class="sd">        The effective modulus.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">e_eff</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu_1</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">e_1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu_2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">e_2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">e_eff</span></div>
+
+
+<span class="k">def</span> <span class="nf">__auxparamshertz</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate a set of parameters required for Hertz contact area/pressure</span>
+<span class="sd">    calculations.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_eff_x: scalar</span>
+<span class="sd">        The effective redius of the contact problem in x-direction.</span>
+<span class="sd">    r_eff_y: scalar</span>
+<span class="sd">        The effective redius of the contact problem in x-direction.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    a_ast: scalar</span>
+<span class="sd">        A parameter often referred to as a*.</span>
+<span class="sd">    b_ast: scalar</span>
+<span class="sd">        A parameter often referred to as b*.</span>
+<span class="sd">    kappa: scalar</span>
+<span class="sd">        A parameter often referred to as kappa.</span>
+<span class="sd">    param_lambda: scalar</span>
+<span class="sd">        A parameter often referred to as lambda.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">r_eff_x</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">r_eff_y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">param_lambda</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">param_lambda</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">r_eff_x</span> <span class="o">/</span> <span class="n">r_eff_y</span><span class="p">,</span> <span class="n">r_eff_y</span> <span class="o">/</span> <span class="n">r_eff_x</span><span class="p">)</span>
+    <span class="n">kappa</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="mi">16</span> <span class="o">/</span> <span class="n">param_lambda</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">param_lambda</span><span class="p">))</span> <span class="o">-</span>
+                 <span class="n">sqrt</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span> <span class="o">+</span> <span class="mf">0.16</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="n">param_lambda</span><span class="p">))</span>
+    <span class="n">a_ast</span> <span class="o">=</span> <span class="n">kappa</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">kappa</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="n">kappa</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span>
+                     <span class="mf">0.25</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="n">kappa</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">b_ast</span> <span class="o">=</span> <span class="n">a_ast</span> <span class="o">/</span> <span class="n">kappa</span>
+    <span class="k">return</span> <span class="n">a_ast</span><span class="p">,</span> <span class="n">b_ast</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">param_lambda</span>
+
+
+<div class="viewcode-block" id="dhertz"><a class="viewcode-back" href="../sec_contact_mechanics.html#tribology_hertz.dhertz">[docs]</a><span class="k">def</span> <span class="nf">dhertz</span><span class="p">(</span><span class="n">e_eff</span><span class="p">,</span> <span class="n">r_x_1</span><span class="p">,</span> <span class="n">r_y_1</span><span class="p">,</span> <span class="n">r_x_2</span><span class="p">,</span> <span class="n">r_y_2</span><span class="p">,</span> <span class="n">force</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the elastic normal displacement of a contact problem according</span>
+<span class="sd">    to Hertzian contact theory.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    e_eff: scalar</span>
+<span class="sd">        The effective modulus of the contact problem.</span>
+<span class="sd">    r_x_1: scalar</span>
+<span class="sd">        The radius of body 1 in direction 1 (x).</span>
+<span class="sd">    r_y_1: scalar</span>
+<span class="sd">        The radius of body 1 in direction 2 (y).</span>
+<span class="sd">    r_x_2: scalar</span>
+<span class="sd">        The radius of body 2 in direction 1 (x).</span>
+<span class="sd">    r_y_2: scalar</span>
+<span class="sd">        The radius of body 2 in direction 2 (y).</span>
+<span class="sd">    force: scalar</span>
+<span class="sd">        The normal force in the contact.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    norm_disp: scalar</span>
+<span class="sd">        The elastic normal displacement of the contact problem.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">apb</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">r_x_1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_y_1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_x_2</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_y_2</span><span class="p">)</span>
+    <span class="n">bma</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">((</span><span class="mi">1</span> <span class="o">/</span> <span class="n">r_x_1</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_y_1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span>
+                     <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">r_x_2</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_y_2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">r_a</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">apb</span> <span class="o">-</span> <span class="n">bma</span><span class="p">)</span>
+    <span class="n">r_b</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">apb</span> <span class="o">+</span> <span class="n">bma</span><span class="p">)</span>
+    <span class="n">r_c</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">r_a</span> <span class="o">*</span> <span class="n">r_b</span><span class="p">)</span>
+
+    <span class="n">f_1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="nb">pow</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="n">r_a</span> <span class="o">/</span> <span class="n">r_b</span><span class="p">,</span> <span class="mf">0.0602</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.456</span><span class="p">)</span>
+    <span class="n">f_2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="nb">pow</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="n">r_a</span> <span class="o">/</span> <span class="n">r_b</span><span class="p">,</span> <span class="mf">0.0684</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.531</span><span class="p">)</span>
+
+    <span class="n">param_c</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">force</span> <span class="o">*</span> <span class="n">r_c</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">e_eff</span><span class="p">),</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">f_1</span>
+    <span class="n">param_e</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="nb">pow</span><span class="p">(</span><span class="n">r_b</span> <span class="o">/</span> <span class="n">r_a</span><span class="p">,</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">param_a</span> <span class="o">=</span> <span class="n">param_c</span> <span class="o">*</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">param_e</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">param_b</span> <span class="o">=</span> <span class="n">param_c</span> <span class="o">*</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">param_e</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">norm_disp</span> <span class="o">=</span> <span class="n">param_a</span> <span class="o">*</span> <span class="n">param_b</span> <span class="o">/</span> <span class="n">r_c</span> <span class="o">*</span> <span class="p">(</span><span class="n">f_2</span> <span class="o">/</span> <span class="n">f_1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">norm_disp</span></div>
+
+
+<div class="viewcode-block" id="ahertz"><a class="viewcode-back" href="../sec_contact_mechanics.html#tribology_hertz.ahertz">[docs]</a><span class="k">def</span> <span class="nf">ahertz</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">force</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the contact area according to Hertzian contact theory.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_eff: scalar</span>
+<span class="sd">        The effective radius of the contact problem.</span>
+<span class="sd">    r_eff_x: scalar</span>
+<span class="sd">        The effective radius of the contact problem in x-direction.</span>
+<span class="sd">    r_eff_y: scalar</span>
+<span class="sd">        The effective radius of the contact problem in y-direction.</span>
+<span class="sd">    e_eff: scalar</span>
+<span class="sd">        The effective modulus of the contact problem.</span>
+<span class="sd">    force: scalar</span>
+<span class="sd">        The normal force in the contact.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    half_axis_a: scalar</span>
+<span class="sd">        The contact area half axis in x-direction.</span>
+<span class="sd">    half_axis_b: scalar</span>
+<span class="sd">        The contact area half axis in y-direction.</span>
+<span class="sd">    a_hertz: scalar</span>
+<span class="sd">        The contact area.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a_ast</span><span class="p">,</span> <span class="n">b_ast</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">__auxparamshertz</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">)</span>
+    <span class="n">half_axis_a</span> <span class="o">=</span> <span class="n">a_ast</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">force</span> <span class="o">*</span> <span class="n">r_eff</span> <span class="o">/</span> <span class="n">e_eff</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">half_axis_b</span> <span class="o">=</span> <span class="n">b_ast</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">force</span> <span class="o">*</span> <span class="n">r_eff</span> <span class="o">/</span> <span class="n">e_eff</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">a_hertz</span> <span class="o">=</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">half_axis_a</span> <span class="o">*</span> <span class="n">half_axis_b</span>
+    <span class="k">return</span> <span class="n">half_axis_a</span><span class="p">,</span> <span class="n">half_axis_b</span><span class="p">,</span> <span class="n">a_hertz</span></div>
+
+
+<div class="viewcode-block" id="fhertz"><a class="viewcode-back" href="../sec_contact_mechanics.html#tribology_hertz.fhertz">[docs]</a><span class="k">def</span> <span class="nf">fhertz</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">p_critical</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the load carrying capacity of a Hertzian contact.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_eff: scalar</span>
+<span class="sd">        The effective radius of the contact problem.</span>
+<span class="sd">    r_eff_x: scalar</span>
+<span class="sd">        The effective radius of the contact problem in x-direction.</span>
+<span class="sd">    r_eff_y: scalar</span>
+<span class="sd">        The effective radius of the contact problem in y-direction.</span>
+<span class="sd">    e_eff: scalar</span>
+<span class="sd">        The effective modulus of the contact problem.</span>
+<span class="sd">    p_critical: scalar</span>
+<span class="sd">        The critical mean Hertzian contact pressure that the contact can sustain</span>
+<span class="sd">        without plastic deformation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    f_crit: scalar</span>
+<span class="sd">        The load carrying capacity of the Hertzian contact.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a_ast</span><span class="p">,</span> <span class="n">b_ast</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">__auxparamshertz</span><span class="p">(</span><span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">)</span>
+    <span class="n">f_crit</span> <span class="o">=</span> <span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="n">a_ast</span> <span class="o">*</span> <span class="n">b_ast</span> <span class="o">*</span> <span class="n">p_critical</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">r_eff</span> <span class="o">/</span> <span class="n">e_eff</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">f_crit</span></div>
+
+
+<div class="viewcode-block" id="phertz"><a class="viewcode-back" href="../sec_contact_mechanics.html#tribology_hertz.phertz">[docs]</a><span class="k">def</span> <span class="nf">phertz</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">force</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the mean contact pressure in a Hertzian contact.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_eff: scalar</span>
+<span class="sd">        The effective radius of the contact problem.</span>
+<span class="sd">    r_eff_x: scalar</span>
+<span class="sd">        The effective radius of the contact problem in x-direction.</span>
+<span class="sd">    r_eff_y: scalar</span>
+<span class="sd">        The effective radius of the contact problem in y-direction.</span>
+<span class="sd">    e_eff: scalar</span>
+<span class="sd">        The effective modulus of the contact problem.</span>
+<span class="sd">    force: scalar</span>
+<span class="sd">        The normal force in the contact.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    p_hertz: scalar</span>
+<span class="sd">        The mean Hertzian contact pressure in the contact.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">area</span> <span class="o">=</span> <span class="n">ahertz</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">r_eff_x</span><span class="p">,</span> <span class="n">r_eff_y</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">force</span><span class="p">)</span>
+    <span class="n">p_hertz</span> <span class="o">=</span> <span class="n">force</span> <span class="o">/</span> <span class="n">area</span>
+    <span class="k">return</span> <span class="n">p_hertz</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Moritz Ploss.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

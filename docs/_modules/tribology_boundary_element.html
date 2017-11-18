@@ -1,0 +1,570 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tribology_boundary_element &mdash; Tribology  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Tribology  documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Tribology
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sec_general_tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_contact_mechanics.html">Contact Mechanics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_ehd_lubrication.html">EHD Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_lubricants.html">Lubricants and Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_constants.html">Constants for Tribology</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Tribology</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>tribology_boundary_element</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tribology_boundary_element</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">This module contains methods related to boundary element solvers for contact</span>
+<span class="sd">mechanics calculations. Please see the :code:`/demo` directory for minimum</span>
+<span class="sd">examples of how to combine the below methods to perform contact mechanics</span>
+<span class="sd">calculations.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">pi</span>
+
+<span class="kn">import</span> <span class="nn">numexpr</span> <span class="k">as</span> <span class="nn">ne</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse.linalg</span> <span class="k">as</span> <span class="nn">spla</span>
+
+
+<span class="k">def</span> <span class="nf">__secant</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span> <span class="n">fx_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Applies secant method to find root *x* of function *f(x)*.</span>
+<span class="sd">    If not enough (*x*, *f(x)*) value pairs are available to apply</span>
+<span class="sd">    secant method, a new *x* value is guessed by slightly changing the</span>
+<span class="sd">    initial *x* value</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x_list: ndarray, list</span>
+<span class="sd">        A list of known function inputs (x-values).</span>
+<span class="sd">    fx_list: ndarray, list</span>
+<span class="sd">        A list of known function outputs corresponding to the function inputs</span>
+<span class="sd">        in ``x_list``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    x: scalar</span>
+<span class="sd">        An estimate of the root of function f(x).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">fx_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> \
+                        <span class="n">fx_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> \
+                        <span class="nb">abs</span><span class="p">(</span><span class="n">fx_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">fx_list</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="n">x_0</span> <span class="o">=</span> <span class="n">x_list</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">x_1</span> <span class="o">=</span> <span class="n">x_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">fx_0</span> <span class="o">=</span> <span class="n">fx_list</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">fx_1</span> <span class="o">=</span> <span class="n">fx_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">fx_1</span> <span class="o">-</span> <span class="n">fx_0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">x_1</span> <span class="o">-</span> <span class="n">x_0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">x_1</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="n">fx_1</span> <span class="o">/</span> <span class="n">slope</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.9</span> <span class="o">+</span> <span class="mf">0.0001</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">__beinflumatgrid</span><span class="p">(</span><span class="n">axis</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Private helper method for influence matrix generation. Generates a grid</span>
+<span class="sd">    that is required for the generation of an influence matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    axis: ndarray</span>
+<span class="sd">        An axis of the elastic half space.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    infl_mat_grid: ndarray</span>
+<span class="sd">        A grid for influence matrix generation.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">len_axis</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+    <span class="n">vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">len_axis</span><span class="p">))</span>
+    <span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">axis</span>
+    <span class="n">vertical_ax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">len_axis</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">vertical_ax</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">axis</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">len_axis</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">infl_mat_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">vertical_ax</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">infl_mat_grid</span>
+
+
+<div class="viewcode-block" id="beinflumatred"><a class="viewcode-back" href="../sec_contact_mechanics.html#tribology_boundary_element.beinflumatred">[docs]</a><span class="k">def</span> <span class="nf">beinflumatred</span><span class="p">(</span><span class="n">influ_mat</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate a reduced influence coefficient matrix from a complete influence</span>
+<span class="sd">    coefficient matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    influ_mat: ndarray</span>
+<span class="sd">        The complete influence coefficient matrix.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    reduced_influ_mat: ndarray</span>
+<span class="sd">        The reduced influence coefficient matrix. The matrix is square and of</span>
+<span class="sd">        order ``n = np.shape(influ_mat)[0]`` :math:`\\times`</span>
+<span class="sd">        ``np.shape(influ_mat)[1]``.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">shape_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">influ_mat</span><span class="p">)</span>
+    <span class="n">len_mat</span> <span class="o">=</span> <span class="n">shape_mat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">shape_mat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">reduced_influ_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">len_mat</span><span class="p">,</span> <span class="n">len_mat</span><span class="p">))</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">shape_mat</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">shape_mat</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">reduced_influ_mat</span><span class="p">[</span><span class="n">counter</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> \
+                <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">influ_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">len_mat</span><span class="p">)</span>
+            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">reduced_influ_mat</span></div>
+
+
+<div class="viewcode-block" id="beinflumat"><a class="viewcode-back" href="../sec_contact_mechanics.html#tribology_boundary_element.beinflumat">[docs]</a><span class="k">def</span> <span class="nf">beinflumat</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">y_axis</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Generate a complete influence coefficient matrix as required for boundary</span>
+<span class="sd">    element contact mechanics calculations.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x_axis: ndarray</span>
+<span class="sd">        The x-axis values of the coordinate grid.</span>
+<span class="sd">    y_axis: ndarray</span>
+<span class="sd">        The y-axis values of the coordinate grid.</span>
+<span class="sd">    e_eff: scalar</span>
+<span class="sd">        The effective modulus of the contact bodies.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    infl_mat: ndarray</span>
+<span class="sd">        The complete four-dimensional influence coefficient matrix of size</span>
+<span class="sd">        ``len(x_axis)`` :math:`\\times` ``len(y_axis)`` :math:`\\times`</span>
+<span class="sd">        ``len(x_axis)`` :math:`\\times` ``len(y_axis)``.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">len_x</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_axis</span><span class="p">)</span>
+    <span class="n">len_y</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_axis</span><span class="p">)</span>
+    <span class="n">influence_matrix_complete</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">len_x</span><span class="p">,</span> <span class="n">len_y</span><span class="p">,</span> <span class="n">len_x</span><span class="p">,</span> <span class="n">len_y</span><span class="p">))</span>
+
+    <span class="c1"># generate coordinate grids</span>
+    <span class="n">a_factor</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_axis</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_axis</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">len_x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">b_factor</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_axis</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_axis</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">len_y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">x_grid</span> <span class="o">=</span> <span class="n">__beinflumatgrid</span><span class="p">(</span><span class="n">x_axis</span><span class="p">)</span>
+    <span class="n">y_grid</span> <span class="o">=</span> <span class="n">__beinflumatgrid</span><span class="p">(</span><span class="n">y_axis</span><span class="p">)</span>
+
+    <span class="c1"># use numexpr to evaluate expressions</span>
+    <span class="n">xpa</span> <span class="o">=</span> <span class="n">ne</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="s1">&#39;x_grid + a_factor&#39;</span><span class="p">)</span>
+    <span class="n">xma</span> <span class="o">=</span> <span class="n">ne</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="s1">&#39;x_grid - a_factor&#39;</span><span class="p">)</span>
+    <span class="n">ypb</span> <span class="o">=</span> <span class="n">ne</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="s1">&#39;y_grid + b_factor&#39;</span><span class="p">)</span>
+    <span class="n">ymb</span> <span class="o">=</span> <span class="n">ne</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="s1">&#39;y_grid - b_factor&#39;</span><span class="p">)</span>
+
+    <span class="c1"># calculate complete influence matrix</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">len_y</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j_prime</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">len_y</span><span class="p">):</span>
+            <span class="n">influence_matrix_complete</span><span class="p">[:,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:,</span> <span class="n">j_prime</span><span class="p">]</span> <span class="o">=</span>  \
+                    <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">xpa</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span>
+                            <span class="p">((</span><span class="n">ypb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">])</span> <span class="o">+</span>
+                             <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">((</span><span class="n">ypb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]),</span>
+                                                 <span class="p">(</span><span class="n">ypb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]))</span> <span class="o">+</span>
+                                     <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">xpa</span><span class="p">,</span> <span class="n">xpa</span><span class="p">))),</span>
+                            <span class="p">((</span><span class="n">ymb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">])</span> <span class="o">+</span>
+                             <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">((</span><span class="n">ymb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]),</span>
+                                                 <span class="p">(</span><span class="n">ymb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]))</span> <span class="o">+</span>
+                                     <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">xpa</span><span class="p">,</span> <span class="n">xpa</span><span class="p">))))))</span> <span class="o">+</span>
+                     <span class="p">(</span><span class="n">ypb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                         <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span>
+                             <span class="p">(</span><span class="n">xpa</span> <span class="o">+</span>
+                              <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">((</span><span class="n">ypb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]),</span>
+                                                  <span class="p">(</span><span class="n">ypb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]))</span> <span class="o">+</span>
+                                      <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">xpa</span><span class="p">,</span> <span class="n">xpa</span><span class="p">))),</span>
+                             <span class="p">(</span><span class="n">xma</span> <span class="o">+</span>
+                              <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">((</span><span class="n">ypb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]),</span>
+                                                  <span class="p">(</span><span class="n">ypb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]))</span> <span class="o">+</span>
+                                      <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">xma</span><span class="p">,</span> <span class="n">xma</span><span class="p">)))))</span> <span class="o">+</span>
+                     <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">xma</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                         <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span>
+                             <span class="p">((</span><span class="n">ymb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">])</span> <span class="o">+</span>
+                              <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">((</span><span class="n">ymb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]),</span>
+                                                  <span class="p">(</span><span class="n">ymb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]))</span> <span class="o">+</span>
+                                      <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">xma</span><span class="p">,</span> <span class="n">xma</span><span class="p">))),</span>
+                             <span class="p">((</span><span class="n">ypb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">])</span> <span class="o">+</span>
+                              <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">((</span><span class="n">ypb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]),</span>
+                                                  <span class="p">(</span><span class="n">ypb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]))</span> <span class="o">+</span>
+                                      <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">xma</span><span class="p">,</span> <span class="n">xma</span><span class="p">))))))</span> <span class="o">+</span>
+                     <span class="p">(</span><span class="n">ymb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                         <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span>
+                             <span class="p">(</span><span class="n">xma</span> <span class="o">+</span>
+                              <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">((</span><span class="n">ymb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]),</span>
+                                                  <span class="p">(</span><span class="n">ymb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]))</span> <span class="o">+</span>
+                                      <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">xma</span><span class="p">,</span> <span class="n">xma</span><span class="p">))),</span>
+                             <span class="p">(</span><span class="n">xpa</span> <span class="o">+</span>
+                              <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">((</span><span class="n">ymb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]),</span>
+                                                  <span class="p">(</span><span class="n">ymb</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j_prime</span><span class="p">]))</span> <span class="o">+</span>
+                                      <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">xpa</span><span class="p">,</span> <span class="n">xpa</span><span class="p">))))))</span>
+
+    <span class="n">infl_mat</span> <span class="o">=</span> <span class="n">influence_matrix_complete</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">e_eff</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">pi</span>
+    <span class="k">return</span> <span class="n">infl_mat</span></div>
+
+
+<span class="k">def</span> <span class="nf">__begetd</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">norm_disp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    profile: ndarray</span>
+<span class="sd">        The combined profiles of two contact bodies.</span>
+<span class="sd">    norm_disp: scalar</span>
+<span class="sd">        The normal elastic displacement (interference) of the two contact</span>
+<span class="sd">        bodies.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    disp: ndarray</span>
+<span class="sd">        A displacement field containing the combined local elastic displacements</span>
+<span class="sd">        of both contact bodies.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">displ_field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">norm_disp</span><span class="p">,</span> <span class="n">profile</span><span class="p">)</span>
+    <span class="n">disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">displ_field</span><span class="p">,</span> <span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">profile</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">disp</span>
+
+
+<span class="k">def</span> <span class="nf">__solvepress</span><span class="p">(</span><span class="n">red_influ_mat</span><span class="p">,</span> <span class="n">disp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Solve for pressure distribution by removing negative pressure elements from</span>
+<span class="sd">    the pressure matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    red_influ_mat: ndarray</span>
+<span class="sd">        The recued influence matrix of the contact problem.</span>
+<span class="sd">    disp: ndarray</span>
+<span class="sd">        The (combined) displacement field of the contact problem.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pressure: ndarray</span>
+<span class="sd">        The pressure field of the contact problem.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># find negative pressure arguments</span>
+    <span class="n">pressure</span> <span class="o">=</span> <span class="n">spla</span><span class="o">.</span><span class="n">gmres</span><span class="p">(</span><span class="n">red_influ_mat</span><span class="p">,</span> <span class="n">disp</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">p_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pressure</span><span class="p">))</span>
+    <span class="n">negative_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pressure</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">p_neg</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">negative_p</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">negative_p</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">pressure</span><span class="p">[</span><span class="n">p_neg</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">p_index</span><span class="p">[</span><span class="n">p_neg</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">u_new_reduced</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">disp</span><span class="p">,</span> <span class="p">[</span><span class="n">p_neg</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">g_new_reduced</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">red_influ_mat</span><span class="p">,</span> <span class="p">[</span><span class="n">p_neg</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">g_new_reduced</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">g_new_reduced</span><span class="p">,</span> <span class="p">[</span><span class="n">p_neg</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pressure</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">p_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)]</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">pressure</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">p_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> \
+                <span class="n">spla</span><span class="o">.</span><span class="n">gmres</span><span class="p">(</span><span class="n">g_new_reduced</span><span class="p">,</span> <span class="n">u_new_reduced</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">negative_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pressure</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p_neg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p_neg</span><span class="p">,</span> <span class="n">negative_p</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pressure</span>
+
+
+<div class="viewcode-block" id="besolve"><a class="viewcode-back" href="../sec_contact_mechanics.html#tribology_boundary_element.besolve">[docs]</a><span class="k">def</span> <span class="nf">besolve</span><span class="p">(</span><span class="n">profile_1</span><span class="p">,</span> <span class="n">profile_2</span><span class="p">,</span> <span class="n">outer_force</span><span class="p">,</span>
+            <span class="n">red_influ_mat</span><span class="p">,</span> <span class="n">delta_x</span><span class="p">,</span> <span class="n">delta_y</span><span class="p">,</span>
+            <span class="n">norm_disp</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">max_offset</span><span class="o">=</span><span class="mf">0.005</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Solve a system of linear equations to find the pressure and displacement</span>
+<span class="sd">    distribution in a boundary element contact problem:</span>
+
+<span class="sd">        :math:`[\\text{pressure}] = [\\text{reduced influence matrix}]^{-1}</span>
+<span class="sd">        \\cdot [\\text{displacement}]`</span>
+
+<span class="sd">    The start value for the relative normal displacement is defined by the</span>
+<span class="sd">    ``norm_disp`` parameter. The default value corresponds to 0.1 units of</span>
+<span class="sd">    length. If the start value of the normal displacement is close to the</span>
+<span class="sd">    equilibrium displacement, the calculation time may be reduced significantly.</span>
+
+<span class="sd">    The solver stops once inner and outer forces are in equilibrium. The maximum</span>
+<span class="sd">    allowed discrepancy between inner and outer forces is defined by the</span>
+<span class="sd">    ``max_offset`` parameter. The default value corresponds to 0.5 %.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    profile_1: ndarray</span>
+<span class="sd">        A matrix containing the profile heights of body 1.</span>
+<span class="sd">    profile_2: ndarray</span>
+<span class="sd">        A matrix containing the profile heights of body 2. The matrix must have</span>
+<span class="sd">        the same size and grid spacing (in unit length) as ``profile_1``.</span>
+<span class="sd">    outer_force: scalar</span>
+<span class="sd">        The (outer) normal force acting on the contact.</span>
+<span class="sd">    red_influ_mat: ndarray</span>
+<span class="sd">        The reduced influence matrix calculated using the ``beinflumatred``</span>
+<span class="sd">        method.</span>
+<span class="sd">    delta_x: scalar</span>
+<span class="sd">        The grid spacing of the profile matrices in unit length in x-direction.</span>
+<span class="sd">    delta_y: scalar</span>
+<span class="sd">        The grid spacing of the profile matrices in unit length in y-direction.</span>
+<span class="sd">    norm_disp: scalar</span>
+<span class="sd">        The initial normal elastic deformation in unit length used to start the</span>
+<span class="sd">        solver.</span>
+<span class="sd">    max_offset: scalar</span>
+<span class="sd">        The maximum allowed percentage difference of inner and outer force (used</span>
+<span class="sd">        to determine when solver has completed).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pressure: ndarray</span>
+<span class="sd">        The contact pressure field in the contact.</span>
+<span class="sd">    disp: ndarray</span>
+<span class="sd">        The combined normal displacement field for contact body 1 and 2.</span>
+<span class="sd">    inner_force: scalar</span>
+<span class="sd">        The sum over all inner forces.</span>
+<span class="sd">    norm_disp: scalar</span>
+<span class="sd">        The normal elastic equilibrium displacement.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># initialise variables</span>
+    <span class="n">x_value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">fx_value</span> <span class="o">=</span> <span class="p">[</span><span class="n">outer_force</span><span class="p">]</span>
+    <span class="n">pressure</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">inner_force</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">profile</span> <span class="o">=</span> <span class="n">profile_1</span> <span class="o">+</span> <span class="n">profile_2</span>
+
+    <span class="c1"># while difference between inner forces and outer forces is significant</span>
+    <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">inner_force</span> <span class="o">-</span> <span class="n">outer_force</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_offset</span> <span class="o">*</span> <span class="n">outer_force</span><span class="p">:</span>
+
+        <span class="c1"># update local displacements</span>
+        <span class="n">disp</span> <span class="o">=</span> <span class="n">__begetd</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">norm_disp</span><span class="p">)</span>
+        <span class="n">pressure</span> <span class="o">=</span> <span class="n">__solvepress</span><span class="p">(</span><span class="n">red_influ_mat</span><span class="p">,</span> <span class="n">disp</span><span class="p">)</span>
+
+        <span class="c1"># calculate resulting force and adjust displacement for next loop</span>
+        <span class="n">pressure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">profile</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">inner_force</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">delta_x</span> <span class="o">*</span> <span class="n">delta_y</span><span class="p">,</span> <span class="n">pressure</span><span class="p">)))</span>
+        <span class="n">x_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x_value</span><span class="p">,</span> <span class="p">[</span><span class="n">norm_disp</span><span class="p">])</span>
+        <span class="n">fx_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fx_value</span><span class="p">,</span> <span class="p">[</span><span class="n">inner_force</span> <span class="o">-</span> <span class="n">outer_force</span><span class="p">])</span>
+        <span class="n">norm_disp</span> <span class="o">=</span> <span class="n">__secant</span><span class="p">(</span><span class="n">x_value</span><span class="p">,</span> <span class="n">fx_value</span><span class="p">)</span>
+
+    <span class="n">disp</span> <span class="o">=</span> <span class="n">__begetd</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">norm_disp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">disp</span><span class="p">,</span> <span class="n">inner_force</span><span class="p">,</span> <span class="n">norm_disp</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Moritz Ploss.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

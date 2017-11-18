@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tribology_constants &mdash; Tribology  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Tribology  documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Tribology
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sec_general_tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_contact_mechanics.html">Contact Mechanics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_ehd_lubrication.html">EHD Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_lubricants.html">Lubricants and Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_constants.html">Constants for Tribology</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Tribology</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>tribology_constants</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tribology_constants</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">Relevant constants for tribology research. Use, for example, as follows:</span>
+
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">   # get young&#39;s modulus of steel in units of MPa</span>
+<span class="sd">   import tribology as tr</span>
+<span class="sd">   youngs_modulus_steel = tr.YoungsMod.STEEL.value</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
+
+
+<div class="viewcode-block" id="RadBall"><a class="viewcode-back" href="../sec_constants.html#tribology_constants.RadBall">[docs]</a><span class="k">class</span> <span class="nc">RadBall</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Scalar constants for ball radii in units of mm. Available values are:</span>
+
+<span class="sd">    :TQInch: 3/4 inch</span>
+<span class="sd">    :HInch: 1/2 inch</span>
+<span class="sd">    :Inch: 1 inch</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">TQInch</span> <span class="o">=</span> <span class="mf">25.4</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">8</span>
+    <span class="n">HInch</span> <span class="o">=</span> <span class="mf">25.4</span> <span class="o">/</span> <span class="mi">4</span>
+    <span class="n">Inch</span> <span class="o">=</span> <span class="mf">25.4</span> <span class="o">/</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="YoungsMod"><a class="viewcode-back" href="../sec_constants.html#tribology_constants.YoungsMod">[docs]</a><span class="k">class</span> <span class="nc">YoungsMod</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Scalar constants for Young&#39;s modulus in units of MPa. Available values are:</span>
+
+<span class="sd">    :STEEL:</span>
+<span class="sd">    :GLASS:</span>
+<span class="sd">    :SiN:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">STEEL</span> <span class="o">=</span> <span class="mi">210000</span>
+    <span class="n">GLASS</span> <span class="o">=</span> <span class="mi">70000</span>
+    <span class="n">SiN</span> <span class="o">=</span> <span class="mi">315000</span></div>
+
+
+<div class="viewcode-block" id="PoissonRatio"><a class="viewcode-back" href="../sec_constants.html#tribology_constants.PoissonRatio">[docs]</a><span class="k">class</span> <span class="nc">PoissonRatio</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Scalar constants for unitless Poisson ratios. Available values are:</span>
+
+<span class="sd">    :STEEL:</span>
+<span class="sd">    :GLASS:</span>
+<span class="sd">    :SiN:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">STEEL</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">GLASS</span> <span class="o">=</span> <span class="mf">0.22</span>
+    <span class="n">SiN</span> <span class="o">=</span> <span class="mf">0.26</span></div>
+
+
+<div class="viewcode-block" id="MatDens"><a class="viewcode-back" href="../sec_constants.html#tribology_constants.MatDens">[docs]</a><span class="k">class</span> <span class="nc">MatDens</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Scalar constants for material density in :math:`\\text{kg m}^{-3}`.</span>
+<span class="sd">    Available values are:</span>
+
+<span class="sd">    :STEEL:</span>
+<span class="sd">    :GLASS:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">STEEL</span> <span class="o">=</span> <span class="mi">7800</span>
+    <span class="n">SiN</span> <span class="o">=</span> <span class="mi">3200</span></div>
+
+
+<div class="viewcode-block" id="LubeDens"><a class="viewcode-back" href="../sec_constants.html#tribology_constants.LubeDens">[docs]</a><span class="k">class</span> <span class="nc">LubeDens</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Scalar constants for lubricant density in :math:`\\text{g ml}^{-1}`.</span>
+<span class="sd">    Available values are:</span>
+
+<span class="sd">    :NA_LUBE_KR_015:</span>
+<span class="sd">    :NYNAS_HP_4:</span>
+<span class="sd">    :NYNAS_HP_12:</span>
+<span class="sd">    :NYNAS_T_3:</span>
+<span class="sd">    :NYNAS_T_9:</span>
+<span class="sd">    :NYNAS_T_22:</span>
+<span class="sd">    :SIGMA_ALDRICH_MINERAL_OIL_HEAVY:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NA_LUBE_KR_015</span> <span class="o">=</span> <span class="mf">0.884</span>
+    <span class="n">NYNAS_HP_4</span> <span class="o">=</span> <span class="mf">0.852</span>
+    <span class="n">NYNAS_HP_12</span> <span class="o">=</span> <span class="mf">0.867</span>
+    <span class="n">NYNAS_T_3</span> <span class="o">=</span> <span class="mf">0.868</span>
+    <span class="n">NYNAS_T_9</span> <span class="o">=</span> <span class="mf">0.888</span>
+    <span class="n">NYNAS_T_22</span> <span class="o">=</span> <span class="mf">0.902</span>
+    <span class="n">SIGMA_ALDRICH_MINERAL_OIL_HEAVY</span> <span class="o">=</span> <span class="mf">0.862</span></div>
+
+
+<div class="viewcode-block" id="LubeVisc"><a class="viewcode-back" href="../sec_constants.html#tribology_constants.LubeVisc">[docs]</a><span class="k">class</span> <span class="nc">LubeVisc</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Tuple containing kinematic viscosities (in unit of cSt) of lubricants</span>
+<span class="sd">    at 40 and 100 :math:`^{\\circ}\\text{C}`. The first value in the tuple</span>
+<span class="sd">    corresponds to the viscosity at 40 :math:`^{\\circ}\\text{C}`, the second</span>
+<span class="sd">    to 100 :math:`^{\\circ}\\text{C}`. The **TEMPS** value contains the</span>
+<span class="sd">    reference temperatures (40, 100). Available values are:</span>
+
+<span class="sd">    :TEMPS: Tuple containing temperature values of 40 and 100</span>
+
+<span class="sd">    :NA_LUBE_KR_015:</span>
+<span class="sd">    :NYNAS_HP_4:</span>
+<span class="sd">    :NYNAS_HP_12:</span>
+<span class="sd">    :NYNAS_T_3:</span>
+<span class="sd">    :NYNAS_T_9:</span>
+<span class="sd">    :NYNAS_T_22:</span>
+<span class="sd">    :SIGMA_ALDRICH_MINERAL_OIL_HEAVY:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">TEMPS</span> <span class="o">=</span> <span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">NA_LUBE_KR_015</span> <span class="o">=</span> <span class="p">(</span><span class="mf">114.0</span><span class="p">,</span> <span class="mf">13.5</span><span class="p">)</span>
+    <span class="n">NYNAS_HP_4</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">)</span>
+    <span class="n">NYNAS_HP_12</span> <span class="o">=</span> <span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="n">NYNAS_T_3</span> <span class="o">=</span> <span class="p">(</span><span class="mf">3.7</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">)</span>
+    <span class="n">NYNAS_T_9</span> <span class="o">=</span> <span class="p">(</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">)</span>
+    <span class="n">NYNAS_T_22</span> <span class="o">=</span> <span class="p">(</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">)</span>
+    <span class="n">SIGMA_ALDRICH_MINERAL_OIL_HEAVY</span> <span class="o">=</span> <span class="p">(</span><span class="mf">67.0</span><span class="p">,</span> <span class="mf">18.9</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PressVisc"><a class="viewcode-back" href="../sec_constants.html#tribology_constants.PressVisc">[docs]</a><span class="k">class</span> <span class="nc">PressVisc</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Pressure-viscosity coefficients in :math:`\\text{Pa}^{-1}` at room</span>
+<span class="sd">    temperature. Available values are:</span>
+
+<span class="sd">    :ESTER_OIL_GENERIC:</span>
+<span class="sd">    :MINERAL_OIL_GENERIC:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ESTER_OIL_GENERIC</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">)</span>
+    <span class="n">MINERAL_OIL_GENERIC</span> <span class="o">=</span> <span class="mi">30</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Moritz Ploss.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

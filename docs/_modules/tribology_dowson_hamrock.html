@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tribology_dowson_hamrock &mdash; Tribology  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Tribology  documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Tribology
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sec_general_tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_contact_mechanics.html">Contact Mechanics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_ehd_lubrication.html">EHD Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_lubricants.html">Lubricants and Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_constants.html">Constants for Tribology</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Tribology</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>tribology_dowson_hamrock</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tribology_dowson_hamrock</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">Methods related to Dowson-Hamrock film thickness calculations</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">__dowson_hamrock_parameters</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">param_g</span><span class="p">,</span> <span class="n">param_u</span><span class="p">,</span> <span class="n">param_w</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">     Calculate the EHD-parameter for Dowson-Hamrock film thickness calculations.</span>
+<span class="sd">     The name EHD-parameter is used within the tribology package to refer to</span>
+<span class="sd">     what is calculated below; this parameter is not officially defined by</span>
+<span class="sd">     Dowson-Hamrock.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_eff: scalar</span>
+<span class="sd">        The effective radius of the contact problem.</span>
+<span class="sd">    param_g: scalar</span>
+<span class="sd">        The elasticity parameter of the contact problem.</span>
+<span class="sd">    param_u: scalar</span>
+<span class="sd">        The velocity parameter of the contact problem.</span>
+<span class="sd">    param_w: scalar</span>
+<span class="sd">        The load parameter of the contact problem.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    param_ehd: scalar</span>
+<span class="sd">        The EHD parameter of the contact problem.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">param_ehd</span> <span class="o">=</span> <span class="n">r_eff</span> <span class="o">*</span> <span class="n">param_g</span> <span class="o">**</span> <span class="mf">0.53</span> <span class="o">*</span> <span class="n">param_u</span> <span class="o">**</span> <span class="mf">0.67</span> <span class="o">*</span> <span class="n">param_w</span> <span class="o">**</span> <span class="o">-</span><span class="mf">0.067</span>
+    <span class="k">return</span> <span class="n">param_ehd</span>
+
+
+<div class="viewcode-block" id="edowham"><a class="viewcode-back" href="../sec_ehd_lubrication.html#tribology_dowson_hamrock.edowham">[docs]</a><span class="k">def</span> <span class="nf">edowham</span><span class="p">(</span><span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the elasticity parameter of the contact problem according to</span>
+<span class="sd">    Dowson-Hamrock.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    alpha_p: ndarray, scalar</span>
+<span class="sd">        The pressure-viscosity coefficient of the lubricant.</span>
+<span class="sd">    e_eff: ndarray, scalar</span>
+<span class="sd">        The effective modulus of the contact problem.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    param_elasticity: ndarray, scalar</span>
+<span class="sd">        The elasticity parameter of the contact problem.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">param_elasticity</span> <span class="o">=</span> <span class="n">alpha_p</span> <span class="o">*</span> <span class="n">e_eff</span>
+    <span class="k">return</span> <span class="n">param_elasticity</span></div>
+
+
+<div class="viewcode-block" id="vdowham"><a class="viewcode-back" href="../sec_ehd_lubrication.html#tribology_dowson_hamrock.vdowham">[docs]</a><span class="k">def</span> <span class="nf">vdowham</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">vel_entrain</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the velocity parameter of the contact problem according to</span>
+<span class="sd">    Dowson-Hamrock.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    eta: ndarray, scalar</span>
+<span class="sd">        The dynamic viscosity of the lubricant.</span>
+<span class="sd">    vel_entrain: ndarray, scalar</span>
+<span class="sd">        The entrainment velocity of the contact problem.</span>
+<span class="sd">    e_eff: ndarray, scalar</span>
+<span class="sd">        The effective modulus of the contact problem.</span>
+<span class="sd">    r_eff: ndarray, scalar</span>
+<span class="sd">        The effective radius of the contact problem.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    param_velocity: ndarray, scalar</span>
+<span class="sd">        The velocity parameter of the contact problem.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">param_velocity</span> <span class="o">=</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">vel_entrain</span> <span class="o">/</span> <span class="p">(</span><span class="n">e_eff</span> <span class="o">*</span> <span class="n">r_eff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">param_velocity</span></div>
+
+
+<div class="viewcode-block" id="dowhamline"><a class="viewcode-back" href="../sec_ehd_lubrication.html#tribology_dowson_hamrock.dowhamline">[docs]</a><span class="k">def</span> <span class="nf">dowhamline</span><span class="p">(</span><span class="n">vel_entrain</span><span class="p">,</span> <span class="n">force</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">l_eff</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the mean film thickness in a line contact according to</span>
+<span class="sd">    Dowson-Hamrock.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    vel_entrain: ndarray, scalar</span>
+<span class="sd">        The entrainment velocity of the contact problem.</span>
+<span class="sd">    force: ndarray, scalar</span>
+<span class="sd">        The normal force in the contact.</span>
+<span class="sd">    alpha_p: ndarray, scalar</span>
+<span class="sd">        The pressure-viscosity coefficient of the lubricant.</span>
+<span class="sd">    e_eff: ndarray, scalar</span>
+<span class="sd">        The effective modulus of the contact problem.</span>
+<span class="sd">    r_eff: ndarray, scalar</span>
+<span class="sd">        The effective radius of the contact problem.</span>
+<span class="sd">    eta: ndarray, scalar</span>
+<span class="sd">        The dynamic viscosity of the lubricant.</span>
+<span class="sd">    l_eff: ndarray, scalar</span>
+<span class="sd">        The effective length of the contact.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    h_0: ndarray, scalar</span>
+<span class="sd">        The central lubricating film thickness in the contact.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">param_g</span> <span class="o">=</span> <span class="n">edowham</span><span class="p">(</span><span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">)</span>
+    <span class="n">param_u</span> <span class="o">=</span> <span class="n">vdowham</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">vel_entrain</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">)</span>
+    <span class="n">param_w</span> <span class="o">=</span> <span class="n">force</span> <span class="o">/</span> <span class="p">(</span><span class="n">l_eff</span> <span class="o">*</span> <span class="n">r_eff</span> <span class="o">*</span> <span class="n">e_eff</span><span class="p">)</span>
+    <span class="n">h_0</span> <span class="o">=</span> <span class="mf">2.69</span> <span class="o">*</span> <span class="n">__dowson_hamrock_parameters</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">param_g</span><span class="p">,</span> <span class="n">param_u</span><span class="p">,</span> <span class="n">param_w</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">h_0</span></div>
+
+
+<div class="viewcode-block" id="dowhampoint"><a class="viewcode-back" href="../sec_ehd_lubrication.html#tribology_dowson_hamrock.dowhampoint">[docs]</a><span class="k">def</span> <span class="nf">dowhampoint</span><span class="p">(</span><span class="n">vel_entrain</span><span class="p">,</span> <span class="n">force</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">,</span> <span class="n">eta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the mean film thickness in a point contact according to</span>
+<span class="sd">    Dowson-Hamrock.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    vel_entrain: ndarray, scalar</span>
+<span class="sd">        The entrainment velocity of the contact problem.</span>
+<span class="sd">    force: ndarray, scalar</span>
+<span class="sd">        The normal force in the contact.</span>
+<span class="sd">    alpha_p: ndarray, scalar</span>
+<span class="sd">        The pressure-viscosity coefficient of the lubricant.</span>
+<span class="sd">    e_eff: ndarray, scalar</span>
+<span class="sd">        The effective modulus of the contact problem.</span>
+<span class="sd">    r_eff: ndarray, scalar</span>
+<span class="sd">        The effective radius of the contact problem.</span>
+<span class="sd">    eta: ndarray, scalar</span>
+<span class="sd">        The dynamic viscosity of the lubricant.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    h_0: ndarray, scalar</span>
+<span class="sd">        The central lubricating film thickness in the contact.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">param_g</span> <span class="o">=</span> <span class="n">edowham</span><span class="p">(</span><span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">)</span>
+    <span class="n">param_u</span> <span class="o">=</span> <span class="n">vdowham</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">vel_entrain</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">)</span>
+    <span class="n">param_w</span> <span class="o">=</span> <span class="n">force</span> <span class="o">/</span> <span class="p">(</span><span class="n">r_eff</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">e_eff</span><span class="p">)</span>
+    <span class="n">h_0</span> <span class="o">=</span> <span class="mf">1.9</span> <span class="o">*</span> <span class="n">__dowson_hamrock_parameters</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">param_g</span><span class="p">,</span> <span class="n">param_u</span><span class="p">,</span> <span class="n">param_w</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">h_0</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Moritz Ploss.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,496 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tribology_lubrication &mdash; Tribology  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Tribology  documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Tribology
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sec_general_tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_contact_mechanics.html">Contact Mechanics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_ehd_lubrication.html">EHD Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_lubricants.html">Lubricants and Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_constants.html">Constants for Tribology</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Tribology</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>tribology_lubrication</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tribology_lubrication</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">Methods related to lubricants and lubrication</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">e</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">log10</span> <span class="k">as</span> <span class="n">lg</span>
+
+
+<div class="viewcode-block" id="kin2dyn"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.kin2dyn">[docs]</a><span class="k">def</span> <span class="nf">kin2dyn</span><span class="p">(</span><span class="n">kin</span><span class="p">,</span> <span class="n">density</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Convert from kinematic to dynamic viscosity.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    kin: ndarray, scalar</span>
+<span class="sd">        The kinematic viscosity of the lubricant.</span>
+<span class="sd">    density: ndarray, scalar</span>
+<span class="sd">        The density of the lubricant.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dyn: ndarray, scalar</span>
+<span class="sd">        The dynamic viscosity of the lubricant.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dyn</span> <span class="o">=</span> <span class="n">kin</span> <span class="o">/</span> <span class="n">density</span>
+    <span class="k">return</span> <span class="n">dyn</span></div>
+
+
+<div class="viewcode-block" id="dyn2kin"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.dyn2kin">[docs]</a><span class="k">def</span> <span class="nf">dyn2kin</span><span class="p">(</span><span class="n">dyn</span><span class="p">,</span> <span class="n">density</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Convert from dynamic to kinematic viscosity.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dyn: ndarray, scalar</span>
+<span class="sd">        The dynamic viscosity of the lubricant.</span>
+<span class="sd">    density: ndarray, scalar</span>
+<span class="sd">        The density of the lubricant.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    kin: ndarray, scalar</span>
+<span class="sd">        The kinematic viscosity of the lubricant.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">kin</span> <span class="o">=</span> <span class="n">dyn</span> <span class="o">*</span> <span class="n">density</span>
+    <span class="k">return</span> <span class="n">kin</span></div>
+
+
+<span class="k">def</span> <span class="nf">__zedwalther</span><span class="p">(</span><span class="n">kin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the z-parameter for the Walther equation (ASTM D341).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    kin: scalar</span>
+<span class="sd">        The kinematic viscosity of the lubricant.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    zed: scalar</span>
+<span class="sd">        The z-parameter.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">zed</span> <span class="o">=</span> <span class="n">kin</span> <span class="o">+</span> <span class="mf">0.7</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.47</span> <span class="o">-</span> <span class="mf">1.84</span> <span class="o">*</span> <span class="n">kin</span> <span class="o">-</span> <span class="mf">0.51</span> <span class="o">*</span> <span class="n">kin</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">zed</span>
+
+
+<span class="k">def</span> <span class="nf">__nuwalther</span><span class="p">(</span><span class="n">zed</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the kinematic viscosity for the Walther equation (ASTM D341).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    zed: scalar</span>
+<span class="sd">        The z-parameter of the Walther equation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    kin: scalar</span>
+<span class="sd">        The kinematic viscosity.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">kin</span> <span class="o">=</span> <span class="p">(</span><span class="n">zed</span> <span class="o">-</span> <span class="mf">0.7</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.7487</span> <span class="o">-</span> <span class="mf">3.295</span> <span class="o">*</span> <span class="p">(</span><span class="n">zed</span> <span class="o">-</span> <span class="mf">0.7</span><span class="p">)</span> <span class="o">+</span>
+                               <span class="mf">0.6119</span> <span class="o">*</span> <span class="p">(</span><span class="n">zed</span> <span class="o">-</span> <span class="mf">0.7</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mf">0.3193</span> <span class="o">*</span>
+                               <span class="p">(</span><span class="n">zed</span> <span class="o">-</span> <span class="mf">0.7</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">kin</span>
+
+
+<div class="viewcode-block" id="walther"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.walther">[docs]</a><span class="k">def</span> <span class="nf">walther</span><span class="p">(</span><span class="n">temp_1</span><span class="p">,</span> <span class="n">nu_1</span><span class="p">,</span> <span class="n">temp_2</span><span class="p">,</span> <span class="n">nu_2</span><span class="p">,</span> <span class="n">temp_3</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the kinematic viscosity at temperature `temp_3` based on the</span>
+<span class="sd">    kinematic viscosities at temperatures `temp_1` and `temp_2`. The</span>
+<span class="sd">    implementation follows standard ASTM D341.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    temp_1: scalar</span>
+<span class="sd">        The temperature in :math:`^{\\circ}\\text{C}` that corresponds to the</span>
+<span class="sd">        kinematic viscosity :code:`nu_1`.</span>
+<span class="sd">    nu_1: scalar</span>
+<span class="sd">        The kinematic viscosity in cSt at temperature :code:`temp_1`.</span>
+<span class="sd">    temp_2: scalar</span>
+<span class="sd">        The temperature in :math:`^{\\circ}\\text{C}` that corresponds to the</span>
+<span class="sd">        kinematic viscosity :code:`nu_2`.</span>
+<span class="sd">    nu_2: scalar</span>
+<span class="sd">        The kinematic viscosity in cSt at temperature :code:`temp_2`.</span>
+<span class="sd">    temp_3: scalar</span>
+<span class="sd">        The temperature in :math:`^{\\circ}\\text{C}` for which to calculate the</span>
+<span class="sd">        kinematic viscosity.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    nu_3: scalar</span>
+<span class="sd">        The kinematic viscosity in cSt at temperature :code:`temp_3`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">abs_zero</span> <span class="o">=</span> <span class="o">-</span><span class="mf">273.15</span>
+    <span class="n">viscs</span> <span class="o">=</span> <span class="p">[</span><span class="n">nu_1</span><span class="p">,</span> <span class="n">nu_2</span><span class="p">]</span>
+    <span class="n">thetas</span> <span class="o">=</span> <span class="p">[</span><span class="n">temp_1</span> <span class="o">-</span> <span class="n">abs_zero</span><span class="p">,</span> <span class="n">temp_2</span> <span class="o">-</span> <span class="n">abs_zero</span><span class="p">,</span> <span class="n">temp_3</span> <span class="o">-</span> <span class="n">abs_zero</span><span class="p">]</span>
+
+    <span class="n">zed</span> <span class="o">=</span> <span class="p">[</span><span class="n">__zedwalther</span><span class="p">(</span><span class="n">nu</span><span class="p">)</span> <span class="k">for</span> <span class="n">nu</span> <span class="ow">in</span> <span class="n">viscs</span><span class="p">]</span>
+    <span class="n">const_a</span> <span class="o">=</span> <span class="p">(</span><span class="n">lg</span><span class="p">(</span><span class="n">lg</span><span class="p">(</span><span class="n">zed</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">-</span> <span class="n">lg</span><span class="p">(</span><span class="n">lg</span><span class="p">(</span><span class="n">zed</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">*</span>
+               <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">/</span> \
+              <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">const_b</span> <span class="o">=</span> <span class="p">(</span><span class="n">const_a</span> <span class="o">-</span> <span class="n">lg</span><span class="p">(</span><span class="n">lg</span><span class="p">(</span><span class="n">zed</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span> <span class="o">/</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">nu_3</span> <span class="o">=</span> <span class="n">__nuwalther</span><span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">const_a</span> <span class="o">-</span> <span class="n">const_b</span> <span class="o">*</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
+    <span class="k">return</span> <span class="n">nu_3</span></div>
+
+
+<div class="viewcode-block" id="trheomflat"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.trheomflat">[docs]</a><span class="k">def</span> <span class="nf">trheomflat</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">gap_height</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the torque that occurs during a viscosity measurement using a</span>
+<span class="sd">    plate-on-plate rheometer.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    eta: scalar</span>
+<span class="sd">        The dynamic viscosity of the fluid.</span>
+<span class="sd">    gap_height: scalar</span>
+<span class="sd">        The gap height between the stationary and the rotating plate.</span>
+<span class="sd">    omega: scalar</span>
+<span class="sd">        The angular velocity of the rotating plate (in radians per second).</span>
+<span class="sd">    r_a: scalar</span>
+<span class="sd">        The outer diameter of the rotating plate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    torque: scalar</span>
+<span class="sd">        The torque required to rotate the rotating plate.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">torque</span> <span class="o">=</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">r_a</span> <span class="o">**</span> <span class="mi">4</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">gap_height</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">torque</span></div>
+
+
+<div class="viewcode-block" id="viscrheomflat"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.viscrheomflat">[docs]</a><span class="k">def</span> <span class="nf">viscrheomflat</span><span class="p">(</span><span class="n">torque</span><span class="p">,</span> <span class="n">gap_height</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the dynamic viscosity of a fluid based on the measurement torque</span>
+<span class="sd">    in a plate-on-plate rheometer.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    torque: scalar</span>
+<span class="sd">        The torque required to rotate the rotating plate.</span>
+<span class="sd">    gap_height: scalar</span>
+<span class="sd">        The gap height between the stationary and the rotating plate.</span>
+<span class="sd">    omega: scalar</span>
+<span class="sd">        The angular velocity of the rotating plate (in radians per second).</span>
+<span class="sd">    r_a: scalar</span>
+<span class="sd">        The outer diameter of the rotating plate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    eta: scalar</span>
+<span class="sd">        The dynamic viscosity of the fluid.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">eta</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">gap_height</span> <span class="o">*</span> <span class="n">torque</span> <span class="o">/</span> <span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">r_a</span> <span class="o">**</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">eta</span></div>
+
+
+<div class="viewcode-block" id="trheomcone"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.trheomcone">[docs]</a><span class="k">def</span> <span class="nf">trheomcone</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the torque that occurs during a viscosity measurement using a</span>
+<span class="sd">    cone-on-plate rheometer.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    eta: scalar</span>
+<span class="sd">        The dynamic viscosity of the fluid.</span>
+<span class="sd">    alpha: scalar</span>
+<span class="sd">        The cone angle in radians.</span>
+<span class="sd">    omega: scalar</span>
+<span class="sd">        The angular velocity of the rotating plate (in radians per second).</span>
+<span class="sd">    r_a: scalar</span>
+<span class="sd">        The outer diameter of the rotating plate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    torque: scalar</span>
+<span class="sd">        The torque required to rotate the rotating plate.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">torque</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">r_a</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">torque</span></div>
+
+
+<div class="viewcode-block" id="viscrheomcone"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.viscrheomcone">[docs]</a><span class="k">def</span> <span class="nf">viscrheomcone</span><span class="p">(</span><span class="n">torque</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the dynamic viscosity of a fluid based on the measurement torque</span>
+<span class="sd">    in a cone-on-plate rheometer.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    torque: scalar</span>
+<span class="sd">        The torque required to rotate the rotating plate.</span>
+<span class="sd">    alpha: scalar</span>
+<span class="sd">        The cone angle in radians.</span>
+<span class="sd">    omega: scalar</span>
+<span class="sd">        The angular velocity of the rotating plate (in radians per second).</span>
+<span class="sd">    r_a: scalar</span>
+<span class="sd">        The outer diameter of the rotating plate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    eta: scalar</span>
+<span class="sd">        The dynamic viscosity of the fluid.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">eta</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">torque</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">r_a</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">eta</span></div>
+
+
+<div class="viewcode-block" id="barus"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.barus">[docs]</a><span class="k">def</span> <span class="nf">barus</span><span class="p">(</span><span class="n">eta_0</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">pressure</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the dynamic viscosity at a given pressure based on the dynamic</span>
+<span class="sd">    viscosity at atmospheric pressure and the pressure-viscosity coefficient.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    eta_0: scalar</span>
+<span class="sd">        The dynamic viscosity at atmospheric pressure.</span>
+<span class="sd">    alpha_p: scalar</span>
+<span class="sd">        The pressure-viscosity coefficient of the fluid.</span>
+<span class="sd">    pressure: scalar</span>
+<span class="sd">        The pressure at which to calculate the dynamic viscosity.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    eta_p: scalar</span>
+<span class="sd">        The dynamic viscosity at pressure `pressure`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">eta_p</span> <span class="o">=</span> <span class="n">eta_0</span> <span class="o">*</span> <span class="n">e</span> <span class="o">**</span> <span class="p">(</span><span class="n">alpha_p</span> <span class="o">*</span> <span class="n">pressure</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">eta_p</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Moritz Ploss.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

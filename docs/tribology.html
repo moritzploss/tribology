@@ -1,0 +1,554 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. Methods for Tribology in General &mdash; Tribology  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Tribology  documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Tribology
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sec_contact_mechanics.html">Contact Mechanics</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Tribology</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>1. Methods for Tribology in General</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/tribology.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="methods-for-tribology-in-general">
+<h1>Methods for Tribology in General<a class="headerlink" href="#methods-for-tribology-in-general" title="Permalink to this headline">¶</a></h1>
+<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">tribology</span></code> module of the
+package.</p>
+<span class="target" id="module-tribology"></span><p>The methods in this module are related to tribology in general.</p>
+<dl class="function">
+<dt id="tribology.abbottfirestone">
+<code class="descname">abbottfirestone</code><span class="sig-paren">(</span><em>trace</em>, <em>num_bins=100</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.abbottfirestone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the Abbott-Firestone curve for a 1D profile trace.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>trace</strong> (<em>ndarray</em>) &#8211; The profile heights of the 1D trace.</li>
+<li><strong>num_bins</strong> (<em>positive int, optional</em>) &#8211; The number of bins for the calculation of the profile height
+probability distribution.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>bins</strong> (<em>ndarray</em>) &#8211; The bins used for the calculation of the profile height
+probability distribution (= x-axis data for Abbott-Firestone plot).</li>
+<li><strong>prob_dist</strong> (<em>ndarray</em>) &#8211; The probability distribution of the profile (= y-axis data for Abbott-
+Firestone plot).</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.fball3plates">
+<code class="descname">fball3plates</code><span class="sig-paren">(</span><em>ax_force</em>, <em>plate_angle=1.5708</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.fball3plates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the normal force per contact in ball-on-3-plates setup.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ax_force</strong> (<em>ndarray, scalar</em>) &#8211; The force acting along the rotational axis of the ball (axial force).</li>
+<li><strong>plate_angle</strong> (<em>ndarray, scalar, optional</em>) &#8211; The plate angle in radians, measured with respect to the rotational
+axis of the ball. Default value corresponds to 45 degree.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The normal force acting in each ball-plate contact.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">norm_force</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.ffourball">
+<code class="descname">ffourball</code><span class="sig-paren">(</span><em>r_1</em>, <em>r_2</em>, <em>ax_force</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.ffourball" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the normal force per contact in a 4-ball test setup.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r_1</strong> &#8211; The radius of the rotating ball.</li>
+<li><strong>r_2</strong> &#8211; The radius of the stationary balls.</li>
+<li><strong>ax_force</strong> &#8211; The force acting along the rotational axis of the rotating ball.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>norm_force</strong> &#8211; The normal force in a single ball-ball contact.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.gfourball">
+<code class="descname">gfourball</code><span class="sig-paren">(</span><em>r_1</em>, <em>r_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.gfourball" title="Permalink to this definition">¶</a></dt>
+<dd><p>Geometric parameters of 4-ball setup</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r_1</strong> (<em>scalar</em>) &#8211; The radius of the rotating ball.</li>
+<li><strong>r_2</strong> (<em>scalar</em>) &#8211; The radius of the (a) stationary ball.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>sliding_radius</strong> (<em>scalar</em>) &#8211; The sliding radius (lever arm) on the rotating ball.</li>
+<li><strong>contact_angle</strong> (<em>scalar</em>) &#8211; Contact angle between direction of ball normal force and vertical axis.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.profball">
+<code class="descname">profball</code><span class="sig-paren">(</span><em>x_axis</em>, <em>r_ball</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.profball" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a 1D ball profile along a central axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x_axis</strong> (<em>ndarray</em>) &#8211; The coordinate points for which to calculate profile heights. Minimum
+and maximum value must be within +/- <strong>r_ball</strong>.</li>
+<li><strong>r_ball</strong> (<em>scalar</em>) &#8211; The radius of the ball.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>prof_heights</strong> &#8211; The profile heights along the <strong>x_axis</strong>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.profrevolve">
+<code class="descname">profrevolve</code><span class="sig-paren">(</span><em>prof_1d</em>, <em>y_axis</em>, <em>y_diam</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.profrevolve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a 2D surface (profile heights) by revolving a 1D profile around a
+central axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>prof_1d</strong> (<em>ndarray</em>) &#8211; The profile heights along the central (x) axis of the surface.</li>
+<li><strong>y_axis</strong> (<em>ndarray</em>) &#8211; The y-axis of the surface.</li>
+<li><strong>y_diam</strong> (<em>scalar</em>) &#8211; The maximum diameter of the surface along its y-axis.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>prof_2d</strong> (<em>ndarray</em>) &#8211; The surface heights of the profile. The array size is
+<code class="code docutils literal"><span class="pre">len(prof_2d)</span></code> <span class="math">\(\times\)</span> <code class="code docutils literal"><span class="pre">len(y_axis)</span></code></li>
+<li><strong>y_profile</strong> (<em>ndarray</em>) &#8211; The profile heights along the y-direction of the surface at the central
+element of the x-axis.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.radpersec2rpm">
+<code class="descname">radpersec2rpm</code><span class="sig-paren">(</span><em>vel_rad_per_sec</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.radpersec2rpm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert velocity from rotations per minute (rpm) to radians per second
+(rad/s).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vel_rad_per_sec</strong> (<em>ndarray, scalar</em>) &#8211; The velcity in radians per second.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>vel_rpm</strong> &#8211; The velocity in rotations per minute.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray, scalar</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.rball3plates">
+<code class="descname">rball3plates</code><span class="sig-paren">(</span><em>r_ball</em>, <em>plate_angle=1.5708</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.rball3plates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the sliding radius (lever arm) for a ball-on-3-plates test setup.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r_ball</strong> (<em>ndarray, scalar</em>) &#8211; The radius of the ball.</li>
+<li><strong>plate_angle</strong> (<em>ndarray, scalar, optional</em>) &#8211; The plate angle in radians, measured with respect to the rotational
+axis of the ball. Default value corresponds to 45 degree.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>r_slide</strong> &#8211; The sliding radius.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.refix">
+<code class="descname">refix</code><span class="sig-paren">(</span><em>val</em>, <em>p_in=''</em>, <em>p_out=''</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.refix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert between different SI unit prefixes. Available options are:</p>
+<p><code class="code docutils literal"><span class="pre">'T'</span></code>   Terra</p>
+<p><code class="code docutils literal"><span class="pre">'G'</span></code> Giga</p>
+<p><code class="code docutils literal"><span class="pre">'M'</span></code> Mega</p>
+<p><code class="code docutils literal"><span class="pre">'k'</span></code> Kilo</p>
+<p><code class="code docutils literal"><span class="pre">'m'</span></code> Milli</p>
+<p><code class="code docutils literal"><span class="pre">'mu'</span></code> Micro</p>
+<p><code class="code docutils literal"><span class="pre">'n'</span></code> Nano</p>
+<p><code class="code docutils literal"><span class="pre">'p'</span></code> Pico</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>val</strong> (<em>scalar</em>) &#8211; The value for which to convert the unit prefix.</li>
+<li><strong>p_in</strong> (<em>string, any of the above, optional</em>) &#8211; The current prefix of <code class="code docutils literal"><span class="pre">val</span></code>. If <code class="code docutils literal"><span class="pre">p_in</span></code> is undefined,
+<code class="code docutils literal"><span class="pre">val</span></code> has no SI unit prefix.</li>
+<li><strong>p_out</strong> (<em>string, any of the above, optional</em>) &#8211; The prefix of <code class="code docutils literal"><span class="pre">val_refix</span></code> after the conversion.  If <code class="code docutils literal"><span class="pre">p_in</span></code>
+is undefined, <code class="code docutils literal"><span class="pre">val_refix</span></code> has no SI unit prefix.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>val_refix</strong> &#8211; The value in units of prefix <code class="code docutils literal"><span class="pre">p_out</span></code>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.rpm2radpersec">
+<code class="descname">rpm2radpersec</code><span class="sig-paren">(</span><em>vel_rpm</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.rpm2radpersec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert velocity from radians per second (rad/s) to rotations per minute
+(rpm).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vel_rpm</strong> (<em>ndarray, scalar</em>) &#8211; The velcity in rotations per minute.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>vel_rad_per_sec</strong> &#8211; The velocity in radians per second.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray, scalar</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.srr">
+<code class="descname">srr</code><span class="sig-paren">(</span><em>vel_1</em>, <em>vel_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.srr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the slide-to-roll ratio (SRR) in a tribological contact based on
+contact body velocities.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>vel_1</strong> (<em>ndarray, scalar</em>) &#8211; The contact velocity of body 1.</li>
+<li><strong>vel_2</strong> (<em>ndarray, scalar</em>) &#8211; The contact velocity of body 2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>srr</strong> &#8211; The slide-to-roll ratio in the tribological contact.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.vroll">
+<code class="descname">vroll</code><span class="sig-paren">(</span><em>vel_1</em>, <em>vel_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.vroll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the rolling speed in a tribological contact based on contact body
+velocities.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>vel_1</strong> (<em>ndarray, scalar</em>) &#8211; The contact velocity of body 1.</li>
+<li><strong>vel_2</strong> (<em>ndarray, scalar</em>) &#8211; The contact velocity of body 2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>vel_roll</strong> &#8211; The rolling velocity in the tribological contact.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tribology.vslide">
+<code class="descname">vslide</code><span class="sig-paren">(</span><em>vel_1</em>, <em>vel_2</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology.vslide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the sliding speed in a tribological contact based on contact body
+velocities.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>vel_1</strong> (<em>ndarray, scalar</em>) &#8211; The contact velocity of body 1.</li>
+<li><strong>vel_2</strong> (<em>ndarray, scalar</em>) &#8211; The contact velocity of body 2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>vel_slide</strong> &#8211; The sliding velocity in the tribological contact.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Moritz Ploss.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
