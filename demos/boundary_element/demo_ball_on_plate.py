@@ -45,11 +45,11 @@ def demo_ball_on_plate():
     f_outer = 10
     e_eff = tr.eeff(tr.YoungsMod.STEEL.value, tr.PoissonRatio.STEEL.value,
                     tr.YoungsMod.STEEL.value, tr.PoissonRatio.STEEL.value)
-    r_eff, r_eff_x, _ = tr.reff(r_ball, r_ball, 0, 0)
+    r_eff, r_eff_x, r_eff_y = tr.reff(r_ball, r_ball, 0, 0)
 
     # create 3d profile for ball and flat plate. calculate Hertz contact width
     # first and use result to determine grid size for boundary element solution
-    width, _, _ = tr.ahertz(r_eff, r_eff_x, r_eff_x, e_eff, f_outer)
+    width, _, _ = tr.ahertz(r_eff, r_eff_x, r_eff_y, e_eff, f_outer)
     ax_x, delta_x = np.linspace(-width * 1.1, width * 1.1, 51, retstep=True)
     ax_y, delta_y = np.linspace(-width * 1.1, width * 1.1, 41, retstep=True)
     ball_3d, _ = tr.profrevolve(tr.profball(ax_x, r_ball), ax_y, 2 * r_ball)
