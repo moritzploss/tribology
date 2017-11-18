@@ -147,9 +147,12 @@
             
   <div class="section" id="welcome-to-tribology-s-documentation">
 <h1>Welcome to Tribology&#8217;s Documentation!<a class="headerlink" href="#welcome-to-tribology-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>The documentation is currently under construction. The information below is
-incomplete and not formated; this will be fixed soon. In the meantime, I hope
-what you can find below is better than not having any documentation at all.</p>
+<p>The tribology package is a collection of methods and classes for tribology
+research and education, including contact mechanics and lubrication science.
+The project is hosted on GitHub:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">moritzploss</span><span class="o">/</span><span class="n">tribology</span>
+</pre></div>
+</div>
 <p>You can install the tribology package using pip:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tribology</span>
 </pre></div>
@@ -165,7 +168,7 @@ classes. Please see below for more information on available modules.</p>
 <div class="toctree-wrapper compound">
 <span id="document-tribology"></span><div class="section" id="methods-for-tribology-in-general">
 <h2>Methods for Tribology in General<a class="headerlink" href="#methods-for-tribology-in-general" title="Permalink to this headline">¶</a></h2>
-<p>All of the below methods ca be found in the <code class="code docutils literal"><span class="pre">tribology</span></code> module of the
+<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">tribology</span></code> module of the
 package.</p>
 <span class="target" id="module-tribology"></span><p>The methods in this module are related to tribology in general.</p>
 <dl class="function">
@@ -907,20 +910,23 @@ module of the package.</p>
 <dl class="function">
 <dt id="tribology_lubrication.barus">
 <code class="descname">barus</code><span class="sig-paren">(</span><em>eta_0</em>, <em>alpha_p</em>, <em>pressure</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.barus" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate dynamic viscosity at a given pressure based on the dynamic
-viscosity at ambient pressure and the pressure-viscosity coefficient</p>
+<dd><p>Calculate the dynamic viscosity at a given pressure based on the dynamic
+viscosity at atmospheric pressure and the pressure-viscosity coefficient.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>eta_0</strong> &#8211; dynamic viscosity at ambient pressure</li>
-<li><strong>alpha_p</strong> &#8211; pressure-viscosity coefficient</li>
-<li><strong>pressure</strong> &#8211; pressure of interest</li>
+<li><strong>eta_0</strong> (<em>scalar</em>) &#8211; The dynamic viscosity at atmospheric pressure.</li>
+<li><strong>alpha_p</strong> (<em>scalar</em>) &#8211; The pressure-viscosity coefficient of the fluid.</li>
+<li><strong>pressure</strong> (<em>scalar</em>) &#8211; The pressure at which to calculate the dynamic viscosity.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dynamic viscosity at pressure of interest</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>eta_p</strong> &#8211; The dynamic viscosity at pressure <cite>pressure</cite>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
 </td>
 </tr>
 </tbody>
@@ -930,18 +936,21 @@ viscosity at ambient pressure and the pressure-viscosity coefficient</p>
 <dl class="function">
 <dt id="tribology_lubrication.dyn2kin">
 <code class="descname">dyn2kin</code><span class="sig-paren">(</span><em>dyn</em>, <em>density</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.dyn2kin" title="Permalink to this definition">¶</a></dt>
-<dd><p>dynamic to kinematic viscosity</p>
+<dd><p>Convert from dynamic to kinematic viscosity.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dyn</strong> &#8211; dynamic viscosity</li>
-<li><strong>density</strong> &#8211; density</li>
+<li><strong>dyn</strong> (<em>ndarray, scalar</em>) &#8211; The dynamic viscosity of the lubricant.</li>
+<li><strong>density</strong> (<em>ndarray, scalar</em>) &#8211; The density of the lubricant.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">kinematic viscosity</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>kin</strong> &#8211; The kinematic viscosity of the lubricant.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
 </td>
 </tr>
 </tbody>
@@ -951,18 +960,21 @@ viscosity at ambient pressure and the pressure-viscosity coefficient</p>
 <dl class="function">
 <dt id="tribology_lubrication.kin2dyn">
 <code class="descname">kin2dyn</code><span class="sig-paren">(</span><em>kin</em>, <em>density</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.kin2dyn" title="Permalink to this definition">¶</a></dt>
-<dd><p>kinematic to dynamic viscosity</p>
+<dd><p>Convert from kinematic to dynamic viscosity.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>kin</strong> &#8211; kinematic viscosity</li>
-<li><strong>density</strong> &#8211; density</li>
+<li><strong>kin</strong> (<em>ndarray, scalar</em>) &#8211; The kinematic viscosity of the lubricant.</li>
+<li><strong>density</strong> (<em>ndarray, scalar</em>) &#8211; The density of the lubricant.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dynamic viscosity</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>dyn</strong> &#8211; The dynamic viscosity of the lubricant.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
 </td>
 </tr>
 </tbody>
@@ -972,21 +984,24 @@ viscosity at ambient pressure and the pressure-viscosity coefficient</p>
 <dl class="function">
 <dt id="tribology_lubrication.trheomcone">
 <code class="descname">trheomcone</code><span class="sig-paren">(</span><em>eta</em>, <em>alpha</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.trheomcone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate torque based on dynamic viscosity measurement from cone-on-
-plate rheometer</p>
+<dd><p>Calculate the torque that occurs during a viscosity measurement using a
+cone-on-plate rheometer.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>eta</strong> &#8211; dinamic viscosity</li>
-<li><strong>alpha</strong> &#8211; cone angle</li>
-<li><strong>omega</strong> &#8211; angular velocity</li>
-<li><strong>r_a</strong> &#8211; cone outer radius</li>
+<li><strong>eta</strong> (<em>scalar</em>) &#8211; The dynamic viscosity of the fluid.</li>
+<li><strong>alpha</strong> (<em>scalar</em>) &#8211; The cone angle in radians.</li>
+<li><strong>omega</strong> (<em>scalar</em>) &#8211; The angular velocity of the rotating plate (in radians per second).</li>
+<li><strong>r_a</strong> (<em>scalar</em>) &#8211; The outer diameter of the rotating plate.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">torque</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>torque</strong> &#8211; The torque required to rotate the rotating plate.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
 </td>
 </tr>
 </tbody>
@@ -996,21 +1011,24 @@ plate rheometer</p>
 <dl class="function">
 <dt id="tribology_lubrication.trheomflat">
 <code class="descname">trheomflat</code><span class="sig-paren">(</span><em>eta</em>, <em>gap_height</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.trheomflat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate torque based on dynamic viscosity measurement from plate-on-
-plate rheometer</p>
+<dd><p>Calculate the torque that occurs during a viscosity measurement using a
+plate-on-plate rheometer.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>eta</strong> &#8211; dynamic viscosity</li>
-<li><strong>gap_height</strong> &#8211; distance between plates</li>
-<li><strong>omega</strong> &#8211; angular velocity</li>
-<li><strong>r_a</strong> &#8211; cone outer radius</li>
+<li><strong>eta</strong> (<em>scalar</em>) &#8211; The dynamic viscosity of the fluid.</li>
+<li><strong>gap_height</strong> (<em>scalar</em>) &#8211; The gap height between the stationary and the rotating plate.</li>
+<li><strong>omega</strong> (<em>scalar</em>) &#8211; The angular velocity of the rotating plate (in radians per second).</li>
+<li><strong>r_a</strong> (<em>scalar</em>) &#8211; The outer diameter of the rotating plate.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">torque</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>torque</strong> &#8211; The torque required to rotate the rotating plate.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
 </td>
 </tr>
 </tbody>
@@ -1020,21 +1038,24 @@ plate rheometer</p>
 <dl class="function">
 <dt id="tribology_lubrication.viscrheomcone">
 <code class="descname">viscrheomcone</code><span class="sig-paren">(</span><em>torque</em>, <em>alpha</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.viscrheomcone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the dynamic viscosity based on torque measurement from cone-on-
-plate rheometer</p>
+<dd><p>Calculate the dynamic viscosity of a fluid based on the measurement torque
+in a cone-on-plate rheometer.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>torque</strong> &#8211; measured torque</li>
-<li><strong>alpha</strong> &#8211; cone angle</li>
-<li><strong>omega</strong> &#8211; angular velocity</li>
-<li><strong>r_a</strong> &#8211; cone outer radius</li>
+<li><strong>torque</strong> (<em>scalar</em>) &#8211; The torque required to rotate the rotating plate.</li>
+<li><strong>alpha</strong> (<em>scalar</em>) &#8211; The cone angle in radians.</li>
+<li><strong>omega</strong> (<em>scalar</em>) &#8211; The angular velocity of the rotating plate (in radians per second).</li>
+<li><strong>r_a</strong> (<em>scalar</em>) &#8211; The outer diameter of the rotating plate.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dynamic viscosity</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>eta</strong> &#8211; The dynamic viscosity of the fluid.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
 </td>
 </tr>
 </tbody>
@@ -1044,22 +1065,24 @@ plate rheometer</p>
 <dl class="function">
 <dt id="tribology_lubrication.viscrheomflat">
 <code class="descname">viscrheomflat</code><span class="sig-paren">(</span><em>torque</em>, <em>gap_height</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.viscrheomflat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the dynamic viscosity based on torque measurement from plate-on-
-plate rheometer</p>
+<dd><p>Calculate the dynamic viscosity of a fluid based on the measurement torque
+in a plate-on-plate rheometer.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>torque</strong> &#8211; measured torque</li>
-<li><strong>gap_height</strong> &#8211; distance between plates</li>
-<li><strong>alpha</strong> &#8211; cone angle</li>
-<li><strong>omega</strong> &#8211; angular velocity</li>
-<li><strong>r_a</strong> &#8211; cone outer radius</li>
+<li><strong>torque</strong> (<em>scalar</em>) &#8211; The torque required to rotate the rotating plate.</li>
+<li><strong>gap_height</strong> (<em>scalar</em>) &#8211; The gap height between the stationary and the rotating plate.</li>
+<li><strong>omega</strong> (<em>scalar</em>) &#8211; The angular velocity of the rotating plate (in radians per second).</li>
+<li><strong>r_a</strong> (<em>scalar</em>) &#8211; The outer diameter of the rotating plate.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dynamic viscosity</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>eta</strong> &#8211; The dynamic viscosity of the fluid.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
 </td>
 </tr>
 </tbody>
@@ -1069,23 +1092,29 @@ plate rheometer</p>
 <dl class="function">
 <dt id="tribology_lubrication.walther">
 <code class="descname">walther</code><span class="sig-paren">(</span><em>temp_1</em>, <em>nu_1</em>, <em>temp_2</em>, <em>nu_2</em>, <em>temp_3</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_lubrication.walther" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates kinematic viscosity at temperature temp_3 based on kin.
-viscosities at temperatures temp_1 and tempo_2. Equations according to
-ASTM D341.</p>
+<dd><p>Calculate the kinematic viscosity at temperature <cite>temp_3</cite> based on the
+kinematic viscosities at temperatures <cite>temp_1</cite> and <cite>temp_2</cite>. The
+implementation follows standard ASTM D341.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>temp_1</strong> &#8211; temperature in deg C</li>
-<li><strong>nu_1</strong> &#8211; kin. viscosity at t1 in cSt</li>
-<li><strong>temp_2</strong> &#8211; temperature in deg C</li>
-<li><strong>nu_2</strong> &#8211; kin. viscosity at t2 in cSt</li>
-<li><strong>temp_3</strong> &#8211; temperature of interest, in deg C</li>
+<li><strong>temp_1</strong> (<em>scalar</em>) &#8211; The temperature in <span class="math">\(^{\circ}\text{C}\)</span> that corresponds to the kinematic
+viscosity <cite>nu_1</cite>.</li>
+<li><strong>nu_1</strong> (<em>scalar</em>) &#8211; The kinematic viscosity in cSt at temperature <cite>temp_1</cite>.</li>
+<li><strong>temp_2</strong> (<em>scalar</em>) &#8211; The temperature in <span class="math">\(^{\circ}\text{C}\)</span> that corresponds to the kinematic
+viscosity <cite>nu_2</cite>.</li>
+<li><strong>nu_2</strong> (<em>scalar</em>) &#8211; The kinematic viscosity in cSt at temperature <cite>temp_2</cite>.</li>
+<li><strong>temp_3</strong> (<em>scalar</em>) &#8211; The temperature in <span class="math">\(^{\circ}\text{C}\)</span> for which to calculate the
+kinematic viscosity.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">kin. viscosity in cSt at temperature t3</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>nu_3</strong> &#8211; The kinematic viscosity in cSt at temperature <cite>temp_3</cite>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
 </td>
 </tr>
 </tbody>

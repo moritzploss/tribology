@@ -14,74 +14,116 @@ from math import log10 as lg
 def kin2dyn(kin, density):
     """
 
-    kinematic to dynamic viscosity
+    Convert from kinematic to dynamic viscosity.
 
-    :param kin: kinematic viscosity
-    :param density: density
+    Parameters
+    ----------
+    kin: ndarray, scalar
+        The kinematic viscosity of the lubricant.
+    density: ndarray, scalar
+        The density of the lubricant.
 
-    :return: dynamic viscosity
+    Returns
+    -------
+    dyn: ndarray, scalar
+        The dynamic viscosity of the lubricant.
 
     """
-    return kin / density
+    dyn = kin / density
+    return dyn
 
 
 def dyn2kin(dyn, density):
     """
 
-    dynamic to kinematic viscosity
+    Convert from dynamic to kinematic viscosity.
 
-    :param dyn: dynamic viscosity
-    :param density: density
+    Parameters
+    ----------
+    dyn: ndarray, scalar
+        The dynamic viscosity of the lubricant.
+    density: ndarray, scalar
+        The density of the lubricant.
 
-    :return: kinematic viscosity
-
-    """
-    return dyn * density
-
-
-def __zedwalther(kin_visc):
-    """
-
-    calculate z factor for Walther Equation (ASTM D341)
-
-    :param kin_visc: kinematic viscosity
-
-    :return: z factor
+    Returns
+    -------
+    kin: ndarray, scalar
+        The kinematic viscosity of the lubricant.
 
     """
-    return kin_visc + 0.7 + \
-           10 ** (-1.47 - 1.84 * kin_visc - 0.51 * kin_visc ** 2)
+    kin = dyn * density
+    return kin
+
+
+def __zedwalther(kin):
+    """
+
+    Calculate the z-parameter for the Walther equation (ASTM D341).
+
+    Parameters
+    ----------
+    kin: scalar
+        The kinematic viscosity of the lubricant.
+
+    Returns
+    -------
+    zed: scalar
+        The z-parameter.
+
+    """
+    zed = kin + 0.7 + 10 ** (-1.47 - 1.84 * kin - 0.51 * kin ** 2)
+    return zed
 
 
 def __nuwalther(zed):
     """
 
-    calculate kinematic viscosity for Walther equation (ASTM D341)
+    Calculate the kinematic viscosity for the Walther equation (ASTM D341).
 
-    :param zed: z factor
+    Parameters
+    ----------
+    zed: scalar
+        The z-parameter of the Walther equation.
 
-    :return: kinematic viscosity
+    Returns
+    -------
+    kin: scalar
+        The kinematic viscosity.
 
     """
-    return (zed - 0.7) - 10 ** (-0.7487 - 3.295 * (zed - 0.7) +
-                                0.6119 * (zed - 0.7) ** 2 - 0.3193 *
-                                (zed - 0.7) ** 3)
+    kin = (zed - 0.7) - 10 ** (-0.7487 - 3.295 * (zed - 0.7) +
+                               0.6119 * (zed - 0.7) ** 2 - 0.3193 *
+                               (zed - 0.7) ** 3)
+    return kin
 
 
 def walther(temp_1, nu_1, temp_2, nu_2, temp_3):
     """
 
-    Calculates kinematic viscosity at temperature temp_3 based on kin.
-    viscosities at temperatures temp_1 and tempo_2. Equations according to
-    ASTM D341.
+    Calculate the kinematic viscosity at temperature `temp_3` based on the
+    kinematic viscosities at temperatures `temp_1` and `temp_2`. The
+    implementation follows standard ASTM D341.
 
-    :param temp_1: temperature in deg C
-    :param nu_1: kin. viscosity at t1 in cSt
-    :param temp_2: temperature in deg C
-    :param nu_2: kin. viscosity at t2 in cSt
-    :param temp_3: temperature of interest, in deg C
+    Parameters
+    ----------
+    temp_1: scalar
+        The temperature in :math:`^{\\circ}\\text{C}` that corresponds to the kinematic
+        viscosity `nu_1`.
+    nu_1: scalar
+        The kinematic viscosity in cSt at temperature `temp_1`.
+    temp_2: scalar
+        The temperature in :math:`^{\\circ}\\text{C}` that corresponds to the kinematic
+        viscosity `nu_2`.
+    nu_2: scalar
+        The kinematic viscosity in cSt at temperature `temp_2`.
+    temp_3: scalar
+        The temperature in :math:`^{\\circ}\\text{C}` for which to calculate the
+        kinematic viscosity.
 
-    :return: kin. viscosity in cSt at temperature t3
+    Returns
+    -------
+    nu_3: scalar
+        The kinematic viscosity in cSt at temperature `temp_3`.
 
     """
     abs_zero = -273.15
@@ -93,89 +135,138 @@ def walther(temp_1, nu_1, temp_2, nu_2, temp_3):
                lg(thetas[0]) / lg(thetas[1])) / \
               (1 - lg(thetas[0]) / lg(thetas[1]))
     const_b = (const_a - lg(lg(zed[1]))) / lg(thetas[1])
-    return __nuwalther(10 ** 10 ** (const_a - const_b * lg(thetas[2])))
+    nu_3 = __nuwalther(10 ** 10 ** (const_a - const_b * lg(thetas[2])))
+    return nu_3
 
 
 def trheomflat(eta, gap_height, omega, r_a):
     """
 
-    Calculate torque based on dynamic viscosity measurement from plate-on-
-    plate rheometer
+    Calculate the torque that occurs during a viscosity measurement using a
+    plate-on-plate rheometer.
 
-    :param eta: dynamic viscosity
-    :param gap_height: distance between plates
-    :param omega: angular velocity
-    :param r_a: cone outer radius
+    Parameters
+    ----------
+    eta: scalar
+        The dynamic viscosity of the fluid.
+    gap_height: scalar
+        The gap height between the stationary and the rotating plate.
+    omega: scalar
+        The angular velocity of the rotating plate (in radians per second).
+    r_a: scalar
+        The outer diameter of the rotating plate.
 
-    :return: torque
+    Returns
+    -------
+    torque: scalar
+        The torque required to rotate the rotating plate.
 
     """
-    return eta * pi * omega * r_a ** 4 / (2 * gap_height)
+    torque = eta * pi * omega * r_a ** 4 / (2 * gap_height)
+    return torque
 
 
 def viscrheomflat(torque, gap_height, omega, r_a):
     """
 
-    Calculate the dynamic viscosity based on torque measurement from plate-on-
-    plate rheometer
+    Calculate the dynamic viscosity of a fluid based on the measurement torque
+    in a plate-on-plate rheometer.
 
-    :param torque: measured torque
-    :param gap_height: distance between plates
-    :param alpha: cone angle
-    :param omega: angular velocity
-    :param r_a: cone outer radius
+    Parameters
+    ----------
+    torque: scalar
+        The torque required to rotate the rotating plate.
+    gap_height: scalar
+        The gap height between the stationary and the rotating plate.
+    omega: scalar
+        The angular velocity of the rotating plate (in radians per second).
+    r_a: scalar
+        The outer diameter of the rotating plate.
 
-    :return: dynamic viscosity
+    Returns
+    -------
+    eta: scalar
+        The dynamic viscosity of the fluid.
 
     """
-    return 2 * gap_height * torque / (pi * omega * r_a ** 4)
+    eta = 2 * gap_height * torque / (pi * omega * r_a ** 4)
+    return eta
 
 
 def trheomcone(eta, alpha, omega, r_a):
     """
 
-    Calculate torque based on dynamic viscosity measurement from cone-on-
-    plate rheometer
+    Calculate the torque that occurs during a viscosity measurement using a
+    cone-on-plate rheometer.
 
-    :param eta: dinamic viscosity
-    :param alpha: cone angle
-    :param omega: angular velocity
-    :param r_a: cone outer radius
+    Parameters
+    ----------
+    eta: scalar
+        The dynamic viscosity of the fluid.
+    alpha: scalar
+        The cone angle in radians.
+    omega: scalar
+        The angular velocity of the rotating plate (in radians per second).
+    r_a: scalar
+        The outer diameter of the rotating plate.
 
-    :return: torque
+    Returns
+    -------
+    torque: scalar
+        The torque required to rotate the rotating plate.
 
     """
-    return 2 * pi * eta * omega * r_a ** 3 / (3 * alpha)
+    torque = 2 * pi * eta * omega * r_a ** 3 / (3 * alpha)
+    return torque
 
 
 def viscrheomcone(torque, alpha, omega, r_a):
     """
 
-    Calculate the dynamic viscosity based on torque measurement from cone-on-
-    plate rheometer
+    Calculate the dynamic viscosity of a fluid based on the measurement torque
+    in a cone-on-plate rheometer.
 
-    :param torque: measured torque
-    :param alpha: cone angle
-    :param omega: angular velocity
-    :param r_a: cone outer radius
+    Parameters
+    ----------
+    torque: scalar
+        The torque required to rotate the rotating plate.
+    alpha: scalar
+        The cone angle in radians.
+    omega: scalar
+        The angular velocity of the rotating plate (in radians per second).
+    r_a: scalar
+        The outer diameter of the rotating plate.
 
-    :return: dynamic viscosity
+    Returns
+    -------
+    eta: scalar
+        The dynamic viscosity of the fluid.
 
     """
-    return 3 * torque * alpha / (2 * pi * omega * r_a ** 3)
+    eta = 3 * torque * alpha / (2 * pi * omega * r_a ** 3)
+    return eta
 
 
 def barus(eta_0, alpha_p, pressure):
     """
 
-    Calculate dynamic viscosity at a given pressure based on the dynamic
-    viscosity at ambient pressure and the pressure-viscosity coefficient
+    Calculate the dynamic viscosity at a given pressure based on the dynamic
+    viscosity at atmospheric pressure and the pressure-viscosity coefficient.
 
-    :param eta_0: dynamic viscosity at ambient pressure
-    :param alpha_p: pressure-viscosity coefficient
-    :param pressure: pressure of interest
+    Parameters
+    ----------
+    eta_0: scalar
+        The dynamic viscosity at atmospheric pressure.
+    alpha_p: scalar
+        The pressure-viscosity coefficient of the fluid.
+    pressure: scalar
+        The pressure at which to calculate the dynamic viscosity.
 
-    :return: dynamic viscosity at pressure of interest
+    Returns
+    -------
+    eta_p: scalar
+        The dynamic viscosity at pressure `pressure`.
 
     """
-    return eta_0 * e ** (alpha_p * pressure)
+    eta_p = eta_0 * e ** (alpha_p * pressure)
+    return eta_p

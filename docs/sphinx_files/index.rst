@@ -6,9 +6,13 @@
 Welcome to Tribology's Documentation!
 =====================================
 
-The documentation is currently under construction. The information below is
-incomplete and not formated; this will be fixed soon. In the meantime, I hope
-what you can find below is better than not having any documentation at all.
+The tribology package is a collection of methods and classes for tribology
+research and education, including contact mechanics and lubrication science.
+The project is hosted on GitHub:
+
+.. code-block:: python
+
+   https://github.com/moritzploss/tribology
 
 You can install the tribology package using pip:
 
