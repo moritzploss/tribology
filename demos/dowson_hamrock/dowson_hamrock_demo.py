@@ -2,11 +2,10 @@
 Short demonstration of how to use dowson-hamrock equation for point contact
 """
 
-import matplotlib.pyplot as plt
+import tribology as tr
 import numpy as np
 
-import tribology as tr
-import tribology.tribology_hertz
+import matplotlib.pyplot as plt
 
 
 def plot_results(films, film_calc, speeds):
@@ -52,11 +51,11 @@ def dowson_hamrock_demo():
     dyn_temp = tr.refix(tr.kin2dyn(kin_temp, density), 'm', 'M')
 
     # calculate effective modulus and radius
-    e_eff = tribology.tribology_hertz.eeff(tr.YoungsMod.STEEL.value,
-                                           tr.PoissonRatio.STEEL.value,
-                                           tr.YoungsMod.GLASS.value,
-                                           tr.PoissonRatio.GLASS.value)
-    r_eff, _, _ = tribology.tribology_hertz.reff(tr.RadBall.TQInch.value, 0, 0, 0)
+    e_eff = tr.eeff(tr.YoungsMod.STEEL.value,
+                    tr.PoissonRatio.STEEL.value,
+                    tr.YoungsMod.GLASS.value,
+                    tr.PoissonRatio.GLASS.value)
+    r_eff, _, _ = tr.reff(tr.RadBall.TQInch.value, 0, 0, 0)
 
     # calculate and plot film thickness
     film_calc = tr.dowhampoint(speeds, loads, alpha_p, e_eff, r_eff,
