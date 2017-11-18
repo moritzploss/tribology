@@ -788,21 +788,26 @@ module of the package.</p>
 <dl class="function">
 <dt id="tribology_hertz.ahertz">
 <code class="descname">ahertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.ahertz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate Hertzian contact area half-axis</p>
+<dd><p>Calculate the contact area according to Hertzian contact theory.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>r_eff</strong> &#8211; effective radius of contact bodies</li>
-<li><strong>r_eff_x</strong> &#8211; effective radius in x direction</li>
-<li><strong>r_eff_y</strong> &#8211; effective radius in y direction</li>
-<li><strong>e_eff</strong> &#8211; effective modulus</li>
-<li><strong>force</strong> &#8211; normal load</li>
+<li><strong>r_eff</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem.</li>
+<li><strong>r_eff_x</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem in x-direction.</li>
+<li><strong>r_eff_y</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem in y-direction.</li>
+<li><strong>e_eff</strong> (<em>scalar</em>) &#8211; The effective modulus of the contact problem.</li>
+<li><strong>force</strong> (<em>scalar</em>) &#8211; The normal force in the contact.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">half axes and total area</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>half_axis_a</strong> (<em>scalar</em>) &#8211; The contact area half axis in x-direction.</li>
+<li><strong>half_axis_b</strong> (<em>scalar</em>) &#8211; The contact area half axis in y-direction.</li>
+<li><strong>a_hertz</strong> (<em>scalar</em>) &#8211; The contact area.</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -812,23 +817,26 @@ module of the package.</p>
 <dl class="function">
 <dt id="tribology_hertz.dhertz">
 <code class="descname">dhertz</code><span class="sig-paren">(</span><em>e_eff</em>, <em>r_x_1</em>, <em>r_y_1</em>, <em>r_x_2</em>, <em>r_y_2</em>, <em>force</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.dhertz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Elastic displacement in normal direction for arbitrary bodies according to
-hertz contact theory</p>
+<dd><p>Calculate the elastic normal displacement of a contact problem according
+to Hertzian contact theory.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>e_eff</strong> &#8211; effective young&#8217;s modulus in MPa</li>
-<li><strong>r_x_1</strong> &#8211; radius body 1 in x direction in mm</li>
-<li><strong>r_y_1</strong> &#8211; radius body 1 in y direction in mm</li>
-<li><strong>r_x_2</strong> &#8211; radius body 2 in x direction in mm</li>
-<li><strong>r_y_2</strong> &#8211; radius body 2 in y direction in mm</li>
-<li><strong>force</strong> &#8211; normal force in N</li>
+<li><strong>e_eff</strong> (<em>scalar</em>) &#8211; The effective modulus of the contact problem.</li>
+<li><strong>r_x_1</strong> (<em>scalar</em>) &#8211; The radius of body 1 in direction 1 (x).</li>
+<li><strong>r_y_1</strong> (<em>scalar</em>) &#8211; The radius of body 1 in direction 2 (y).</li>
+<li><strong>r_x_2</strong> (<em>scalar</em>) &#8211; The radius of body 2 in direction 1 (x).</li>
+<li><strong>r_y_2</strong> (<em>scalar</em>) &#8211; The radius of body 2 in direction 2 (y).</li>
+<li><strong>force</strong> (<em>scalar</em>) &#8211; The normal force in the contact.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">combined normal displacement in mm</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>norm_disp</strong> &#8211; The elastic normal displacement of the contact problem.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
 </td>
 </tr>
 </tbody>
@@ -838,21 +846,25 @@ hertz contact theory</p>
 <dl class="function">
 <dt id="tribology_hertz.fhertz">
 <code class="descname">fhertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>p_critical</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.fhertz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate load carrying capacity of Hertzian contact</p>
+<dd><p>Calculate the load carrying capacity of a Hertzian contact.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>r_eff</strong> &#8211; effective radius of contact bodies</li>
-<li><strong>r_eff_x</strong> &#8211; effective radius in x direction</li>
-<li><strong>r_eff_y</strong> &#8211; effective radius in y direction</li>
-<li><strong>e_eff</strong> &#8211; effective modulus</li>
-<li><strong>p_critical</strong> &#8211; critical mean contact pressure</li>
+<li><strong>r_eff</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem.</li>
+<li><strong>r_eff_x</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem in x-direction.</li>
+<li><strong>r_eff_y</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem in y-direction.</li>
+<li><strong>e_eff</strong> (<em>scalar</em>) &#8211; The effective modulus of the contact problem.</li>
+<li><strong>p_critical</strong> (<em>scalar</em>) &#8211; The critical mean Hertzian contact pressure that the contact can sustain
+without plastic deformation.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">critical normal force</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>f_crit</strong> &#8211; The load carrying capacity of the Hertzian contact.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
 </td>
 </tr>
 </tbody>
@@ -862,21 +874,24 @@ hertz contact theory</p>
 <dl class="function">
 <dt id="tribology_hertz.phertz">
 <code class="descname">phertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em><span class="sig-paren">)</span><a class="headerlink" href="#tribology_hertz.phertz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate mean contact pressure in Hertzian contact</p>
+<dd><p>Calculate the mean contact pressure in a Hertzian contact.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>r_eff</strong> &#8211; effective radius of contact bodies</li>
-<li><strong>r_eff_x</strong> &#8211; effective radius in x direction</li>
-<li><strong>r_eff_y</strong> &#8211; effective radius in y direction</li>
-<li><strong>e_eff</strong> &#8211; effective modulus</li>
-<li><strong>force</strong> &#8211; normal force</li>
+<li><strong>r_eff</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem.</li>
+<li><strong>r_eff_x</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem in x-direction.</li>
+<li><strong>r_eff_y</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem in y-direction.</li>
+<li><strong>e_eff</strong> (<em>scalar</em>) &#8211; The effective modulus of the contact problem.</li>
+<li><strong>force</strong> (<em>scalar</em>) &#8211; The normal force in the contact.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">mean contact pressure</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>p_hertz</strong> &#8211; The mean Hertzian contact pressure in the contact.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
 </td>
 </tr>
 </tbody>

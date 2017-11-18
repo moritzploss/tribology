@@ -40,6 +40,7 @@ for more information.
 #### 0.2.2.dev
 Current development version on GitHub.
 
+- docstrings for module `tribology_hertz` changed to numpy format and refactored
 - docstrings for module `tribology_dowson_hamrock` changed to numpy format and refactored
 - docstrings for module `tribology_boundary_element` changed to numpy format and refactored
 - docstrings for module `tribology` changed to numpy format and refactored
@@ -48,7 +49,8 @@ Current development version on GitHub.
 - helper functions made private
 
 #### 0.2.1
-- Sphinx documentation added to git repo, docs available at https://moritzploss.github.io/tribology
+- Sphinx documentation added to GitHub repo, docs available at
+https://moritzploss.github.io/tribology
 -  Travis CI builds now with Pylint error check for package files.
 Non-package files are not checked. Build fails if Pylint error is found.
 - Python 3.4 and 3.5 builds added to Travis CI (now 3.4, 3.5 and 3.6)
