@@ -9,6 +9,108 @@ Methods related to Hertz contact theory
 from math import sqrt, pi, log
 
 
+def __rred(r_1, r_2):
+    """
+
+    Calculate the reduced (effective) radius of two radii according to Hertzian
+    contact theory.
+
+    Parameters
+    ----------
+    r_1: scalar
+        The first radius.
+    r_2: scalar
+        The second radius.
+
+    Returns
+    -------
+    r_red: scalar
+        The reduced (effective) radius.
+
+    """
+    if (r_1 == 0 or abs(r_1) == float('inf')) and r_2 != 0:
+        r_red =  r_2
+    elif (r_2 == 0 or abs(r_2) == float('inf')) and r_1 != 0:
+        r_red = r_1
+    elif (r_1 == 0 or abs(r_1) == float('inf')) and \
+            (r_2 == 0 or abs(r_2) == float('inf')):
+        r_red = 0
+    elif r_1 == -r_2:
+        r_red = 0
+    else:
+        r_red = 1 / (1 / r_1 + 1 / r_2)
+    return r_red
+
+
+def reff(r_x_1, r_y_1, r_x_2, r_y_2, ):
+    """
+
+    Calculate the effective radii for two bodies according to Hertzian contact
+    theory. It is assumed that the two major axis of each body (x- and y-axis)
+    are perpendicular to each other and that the x and y axes of both bodies are
+    aligned.
+
+    Parameters
+    ----------
+    r_x_1: scalar
+        The radius of body 1 in direction 1 (x).
+    r_y_1: scalar
+        The radius of body 1 in direction 2 (y).
+    r_x_2: scalar
+        The radius of body 2 in direction 1 (x).
+    r_y_2: scalar
+        The radius of body 2 in direction 2 (y).
+
+    Returns
+    -------
+    r_eff: scalar
+        The effective radius.
+    r_eff_x: scalar
+        The effective radius in x-direction.
+    r_eff_y: scalar
+        The effective radius in y-direction.
+
+    """
+    recip_radius = []
+    for radius in [r_x_1, r_y_1, r_x_2, r_y_2]:
+        if radius == 0:
+            recip_radius.append(float('inf'))
+        else:
+            recip_radius.append(1 / radius)
+
+    r_eff_x = __rred(r_x_1, r_x_2)
+    r_eff_y = __rred(r_y_1, r_y_2)
+    r_eff = __rred(r_eff_x, r_eff_y)
+    return r_eff, r_eff_x, r_eff_y
+
+
+def eeff(e_1, nu_1, e_2, nu_2):
+    """
+
+    Calculate the effective (Young's) modulus of two contact bodies according
+    to Hertzian contact theory.
+
+    Parameters
+    ----------
+    e_1: ndarray, scalar
+        The Young's modulus of contact body 1.
+    nu_1: ndarray, scalar
+        The Poisson ratio of contact body 1.
+    e_2: ndarray, scalar
+        The Young's modulus of contact body 2.
+    nu_2: ndarray, scalar
+        The Poisson ratio of contact body 1.
+
+    Returns
+    -------
+    e_eff: scalar
+        The effective modulus.
+
+    """
+    e_eff = 1 / ((1 - nu_1 ** 2) / (2 * e_1) + (1 - nu_2 ** 2) / (2 * e_2))
+    return e_eff
+
+
 def __auxparamshertz(r_eff_x, r_eff_y):
     """
 

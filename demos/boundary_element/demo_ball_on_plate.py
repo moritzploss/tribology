@@ -8,6 +8,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+import tribology.tribology_hertz
+
 
 def plot_results(ax_x, ax_y, press):
     """
@@ -43,9 +45,9 @@ def demo_ball_on_plate():
     # inputs for steel ball geometry in contact with steel flat
     r_ball = tr.RadBall.HInch.value
     f_outer = 10
-    e_eff = tr.eeff(tr.YoungsMod.STEEL.value, tr.PoissonRatio.STEEL.value,
-                    tr.YoungsMod.STEEL.value, tr.PoissonRatio.STEEL.value)
-    r_eff, r_eff_x, _ = tr.reff(r_ball, r_ball, 0, 0)
+    e_eff = tribology.tribology_hertz.eeff(tr.YoungsMod.STEEL.value, tr.PoissonRatio.STEEL.value,
+                                           tr.YoungsMod.STEEL.value, tr.PoissonRatio.STEEL.value)
+    r_eff, r_eff_x, _ = tribology.tribology_hertz.reff(r_ball, r_ball, 0, 0)
 
     # create 3d profile for ball and flat plate. calculate Hertz contact width
     # first and use result to determine grid size for boundary element solution

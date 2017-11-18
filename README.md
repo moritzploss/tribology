@@ -41,6 +41,7 @@ for more information.
 Current development version on GitHub.
 
 - docstrings changed to numpy format and refactored
+- functions `eeff` and `reff` moved to `tribology_hertz` module
 - function `eeff` renamed to `reff`
 - function `meff` renamed to `eeff`
 - helper functions made private

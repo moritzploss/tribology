@@ -8,7 +8,8 @@ import unittest
 
 import numpy as np
 
-from ..tribology import eeff, reff, profball, profrevolve
+from ..tribology import profball, profrevolve
+from tribology import reff, eeff
 from .. import tribology_hertz as th
 from .. import tribology_lubrication as tl
 from .. import tribology_boundary_element as tb
