@@ -1,9 +1,9 @@
-sphinx-build -b html docs/sphinx_files/ docs/ -a
-git add .
-git commit -m "deploy $1"
 
 if [ "$2" == "major" ] || [ "$2" == "minor" ] || [ "$2" == "patch" ] || [ "$2" == "p" ] ;
 then
+sphinx-build -b html docs/sphinx_files/ docs/ -a
+git add .
+git commit -m "deploy $1"
 
 if [ "$2" ==  "major" ]
 then
