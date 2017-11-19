@@ -37,10 +37,13 @@ for more information.
 
 # version history
 
+Neutral builds are continuously pushed to PyPI. The changes listed
+for the neutral builds are with respect to the latest numbered release.
 
-#### 0.2.3.dev
+#### Latest Neutral Build on PyPI
 
-Current development version on GitHub.
+- refactoring
+- auto-release on PyPI
 
 #### 0.2.2
 

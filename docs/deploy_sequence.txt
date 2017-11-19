@@ -1,0 +1,5 @@
+sphinx-build -b html docs/sphinx_files/ docs/ -a
+git add .
+git commit -m "deploy"
+bumpversion patch
+git push origin master && git push origin master --tags
