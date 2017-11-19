@@ -14,7 +14,7 @@ You can also install the package through pip:
 
     pip install tribology
 
-After installation, it's recommended to import the package and all its
+After installation, it is recommended to import the package and all its
 modules as follows:
 
 ```python
