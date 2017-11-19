@@ -37,8 +37,9 @@ for more information.
 
 # version history
 
-Neutral builds are continuously pushed to PyPI. The changes listed
-for the neutral builds are with respect to the latest numbered release.
+Neutral builds are continuously deployed to PyPI. The log for
+neutral builds includes changes with respect to the latest numbered
+release listed below.
 
 #### Latest Neutral Build on PyPI
 
