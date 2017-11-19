@@ -41,7 +41,7 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
-#### Latest Neutral Build on PyPI
+#### Latest Neutral Build
 
 - refactoring
 - auto-release on PyPI

@@ -1,5 +1,25 @@
+# deploy patch
+
 sphinx-build -b html docs/sphinx_files/ docs/ -a
 git add .
-git commit -m "deploy"
+git commit -m "deploy patch"
 bumpversion patch
+git push origin master && git push origin master --tags
+
+
+# deploy minor
+
+sphinx-build -b html docs/sphinx_files/ docs/ -a
+git add .
+git commit -m "deploy minor"
+bumpversion minor
+git push origin master && git push origin master --tags
+
+
+# deploy major
+
+sphinx-build -b html docs/sphinx_files/ docs/ -a
+git add .
+git commit -m "deploy major"
+bumpversion major
 git push origin master && git push origin master --tags
