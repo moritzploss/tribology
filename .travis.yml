@@ -1,17 +1,16 @@
-
-# deploy:
-#  provider: pages
-#  skip_cleanup: true
-#  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-#  on:
-#    branch: master
-
+deploy:
+  provider: pypi
+  user: "moritz.ploss"
+  password:
+    secure: "m7sseC7Z+e2SEd20W8JCW4dZDGdO9iz0wy3D7CIEPA1Mon0+Wpd+YLQDyR7Dvdz6NnprFBMO0Md5iqxJ8vr+7d8eJDzvd05HB9UnhwPrXpquERO8N9nXFUDos+juDJfA2r1XcxSlrSk4Ay2cnsVUTC3B17WlH+Cumsh/UtQJoHcDO3YhVxSry7uY/E5EQyoSE6NUiN4edCdSgYpjY2FH8VX6N5geSqlm2aOKyVnMyU17/a5HvZWerqFcxEP0qeKeIwn1V6ZjEWjoU3sc9NnDncPzMmY8oMAy44JznWOEBUEIMJsbSJpMyv2ioAHaA/DmFy+4xrmrFRhgOt9OX1jyQzTdJUw5TnCW9hrrWDGTO8pIpNpbImqeYlVVdwRKj2bYnK7sfn1T3F388x392bjp2AmdpuBio/J1IG/7UgUns6EbT3B+MHJKViJ9sUkpMrZClFCraOBXe+utB70JvghD4Xf3ubbjPkoDPTUbPB18Izx30PkZjrgKRTt92q3JyHjgnPe7NUQxHCew2+iBVk64brLbjHP7Ihr81Y8zA3+hviMUgKlffKRQ6lDrJyGGK9wnwmw8h/eP6OBebRRRUsC29hq/7uBji92AU8SZQACQJclHWGf4KnmdWlPaTt8ojaweS45VN0IsfPmlZLrCrXZmZ6vBkkSgGvXB26txUgt4Jp4="
+  distributions: "sdist bdist_wheel"
+  on:
+    tags: true
 language: python
 python:
 - '3.4'
 - '3.5'
 - '3.6'
-
 install:
 - pip install .
 - pip install --upgrade bumpversion
