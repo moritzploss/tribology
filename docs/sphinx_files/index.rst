@@ -20,7 +20,7 @@ You can install the tribology package using pip:
 
    pip install tribology
 
-It is generally recommended to :code:`import` the tribology package as follows.
+It's generally recommended to :code:`import` the tribology package as follows.
 This will import all modules of the package and you can use all classes and
 methods without ever worrying about modules:
 
