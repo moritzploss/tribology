@@ -1,6 +1,6 @@
 """
 
-Import delimited .txt files.
+Import delimited data files.
 
 """
 
@@ -50,7 +50,55 @@ def __to_float(num):
         return num
 
 
-def __process_file(file, decimal_mark, padding=0):
+def __assemble_data_table(num_data_tables, max_num_data_length):
+    # re-assemble complete data table from list of data tables
+    num_data = np.zeros((
+        (len(num_data_tables) - 1) * max_num_data_length +
+        num_data_tables[-1].shape[0],
+        num_data_tables[-1].shape[1]),
+        dtype=object)
+    for idx, data_table in enumerate(num_data_tables):
+        # do this for all but the last data table
+        if idx + 1 < len(num_data_tables):
+            num_data[idx * max_num_data_length: (idx + 1) * max_num_data_length,
+            :] = data_table
+        # do this for the last data table
+        else:
+            num_data[idx * max_num_data_length:, :] = data_table
+    return num_data
+
+
+def __write_to_out_dict(num_data, column_headers):
+    """
+
+    extract the data columns from the num_data array and write them to a
+    dictionary
+
+    Parameters
+    ----------
+    num_data
+    column_headers
+
+    Returns
+    -------
+
+    """
+    output_dict = {'column_headers': column_headers}
+    for idx, column in enumerate(column_headers):
+        # if empty data columns are not padded with tabs
+        if idx >= num_data.shape[1]:
+            output_dict[column] = np.zeros(num_data.shape[1]) * float('nan')
+        else:
+            # if data is of numeric type
+            if __is_floatable(num_data[0, idx]):
+                output_dict[column] = num_data[:, idx].astype(float)[:, None]
+            # if data is of other type (string)
+            else:
+                output_dict[column] = num_data[:, idx].astype(object)[:, None]
+    return output_dict
+
+
+def __process_file(in_file, decimal_mark, padding=0):
     """
     extract data from tab-separated text file and return dictionary containing
     all data. the 'padding' parameter allows to ignore leading columns
@@ -60,10 +108,8 @@ def __process_file(file, decimal_mark, padding=0):
     num_data = []
     column_headers = []
     num_data_tables = []
-    with open(file) as mtm_file:
-        for line in mtm_file:
-            # split line and ignore first 8 columns if the line is long
-            # (indicates 2D-type PCS file)
+    with open(in_file) as dat_file:
+        for line in dat_file:
             if decimal_mark != '.':
                 split_line = line.replace(decimal_mark, '.').split('\t')
             else:
@@ -108,42 +154,11 @@ def __process_file(file, decimal_mark, padding=0):
                     num_data = np.append(num_data, np.asarray(
                         [__to_float(item.rstrip('\n')) for item in split_line])
                                          .reshape((1, len(split_line))), axis=0)
-    num_data_tables.append(num_data)
-    # re-assemble complete data table from list of data tables
-    num_data = np.zeros((
-        (len(num_data_tables) - 1) * max_num_data_length +
-        num_data_tables[-1].shape[0],
-        num_data_tables[-1].shape[1]),
-        dtype=object
-    )
-    for idx, data_table in enumerate(num_data_tables):
-        # do this for all but the last data table
-        if idx + 1 < len(num_data_tables):
-            num_data[idx * max_num_data_length: (idx + 1) * max_num_data_length,
-            :] = data_table
-        # do this for the last data table (because it might be smaller than the
-        # others)
-        else:
-            num_data[idx * max_num_data_length:, :] = data_table
 
-    # extract the data columns from the num_data array and write them to a
-    # dictionary
-    output_dict = {'column_headers': column_headers}
-    for idx, column in enumerate(column_headers):
-        # take care of all other columns
-        if column:
-            # if empty data columns are not padded with tabs
-            if idx >= num_data.shape[1]:
-                output_dict[column] = np.zeros(num_data.shape[1]) * float('nan')
-            else:
-                # if data is of numeric type
-                if __is_floatable(num_data[0, idx]):
-                    output_dict[column] = num_data[:, idx].astype(float)[:,
-                                          None]
-                # if data is of other type (string)
-                else:
-                    output_dict[column] = num_data[:, idx].astype(object)[:,
-                                          None]
+    num_data_tables.append(num_data)
+    num_data = __assemble_data_table(num_data_tables, max_num_data_length)
+    output_dict = __write_to_out_dict(num_data, column_headers)
+
     return output_dict
 
 
