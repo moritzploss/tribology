@@ -62,7 +62,8 @@ def __process_file(file, decimal_mark, padding=0):
     num_data_tables = []
     with open(file) as mtm_file:
         for line in mtm_file:
-            # split line and ignore first 8 columns if the line is long (indicates 2D-type PCS file)
+            # split line and ignore first 8 columns if the line is long
+            # (indicates 2D-type PCS file)
             if decimal_mark != '.':
                 split_line = line.replace(decimal_mark, '.').split('\t')
             else:
@@ -70,27 +71,32 @@ def __process_file(file, decimal_mark, padding=0):
             # get rid of trailing newline characters
             if split_line and split_line[-1] == '\n':
                 split_line[-1] = ''
-            # check if first character is not (digit or minus symbol (hyphen)) to identify non-data lines
+            # check if first character is not (digit or minus symbol (hyphen))
+            # to identify non-data lines
             if not (line[0].isdigit() or line[0] == '-') or len(split_line) < 1:
                 if split_line != ['']:
                     previous_line = split_line
                 continue
-            # if line contains data, split line into data fields, fill empty fields with 'nan'
+            # if line contains data, split line into data fields, fill empty
+            # fields with 'nan'
             split_line[:] = (item or 'nan' for item in split_line)
             # if this is the first data-containing line...
             if not len(column_headers):
-                # replace non-alphanumeric characters and trailing underscores in column headers
+                # replace non-alphanumeric characters and trailing underscores
+                # in column headers
                 column_headers[:] = (re.sub("\W+", '_', item.lower()).strip('_')
                                      for item in previous_line)
                 # convert data type for easy matlab export
                 column_headers = np.asarray(column_headers, dtype='object')
-                # write first line to data table. note that "to_float" is not necessary, but it's much faster
+                # write first line to data table. note that "to_float" is not
+                # necessary, but it's much faster
                 num_data = np.asarray([__to_float(item.rstrip('\n')) for item in
                                        split_line]).reshape(
                     (1, len(split_line)))
             # ...else append current line to data table
             else:
-                # if data table becomes large, make new data table and add old table to table list (for speed)
+                # if data table becomes large, make new data table and add old
+                # table to table list (for speed)
                 if num_data.shape[0] == max_num_data_length:
                     num_data_tables.append(num_data)
                     num_data = np.asarray(
@@ -115,11 +121,13 @@ def __process_file(file, decimal_mark, padding=0):
         if idx + 1 < len(num_data_tables):
             num_data[idx * max_num_data_length: (idx + 1) * max_num_data_length,
             :] = data_table
-        # do this for the last data table (because it might be smaller than the others)
+        # do this for the last data table (because it might be smaller than the
+        # others)
         else:
             num_data[idx * max_num_data_length:, :] = data_table
 
-    # extract the data columns from the num_data array and write them to a dictionary
+    # extract the data columns from the num_data array and write them to a
+    # dictionary
     output_dict = {'column_headers': column_headers}
     for idx, column in enumerate(column_headers):
         # take care of all other columns
@@ -140,7 +148,6 @@ def __process_file(file, decimal_mark, padding=0):
 
 
 def __parse_args():
-
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--force', action="store_true", default=False,
                         help='overwrite existing database files during import')
@@ -169,65 +176,61 @@ def __get_file_handles(directory, ext, recursive=False):
         in_files = []
         dir_list = [x[0] + os.sep for x in os.walk(directory)]
         for dir in dir_list:
-            in_files.extend(
-                sorted(glob.glob('{}*.{}'.format(dir, ext))))
+            in_files.extend(sorted(glob.glob('{}*.{}'.format(dir, ext))))
         in_files = [f.replace(directory, '').lstrip(os.sep) for f in in_files]
     return in_files
 
 
 def __save_out_file(f_no_ext, output_dict, out_ext):
+    out_file = ''
     if out_ext == 'mat':
-        scipy.io.savemat('{}/{}.mat'.format(os.getcwd(), f_no_ext),
-                         output_dict)
+        out_file = '{}/{}.mat'.format(os.getcwd(), f_no_ext)
+        scipy.io.savemat(out_file, output_dict)
     elif out_ext == 'npz':
-        np.savez('{}/{}'.format(os.getcwd(), f_no_ext), **output_dict)
+        out_file = '{}/{}'.format(os.getcwd(), f_no_ext)
+        np.savez(out_file, **output_dict)
+    return out_file
 
 
-def import_txt(in_files, force=False, deli='\t', dec_mark='.',
+def import_txt(in_file, force=False, deli='\t', dec_mark='.',
                out_ext='npz', recursive=False, status=False):
     """
     orchestrate data import
     """
-    out_files = []
-    imported = []
 
-    for file in in_files:
-        f_no_ext = os.path.splitext(file)[0]
+    file_no_ext = os.path.splitext(in_file)[0]
+    out_file_exists = (".".join([file_no_ext, out_ext])
+                       in os.path.dirname(in_file))
 
-        out_file_exists = (f_no_ext + '.{}'.format(out_ext)) \
-                          in os.path.dirname(file)
+    import_status = False
+    out_file = ''
 
-        if out_file_exists and force is False:
-            __print_status("file '{}.{}' already exists. did not overwrite {} "
-                           "database".format(f_no_ext,
-                                             args.outformat,
-                                             args.outformat),
-                           __bcolors.ENDC)
-        else:
-            try:
-                output_dict = __process_file(file, dec_mark)
-                __save_out_file(f_no_ext, output_dict, out_ext)
-
-                print_string = "file '{}' imported. {} database".format(file,
-                                                                        out_ext)
-                if out_file_exists:
-                    __print_status("{} overwritten".format(print_string),
-                                   __bcolors.OKGREEN)
-                else:
-                    __print_status("{} created".format(print_string),
-                                   __bcolors.OKGREEN)
-
-            except (ValueError):
-                __print_status(
-                    "### did not import file '{}'. file does not seem to be a "
-                    "simple tab-separated file ###"
-                    .format(file), __bcolors.FAIL, )
-    print('{}\nfinished all imports'.format(120 * '-'))
-    return
+    if not out_file_exists or force is True:
+        try:
+            output_dict = __process_file(in_file, dec_mark)
+            out_file = __save_out_file(file_no_ext, output_dict, out_ext)
+            import_status = True
+        except ValueError:
+            pass
+    return out_file, import_status
 
 
 if __name__ == "__main__":
     args = __parse_args()
     in_files = __get_file_handles(os.getcwd(), args.ext, args.recursive)
-    import_txt(in_files, force=args.force, deli=args.delimiter,
+    for in_file in in_files:
+        import_txt(in_files, force=args.force, deli=args.delimiter,
                dec_mark=args.mark, out_ext=args.outformat)
+        __print_status("file '{}.{}' already exists. did not overwrite {} "
+                       "database".format(f_no_ext,
+                                         args.outformat,
+                                         args.outformat),
+                       __bcolors.ENDC)
+        print_string = "file '{}' imported. {} database".format(in_file,
+                                                                out_ext)
+        if out_file_exists:
+            __print_status("{} overwritten".format(print_string),
+                           __bcolors.OKGREEN)
+        else:
+            __print_status("{} created".format(print_string),
+                           __bcolors.OKGREEN)
