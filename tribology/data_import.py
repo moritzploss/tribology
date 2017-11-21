@@ -231,6 +231,7 @@ def import_txt(in_file, force=False, deli='\t', dec_mark='.',
 
 
 if __name__ == "__main__":
+    """
     args = __parse_args()
     in_files = __get_file_handles(os.getcwd(), args.ext, args.recursive)
     for in_file in in_files:
@@ -249,3 +250,4 @@ if __name__ == "__main__":
         else:
             __print_status("{} created".format(print_string),
                            __bcolors.OKGREEN)
+    """
