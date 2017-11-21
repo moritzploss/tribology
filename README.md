@@ -43,6 +43,7 @@ release listed below.
 
 #### Latest Neutral Build
 
+- modules renamed, removed leading `tribology_` in module names
 - refactoring
 - auto-release on PyPI
 
