@@ -9,9 +9,9 @@ import unittest
 import numpy as np
 
 from ..tribology import profball, profrevolve
-from .. import tribology_hertz as th
-from .. import tribology_lubrication as tl
-from .. import tribology_boundary_element as tb
+from .. import hertz as th
+from .. import lubrication as tl
+from .. import boundary_element as tb
 
 
 class TestTribology(unittest.TestCase):

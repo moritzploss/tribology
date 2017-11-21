@@ -3,15 +3,17 @@ Methods related to general tribology
 """
 
 __all__ = ['tribology',
-           'tribology_boundary_element',
-           'tribology_constants',
-           'tribology_dowson_hamrock',
-           'tribology_hertz',
-           'tribology_lubrication']
+           'boundary_element.py',
+           'constants.py',
+           'dowson_hamrock.py',
+           'hertz.py',
+           'lubrication.py',
+           'data_import']
 
 from tribology.tribology import *
-from tribology.tribology_boundary_element import *
-from tribology.tribology_constants import *
-from tribology.tribology_dowson_hamrock import *
-from tribology.tribology_hertz import *
-from tribology.tribology_lubrication import *
+from tribology.boundary_element import *
+from tribology.constants import *
+from tribology.data_import import *
+from tribology.dowson_hamrock import *
+from tribology.hertz import *
+from tribology.lubrication import *
