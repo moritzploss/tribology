@@ -41,8 +41,9 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
-#### Latest Neutral Build
+#### Latest Development Version
 
+- module `data_import` added
 - modules renamed, removed leading `tribology_` in module names
 - refactoring
 - auto-release on PyPI
