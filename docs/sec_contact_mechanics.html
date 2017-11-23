@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Tribology  documentation" href="index.html"/>
         <link rel="next" title="EHD Lubrication" href="sec_ehd_lubrication.html"/>
-        <link rel="prev" title="Methods for General Tribology" href="sec_general_tribology.html"/> 
+        <link rel="prev" title="General Tribology" href="sec_general_tribology.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -88,7 +88,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="sec_general_tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_general_tribology.html">General Tribology</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Contact Mechanics</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#boundary-element-theory">Boundary Element Theory</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hertzian-contact-theory">Hertzian Contact Theory</a></li>
@@ -164,15 +164,15 @@
 <h1>Contact Mechanics<a class="headerlink" href="#contact-mechanics" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="boundary-element-theory">
 <h2>Boundary Element Theory<a class="headerlink" href="#boundary-element-theory" title="Permalink to this headline">¶</a></h2>
-<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">tribology_boundary_element</span></code>
+<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">boundary_element</span></code>
 module of the package.</p>
-<span class="target" id="module-tribology_boundary_element"></span><p>This module contains methods related to boundary element solvers for contact
+<span class="target" id="module-boundary_element"></span><p>This module contains methods related to boundary element solvers for contact
 mechanics calculations. Please see the <code class="code docutils literal"><span class="pre">/demo</span></code> directory for minimum
 examples of how to combine the below methods to perform contact mechanics
 calculations.</p>
 <dl class="function">
-<dt id="tribology_boundary_element.beinflumat">
-<code class="descname">beinflumat</code><span class="sig-paren">(</span><em>x_axis</em>, <em>y_axis</em>, <em>e_eff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_boundary_element.html#beinflumat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_boundary_element.beinflumat" title="Permalink to this definition">¶</a></dt>
+<dt id="boundary_element.beinflumat">
+<code class="descname">beinflumat</code><span class="sig-paren">(</span><em>x_axis</em>, <em>y_axis</em>, <em>e_eff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/boundary_element.html#beinflumat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#boundary_element.beinflumat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a complete influence coefficient matrix as required for boundary
 element contact mechanics calculations.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -199,8 +199,8 @@ element contact mechanics calculations.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_boundary_element.beinflumatred">
-<code class="descname">beinflumatred</code><span class="sig-paren">(</span><em>influ_mat</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_boundary_element.html#beinflumatred"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_boundary_element.beinflumatred" title="Permalink to this definition">¶</a></dt>
+<dt id="boundary_element.beinflumatred">
+<code class="descname">beinflumatred</code><span class="sig-paren">(</span><em>influ_mat</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/boundary_element.html#beinflumatred"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#boundary_element.beinflumatred" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate a reduced influence coefficient matrix from a complete influence
 coefficient matrix.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -220,8 +220,8 @@ order <code class="docutils literal"><span class="pre">n</span> <span class="pre
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_boundary_element.besolve">
-<code class="descname">besolve</code><span class="sig-paren">(</span><em>profile_1</em>, <em>profile_2</em>, <em>outer_force</em>, <em>red_influ_mat</em>, <em>delta_x</em>, <em>delta_y</em>, <em>norm_disp=0.1</em>, <em>max_offset=0.005</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_boundary_element.html#besolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_boundary_element.besolve" title="Permalink to this definition">¶</a></dt>
+<dt id="boundary_element.besolve">
+<code class="descname">besolve</code><span class="sig-paren">(</span><em>profile_1</em>, <em>profile_2</em>, <em>outer_force</em>, <em>red_influ_mat</em>, <em>delta_x</em>, <em>delta_y</em>, <em>norm_disp=0.1</em>, <em>max_offset=0.005</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/boundary_element.html#besolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#boundary_element.besolve" title="Permalink to this definition">¶</a></dt>
 <dd><p>Solve a system of linear equations to find the pressure and displacement
 distribution in a boundary element contact problem:</p>
 <blockquote>
@@ -270,12 +270,12 @@ to determine when solver has completed).</li>
 </div>
 <div class="section" id="hertzian-contact-theory">
 <h2>Hertzian Contact Theory<a class="headerlink" href="#hertzian-contact-theory" title="Permalink to this headline">¶</a></h2>
-<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">tribology_hertz</span></code>
+<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">hertz</span></code>
 module of the package.</p>
-<span class="target" id="module-tribology_hertz"></span><p>Methods related to Hertz contact theory</p>
+<span class="target" id="module-hertz"></span><p>Methods related to Hertz contact theory</p>
 <dl class="function">
-<dt id="tribology_hertz.ahertz">
-<code class="descname">ahertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_hertz.html#ahertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_hertz.ahertz" title="Permalink to this definition">¶</a></dt>
+<dt id="hertz.ahertz">
+<code class="descname">ahertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#ahertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.ahertz" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the contact area according to Hertzian contact theory.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -303,8 +303,8 @@ module of the package.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_hertz.dhertz">
-<code class="descname">dhertz</code><span class="sig-paren">(</span><em>e_eff</em>, <em>r_x_1</em>, <em>r_y_1</em>, <em>r_x_2</em>, <em>r_y_2</em>, <em>force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_hertz.html#dhertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_hertz.dhertz" title="Permalink to this definition">¶</a></dt>
+<dt id="hertz.dhertz">
+<code class="descname">dhertz</code><span class="sig-paren">(</span><em>e_eff</em>, <em>r_x_1</em>, <em>r_y_1</em>, <em>r_x_2</em>, <em>r_y_2</em>, <em>force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#dhertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.dhertz" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the elastic normal displacement of a contact problem according
 to Hertzian contact theory.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -332,8 +332,8 @@ to Hertzian contact theory.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_hertz.eeff">
-<code class="descname">eeff</code><span class="sig-paren">(</span><em>e_1</em>, <em>nu_1</em>, <em>e_2</em>, <em>nu_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_hertz.html#eeff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_hertz.eeff" title="Permalink to this definition">¶</a></dt>
+<dt id="hertz.eeff">
+<code class="descname">eeff</code><span class="sig-paren">(</span><em>e_1</em>, <em>nu_1</em>, <em>e_2</em>, <em>nu_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#eeff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.eeff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the effective (Young&#8217;s) modulus of two contact bodies according
 to Hertzian contact theory.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -359,8 +359,8 @@ to Hertzian contact theory.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_hertz.fhertz">
-<code class="descname">fhertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>p_critical</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_hertz.html#fhertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_hertz.fhertz" title="Permalink to this definition">¶</a></dt>
+<dt id="hertz.fhertz">
+<code class="descname">fhertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>p_critical</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#fhertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.fhertz" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the load carrying capacity of a Hertzian contact.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -387,8 +387,8 @@ without plastic deformation.</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_hertz.phertz">
-<code class="descname">phertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_hertz.html#phertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_hertz.phertz" title="Permalink to this definition">¶</a></dt>
+<dt id="hertz.phertz">
+<code class="descname">phertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#phertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.phertz" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the mean contact pressure in a Hertzian contact.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -414,8 +414,8 @@ without plastic deformation.</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_hertz.reff">
-<code class="descname">reff</code><span class="sig-paren">(</span><em>r_x_1</em>, <em>r_y_1</em>, <em>r_x_2</em>, <em>r_y_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_hertz.html#reff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_hertz.reff" title="Permalink to this definition">¶</a></dt>
+<dt id="hertz.reff">
+<code class="descname">reff</code><span class="sig-paren">(</span><em>r_x_1</em>, <em>r_y_1</em>, <em>r_x_2</em>, <em>r_y_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#reff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.reff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the effective radii for two bodies according to Hertzian contact
 theory. It is assumed that the two major axis of each body (x- and y-axis)
 are perpendicular to each other and that the x and y axes of both bodies are
@@ -460,7 +460,7 @@ aligned.</p>
         <a href="sec_ehd_lubrication.html" class="btn btn-neutral float-right" title="EHD Lubrication" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="sec_general_tribology.html" class="btn btn-neutral" title="Methods for General Tribology" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="sec_general_tribology.html" class="btn btn-neutral" title="General Tribology" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tribology_dowson_hamrock &mdash; Tribology  documentation</title>
+  <title>dowson_hamrock &mdash; Tribology  documentation</title>
   
 
   
@@ -138,7 +138,7 @@
         
           <li><a href="index.html">Module code</a> &raquo;</li>
         
-      <li>tribology_dowson_hamrock</li>
+      <li>dowson_hamrock</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -155,7 +155,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for tribology_dowson_hamrock</h1><div class="highlight"><pre>
+  <h1>Source code for dowson_hamrock</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -194,7 +194,7 @@
     <span class="k">return</span> <span class="n">param_ehd</span>
 
 
-<div class="viewcode-block" id="edowham"><a class="viewcode-back" href="../sec_ehd_lubrication.html#tribology_dowson_hamrock.edowham">[docs]</a><span class="k">def</span> <span class="nf">edowham</span><span class="p">(</span><span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">):</span>
+<div class="viewcode-block" id="edowham"><a class="viewcode-back" href="../sec_ehd_lubrication.html#dowson_hamrock.edowham">[docs]</a><span class="k">def</span> <span class="nf">edowham</span><span class="p">(</span><span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Calculate the elasticity parameter of the contact problem according to</span>
@@ -217,7 +217,7 @@
     <span class="k">return</span> <span class="n">param_elasticity</span></div>
 
 
-<div class="viewcode-block" id="vdowham"><a class="viewcode-back" href="../sec_ehd_lubrication.html#tribology_dowson_hamrock.vdowham">[docs]</a><span class="k">def</span> <span class="nf">vdowham</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">vel_entrain</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">):</span>
+<div class="viewcode-block" id="vdowham"><a class="viewcode-back" href="../sec_ehd_lubrication.html#dowson_hamrock.vdowham">[docs]</a><span class="k">def</span> <span class="nf">vdowham</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">vel_entrain</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Calculate the velocity parameter of the contact problem according to</span>
@@ -244,7 +244,7 @@
     <span class="k">return</span> <span class="n">param_velocity</span></div>
 
 
-<div class="viewcode-block" id="dowhamline"><a class="viewcode-back" href="../sec_ehd_lubrication.html#tribology_dowson_hamrock.dowhamline">[docs]</a><span class="k">def</span> <span class="nf">dowhamline</span><span class="p">(</span><span class="n">vel_entrain</span><span class="p">,</span> <span class="n">force</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">l_eff</span><span class="p">):</span>
+<div class="viewcode-block" id="dowhamline"><a class="viewcode-back" href="../sec_ehd_lubrication.html#dowson_hamrock.dowhamline">[docs]</a><span class="k">def</span> <span class="nf">dowhamline</span><span class="p">(</span><span class="n">vel_entrain</span><span class="p">,</span> <span class="n">force</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">l_eff</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Calculate the mean film thickness in a line contact according to</span>
@@ -280,7 +280,7 @@
     <span class="k">return</span> <span class="n">h_0</span></div>
 
 
-<div class="viewcode-block" id="dowhampoint"><a class="viewcode-back" href="../sec_ehd_lubrication.html#tribology_dowson_hamrock.dowhampoint">[docs]</a><span class="k">def</span> <span class="nf">dowhampoint</span><span class="p">(</span><span class="n">vel_entrain</span><span class="p">,</span> <span class="n">force</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">,</span> <span class="n">eta</span><span class="p">):</span>
+<div class="viewcode-block" id="dowhampoint"><a class="viewcode-back" href="../sec_ehd_lubrication.html#dowson_hamrock.dowhampoint">[docs]</a><span class="k">def</span> <span class="nf">dowhampoint</span><span class="p">(</span><span class="n">vel_entrain</span><span class="p">,</span> <span class="n">force</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">,</span> <span class="n">eta</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Calculate the mean film thickness in a point contact according to</span>

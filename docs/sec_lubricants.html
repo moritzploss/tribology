@@ -88,7 +88,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="sec_general_tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_general_tribology.html">General Tribology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_contact_mechanics.html">Contact Mechanics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_ehd_lubrication.html">EHD Lubrication</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Lubricants and Lubrication</a></li>
@@ -158,12 +158,12 @@
             
   <div class="section" id="lubricants-and-lubrication">
 <h1>Lubricants and Lubrication<a class="headerlink" href="#lubricants-and-lubrication" title="Permalink to this headline">¶</a></h1>
-<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">tribology_lubrication</span></code>
+<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">lubrication</span></code>
 module of the package.</p>
-<span class="target" id="module-tribology_lubrication"></span><p>Methods related to lubricants and lubrication</p>
+<span class="target" id="module-lubrication"></span><p>Methods related to lubricants and lubrication</p>
 <dl class="function">
-<dt id="tribology_lubrication.barus">
-<code class="descname">barus</code><span class="sig-paren">(</span><em>eta_0</em>, <em>alpha_p</em>, <em>pressure</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#barus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.barus" title="Permalink to this definition">¶</a></dt>
+<dt id="lubrication.barus">
+<code class="descname">barus</code><span class="sig-paren">(</span><em>eta_0</em>, <em>alpha_p</em>, <em>pressure</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lubrication.html#barus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lubrication.barus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the dynamic viscosity at a given pressure based on the dynamic
 viscosity at atmospheric pressure and the pressure-viscosity coefficient.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -188,8 +188,8 @@ viscosity at atmospheric pressure and the pressure-viscosity coefficient.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_lubrication.dyn2kin">
-<code class="descname">dyn2kin</code><span class="sig-paren">(</span><em>dyn</em>, <em>density</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#dyn2kin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.dyn2kin" title="Permalink to this definition">¶</a></dt>
+<dt id="lubrication.dyn2kin">
+<code class="descname">dyn2kin</code><span class="sig-paren">(</span><em>dyn</em>, <em>density</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lubrication.html#dyn2kin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lubrication.dyn2kin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert from dynamic to kinematic viscosity.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -212,8 +212,8 @@ viscosity at atmospheric pressure and the pressure-viscosity coefficient.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_lubrication.kin2dyn">
-<code class="descname">kin2dyn</code><span class="sig-paren">(</span><em>kin</em>, <em>density</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#kin2dyn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.kin2dyn" title="Permalink to this definition">¶</a></dt>
+<dt id="lubrication.kin2dyn">
+<code class="descname">kin2dyn</code><span class="sig-paren">(</span><em>kin</em>, <em>density</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lubrication.html#kin2dyn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lubrication.kin2dyn" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert from kinematic to dynamic viscosity.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -236,8 +236,8 @@ viscosity at atmospheric pressure and the pressure-viscosity coefficient.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_lubrication.trheomcone">
-<code class="descname">trheomcone</code><span class="sig-paren">(</span><em>eta</em>, <em>alpha</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#trheomcone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.trheomcone" title="Permalink to this definition">¶</a></dt>
+<dt id="lubrication.trheomcone">
+<code class="descname">trheomcone</code><span class="sig-paren">(</span><em>eta</em>, <em>alpha</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lubrication.html#trheomcone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lubrication.trheomcone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the torque that occurs during a viscosity measurement using a
 cone-on-plate rheometer.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -263,8 +263,8 @@ cone-on-plate rheometer.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_lubrication.trheomflat">
-<code class="descname">trheomflat</code><span class="sig-paren">(</span><em>eta</em>, <em>gap_height</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#trheomflat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.trheomflat" title="Permalink to this definition">¶</a></dt>
+<dt id="lubrication.trheomflat">
+<code class="descname">trheomflat</code><span class="sig-paren">(</span><em>eta</em>, <em>gap_height</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lubrication.html#trheomflat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lubrication.trheomflat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the torque that occurs during a viscosity measurement using a
 plate-on-plate rheometer.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -290,8 +290,8 @@ plate-on-plate rheometer.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_lubrication.viscrheomcone">
-<code class="descname">viscrheomcone</code><span class="sig-paren">(</span><em>torque</em>, <em>alpha</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#viscrheomcone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.viscrheomcone" title="Permalink to this definition">¶</a></dt>
+<dt id="lubrication.viscrheomcone">
+<code class="descname">viscrheomcone</code><span class="sig-paren">(</span><em>torque</em>, <em>alpha</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lubrication.html#viscrheomcone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lubrication.viscrheomcone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the dynamic viscosity of a fluid based on the measurement torque
 in a cone-on-plate rheometer.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -317,8 +317,8 @@ in a cone-on-plate rheometer.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_lubrication.viscrheomflat">
-<code class="descname">viscrheomflat</code><span class="sig-paren">(</span><em>torque</em>, <em>gap_height</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#viscrheomflat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.viscrheomflat" title="Permalink to this definition">¶</a></dt>
+<dt id="lubrication.viscrheomflat">
+<code class="descname">viscrheomflat</code><span class="sig-paren">(</span><em>torque</em>, <em>gap_height</em>, <em>omega</em>, <em>r_a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lubrication.html#viscrheomflat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lubrication.viscrheomflat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the dynamic viscosity of a fluid based on the measurement torque
 in a plate-on-plate rheometer.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -344,8 +344,8 @@ in a plate-on-plate rheometer.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_lubrication.walther">
-<code class="descname">walther</code><span class="sig-paren">(</span><em>temp_1</em>, <em>nu_1</em>, <em>temp_2</em>, <em>nu_2</em>, <em>temp_3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_lubrication.html#walther"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_lubrication.walther" title="Permalink to this definition">¶</a></dt>
+<dt id="lubrication.walther">
+<code class="descname">walther</code><span class="sig-paren">(</span><em>temp_1</em>, <em>nu_1</em>, <em>temp_2</em>, <em>nu_2</em>, <em>temp_3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lubrication.html#walther"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lubrication.walther" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the kinematic viscosity at temperature <cite>temp_3</cite> based on the
 kinematic viscosities at temperatures <cite>temp_1</cite> and <cite>temp_2</cite>. The
 implementation follows standard ASTM D341.</p>

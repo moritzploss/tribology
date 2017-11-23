@@ -1,8 +1,8 @@
 Lubricants and Lubrication
 ==========================
 
-All of the below methods can be found in the :code:`tribology_lubrication`
+All of the below methods can be found in the :code:`lubrication`
 module of the package.
 
-.. automodule:: tribology_lubrication
+.. automodule:: lubrication
    :members:

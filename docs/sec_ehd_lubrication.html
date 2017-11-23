@@ -88,7 +88,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="sec_general_tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_general_tribology.html">General Tribology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_contact_mechanics.html">Contact Mechanics</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">EHD Lubrication</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#dowson-hamrock-film-thickness">Dowson-Hamrock Film Thickness</a></li>
@@ -163,12 +163,12 @@
 <h1>EHD Lubrication<a class="headerlink" href="#ehd-lubrication" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="dowson-hamrock-film-thickness">
 <h2>Dowson-Hamrock Film Thickness<a class="headerlink" href="#dowson-hamrock-film-thickness" title="Permalink to this headline">¶</a></h2>
-<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">tribology_dowson_hamrock</span></code>
+<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">dowson_hamrock</span></code>
 module of the package.</p>
-<span class="target" id="module-tribology_dowson_hamrock"></span><p>Methods related to Dowson-Hamrock film thickness calculations</p>
+<span class="target" id="module-dowson_hamrock"></span><p>Methods related to Dowson-Hamrock film thickness calculations</p>
 <dl class="function">
-<dt id="tribology_dowson_hamrock.dowhamline">
-<code class="descname">dowhamline</code><span class="sig-paren">(</span><em>vel_entrain</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em>, <em>l_eff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_dowson_hamrock.html#dowhamline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_dowson_hamrock.dowhamline" title="Permalink to this definition">¶</a></dt>
+<dt id="dowson_hamrock.dowhamline">
+<code class="descname">dowhamline</code><span class="sig-paren">(</span><em>vel_entrain</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em>, <em>l_eff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dowson_hamrock.html#dowhamline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dowson_hamrock.dowhamline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the mean film thickness in a line contact according to
 Dowson-Hamrock.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -197,8 +197,8 @@ Dowson-Hamrock.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_dowson_hamrock.dowhampoint">
-<code class="descname">dowhampoint</code><span class="sig-paren">(</span><em>vel_entrain</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_dowson_hamrock.html#dowhampoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_dowson_hamrock.dowhampoint" title="Permalink to this definition">¶</a></dt>
+<dt id="dowson_hamrock.dowhampoint">
+<code class="descname">dowhampoint</code><span class="sig-paren">(</span><em>vel_entrain</em>, <em>force</em>, <em>alpha_p</em>, <em>e_eff</em>, <em>r_eff</em>, <em>eta</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dowson_hamrock.html#dowhampoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dowson_hamrock.dowhampoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the mean film thickness in a point contact according to
 Dowson-Hamrock.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -226,8 +226,8 @@ Dowson-Hamrock.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_dowson_hamrock.edowham">
-<code class="descname">edowham</code><span class="sig-paren">(</span><em>alpha_p</em>, <em>e_eff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_dowson_hamrock.html#edowham"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_dowson_hamrock.edowham" title="Permalink to this definition">¶</a></dt>
+<dt id="dowson_hamrock.edowham">
+<code class="descname">edowham</code><span class="sig-paren">(</span><em>alpha_p</em>, <em>e_eff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dowson_hamrock.html#edowham"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dowson_hamrock.edowham" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the elasticity parameter of the contact problem according to
 Dowson-Hamrock.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -251,8 +251,8 @@ Dowson-Hamrock.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="tribology_dowson_hamrock.vdowham">
-<code class="descname">vdowham</code><span class="sig-paren">(</span><em>eta</em>, <em>vel_entrain</em>, <em>e_eff</em>, <em>r_eff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology_dowson_hamrock.html#vdowham"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_dowson_hamrock.vdowham" title="Permalink to this definition">¶</a></dt>
+<dt id="dowson_hamrock.vdowham">
+<code class="descname">vdowham</code><span class="sig-paren">(</span><em>eta</em>, <em>vel_entrain</em>, <em>e_eff</em>, <em>r_eff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dowson_hamrock.html#vdowham"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dowson_hamrock.vdowham" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the velocity parameter of the contact problem according to
 Dowson-Hamrock.</p>
 <table class="docutils field-list" frame="void" rules="none">

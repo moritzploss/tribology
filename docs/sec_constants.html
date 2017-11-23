@@ -87,7 +87,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="sec_general_tribology.html">Methods for General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_general_tribology.html">General Tribology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_contact_mechanics.html">Contact Mechanics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_ehd_lubrication.html">EHD Lubrication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_lubricants.html">Lubricants and Lubrication</a></li>
@@ -157,17 +157,17 @@
             
   <div class="section" id="constants-for-tribology">
 <h1>Constants for Tribology<a class="headerlink" href="#constants-for-tribology" title="Permalink to this headline">¶</a></h1>
-<p>All of the below classes can be found in the <code class="code docutils literal"><span class="pre">tribology_constants</span></code>
+<p>All of the below classes can be found in the <code class="code docutils literal"><span class="pre">constants</span></code>
 module of the package.</p>
-<span class="target" id="module-tribology_constants"></span><p>Relevant constants for tribology research. Use, for example, as follows:</p>
+<span class="target" id="module-constants"></span><p>Relevant constants for tribology research. Use, for example, as follows:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># get young&#39;s modulus of steel in units of MPa</span>
 <span class="kn">import</span> <span class="nn">tribology</span> <span class="kn">as</span> <span class="nn">tr</span>
 <span class="n">youngs_modulus_steel</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">YoungsMod</span><span class="o">.</span><span class="n">STEEL</span><span class="o">.</span><span class="n">value</span>
 </pre></div>
 </div>
 <dl class="class">
-<dt id="tribology_constants.LubeDens">
-<em class="property">class </em><code class="descname">LubeDens</code><a class="reference internal" href="_modules/tribology_constants.html#LubeDens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_constants.LubeDens" title="Permalink to this definition">¶</a></dt>
+<dt id="constants.LubeDens">
+<em class="property">class </em><code class="descname">LubeDens</code><a class="reference internal" href="_modules/constants.html#LubeDens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#constants.LubeDens" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scalar constants for lubricant density in <span class="math">\(\text{g ml}^{-1}\)</span>.
 Available values are:</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -194,8 +194,8 @@ Available values are:</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="tribology_constants.LubeVisc">
-<em class="property">class </em><code class="descname">LubeVisc</code><a class="reference internal" href="_modules/tribology_constants.html#LubeVisc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_constants.LubeVisc" title="Permalink to this definition">¶</a></dt>
+<dt id="constants.LubeVisc">
+<em class="property">class </em><code class="descname">LubeVisc</code><a class="reference internal" href="_modules/constants.html#LubeVisc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#constants.LubeVisc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tuple containing kinematic viscosities (in unit of cSt) of lubricants
 at 40 and 100 <span class="math">\(^{\circ}\text{C}\)</span>. The first value in the tuple
 corresponds to the viscosity at 40 <span class="math">\(^{\circ}\text{C}\)</span>, the second
@@ -227,8 +227,8 @@ reference temperatures (40, 100). Available values are:</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="tribology_constants.MatDens">
-<em class="property">class </em><code class="descname">MatDens</code><a class="reference internal" href="_modules/tribology_constants.html#MatDens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_constants.MatDens" title="Permalink to this definition">¶</a></dt>
+<dt id="constants.MatDens">
+<em class="property">class </em><code class="descname">MatDens</code><a class="reference internal" href="_modules/constants.html#MatDens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#constants.MatDens" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scalar constants for material density in <span class="math">\(\text{kg m}^{-3}\)</span>.
 Available values are:</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -244,8 +244,8 @@ Available values are:</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="tribology_constants.PoissonRatio">
-<em class="property">class </em><code class="descname">PoissonRatio</code><a class="reference internal" href="_modules/tribology_constants.html#PoissonRatio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_constants.PoissonRatio" title="Permalink to this definition">¶</a></dt>
+<dt id="constants.PoissonRatio">
+<em class="property">class </em><code class="descname">PoissonRatio</code><a class="reference internal" href="_modules/constants.html#PoissonRatio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#constants.PoissonRatio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scalar constants for unitless Poisson ratios. Available values are:</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -262,8 +262,8 @@ Available values are:</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="tribology_constants.PressVisc">
-<em class="property">class </em><code class="descname">PressVisc</code><a class="reference internal" href="_modules/tribology_constants.html#PressVisc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_constants.PressVisc" title="Permalink to this definition">¶</a></dt>
+<dt id="constants.PressVisc">
+<em class="property">class </em><code class="descname">PressVisc</code><a class="reference internal" href="_modules/constants.html#PressVisc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#constants.PressVisc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pressure-viscosity coefficients in <span class="math">\(\text{Pa}^{-1}\)</span> at room
 temperature. Available values are:</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -281,8 +281,8 @@ temperature. Available values are:</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="tribology_constants.RadBall">
-<em class="property">class </em><code class="descname">RadBall</code><a class="reference internal" href="_modules/tribology_constants.html#RadBall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_constants.RadBall" title="Permalink to this definition">¶</a></dt>
+<dt id="constants.RadBall">
+<em class="property">class </em><code class="descname">RadBall</code><a class="reference internal" href="_modules/constants.html#RadBall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#constants.RadBall" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scalar constants for ball radii in units of mm. Available values are:</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -299,8 +299,8 @@ temperature. Available values are:</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="tribology_constants.YoungsMod">
-<em class="property">class </em><code class="descname">YoungsMod</code><a class="reference internal" href="_modules/tribology_constants.html#YoungsMod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology_constants.YoungsMod" title="Permalink to this definition">¶</a></dt>
+<dt id="constants.YoungsMod">
+<em class="property">class </em><code class="descname">YoungsMod</code><a class="reference internal" href="_modules/constants.html#YoungsMod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#constants.YoungsMod" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scalar constants for Young&#8217;s modulus in units of MPa. Available values are:</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

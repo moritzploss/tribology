@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tribology_lubrication &mdash; Tribology  documentation</title>
+  <title>lubrication &mdash; Tribology  documentation</title>
   
 
   
@@ -138,7 +138,7 @@
         
           <li><a href="index.html">Module code</a> &raquo;</li>
         
-      <li>tribology_lubrication</li>
+      <li>lubrication</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -155,7 +155,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for tribology_lubrication</h1><div class="highlight"><pre>
+  <h1>Source code for lubrication</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -169,7 +169,7 @@
 <span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">log10</span> <span class="k">as</span> <span class="n">lg</span>
 
 
-<div class="viewcode-block" id="kin2dyn"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.kin2dyn">[docs]</a><span class="k">def</span> <span class="nf">kin2dyn</span><span class="p">(</span><span class="n">kin</span><span class="p">,</span> <span class="n">density</span><span class="p">):</span>
+<div class="viewcode-block" id="kin2dyn"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.kin2dyn">[docs]</a><span class="k">def</span> <span class="nf">kin2dyn</span><span class="p">(</span><span class="n">kin</span><span class="p">,</span> <span class="n">density</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Convert from kinematic to dynamic viscosity.</span>
@@ -191,7 +191,7 @@
     <span class="k">return</span> <span class="n">dyn</span></div>
 
 
-<div class="viewcode-block" id="dyn2kin"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.dyn2kin">[docs]</a><span class="k">def</span> <span class="nf">dyn2kin</span><span class="p">(</span><span class="n">dyn</span><span class="p">,</span> <span class="n">density</span><span class="p">):</span>
+<div class="viewcode-block" id="dyn2kin"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.dyn2kin">[docs]</a><span class="k">def</span> <span class="nf">dyn2kin</span><span class="p">(</span><span class="n">dyn</span><span class="p">,</span> <span class="n">density</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Convert from dynamic to kinematic viscosity.</span>
@@ -255,7 +255,7 @@
     <span class="k">return</span> <span class="n">kin</span>
 
 
-<div class="viewcode-block" id="walther"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.walther">[docs]</a><span class="k">def</span> <span class="nf">walther</span><span class="p">(</span><span class="n">temp_1</span><span class="p">,</span> <span class="n">nu_1</span><span class="p">,</span> <span class="n">temp_2</span><span class="p">,</span> <span class="n">nu_2</span><span class="p">,</span> <span class="n">temp_3</span><span class="p">):</span>
+<div class="viewcode-block" id="walther"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.walther">[docs]</a><span class="k">def</span> <span class="nf">walther</span><span class="p">(</span><span class="n">temp_1</span><span class="p">,</span> <span class="n">nu_1</span><span class="p">,</span> <span class="n">temp_2</span><span class="p">,</span> <span class="n">nu_2</span><span class="p">,</span> <span class="n">temp_3</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Calculate the kinematic viscosity at temperature `temp_3` based on the</span>
@@ -297,7 +297,7 @@
     <span class="k">return</span> <span class="n">nu_3</span></div>
 
 
-<div class="viewcode-block" id="trheomflat"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.trheomflat">[docs]</a><span class="k">def</span> <span class="nf">trheomflat</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">gap_height</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
+<div class="viewcode-block" id="trheomflat"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.trheomflat">[docs]</a><span class="k">def</span> <span class="nf">trheomflat</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">gap_height</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Calculate the torque that occurs during a viscosity measurement using a</span>
@@ -324,7 +324,7 @@
     <span class="k">return</span> <span class="n">torque</span></div>
 
 
-<div class="viewcode-block" id="viscrheomflat"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.viscrheomflat">[docs]</a><span class="k">def</span> <span class="nf">viscrheomflat</span><span class="p">(</span><span class="n">torque</span><span class="p">,</span> <span class="n">gap_height</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
+<div class="viewcode-block" id="viscrheomflat"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.viscrheomflat">[docs]</a><span class="k">def</span> <span class="nf">viscrheomflat</span><span class="p">(</span><span class="n">torque</span><span class="p">,</span> <span class="n">gap_height</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Calculate the dynamic viscosity of a fluid based on the measurement torque</span>
@@ -351,7 +351,7 @@
     <span class="k">return</span> <span class="n">eta</span></div>
 
 
-<div class="viewcode-block" id="trheomcone"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.trheomcone">[docs]</a><span class="k">def</span> <span class="nf">trheomcone</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
+<div class="viewcode-block" id="trheomcone"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.trheomcone">[docs]</a><span class="k">def</span> <span class="nf">trheomcone</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Calculate the torque that occurs during a viscosity measurement using a</span>
@@ -378,7 +378,7 @@
     <span class="k">return</span> <span class="n">torque</span></div>
 
 
-<div class="viewcode-block" id="viscrheomcone"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.viscrheomcone">[docs]</a><span class="k">def</span> <span class="nf">viscrheomcone</span><span class="p">(</span><span class="n">torque</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
+<div class="viewcode-block" id="viscrheomcone"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.viscrheomcone">[docs]</a><span class="k">def</span> <span class="nf">viscrheomcone</span><span class="p">(</span><span class="n">torque</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Calculate the dynamic viscosity of a fluid based on the measurement torque</span>
@@ -405,7 +405,7 @@
     <span class="k">return</span> <span class="n">eta</span></div>
 
 
-<div class="viewcode-block" id="barus"><a class="viewcode-back" href="../sec_lubricants.html#tribology_lubrication.barus">[docs]</a><span class="k">def</span> <span class="nf">barus</span><span class="p">(</span><span class="n">eta_0</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">pressure</span><span class="p">):</span>
+<div class="viewcode-block" id="barus"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.barus">[docs]</a><span class="k">def</span> <span class="nf">barus</span><span class="p">(</span><span class="n">eta_0</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">pressure</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Calculate the dynamic viscosity at a given pressure based on the dynamic</span>

@@ -5,18 +5,18 @@ Contact Mechanics
 Boundary Element Theory
 -----------------------
 
-All of the below methods can be found in the :code:`tribology_boundary_element`
+All of the below methods can be found in the :code:`boundary_element`
 module of the package.
 
-.. automodule:: tribology_boundary_element
+.. automodule:: boundary_element
    :members:
 
 
 Hertzian Contact Theory
 -----------------------
 
-All of the below methods can be found in the :code:`tribology_hertz`
+All of the below methods can be found in the :code:`hertz`
 module of the package.
 
-.. automodule:: tribology_hertz
+.. automodule:: hertz
    :members:
