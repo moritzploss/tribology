@@ -10,15 +10,15 @@ git commit -m "deploy $1"
 if [ "$1" ==  "major" ]
 then
 echo $1
-#bumpversion major
+bumpversion major
 elif [ "$1" ==  "minor" ]
 then
 echo $1
-#bumpversion minor
+bumpversion minor
 elif [ "$1" == "patch" ] || [ "$1" == "p" ];
 then
 echo $1
-#bumpversion patch
+bumpversion patch
 fi
 
 git push origin master && git push origin master --tags
