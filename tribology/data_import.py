@@ -43,10 +43,6 @@ def __print_status(message, status_color=_Colors.ENDC):
     status_color:
         The color in which to print the message.
 
-    Returns
-    -------
-        None
-
     """
     print(status_color + message + _Colors.ENDC)
 
@@ -398,8 +394,6 @@ def import_txt(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
     out_dir: str, optional
         The absolute or relative path to the output directory. Default is the
         current working directory.
-    retdat: bool, optional
-        If :code:`True`, a dictionary containing all data is returned.
 
     Returns
     -------
@@ -503,7 +497,6 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
     print_stat: bool, optional
         If :code:`True`, the current import status is printed to the console.
         Default is :code:`False`.
-
 
     Returns
     -------
