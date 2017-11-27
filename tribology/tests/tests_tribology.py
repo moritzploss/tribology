@@ -101,19 +101,31 @@ class TestDataImport(unittest.TestCase):
     test case methods for methods relate to data_import
     """
     demo_1 = 'tribology/tests/data_import/demo_1'
+    demo_2 = 'tribology/tests/data_import/demo_2'
+    demo_1_txt = '{}.txt'.format(demo_1)
+    demo_2_txt = '{}.txt'.format(demo_2)
+    demo_1_npz = '{}.npz'.format(demo_1)
+    demo_2_npz = '{}.npz'.format(demo_2)
+    demo_dir = 'tribology/tests/data_import'
 
     def test_import_txt_to_npz(self):
-        f_out, status = td.import_txt('{}.txt'.format(self.demo_1))
+        f_out, status = td.import_txt(self.demo_1_txt)
         self.assertEqual(status, True)
-        data_txt = np.load(f_out)
-        self.assertEqual(data_txt['fx_n'][0], 0.211219)
         os.remove(f_out)
 
     def test_import_txt_to_mat(self):
-        f_out, status = td.import_txt('{}.txt'.format(self.demo_1),
-                                      out_ext='mat')
+        f_out, status = td.import_txt(self.demo_1_txt, out_ext='mat')
         self.assertEqual(status, True)
         os.remove(f_out)
+
+    def test_import_dir_to_npz(self):
+        f_in, f_out, status = td.import_dir(self.demo_dir)
+        self.assertEqual(f_in, [self.demo_1_txt, self.demo_2_txt])
+        self.assertEqual(f_out[0].endswith(self.demo_1_npz), True)
+        self.assertEqual(f_out[1].endswith(self.demo_2_npz), True)
+        self.assertEqual(status, [True, True])
+        for file in f_out:
+            os.remove(file)
 
 
 class TestHertz(unittest.TestCase):

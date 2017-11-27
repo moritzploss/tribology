@@ -306,14 +306,14 @@ def __parse_args():
     return args
 
 
-def __get_file_handles(directory, ext, recursive=False):
+def __get_file_handles(in_dir, ext, recursive=False):
     """
 
     Get file handles for all delimited files that are to be imported.
 
     Parameters
     ----------
-    directory: str
+    in_dir: str
         The directory in which the delimited files are stored.
     ext: str
         The file extension of the delimited files.
@@ -329,13 +329,13 @@ def __get_file_handles(directory, ext, recursive=False):
 
     """
     if not recursive:
-        in_files = sorted(glob.glob('*.{}'.format(ext)))
+        in_files = sorted(glob.glob('{}{}*.{}'.format(in_dir, os.sep, ext)))
     else:
         in_files = []
-        dir_list = [x[0] + os.sep for x in os.walk(directory)]
+        dir_list = [x[0] + os.sep for x in os.walk(in_dir)]
         for dir in dir_list:
             in_files.extend(sorted(glob.glob('{}*.{}'.format(dir, ext))))
-        in_files = [f.replace(directory, '').lstrip(os.sep) for f in in_files]
+        in_files = [f.replace(in_dir, '').lstrip(os.sep) for f in in_files]
     return in_files
 
 
@@ -411,15 +411,16 @@ def import_txt(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
         file with the same name already exists).
 
     """
+    if out_dir == '':
+        out_dir = os.getcwd()
+        file_no_ext = os.path.splitext(in_file)[0]
+    else:
+        file_no_ext = os.path.splitext(in_file)[0].split(os.sep)[-1]
 
-    file_no_ext = os.path.splitext(in_file)[0]
     out_file = os.sep.join([out_dir, ".".join([file_no_ext, out_ext])])
     out_file_exists = (os.path.isfile(out_file))
     import_status = None
     out_file = None
-
-    if out_dir == '':
-        out_dir = os.getcwd()
 
     if (not out_file_exists) or (force is True):
         try:
