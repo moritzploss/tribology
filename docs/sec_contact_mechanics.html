@@ -180,13 +180,13 @@ element contact mechanics calculations.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x_axis</strong> (<em>ndarray</em>) &#8211; The x-axis values of the coordinate grid.</li>
-<li><strong>y_axis</strong> (<em>ndarray</em>) &#8211; The y-axis values of the coordinate grid.</li>
-<li><strong>e_eff</strong> (<em>scalar</em>) &#8211; The effective modulus of the contact bodies.</li>
+<li><strong>x_axis</strong> (<em>ndarray</em>) – The x-axis values of the coordinate grid.</li>
+<li><strong>y_axis</strong> (<em>ndarray</em>) – The y-axis values of the coordinate grid.</li>
+<li><strong>e_eff</strong> (<em>scalar</em>) – The effective modulus of the contact bodies.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>infl_mat</strong> &#8211; The complete four-dimensional influence coefficient matrix of size
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>infl_mat</strong> – The complete four-dimensional influence coefficient matrix of size
 <code class="docutils literal"><span class="pre">len(x_axis)</span></code> <span class="math">\(\times\)</span> <code class="docutils literal"><span class="pre">len(y_axis)</span></code> <span class="math">\(\times\)</span>
 <code class="docutils literal"><span class="pre">len(x_axis)</span></code> <span class="math">\(\times\)</span> <code class="docutils literal"><span class="pre">len(y_axis)</span></code>.</p>
 </td>
@@ -207,9 +207,9 @@ coefficient matrix.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>influ_mat</strong> (<em>ndarray</em>) &#8211; The complete influence coefficient matrix.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>influ_mat</strong> (<em>ndarray</em>) – The complete influence coefficient matrix.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>reduced_influ_mat</strong> &#8211; The reduced influence coefficient matrix. The matrix is square and of
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>reduced_influ_mat</strong> – The reduced influence coefficient matrix. The matrix is square and of
 order <code class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">np.shape(influ_mat)[0]</span></code> <span class="math">\(\times\)</span>
 <code class="docutils literal"><span class="pre">np.shape(influ_mat)[1]</span></code>.</td>
 </tr>
@@ -239,26 +239,26 @@ allowed discrepancy between inner and outer forces is defined by the
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>profile_1</strong> (<em>ndarray</em>) &#8211; A matrix containing the profile heights of body 1.</li>
-<li><strong>profile_2</strong> (<em>ndarray</em>) &#8211; A matrix containing the profile heights of body 2. The matrix must have
+<li><strong>profile_1</strong> (<em>ndarray</em>) – A matrix containing the profile heights of body 1.</li>
+<li><strong>profile_2</strong> (<em>ndarray</em>) – A matrix containing the profile heights of body 2. The matrix must have
 the same size and grid spacing (in unit length) as <code class="docutils literal"><span class="pre">profile_1</span></code>.</li>
-<li><strong>outer_force</strong> (<em>scalar</em>) &#8211; The (outer) normal force acting on the contact.</li>
-<li><strong>red_influ_mat</strong> (<em>ndarray</em>) &#8211; The reduced influence matrix calculated using the <code class="docutils literal"><span class="pre">beinflumatred</span></code>
+<li><strong>outer_force</strong> (<em>scalar</em>) – The (outer) normal force acting on the contact.</li>
+<li><strong>red_influ_mat</strong> (<em>ndarray</em>) – The reduced influence matrix calculated using the <code class="docutils literal"><span class="pre">beinflumatred</span></code>
 method.</li>
-<li><strong>delta_x</strong> (<em>scalar</em>) &#8211; The grid spacing of the profile matrices in unit length in x-direction.</li>
-<li><strong>delta_y</strong> (<em>scalar</em>) &#8211; The grid spacing of the profile matrices in unit length in y-direction.</li>
-<li><strong>norm_disp</strong> (<em>scalar</em>) &#8211; The initial normal elastic deformation in unit length used to start the
+<li><strong>delta_x</strong> (<em>scalar</em>) – The grid spacing of the profile matrices in unit length in x-direction.</li>
+<li><strong>delta_y</strong> (<em>scalar</em>) – The grid spacing of the profile matrices in unit length in y-direction.</li>
+<li><strong>norm_disp</strong> (<em>scalar</em>) – The initial normal elastic deformation in unit length used to start the
 solver.</li>
-<li><strong>max_offset</strong> (<em>scalar</em>) &#8211; The maximum allowed percentage difference of inner and outer force (used
+<li><strong>max_offset</strong> (<em>scalar</em>) – The maximum allowed percentage difference of inner and outer force (used
 to determine when solver has completed).</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>pressure</strong> (<em>ndarray</em>) &#8211; The contact pressure field in the contact.</li>
-<li><strong>disp</strong> (<em>ndarray</em>) &#8211; The combined normal displacement field for contact body 1 and 2.</li>
-<li><strong>inner_force</strong> (<em>scalar</em>) &#8211; The sum over all inner forces.</li>
-<li><strong>norm_disp</strong> (<em>scalar</em>) &#8211; The normal elastic equilibrium displacement.</li>
+<li><strong>pressure</strong> (<em>ndarray</em>) – The contact pressure field in the contact.</li>
+<li><strong>disp</strong> (<em>ndarray</em>) – The combined normal displacement field for contact body 1 and 2.</li>
+<li><strong>inner_force</strong> (<em>scalar</em>) – The sum over all inner forces.</li>
+<li><strong>norm_disp</strong> (<em>scalar</em>) – The normal elastic equilibrium displacement.</li>
 </ul>
 </p>
 </td>
@@ -282,18 +282,18 @@ module of the package.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>r_eff</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem.</li>
-<li><strong>r_eff_x</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem in x-direction.</li>
-<li><strong>r_eff_y</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem in y-direction.</li>
-<li><strong>e_eff</strong> (<em>scalar</em>) &#8211; The effective modulus of the contact problem.</li>
-<li><strong>force</strong> (<em>scalar</em>) &#8211; The normal force in the contact.</li>
+<li><strong>r_eff</strong> (<em>scalar</em>) – The effective radius of the contact problem.</li>
+<li><strong>r_eff_x</strong> (<em>scalar</em>) – The effective radius of the contact problem in x-direction.</li>
+<li><strong>r_eff_y</strong> (<em>scalar</em>) – The effective radius of the contact problem in y-direction.</li>
+<li><strong>e_eff</strong> (<em>scalar</em>) – The effective modulus of the contact problem.</li>
+<li><strong>force</strong> (<em>scalar</em>) – The normal force in the contact.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>half_axis_a</strong> (<em>scalar</em>) &#8211; The contact area half axis in x-direction.</li>
-<li><strong>half_axis_b</strong> (<em>scalar</em>) &#8211; The contact area half axis in y-direction.</li>
-<li><strong>a_hertz</strong> (<em>scalar</em>) &#8211; The contact area.</li>
+<li><strong>half_axis_a</strong> (<em>scalar</em>) – The contact area half axis in x-direction.</li>
+<li><strong>half_axis_b</strong> (<em>scalar</em>) – The contact area half axis in y-direction.</li>
+<li><strong>a_hertz</strong> (<em>scalar</em>) – The contact area.</li>
 </ul>
 </p>
 </td>
@@ -312,16 +312,16 @@ to Hertzian contact theory.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>e_eff</strong> (<em>scalar</em>) &#8211; The effective modulus of the contact problem.</li>
-<li><strong>r_x_1</strong> (<em>scalar</em>) &#8211; The radius of body 1 in direction 1 (x).</li>
-<li><strong>r_y_1</strong> (<em>scalar</em>) &#8211; The radius of body 1 in direction 2 (y).</li>
-<li><strong>r_x_2</strong> (<em>scalar</em>) &#8211; The radius of body 2 in direction 1 (x).</li>
-<li><strong>r_y_2</strong> (<em>scalar</em>) &#8211; The radius of body 2 in direction 2 (y).</li>
-<li><strong>force</strong> (<em>scalar</em>) &#8211; The normal force in the contact.</li>
+<li><strong>e_eff</strong> (<em>scalar</em>) – The effective modulus of the contact problem.</li>
+<li><strong>r_x_1</strong> (<em>scalar</em>) – The radius of body 1 in direction 1 (x).</li>
+<li><strong>r_y_1</strong> (<em>scalar</em>) – The radius of body 1 in direction 2 (y).</li>
+<li><strong>r_x_2</strong> (<em>scalar</em>) – The radius of body 2 in direction 1 (x).</li>
+<li><strong>r_y_2</strong> (<em>scalar</em>) – The radius of body 2 in direction 2 (y).</li>
+<li><strong>force</strong> (<em>scalar</em>) – The normal force in the contact.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>norm_disp</strong> &#8211; The elastic normal displacement of the contact problem.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>norm_disp</strong> – The elastic normal displacement of the contact problem.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
@@ -334,21 +334,21 @@ to Hertzian contact theory.</p>
 <dl class="function">
 <dt id="hertz.eeff">
 <code class="descname">eeff</code><span class="sig-paren">(</span><em>e_1</em>, <em>nu_1</em>, <em>e_2</em>, <em>nu_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#eeff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.eeff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the effective (Young&#8217;s) modulus of two contact bodies according
+<dd><p>Calculate the effective (Young’s) modulus of two contact bodies according
 to Hertzian contact theory.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>e_1</strong> (<em>ndarray, scalar</em>) &#8211; The Young&#8217;s modulus of contact body 1.</li>
-<li><strong>nu_1</strong> (<em>ndarray, scalar</em>) &#8211; The Poisson ratio of contact body 1.</li>
-<li><strong>e_2</strong> (<em>ndarray, scalar</em>) &#8211; The Young&#8217;s modulus of contact body 2.</li>
-<li><strong>nu_2</strong> (<em>ndarray, scalar</em>) &#8211; The Poisson ratio of contact body 1.</li>
+<li><strong>e_1</strong> (<em>ndarray, scalar</em>) – The Young’s modulus of contact body 1.</li>
+<li><strong>nu_1</strong> (<em>ndarray, scalar</em>) – The Poisson ratio of contact body 1.</li>
+<li><strong>e_2</strong> (<em>ndarray, scalar</em>) – The Young’s modulus of contact body 2.</li>
+<li><strong>nu_2</strong> (<em>ndarray, scalar</em>) – The Poisson ratio of contact body 1.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>e_eff</strong> &#8211; The effective modulus.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>e_eff</strong> – The effective modulus.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
@@ -367,16 +367,16 @@ to Hertzian contact theory.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>r_eff</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem.</li>
-<li><strong>r_eff_x</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem in x-direction.</li>
-<li><strong>r_eff_y</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem in y-direction.</li>
-<li><strong>e_eff</strong> (<em>scalar</em>) &#8211; The effective modulus of the contact problem.</li>
-<li><strong>p_critical</strong> (<em>scalar</em>) &#8211; The critical mean Hertzian contact pressure that the contact can sustain
+<li><strong>r_eff</strong> (<em>scalar</em>) – The effective radius of the contact problem.</li>
+<li><strong>r_eff_x</strong> (<em>scalar</em>) – The effective radius of the contact problem in x-direction.</li>
+<li><strong>r_eff_y</strong> (<em>scalar</em>) – The effective radius of the contact problem in y-direction.</li>
+<li><strong>e_eff</strong> (<em>scalar</em>) – The effective modulus of the contact problem.</li>
+<li><strong>p_critical</strong> (<em>scalar</em>) – The critical mean Hertzian contact pressure that the contact can sustain
 without plastic deformation.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>f_crit</strong> &#8211; The load carrying capacity of the Hertzian contact.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>f_crit</strong> – The load carrying capacity of the Hertzian contact.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
@@ -395,15 +395,15 @@ without plastic deformation.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>r_eff</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem.</li>
-<li><strong>r_eff_x</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem in x-direction.</li>
-<li><strong>r_eff_y</strong> (<em>scalar</em>) &#8211; The effective radius of the contact problem in y-direction.</li>
-<li><strong>e_eff</strong> (<em>scalar</em>) &#8211; The effective modulus of the contact problem.</li>
-<li><strong>force</strong> (<em>scalar</em>) &#8211; The normal force in the contact.</li>
+<li><strong>r_eff</strong> (<em>scalar</em>) – The effective radius of the contact problem.</li>
+<li><strong>r_eff_x</strong> (<em>scalar</em>) – The effective radius of the contact problem in x-direction.</li>
+<li><strong>r_eff_y</strong> (<em>scalar</em>) – The effective radius of the contact problem in y-direction.</li>
+<li><strong>e_eff</strong> (<em>scalar</em>) – The effective modulus of the contact problem.</li>
+<li><strong>force</strong> (<em>scalar</em>) – The normal force in the contact.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>p_hertz</strong> &#8211; The mean Hertzian contact pressure in the contact.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>p_hertz</strong> – The mean Hertzian contact pressure in the contact.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
@@ -425,17 +425,17 @@ aligned.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>r_x_1</strong> (<em>scalar</em>) &#8211; The radius of body 1 in direction 1 (x).</li>
-<li><strong>r_y_1</strong> (<em>scalar</em>) &#8211; The radius of body 1 in direction 2 (y).</li>
-<li><strong>r_x_2</strong> (<em>scalar</em>) &#8211; The radius of body 2 in direction 1 (x).</li>
-<li><strong>r_y_2</strong> (<em>scalar</em>) &#8211; The radius of body 2 in direction 2 (y).</li>
+<li><strong>r_x_1</strong> (<em>scalar</em>) – The radius of body 1 in direction 1 (x).</li>
+<li><strong>r_y_1</strong> (<em>scalar</em>) – The radius of body 1 in direction 2 (y).</li>
+<li><strong>r_x_2</strong> (<em>scalar</em>) – The radius of body 2 in direction 1 (x).</li>
+<li><strong>r_y_2</strong> (<em>scalar</em>) – The radius of body 2 in direction 2 (y).</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>r_eff</strong> (<em>scalar</em>) &#8211; The effective radius.</li>
-<li><strong>r_eff_x</strong> (<em>scalar</em>) &#8211; The effective radius in x-direction.</li>
-<li><strong>r_eff_y</strong> (<em>scalar</em>) &#8211; The effective radius in y-direction.</li>
+<li><strong>r_eff</strong> (<em>scalar</em>) – The effective radius.</li>
+<li><strong>r_eff_x</strong> (<em>scalar</em>) – The effective radius in x-direction.</li>
+<li><strong>r_eff_y</strong> (<em>scalar</em>) – The effective radius in y-direction.</li>
 </ul>
 </p>
 </td>
@@ -501,7 +501,7 @@ aligned.</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

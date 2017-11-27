@@ -170,16 +170,16 @@ package.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>trace</strong> (<em>ndarray</em>) &#8211; The profile heights of the 1D trace.</li>
-<li><strong>num_bins</strong> (<em>positive int, optional</em>) &#8211; The number of bins for the calculation of the profile height
+<li><strong>trace</strong> (<em>ndarray</em>) – The profile heights of the 1D trace.</li>
+<li><strong>num_bins</strong> (<em>positive int, optional</em>) – The number of bins for the calculation of the profile height
 probability distribution.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>bins</strong> (<em>ndarray</em>) &#8211; The bins used for the calculation of the profile height
+<li><strong>bins</strong> (<em>ndarray</em>) – The bins used for the calculation of the profile height
 probability distribution (= x-axis data for Abbott-Firestone plot).</li>
-<li><strong>prob_dist</strong> (<em>ndarray</em>) &#8211; The probability distribution of the profile (= y-axis data for Abbott-
+<li><strong>prob_dist</strong> (<em>ndarray</em>) – The probability distribution of the profile (= y-axis data for Abbott-
 Firestone plot).</li>
 </ul>
 </p>
@@ -198,8 +198,8 @@ Firestone plot).</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ax_force</strong> (<em>ndarray, scalar</em>) &#8211; The force acting along the rotational axis of the ball (axial force).</li>
-<li><strong>plate_angle</strong> (<em>ndarray, scalar, optional</em>) &#8211; The plate angle in radians, measured with respect to the rotational
+<li><strong>ax_force</strong> (<em>ndarray, scalar</em>) – The force acting along the rotational axis of the ball (axial force).</li>
+<li><strong>plate_angle</strong> (<em>ndarray, scalar, optional</em>) – The plate angle in radians, measured with respect to the rotational
 axis of the ball. Default value corresponds to 45 degree.</li>
 </ul>
 </td>
@@ -223,13 +223,13 @@ axis of the ball. Default value corresponds to 45 degree.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>r_1</strong> &#8211; The radius of the rotating ball.</li>
-<li><strong>r_2</strong> &#8211; The radius of the stationary balls.</li>
-<li><strong>ax_force</strong> &#8211; The force acting along the rotational axis of the rotating ball.</li>
+<li><strong>r_1</strong> – The radius of the rotating ball.</li>
+<li><strong>r_2</strong> – The radius of the stationary balls.</li>
+<li><strong>ax_force</strong> – The force acting along the rotational axis of the rotating ball.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>norm_force</strong> &#8211; The normal force in a single ball-ball contact.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>norm_force</strong> – The normal force in a single ball-ball contact.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
@@ -248,14 +248,14 @@ axis of the ball. Default value corresponds to 45 degree.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>r_1</strong> (<em>scalar</em>) &#8211; The radius of the rotating ball.</li>
-<li><strong>r_2</strong> (<em>scalar</em>) &#8211; The radius of the (a) stationary ball.</li>
+<li><strong>r_1</strong> (<em>scalar</em>) – The radius of the rotating ball.</li>
+<li><strong>r_2</strong> (<em>scalar</em>) – The radius of the (a) stationary ball.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>sliding_radius</strong> (<em>scalar</em>) &#8211; The sliding radius (lever arm) on the rotating ball.</li>
-<li><strong>contact_angle</strong> (<em>scalar</em>) &#8211; Contact angle between direction of ball normal force and vertical axis.</li>
+<li><strong>sliding_radius</strong> (<em>scalar</em>) – The sliding radius (lever arm) on the rotating ball.</li>
+<li><strong>contact_angle</strong> (<em>scalar</em>) – Contact angle between direction of ball normal force and vertical axis.</li>
 </ul>
 </p>
 </td>
@@ -273,13 +273,13 @@ axis of the ball. Default value corresponds to 45 degree.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x_axis</strong> (<em>ndarray</em>) &#8211; The coordinate points for which to calculate profile heights. Minimum
+<li><strong>x_axis</strong> (<em>ndarray</em>) – The coordinate points for which to calculate profile heights. Minimum
 and maximum value must be within +/- <strong>r_ball</strong>.</li>
-<li><strong>r_ball</strong> (<em>scalar</em>) &#8211; The radius of the ball.</li>
+<li><strong>r_ball</strong> (<em>scalar</em>) – The radius of the ball.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>prof_heights</strong> &#8211; The profile heights along the <strong>x_axis</strong>.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>prof_heights</strong> – The profile heights along the <strong>x_axis</strong>.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
@@ -299,16 +299,16 @@ central axis.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>prof_1d</strong> (<em>ndarray</em>) &#8211; The profile heights along the central (x) axis of the surface.</li>
-<li><strong>y_axis</strong> (<em>ndarray</em>) &#8211; The y-axis of the surface.</li>
-<li><strong>y_diam</strong> (<em>scalar</em>) &#8211; The maximum diameter of the surface along its y-axis.</li>
+<li><strong>prof_1d</strong> (<em>ndarray</em>) – The profile heights along the central (x) axis of the surface.</li>
+<li><strong>y_axis</strong> (<em>ndarray</em>) – The y-axis of the surface.</li>
+<li><strong>y_diam</strong> (<em>scalar</em>) – The maximum diameter of the surface along its y-axis.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>prof_2d</strong> (<em>ndarray</em>) &#8211; The surface heights of the profile. The array size is
+<li><strong>prof_2d</strong> (<em>ndarray</em>) – The surface heights of the profile. The array size is
 <code class="code docutils literal"><span class="pre">len(prof_2d)</span></code> <span class="math">\(\times\)</span> <code class="code docutils literal"><span class="pre">len(y_axis)</span></code></li>
-<li><strong>y_profile</strong> (<em>ndarray</em>) &#8211; The profile heights along the y-direction of the surface at the central
+<li><strong>y_profile</strong> (<em>ndarray</em>) – The profile heights along the y-direction of the surface at the central
 element of the x-axis.</li>
 </ul>
 </p>
@@ -327,9 +327,9 @@ element of the x-axis.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vel_rad_per_sec</strong> (<em>ndarray, scalar</em>) &#8211; The velcity in radians per second.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vel_rad_per_sec</strong> (<em>ndarray, scalar</em>) – The velcity in radians per second.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>vel_rpm</strong> &#8211; The velocity in rotations per minute.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>vel_rpm</strong> – The velocity in rotations per minute.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray, scalar</td>
 </tr>
@@ -346,13 +346,13 @@ element of the x-axis.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>r_ball</strong> (<em>ndarray, scalar</em>) &#8211; The radius of the ball.</li>
-<li><strong>plate_angle</strong> (<em>ndarray, scalar, optional</em>) &#8211; The plate angle in radians, measured with respect to the rotational
+<li><strong>r_ball</strong> (<em>ndarray, scalar</em>) – The radius of the ball.</li>
+<li><strong>plate_angle</strong> (<em>ndarray, scalar, optional</em>) – The plate angle in radians, measured with respect to the rotational
 axis of the ball. Default value corresponds to 45 degree.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>r_slide</strong> &#8211; The sliding radius.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>r_slide</strong> – The sliding radius.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
@@ -364,7 +364,7 @@ axis of the ball. Default value corresponds to 45 degree.</li>
 
 <dl class="function">
 <dt id="tribology.refix">
-<code class="descname">refix</code><span class="sig-paren">(</span><em>val</em>, <em>p_in=''</em>, <em>p_out=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#refix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.refix" title="Permalink to this definition">¶</a></dt>
+<code class="descname">refix</code><span class="sig-paren">(</span><em>val</em>, <em>p_in=”</em>, <em>p_out=”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#refix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.refix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert between different SI unit prefixes. Available options are:</p>
 <p><code class="code docutils literal"><span class="pre">'T'</span></code>   Terra</p>
 <p><code class="code docutils literal"><span class="pre">'G'</span></code> Giga</p>
@@ -379,15 +379,15 @@ axis of the ball. Default value corresponds to 45 degree.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>val</strong> (<em>scalar</em>) &#8211; The value for which to convert the unit prefix.</li>
-<li><strong>p_in</strong> (<em>string, any of the above, optional</em>) &#8211; The current prefix of <code class="code docutils literal"><span class="pre">val</span></code>. If <code class="code docutils literal"><span class="pre">p_in</span></code> is undefined,
+<li><strong>val</strong> (<em>scalar</em>) – The value for which to convert the unit prefix.</li>
+<li><strong>p_in</strong> (<em>string, any of the above, optional</em>) – The current prefix of <code class="code docutils literal"><span class="pre">val</span></code>. If <code class="code docutils literal"><span class="pre">p_in</span></code> is undefined,
 <code class="code docutils literal"><span class="pre">val</span></code> has no SI unit prefix.</li>
-<li><strong>p_out</strong> (<em>string, any of the above, optional</em>) &#8211; The prefix of <code class="code docutils literal"><span class="pre">val_refix</span></code> after the conversion.  If <code class="code docutils literal"><span class="pre">p_in</span></code>
+<li><strong>p_out</strong> (<em>string, any of the above, optional</em>) – The prefix of <code class="code docutils literal"><span class="pre">val_refix</span></code> after the conversion.  If <code class="code docutils literal"><span class="pre">p_in</span></code>
 is undefined, <code class="code docutils literal"><span class="pre">val_refix</span></code> has no SI unit prefix.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>val_refix</strong> &#8211; The value in units of prefix <code class="code docutils literal"><span class="pre">p_out</span></code>.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>val_refix</strong> – The value in units of prefix <code class="code docutils literal"><span class="pre">p_out</span></code>.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
@@ -406,9 +406,9 @@ is undefined, <code class="code docutils literal"><span class="pre">val_refix</s
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vel_rpm</strong> (<em>ndarray, scalar</em>) &#8211; The velcity in rotations per minute.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vel_rpm</strong> (<em>ndarray, scalar</em>) – The velcity in rotations per minute.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>vel_rad_per_sec</strong> &#8211; The velocity in radians per second.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>vel_rad_per_sec</strong> – The velocity in radians per second.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray, scalar</td>
 </tr>
@@ -426,12 +426,12 @@ contact body velocities.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>vel_1</strong> (<em>ndarray, scalar</em>) &#8211; The contact velocity of body 1.</li>
-<li><strong>vel_2</strong> (<em>ndarray, scalar</em>) &#8211; The contact velocity of body 2</li>
+<li><strong>vel_1</strong> (<em>ndarray, scalar</em>) – The contact velocity of body 1.</li>
+<li><strong>vel_2</strong> (<em>ndarray, scalar</em>) – The contact velocity of body 2</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>srr</strong> &#8211; The slide-to-roll ratio in the tribological contact.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>srr</strong> – The slide-to-roll ratio in the tribological contact.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
@@ -451,12 +451,12 @@ velocities.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>vel_1</strong> (<em>ndarray, scalar</em>) &#8211; The contact velocity of body 1.</li>
-<li><strong>vel_2</strong> (<em>ndarray, scalar</em>) &#8211; The contact velocity of body 2</li>
+<li><strong>vel_1</strong> (<em>ndarray, scalar</em>) – The contact velocity of body 1.</li>
+<li><strong>vel_2</strong> (<em>ndarray, scalar</em>) – The contact velocity of body 2</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>vel_roll</strong> &#8211; The rolling velocity in the tribological contact.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>vel_roll</strong> – The rolling velocity in the tribological contact.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
@@ -476,12 +476,12 @@ velocities.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>vel_1</strong> (<em>ndarray, scalar</em>) &#8211; The contact velocity of body 1.</li>
-<li><strong>vel_2</strong> (<em>ndarray, scalar</em>) &#8211; The contact velocity of body 2</li>
+<li><strong>vel_1</strong> (<em>ndarray, scalar</em>) – The contact velocity of body 1.</li>
+<li><strong>vel_2</strong> (<em>ndarray, scalar</em>) – The contact velocity of body 2</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>vel_slide</strong> &#8211; The sliding velocity in the tribological contact.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>vel_slide</strong> – The sliding velocity in the tribological contact.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
@@ -547,7 +547,7 @@ velocities.</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
