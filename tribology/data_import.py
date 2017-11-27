@@ -14,7 +14,7 @@ import numpy as np
 import scipy.io
 
 
-class __Colors:
+class _Colors:
     """
 
     A collection of colors that can be used to highlight terminal outputs.
@@ -31,7 +31,7 @@ class __Colors:
     UNDERLINE = '\033[4m'
 
 
-def __print_status(message, status_color=__Colors.ENDC):
+def __print_status(message, status_color=_Colors.ENDC):
     """
 
     Print a color-coded message to the terminal.
@@ -48,7 +48,7 @@ def __print_status(message, status_color=__Colors.ENDC):
         None
 
     """
-    print(status_color + message + __Colors.ENDC)
+    print(status_color + message + _Colors.ENDC)
 
 
 def __is_floatable(num):
@@ -88,13 +88,12 @@ def __assemble_data_table(num_data_tables, max_num_data_length):
     num_data = np.zeros((
         (len(num_data_tables) - 1) * max_num_data_length +
         num_data_tables[-1].shape[0],
-        num_data_tables[-1].shape[1]),
-        dtype=object)
+        num_data_tables[-1].shape[1]), dtype=object)
     for idx, data_table in enumerate(num_data_tables):
         # do this for all but the last data table
         if idx + 1 < len(num_data_tables):
-            num_data[idx * max_num_data_length: (idx + 1) * max_num_data_length,
-            :] = data_table
+            num_data[idx * max_num_data_length:
+                     (idx + 1) * max_num_data_length, :] = data_table
         # do this for the last data table
         else:
             num_data[idx * max_num_data_length:, :] = data_table
@@ -193,8 +192,7 @@ def __process_data(split_line, num_dat, max_len, num_data_tables):
         num_data_tables.append(num_dat)
         num_dat = np.asarray(
             [__to_float(item.rstrip('\n')) for item in
-             split_line]).reshape(
-            (1, len(split_line)))
+             split_line]).reshape((1, len(split_line)))
     # else simply append to data table
     else:
         num_dat = np.append(num_dat, np.asarray(
@@ -300,7 +298,7 @@ def __parse_args():
                         help='specify output database format. default is "npz"'
                              ' for numpy database. use "mat" for matlab '
                              ' database format.')
-    parser.add_argument('-r', '--recursive', action="store_true", default=True,
+    parser.add_argument('-r', '--recursive', action="store_true", default=False,
                         help='recursively walk through all sub-directories of'
                              ' current working directory')
     args = parser.parse_args()
@@ -334,8 +332,8 @@ def __get_file_handles(in_dir, ext, recursive=False):
     else:
         in_files = []
         dir_list = [x[0] + os.sep for x in os.walk(in_dir)]
-        for dir in dir_list:
-            in_files.extend(sorted(glob.glob('{}*.{}'.format(dir, ext))))
+        for directory in dir_list:
+            in_files.extend(sorted(glob.glob('{}*.{}'.format(directory, ext))))
         in_files = [f.replace(in_dir, '').lstrip(os.sep) for f in in_files]
     return in_files
 
@@ -449,17 +447,16 @@ def __print_import_stats(in_file, status):
     """
     out_str = ': '.join([str(status), str(in_file)])
     if status is False:
-        out_col = __Colors.FAIL
+        out_col = _Colors.FAIL
     elif status is True:
-        out_col = __Colors.OKGREEN
+        out_col = _Colors.OKGREEN
     else:
-        out_col = __Colors.WARNING
+        out_col = _Colors.WARNING
     __print_status(out_str, out_col)
 
 
 def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
-               dec_mark='.',  out_ext='npz', out_dir='',
-               print_stat=False):
+               dec_mark='.', out_ext='npz', out_dir='', print_stat=False):
     """
 
     Import all delimited data files in a directory into Numpy or Matlab
@@ -538,12 +535,9 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
 
 
 if __name__ == "__main__":
-    """
-    
-    If the file is executed from as a script, import all data files in the
-    current working directory based on the parser arguments provided.
-    
-    """
-    args = __parse_args()
-    import_dir(os.getcwd(), args.extension, args.recursive, args.force,
-               args.delimiter, args.mark, args.outformat, os.getcwd(), True)
+    # If the file is executed from as a script, import all data files in the
+    # current working directory based on the parser arguments provided.
+    ARGS = __parse_args()
+    import_dir(os.getcwd(), ARGS.extension, ARGS.recursive,
+               ARGS.force, ARGS.delimiter, ARGS.mark,
+               ARGS.outformat, os.getcwd(), True)

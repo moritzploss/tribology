@@ -173,7 +173,7 @@
 <span class="kn">import</span> <span class="nn">scipy.io</span>
 
 
-<span class="k">class</span> <span class="nc">__Colors</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">_Colors</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    A collection of colors that can be used to highlight terminal outputs.</span>
@@ -190,7 +190,7 @@
     <span class="n">UNDERLINE</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[4m&#39;</span>
 
 
-<span class="k">def</span> <span class="nf">__print_status</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">status_color</span><span class="o">=</span><span class="n">__Colors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">__print_status</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">status_color</span><span class="o">=</span><span class="n">_Colors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Print a color-coded message to the terminal.</span>
@@ -207,7 +207,7 @@
 <span class="sd">        None</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">status_color</span> <span class="o">+</span> <span class="n">message</span> <span class="o">+</span> <span class="n">__Colors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">status_color</span> <span class="o">+</span> <span class="n">message</span> <span class="o">+</span> <span class="n">_Colors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">__is_floatable</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
@@ -247,13 +247,12 @@
     <span class="n">num_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span>
         <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num_data_tables</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">max_num_data_length</span> <span class="o">+</span>
         <span class="n">num_data_tables</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-        <span class="n">num_data_tables</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="n">num_data_tables</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">data_table</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">num_data_tables</span><span class="p">):</span>
         <span class="c1"># do this for all but the last data table</span>
         <span class="k">if</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">num_data_tables</span><span class="p">):</span>
-            <span class="n">num_data</span><span class="p">[</span><span class="n">idx</span> <span class="o">*</span> <span class="n">max_num_data_length</span><span class="p">:</span> <span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">max_num_data_length</span><span class="p">,</span>
-            <span class="p">:]</span> <span class="o">=</span> <span class="n">data_table</span>
+            <span class="n">num_data</span><span class="p">[</span><span class="n">idx</span> <span class="o">*</span> <span class="n">max_num_data_length</span><span class="p">:</span>
+                     <span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">max_num_data_length</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">data_table</span>
         <span class="c1"># do this for the last data table</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">num_data</span><span class="p">[</span><span class="n">idx</span> <span class="o">*</span> <span class="n">max_num_data_length</span><span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">data_table</span>
@@ -352,8 +351,7 @@
         <span class="n">num_data_tables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_dat</span><span class="p">)</span>
         <span class="n">num_dat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
             <span class="p">[</span><span class="n">__to_float</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span>
-             <span class="n">split_line</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
-            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_line</span><span class="p">)))</span>
+             <span class="n">split_line</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_line</span><span class="p">)))</span>
     <span class="c1"># else simply append to data table</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">num_dat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_dat</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
@@ -459,7 +457,7 @@
                         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;specify output database format. default is &quot;npz&quot;&#39;</span>
                              <span class="s1">&#39; for numpy database. use &quot;mat&quot; for matlab &#39;</span>
                              <span class="s1">&#39; database format.&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="s1">&#39;--recursive&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="s1">&#39;--recursive&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;recursively walk through all sub-directories of&#39;</span>
                              <span class="s1">&#39; current working directory&#39;</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
@@ -493,8 +491,8 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">in_files</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">dir_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">in_dir</span><span class="p">)]</span>
-        <span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="n">dir_list</span><span class="p">:</span>
-            <span class="n">in_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">*.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">ext</span><span class="p">))))</span>
+        <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">dir_list</span><span class="p">:</span>
+            <span class="n">in_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">*.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">ext</span><span class="p">))))</span>
         <span class="n">in_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">in_dir</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">in_files</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">in_files</span>
 
@@ -608,17 +606,16 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">out_str</span> <span class="o">=</span> <span class="s1">&#39;: &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">status</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">in_file</span><span class="p">)])</span>
     <span class="k">if</span> <span class="n">status</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">out_col</span> <span class="o">=</span> <span class="n">__Colors</span><span class="o">.</span><span class="n">FAIL</span>
+        <span class="n">out_col</span> <span class="o">=</span> <span class="n">_Colors</span><span class="o">.</span><span class="n">FAIL</span>
     <span class="k">elif</span> <span class="n">status</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">out_col</span> <span class="o">=</span> <span class="n">__Colors</span><span class="o">.</span><span class="n">OKGREEN</span>
+        <span class="n">out_col</span> <span class="o">=</span> <span class="n">_Colors</span><span class="o">.</span><span class="n">OKGREEN</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">out_col</span> <span class="o">=</span> <span class="n">__Colors</span><span class="o">.</span><span class="n">WARNING</span>
+        <span class="n">out_col</span> <span class="o">=</span> <span class="n">_Colors</span><span class="o">.</span><span class="n">WARNING</span>
     <span class="n">__print_status</span><span class="p">(</span><span class="n">out_str</span><span class="p">,</span> <span class="n">out_col</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="import_dir"><a class="viewcode-back" href="../sec_data_import.html#data_import.import_dir">[docs]</a><span class="k">def</span> <span class="nf">import_dir</span><span class="p">(</span><span class="n">in_dir</span><span class="p">,</span> <span class="n">in_ext</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">deli</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span>
-               <span class="n">dec_mark</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>  <span class="n">out_ext</span><span class="o">=</span><span class="s1">&#39;npz&#39;</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-               <span class="n">print_stat</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+               <span class="n">dec_mark</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">out_ext</span><span class="o">=</span><span class="s1">&#39;npz&#39;</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">print_stat</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Import all delimited data files in a directory into Numpy or Matlab</span>
@@ -697,15 +694,12 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    </span>
-<span class="sd">    If the file is executed from as a script, import all data files in the</span>
-<span class="sd">    current working directory based on the parser arguments provided.</span>
-<span class="sd">    </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">__parse_args</span><span class="p">()</span>
-    <span class="n">import_dir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">args</span><span class="o">.</span><span class="n">extension</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">recursive</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">force</span><span class="p">,</span>
-               <span class="n">args</span><span class="o">.</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">mark</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">outformat</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># If the file is executed from as a script, import all data files in the</span>
+    <span class="c1"># current working directory based on the parser arguments provided.</span>
+    <span class="n">ARGS</span> <span class="o">=</span> <span class="n">__parse_args</span><span class="p">()</span>
+    <span class="n">import_dir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">ARGS</span><span class="o">.</span><span class="n">extension</span><span class="p">,</span> <span class="n">ARGS</span><span class="o">.</span><span class="n">recursive</span><span class="p">,</span>
+               <span class="n">ARGS</span><span class="o">.</span><span class="n">force</span><span class="p">,</span> <span class="n">ARGS</span><span class="o">.</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">ARGS</span><span class="o">.</span><span class="n">mark</span><span class="p">,</span>
+               <span class="n">ARGS</span><span class="o">.</span><span class="n">outformat</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
            </div>
