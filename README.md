@@ -47,8 +47,8 @@ release listed below.
 - module `data_import` added. the module contains methods for data
 import from delimited data files into Numpy and Matlab database format.
 - modules renamed, removed leading `tribology_` in module names
+- auto-release on PyPI through Travis CI
 - refactoring
-- auto-release on PyPI
 
 #### 0.2.2
 
