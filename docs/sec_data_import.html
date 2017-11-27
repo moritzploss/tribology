@@ -161,10 +161,11 @@
 <h1>Methods for Data Import<a class="headerlink" href="#methods-for-data-import" title="Permalink to this headline">¶</a></h1>
 <p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">data_import</span></code>
 module of the package.</p>
-<span class="target" id="module-data_import"></span><p>Import delimited data files.</p>
+<span class="target" id="module-data_import"></span><p>The below methods can be used to import delimited data files into Numpy or
+Matlab database format.</p>
 <dl class="function">
 <dt id="data_import.import_dir">
-<code class="descname">import_dir</code><span class="sig-paren">(</span><em>in_dir</em>, <em>in_ext=’txt’</em>, <em>recursive=False</em>, <em>force=False</em>, <em>deli=’\t’</em>, <em>dec_mark=’.’</em>, <em>out_ext=’npz’</em>, <em>out_dir=”</em>, <em>print_stat=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_dir" title="Permalink to this definition">¶</a></dt>
+<code class="descname">import_dir</code><span class="sig-paren">(</span><em>in_dir</em>, <em>in_ext='txt'</em>, <em>recursive=False</em>, <em>force=False</em>, <em>deli='\t'</em>, <em>dec_mark='.'</em>, <em>out_ext='npz'</em>, <em>out_dir=''</em>, <em>print_stat=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import all delimited data files in a directory into Numpy or Matlab
 database format. Optionally, all data files in a directory and all its
 child directories can be imported.</p>
@@ -193,7 +194,8 @@ database format.</li>
 <li><strong>out_dir</strong> (<em>str, optional</em>) – The path to the output directory where output databases are stored after
 import. By default, files are stored in <code class="code docutils literal"><span class="pre">in_dir</span></code> if
 <code class="code docutils literal"><span class="pre">recursive=False</span></code>. If <code class="code docutils literal"><span class="pre">recursive=True</span></code>, files are stored in
-the respective child directories of <code class="code docutils literal"><span class="pre">in_dir</span></code>.</li>
+the respective child directories of <code class="code docutils literal"><span class="pre">in_dir</span></code> if <code class="code docutils literal"><span class="pre">out_dir</span></code>
+is not specified.</li>
 <li><strong>print_stat</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, the current import status is printed to the console.
 Default is <code class="code docutils literal"><span class="pre">False</span></code>.</li>
 </ul>
@@ -217,7 +219,7 @@ likely because an output file with the same name already exists).</li>
 
 <dl class="function">
 <dt id="data_import.import_txt">
-<code class="descname">import_txt</code><span class="sig-paren">(</span><em>in_file</em>, <em>force=False</em>, <em>deli=’\t’</em>, <em>dec_mark=’.’</em>, <em>out_ext=’npz’</em>, <em>out_dir=”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_txt" title="Permalink to this definition">¶</a></dt>
+<code class="descname">import_txt</code><span class="sig-paren">(</span><em>in_file</em>, <em>force=False</em>, <em>deli='\t'</em>, <em>dec_mark='.'</em>, <em>out_ext='npz'</em>, <em>out_dir=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_txt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import a delimited data file into Numpy or Matlab database format.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -308,7 +310,7 @@ file with the same name already exists).</li>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

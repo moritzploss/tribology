@@ -43,7 +43,8 @@ release listed below.
 
 #### Latest Development Version
 
-- module `data_import` added
+- module `data_import` added. the mpdule contains methods for data
+import from delimited data files into Numpy and Matlab databse format.
 - modules renamed, removed leading `tribology_` in module names
 - refactoring
 - auto-release on PyPI

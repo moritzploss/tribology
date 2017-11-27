@@ -109,16 +109,34 @@ class TestDataImport(unittest.TestCase):
     demo_dir = 'tribology/tests/data_import'
 
     def test_import_txt_to_npz(self):
+        """
+        check if simple txt file can be imported to npz format
+        """
         f_out, status = td.import_txt(self.demo_1_txt)
         self.assertEqual(status, True)
         os.remove(f_out)
 
+    def test_import_txt_database(self):
+        """
+        check if database is created correctly
+        """
+        f_out, status = td.import_txt(self.demo_1_txt)
+        database = np.load(f_out)
+        self.assertEqual(database['fx_n'][0], 0.211219)
+        os.remove(f_out)
+
     def test_import_txt_to_mat(self):
+        """
+        check if simple txt file can be imported to mat format
+        """
         f_out, status = td.import_txt(self.demo_1_txt, out_ext='mat')
         self.assertEqual(status, True)
         os.remove(f_out)
 
     def test_import_dir_to_npz(self):
+        """
+        check if directory can be imported to npz format
+        """
         f_in, f_out, status = td.import_dir(self.demo_dir)
         self.assertEqual(f_in, [self.demo_1_txt, self.demo_2_txt])
         self.assertEqual(f_out[0].endswith(self.demo_1_npz), True)

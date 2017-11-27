@@ -1,6 +1,7 @@
 """
 
-Import delimited data files.
+The below methods can be used to import delimited data files into Numpy or
+Matlab database format.
 
 """
 
@@ -495,7 +496,8 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
         The path to the output directory where output databases are stored after
         import. By default, files are stored in :code:`in_dir` if
         :code:`recursive=False`. If :code:`recursive=True`, files are stored in
-        the respective child directories of :code:`in_dir`.
+        the respective child directories of :code:`in_dir` if :code:`out_dir`
+        is not specified.
     print_stat: bool, optional
         If :code:`True`, the current import status is printed to the console.
         Default is :code:`False`.
