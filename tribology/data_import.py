@@ -155,8 +155,8 @@ def __process_header(prev_line):
     """
 
     # replace non-alphanumeric characters and trailing underscores
-    col_headers = (re.sub("\W+", '_', item.lower()).strip('_')
-                   for item in prev_line)
+    col_headers = [re.sub("\W+", '_', item.lower()).strip('_')
+                   for item in prev_line]
     # convert data type for easy matlab export
     col_headers = np.asarray(col_headers, dtype='object')
     return col_headers

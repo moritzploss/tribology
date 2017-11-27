@@ -9,9 +9,10 @@ import unittest
 import numpy as np
 
 from ..tribology import profball, profrevolve
-from .. import hertz as th
+from .. import hertz as th, os
 from .. import lubrication as tl
 from .. import boundary_element as tb
+from .. import data_import as td
 
 
 class TestTribology(unittest.TestCase):
@@ -93,6 +94,26 @@ class TestLubrication(unittest.TestCase):
     test case methods for tribology methods relate to Lubrication
     """
     pass
+
+
+class TestDataImport(unittest.TestCase):
+    """
+    test case methods for methods relate to data_import
+    """
+    demo_1 = 'tribology/tests/data_import/demo_1'
+
+    def test_import_txt_to_npz(self):
+        f_out, status = td.import_txt('{}.txt'.format(self.demo_1))
+        self.assertEqual(status, True)
+        data_txt = np.load(f_out)
+        self.assertEqual(data_txt['fx_n'][0], 0.211219)
+        os.remove(f_out)
+
+    def test_import_txt_to_mat(self):
+        f_out, status = td.import_txt('{}.txt'.format(self.demo_1),
+                                      out_ext='mat')
+        self.assertEqual(status, True)
+        os.remove(f_out)
 
 
 class TestHertz(unittest.TestCase):
