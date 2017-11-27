@@ -40,6 +40,7 @@ information, package modules are loosely grouped by topic in the following.
    sec_contact_mechanics.rst
    sec_ehd_lubrication.rst
    sec_lubricants.rst
+   sec_data_import.rst
    sec_constants.rst
 
 

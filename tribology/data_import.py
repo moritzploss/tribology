@@ -53,8 +53,8 @@ def __print_status(message, status_color=__Colors.ENDC):
 def __is_floatable(num):
     """
 
-    Check if 'num' can be converted to float. If yes, return `True`, else return
-    `False`.
+    Check if 'num' can be converted to float. If yes, return :code:`True`, else
+    return :code:`False`.
 
     """
     try:
@@ -68,7 +68,7 @@ def __to_float(num):
     """
 
     Try to convert 'num' to float, return 'num' if it's not possible, else
-    return converted `num`.
+    return converted :code:`num`.
 
     """
     try:
@@ -111,7 +111,7 @@ def __write_to_out_dict(num_data, column_headers):
     num_data: ndarray
         The data extracted from the delimited file, stored in a single table.
     column_headers: list of strings
-        The column headers corresponding to the columns in `num_data`
+        The column headers corresponding to the columns in :code:`num_data`
 
     Returns
     -------
@@ -217,9 +217,9 @@ def __process_file(in_file, dec_mark, deli, padding=0):
     deli: str
         The delimiter used to separate data columns in the delimited file.
     padding: positive int
-        Ignore the first `n` leading columns in the delimited file, where
-        `n = padding`. For example, if padding = 8, the first 8 columns are
-        ignored.
+        Ignore the first :code:`n` leading columns in the delimited file, where
+        :code:`n = padding`. For example, if padding = 8, the first 8 columns
+        are ignored.
 
     Returns
     -------
@@ -318,9 +318,9 @@ def __get_file_handles(directory, ext, recursive=False):
     ext: str
         The file extension of the delimited files.
     recursive: bool, optional
-        If `True`, delimited files are imported for all child directories of
-        `directory` (including `directory`). If `False`, only files in
-        `directory` are imported. Default is `False`.
+        If :code:`True`, delimited files are imported for all child directories
+        of :code:`directory` (including :code:`directory`). If :code:`False`,
+        only files in :code:`directory` are imported. Default is :code:`False`.
 
     Returns
     -------
@@ -353,8 +353,8 @@ def __save_out_file(f_no_ext, output_dict, out_ext, out_dir):
         The output data stored in a dictionary where keys correspond to column
         headers, values correspond to data.
     out_ext: str
-        The file extension (format) of the output file. Options are `npz` for
-        Numpy format and `mat` for Matlab database format.
+        The file extension (format) of the output file. Options are :code:`npz`
+        for Numpy format and :code:`mat` for Matlab database format.
     out_dir: str
         The path to the directory in which to save the output file.
 
@@ -375,7 +375,7 @@ def __save_out_file(f_no_ext, output_dict, out_ext, out_dir):
 
 
 def import_txt(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
-               out_dir=os.getcwd()):
+               out_dir=''):
     """
 
     Import a delimited data file into Numpy or Matlab database format.
@@ -385,16 +385,17 @@ def import_txt(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
     in_file: str
         The file handle of the delimited file that is to be imported.
     force: bool, optional
-        If `True`, existing output files will be overwritten during import.
-        Default is `False`.
+        If :code:`True`, existing output files will be overwritten during
+        import. Default is :code:`False`.
     deli: str, optional
         The delimiter used to separate data columns in the delimited file.
-        Default is tab (`\t`).
+        Default is tab.
     dec_mark: str, optional
-        The decimal mark of the data file. Default is dot (`.`).
+        The decimal mark of the data file. Default is dot.
     out_ext: str, optional
-        The file extension (format) of the output file. Default is `npz` for
-        Numpy database format. Alternative is `mat` for Matlab database format.
+        The file extension (format) of the output file. Default is :code:`npz`
+        for Numpy database format. Alternative is :code:`mat` for Matlab
+        database format.
     out_dir: str, optional
         The absolute or relative path to the output directory. Default is the
         current working directory.
@@ -404,9 +405,9 @@ def import_txt(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
     out_file: str
         A handle to the output file that was generated during import.
     import_status: str
-        The import status of `in_file`. If `True`, the file was successfully
-        imported. If 'False', file import was attempted and failed. If
-        'None', file import was not attempted (most likely because an output
+        The import status of :code:`in_file`. If :code:`True`, the file was
+        successfully imported. If 'False', file import was attempted and failed.
+        If 'None', file import was not attempted (most likely because an output
         file with the same name already exists).
 
     """
@@ -414,9 +415,11 @@ def import_txt(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
     file_no_ext = os.path.splitext(in_file)[0]
     out_file = os.sep.join([out_dir, ".".join([file_no_ext, out_ext])])
     out_file_exists = (os.path.isfile(out_file))
-
     import_status = None
     out_file = None
+
+    if out_dir == '':
+        out_dir = os.getcwd()
 
     if (not out_file_exists) or (force is True):
         try:
@@ -439,7 +442,7 @@ def __print_import_stats(in_file, status):
     in_file: str
         The file name of the file for which to print the status.
     status: bool, None
-        The import status of `in_file`.
+        The import status of :code:`in_file`.
 
     """
     out_str = ': '.join([str(status), str(in_file)])
@@ -453,7 +456,7 @@ def __print_import_stats(in_file, status):
 
 
 def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
-               dec_mark='.',  out_ext='npz', out_dir=os.getcwd(),
+               dec_mark='.',  out_ext='npz', out_dir='',
                print_stat=False):
     """
 
@@ -464,34 +467,37 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
     Parameters
     ----------
     in_dir: str
-        Path to directory for which to import all files with extension `in_ext`.
-        If `recursive=True`, imports are performed for all files with extension
-        `in_ext` in the directory tree with parent `in_dir`.
+        Path to directory for which to import all files with extension
+        :code:`in_ext`. If :code:`recursive=True`, imports are performed for all
+        files with extension :code:`in_ext` in the directory tree with parent
+        :code:`in_dir`.
     in_ext: str, optional
-        File extension of files to import (without dot). Default is `txt`.
+        File extension of files to import (without dot). Default is :code:`txt`.
     recursive: bool, optional
-        Default `False`. If `True`, all files in `in_dir` and all its child
+        If :code:`True`, all files in :code:`in_dir` and all its child
         directories are imported. Output files are saved to the same directory
-        as source files irrespective of `out_dir` value.
+        as source files irrespective of :code:`out_dir` value. Default
+        is :code:`False`.
     force: bool, optional
-        If `True`, existing output files will be overwritten during import.
-        Default is `False`.
+        If :code:`True`, existing output files will be overwritten during
+        import. Default is :code:`False`.
     deli: str, optional
         The delimiter used to separate data columns in the delimited file.
-        Default is tab (`\t`).
+        Default is tab.
     dec_mark: str, optional
-        The decimal mark of the data file. Default is dot (`.`).
+        The decimal mark of the data file. Default is dot.
     out_ext: str, optional
-        The file extension (format) of the output file. Default is `npz` for
-        Numpy database format. Alternative is `mat` for Matlab database format.
+        The file extension (format) of the output file. Default is :code:`npz`
+        for Numpy database format. Alternative is :code:`mat` for Matlab
+        database format.
     out_dir: str, optional
         The path to the output directory where output databases are stored after
-        import. By default, files are stored `in_dir` if `recursive=False`. If
-        `recursive=True`, files are stored in the respective child directories
-        of `in_dir`.
+        import. By default, files are stored in :code:`in_dir` if
+        :code:`recursive=False`. If :code:`recursive=True`, files are stored in
+        the respective child directories of :code:`in_dir`.
     print_stat: bool, optional
-        If `True`, the current import status is printed to the console. Default
-        is `False`.
+        If :code:`True`, the current import status is printed to the console.
+        Default is :code:`False`.
 
 
     Returns
@@ -502,10 +508,10 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
         The file handles of all output files that were generated during the
         import process.
     import_status: list of bools
-        The import status of for each file in `in_files`. If `True`, the file
-        was successfully imported. If 'False', file import was attempted and
-        failed. If 'None', file import was not attempted (most likely because
-        an output file with the same name already exists).
+        The import status of for each file in :code:`in_files`. If :code:`True`,
+        the file was successfully imported. If 'False', file import was
+        attempted and failed. If 'None', file import was not attempted (most
+        likely because an output file with the same name already exists).
 
     """
     in_files = __get_file_handles(in_dir, in_ext, recursive)

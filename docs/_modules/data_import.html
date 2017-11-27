@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>data_import &mdash; Tribology  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Tribology  documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Tribology
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sec_general_tribology.html">General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_contact_mechanics.html">Contact Mechanics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_ehd_lubrication.html">EHD Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_lubricants.html">Lubricants and Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_data_import.html">Methods for Data Import</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_constants.html">Constants for Tribology</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Tribology</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>data_import</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for data_import</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">Import delimited data files.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.io</span>
+
+
+<span class="k">class</span> <span class="nc">__Colors</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    A collection of colors that can be used to highlight terminal outputs.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">HEADER</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[95m&#39;</span>
+    <span class="n">OKBLUE</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[94m&#39;</span>
+    <span class="n">OKGREEN</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[92m&#39;</span>
+    <span class="n">WARNING</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[93m&#39;</span>
+    <span class="n">FAIL</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[91m&#39;</span>
+    <span class="n">ENDC</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0m&#39;</span>
+    <span class="n">BOLD</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[1m&#39;</span>
+    <span class="n">UNDERLINE</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[4m&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">__print_status</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">status_color</span><span class="o">=</span><span class="n">__Colors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Print a color-coded message to the terminal.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    message: str</span>
+<span class="sd">        The message to print to the terminal.</span>
+<span class="sd">    status_color:</span>
+<span class="sd">        The color in which to print the message.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">status_color</span> <span class="o">+</span> <span class="n">message</span> <span class="o">+</span> <span class="n">__Colors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">__is_floatable</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Check if &#39;num&#39; can be converted to float. If yes, return :code:`True`, else</span>
+<span class="sd">    return :code:`False`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">float</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">__to_float</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Try to convert &#39;num&#39; to float, return &#39;num&#39; if it&#39;s not possible, else</span>
+<span class="sd">    return converted :code:`num`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">float</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">num</span>
+
+
+<span class="k">def</span> <span class="nf">__assemble_data_table</span><span class="p">(</span><span class="n">num_data_tables</span><span class="p">,</span> <span class="n">max_num_data_length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Assemble the complete data table from a list of data tables.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">num_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span>
+        <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num_data_tables</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">max_num_data_length</span> <span class="o">+</span>
+        <span class="n">num_data_tables</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">num_data_tables</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">data_table</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">num_data_tables</span><span class="p">):</span>
+        <span class="c1"># do this for all but the last data table</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">num_data_tables</span><span class="p">):</span>
+            <span class="n">num_data</span><span class="p">[</span><span class="n">idx</span> <span class="o">*</span> <span class="n">max_num_data_length</span><span class="p">:</span> <span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">max_num_data_length</span><span class="p">,</span>
+            <span class="p">:]</span> <span class="o">=</span> <span class="n">data_table</span>
+        <span class="c1"># do this for the last data table</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">num_data</span><span class="p">[</span><span class="n">idx</span> <span class="o">*</span> <span class="n">max_num_data_length</span><span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">data_table</span>
+    <span class="k">return</span> <span class="n">num_data</span>
+
+
+<span class="k">def</span> <span class="nf">__write_to_out_dict</span><span class="p">(</span><span class="n">num_data</span><span class="p">,</span> <span class="n">column_headers</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Extract the data columns from the num_data array and write them to a</span>
+<span class="sd">    dictionary.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    num_data: ndarray</span>
+<span class="sd">        The data extracted from the delimited file, stored in a single table.</span>
+<span class="sd">    column_headers: list of strings</span>
+<span class="sd">        The column headers corresponding to the columns in :code:`num_data`</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    output_dict: dict</span>
+<span class="sd">        A dictionary containing all data that is to be saved to the output</span>
+<span class="sd">        database. Keys are based on column headers, values are data columns of</span>
+<span class="sd">        num_data.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">output_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;column_headers&#39;</span><span class="p">:</span> <span class="n">column_headers</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">column_headers</span><span class="p">):</span>
+        <span class="c1"># if empty data columns are not padded with tabs</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">num_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">output_dict</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># if data is of numeric type</span>
+            <span class="k">if</span> <span class="n">__is_floatable</span><span class="p">(</span><span class="n">num_data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx</span><span class="p">]):</span>
+                <span class="n">output_dict</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_data</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+            <span class="c1"># if data is of other type (string)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">output_dict</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_data</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">object</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">output_dict</span>
+
+
+<span class="k">def</span> <span class="nf">__process_header</span><span class="p">(</span><span class="n">prev_line</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Process the column headers by removing special characters and converting to</span>
+<span class="sd">    Matlab-optimized data type.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    prev_line: list of strings</span>
+<span class="sd">        The column headers of the delimited file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    col_headers: ndarray (dtype = object)</span>
+<span class="sd">        The re-formated column headers.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># replace non-alphanumeric characters and trailing underscores</span>
+    <span class="n">col_headers</span> <span class="o">=</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;\W+&quot;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+                   <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">prev_line</span><span class="p">)</span>
+    <span class="c1"># convert data type for easy matlab export</span>
+    <span class="n">col_headers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">col_headers</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">col_headers</span>
+
+
+<span class="k">def</span> <span class="nf">__process_data</span><span class="p">(</span><span class="n">split_line</span><span class="p">,</span> <span class="n">num_dat</span><span class="p">,</span> <span class="n">max_len</span><span class="p">,</span> <span class="n">num_data_tables</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Append a data line to the current data table. If the length of the current</span>
+<span class="sd">    data table exceeds the maximum permitted data table length, save the current</span>
+<span class="sd">    data table to a list of data tables and initialise a new one.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    split_line: list</span>
+<span class="sd">        The data that is to be appended to the table.</span>
+<span class="sd">    num_dat: ndarray</span>
+<span class="sd">        The current data table to which the last line of data was appended.</span>
+<span class="sd">    max_len: positive int</span>
+<span class="sd">        The maximum length of a data table.</span>
+<span class="sd">    num_data_tables: list</span>
+<span class="sd">        The complete list of data tables.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    num_dat: ndarray</span>
+<span class="sd">        The data table to which the current line of data was appended.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># if data table becomes large, make new data table and add old</span>
+    <span class="c1"># table to table list (for speed)</span>
+    <span class="k">if</span> <span class="n">num_dat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">max_len</span><span class="p">:</span>
+        <span class="n">num_data_tables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_dat</span><span class="p">)</span>
+        <span class="n">num_dat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">__to_float</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span>
+             <span class="n">split_line</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_line</span><span class="p">)))</span>
+    <span class="c1"># else simply append to data table</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">num_dat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_dat</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">__to_float</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">split_line</span><span class="p">])</span>
+                            <span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_line</span><span class="p">))),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">num_dat</span>
+
+
+<span class="k">def</span> <span class="nf">__process_file</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">dec_mark</span><span class="p">,</span> <span class="n">deli</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Extract data from a delimited text file and return a dictionary containing</span>
+<span class="sd">    all data.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    in_file: str</span>
+<span class="sd">        The file handle of the delimited file that is to be imported.</span>
+<span class="sd">    dec_mark: str</span>
+<span class="sd">        The decimal mark of the data file.</span>
+<span class="sd">    deli: str</span>
+<span class="sd">        The delimiter used to separate data columns in the delimited file.</span>
+<span class="sd">    padding: positive int</span>
+<span class="sd">        Ignore the first :code:`n` leading columns in the delimited file, where</span>
+<span class="sd">        :code:`n = padding`. For example, if padding = 8, the first 8 columns</span>
+<span class="sd">        are ignored.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    output_dict: dict</span>
+<span class="sd">        A dictionary containing all data that is to be saved to the output</span>
+<span class="sd">        database. Keys are based on column headers, values are data columns of</span>
+<span class="sd">        num_data.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">max_len</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="n">num_dat</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">col_headers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">num_data_tables</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">prev_line</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">in_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">dat_file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">dat_file</span><span class="p">:</span>
+            <span class="n">split_line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">dec_mark</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">deli</span><span class="p">)</span>
+
+            <span class="c1"># get rid of trailing newline characters</span>
+            <span class="k">if</span> <span class="n">split_line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">:</span>
+                <span class="n">split_line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+            <span class="c1"># check if first character is not (digit or minus symbol (hyphen))</span>
+            <span class="c1"># to identify non-data lines. skip non-data lines.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_line</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">split_line</span> <span class="o">!=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]:</span>
+                    <span class="n">prev_line</span> <span class="o">=</span> <span class="n">split_line</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># if line contains data, split line into data fields, fill empty</span>
+            <span class="c1"># fields with &#39;nan&#39;</span>
+            <span class="n">split_line</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">item</span> <span class="ow">or</span> <span class="s1">&#39;nan&#39;</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">split_line</span><span class="p">)</span>
+            <span class="c1"># if this is the first data-containing line...</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_headers</span><span class="p">):</span>
+                <span class="c1"># get the column headers</span>
+                <span class="n">col_headers</span> <span class="o">=</span> <span class="n">__process_header</span><span class="p">(</span><span class="n">prev_line</span><span class="p">)</span>
+                <span class="c1"># write the first line to the data table</span>
+                <span class="n">num_dat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">__to_float</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
+                     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">split_line</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_line</span><span class="p">)))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">num_dat</span> <span class="o">=</span> <span class="n">__process_data</span><span class="p">(</span><span class="n">split_line</span><span class="p">,</span> <span class="n">num_dat</span><span class="p">,</span> <span class="n">max_len</span><span class="p">,</span>
+                                         <span class="n">num_data_tables</span><span class="p">)</span>
+
+    <span class="c1"># assemble the complete data table and create output dictionary</span>
+    <span class="n">num_data_tables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_dat</span><span class="p">)</span>
+    <span class="n">num_dat</span> <span class="o">=</span> <span class="n">__assemble_data_table</span><span class="p">(</span><span class="n">num_data_tables</span><span class="p">,</span> <span class="n">max_len</span><span class="p">)</span>
+    <span class="n">output_dict</span> <span class="o">=</span> <span class="n">__write_to_out_dict</span><span class="p">(</span><span class="n">num_dat</span><span class="p">,</span> <span class="n">col_headers</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">output_dict</span>
+
+
+<span class="k">def</span> <span class="nf">__parse_args</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parse all parser arguments that are provided when the script is running in</span>
+<span class="sd">    a terminal.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    args: Namespace</span>
+<span class="sd">        The parsed parser arguments.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="s1">&#39;--force&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;overwrite existing database files during import&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-e&#39;</span><span class="p">,</span> <span class="s1">&#39;--extension&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;specify file extension. default is &quot;txt&quot;&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-d&#39;</span><span class="p">,</span> <span class="s1">&#39;--delimiter&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;specify column delimiter. default is tab (</span><span class="se">\\</span><span class="s1">t)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="s1">&#39;--mark&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;specify decimal mark for numeric data. default is&#39;</span>
+                             <span class="s1">&#39; dot (.)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="s1">&#39;--outformat&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;npz&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;specify output database format. default is &quot;npz&quot;&#39;</span>
+                             <span class="s1">&#39; for numpy database. use &quot;mat&quot; for matlab &#39;</span>
+                             <span class="s1">&#39; database format.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="s1">&#39;--recursive&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;recursively walk through all sub-directories of&#39;</span>
+                             <span class="s1">&#39; current working directory&#39;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">args</span>
+
+
+<span class="k">def</span> <span class="nf">__get_file_handles</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">ext</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Get file handles for all delimited files that are to be imported.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    directory: str</span>
+<span class="sd">        The directory in which the delimited files are stored.</span>
+<span class="sd">    ext: str</span>
+<span class="sd">        The file extension of the delimited files.</span>
+<span class="sd">    recursive: bool, optional</span>
+<span class="sd">        If :code:`True`, delimited files are imported for all child directories</span>
+<span class="sd">        of :code:`directory` (including :code:`directory`). If :code:`False`,</span>
+<span class="sd">        only files in :code:`directory` are imported. Default is :code:`False`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    in_files: list of strings</span>
+<span class="sd">        The file handles to all delimited files that are to be imported.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">recursive</span><span class="p">:</span>
+        <span class="n">in_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ext</span><span class="p">)))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">in_files</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">dir_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">directory</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="n">dir_list</span><span class="p">:</span>
+            <span class="n">in_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">*.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">ext</span><span class="p">))))</span>
+        <span class="n">in_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">in_files</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">in_files</span>
+
+
+<span class="k">def</span> <span class="nf">__save_out_file</span><span class="p">(</span><span class="n">f_no_ext</span><span class="p">,</span> <span class="n">output_dict</span><span class="p">,</span> <span class="n">out_ext</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Save the imported data to an output database, either in Numpy or Matlab</span>
+<span class="sd">    format.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    f_no_ext: str</span>
+<span class="sd">        The import file name without file extension.</span>
+<span class="sd">    output_dict: dict</span>
+<span class="sd">        The output data stored in a dictionary where keys correspond to column</span>
+<span class="sd">        headers, values correspond to data.</span>
+<span class="sd">    out_ext: str</span>
+<span class="sd">        The file extension (format) of the output file. Options are :code:`npz`</span>
+<span class="sd">        for Numpy format and :code:`mat` for Matlab database format.</span>
+<span class="sd">    out_dir: str</span>
+<span class="sd">        The path to the directory in which to save the output file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out_file: str</span>
+<span class="sd">        A handle to the output file that was generated after import.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">out_ext</span> <span class="o">==</span> <span class="s1">&#39;mat&#39;</span><span class="p">:</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">.mat&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="n">f_no_ext</span><span class="p">)</span>
+        <span class="n">scipy</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">savemat</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="n">output_dict</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">out_ext</span> <span class="o">==</span> <span class="s1">&#39;npz&#39;</span><span class="p">:</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">.npz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="n">f_no_ext</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savez</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="o">**</span><span class="n">output_dict</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_file</span>
+
+
+<div class="viewcode-block" id="import_txt"><a class="viewcode-back" href="../sec_data_import.html#data_import.import_txt">[docs]</a><span class="k">def</span> <span class="nf">import_txt</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">deli</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">dec_mark</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">out_ext</span><span class="o">=</span><span class="s1">&#39;npz&#39;</span><span class="p">,</span>
+               <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Import a delimited data file into Numpy or Matlab database format.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    in_file: str</span>
+<span class="sd">        The file handle of the delimited file that is to be imported.</span>
+<span class="sd">    force: bool, optional</span>
+<span class="sd">        If :code:`True`, existing output files will be overwritten during</span>
+<span class="sd">        import. Default is :code:`False`.</span>
+<span class="sd">    deli: str, optional</span>
+<span class="sd">        The delimiter used to separate data columns in the delimited file.</span>
+<span class="sd">        Default is tab.</span>
+<span class="sd">    dec_mark: str, optional</span>
+<span class="sd">        The decimal mark of the data file. Default is dot.</span>
+<span class="sd">    out_ext: str, optional</span>
+<span class="sd">        The file extension (format) of the output file. Default is :code:`npz`</span>
+<span class="sd">        for Numpy database format. Alternative is :code:`mat` for Matlab</span>
+<span class="sd">        database format.</span>
+<span class="sd">    out_dir: str, optional</span>
+<span class="sd">        The absolute or relative path to the output directory. Default is the</span>
+<span class="sd">        current working directory.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out_file: str</span>
+<span class="sd">        A handle to the output file that was generated during import.</span>
+<span class="sd">    import_status: str</span>
+<span class="sd">        The import status of :code:`in_file`. If :code:`True`, the file was</span>
+<span class="sd">        successfully imported. If &#39;False&#39;, file import was attempted and failed.</span>
+<span class="sd">        If &#39;None&#39;, file import was not attempted (most likely because an output</span>
+<span class="sd">        file with the same name already exists).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">file_no_ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">in_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">out_dir</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">file_no_ext</span><span class="p">,</span> <span class="n">out_ext</span><span class="p">])])</span>
+    <span class="n">out_file_exists</span> <span class="o">=</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">out_file</span><span class="p">))</span>
+    <span class="n">import_status</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">out_dir</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">out_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">out_file_exists</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">force</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">output_dict</span> <span class="o">=</span> <span class="n">__process_file</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">dec_mark</span><span class="p">,</span> <span class="n">deli</span><span class="p">)</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="n">__save_out_file</span><span class="p">(</span><span class="n">file_no_ext</span><span class="p">,</span> <span class="n">output_dict</span><span class="p">,</span> <span class="n">out_ext</span><span class="p">,</span>
+                                       <span class="n">out_dir</span><span class="p">)</span>
+            <span class="n">import_status</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">import_status</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">import_status</span></div>
+
+
+<span class="k">def</span> <span class="nf">__print_import_stats</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Print the import status to the console.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    in_file: str</span>
+<span class="sd">        The file name of the file for which to print the status.</span>
+<span class="sd">    status: bool, None</span>
+<span class="sd">        The import status of :code:`in_file`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">out_str</span> <span class="o">=</span> <span class="s1">&#39;: &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">status</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">in_file</span><span class="p">)])</span>
+    <span class="k">if</span> <span class="n">status</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">out_col</span> <span class="o">=</span> <span class="n">__Colors</span><span class="o">.</span><span class="n">FAIL</span>
+    <span class="k">elif</span> <span class="n">status</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">out_col</span> <span class="o">=</span> <span class="n">__Colors</span><span class="o">.</span><span class="n">OKGREEN</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">out_col</span> <span class="o">=</span> <span class="n">__Colors</span><span class="o">.</span><span class="n">WARNING</span>
+    <span class="n">__print_status</span><span class="p">(</span><span class="n">out_str</span><span class="p">,</span> <span class="n">out_col</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="import_dir"><a class="viewcode-back" href="../sec_data_import.html#data_import.import_dir">[docs]</a><span class="k">def</span> <span class="nf">import_dir</span><span class="p">(</span><span class="n">in_dir</span><span class="p">,</span> <span class="n">in_ext</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">deli</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span>
+               <span class="n">dec_mark</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>  <span class="n">out_ext</span><span class="o">=</span><span class="s1">&#39;npz&#39;</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+               <span class="n">print_stat</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Import all delimited data files in a directory into Numpy or Matlab</span>
+<span class="sd">    database format. Optionally, all data files in a directory and all its</span>
+<span class="sd">    child directories can be imported.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    in_dir: str</span>
+<span class="sd">        Path to directory for which to import all files with extension</span>
+<span class="sd">        :code:`in_ext`. If :code:`recursive=True`, imports are performed for all</span>
+<span class="sd">        files with extension :code:`in_ext` in the directory tree with parent</span>
+<span class="sd">        :code:`in_dir`.</span>
+<span class="sd">    in_ext: str, optional</span>
+<span class="sd">        File extension of files to import (without dot). Default is :code:`txt`.</span>
+<span class="sd">    recursive: bool, optional</span>
+<span class="sd">        If :code:`True`, all files in :code:`in_dir` and all its child</span>
+<span class="sd">        directories are imported. Output files are saved to the same directory</span>
+<span class="sd">        as source files irrespective of :code:`out_dir` value. Default</span>
+<span class="sd">        is :code:`False`.</span>
+<span class="sd">    force: bool, optional</span>
+<span class="sd">        If :code:`True`, existing output files will be overwritten during</span>
+<span class="sd">        import. Default is :code:`False`.</span>
+<span class="sd">    deli: str, optional</span>
+<span class="sd">        The delimiter used to separate data columns in the delimited file.</span>
+<span class="sd">        Default is tab.</span>
+<span class="sd">    dec_mark: str, optional</span>
+<span class="sd">        The decimal mark of the data file. Default is dot.</span>
+<span class="sd">    out_ext: str, optional</span>
+<span class="sd">        The file extension (format) of the output file. Default is :code:`npz`</span>
+<span class="sd">        for Numpy database format. Alternative is :code:`mat` for Matlab</span>
+<span class="sd">        database format.</span>
+<span class="sd">    out_dir: str, optional</span>
+<span class="sd">        The path to the output directory where output databases are stored after</span>
+<span class="sd">        import. By default, files are stored in :code:`in_dir` if</span>
+<span class="sd">        :code:`recursive=False`. If :code:`recursive=True`, files are stored in</span>
+<span class="sd">        the respective child directories of :code:`in_dir`.</span>
+<span class="sd">    print_stat: bool, optional</span>
+<span class="sd">        If :code:`True`, the current import status is printed to the console.</span>
+<span class="sd">        Default is :code:`False`.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    in_files: list of strings</span>
+<span class="sd">        The file handles of all files for which import was attempted.</span>
+<span class="sd">    out_files: list of strings</span>
+<span class="sd">        The file handles of all output files that were generated during the</span>
+<span class="sd">        import process.</span>
+<span class="sd">    import_status: list of bools</span>
+<span class="sd">        The import status of for each file in :code:`in_files`. If :code:`True`,</span>
+<span class="sd">        the file was successfully imported. If &#39;False&#39;, file import was</span>
+<span class="sd">        attempted and failed. If &#39;None&#39;, file import was not attempted (most</span>
+<span class="sd">        likely because an output file with the same name already exists).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">in_files</span> <span class="o">=</span> <span class="n">__get_file_handles</span><span class="p">(</span><span class="n">in_dir</span><span class="p">,</span> <span class="n">in_ext</span><span class="p">,</span> <span class="n">recursive</span><span class="p">)</span>
+    <span class="n">out_files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">import_status</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">print_stat</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;importing </span><span class="si">{}</span><span class="s1"> files:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">in_files</span><span class="p">)))</span>
+
+    <span class="k">for</span> <span class="n">in_file</span> <span class="ow">in</span> <span class="n">in_files</span><span class="p">:</span>
+
+        <span class="n">out_file</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="n">import_txt</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">deli</span><span class="o">=</span><span class="n">deli</span><span class="p">,</span>
+                                      <span class="n">dec_mark</span><span class="o">=</span><span class="n">dec_mark</span><span class="p">,</span> <span class="n">out_ext</span><span class="o">=</span><span class="n">out_ext</span><span class="p">,</span>
+                                      <span class="n">out_dir</span><span class="o">=</span><span class="n">out_dir</span><span class="p">)</span>
+        <span class="n">out_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+        <span class="n">import_status</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">print_stat</span><span class="p">:</span>
+            <span class="n">__print_import_stats</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">in_files</span><span class="p">,</span> <span class="n">out_files</span><span class="p">,</span> <span class="n">import_status</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    </span>
+<span class="sd">    If the file is executed from as a script, import all data files in the</span>
+<span class="sd">    current working directory based on the parser arguments provided.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">__parse_args</span><span class="p">()</span>
+    <span class="n">import_dir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">args</span><span class="o">.</span><span class="n">extension</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">recursive</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">force</span><span class="p">,</span>
+               <span class="n">args</span><span class="o">.</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">mark</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">outformat</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Moritz Ploss.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
