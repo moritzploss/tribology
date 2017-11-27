@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Methods for Data Import &mdash; Tribology  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Tribology  documentation" href="index.html"/>
+        <link rel="next" title="Constants for Tribology" href="sec_constants.html"/>
+        <link rel="prev" title="Lubricants and Lubrication" href="sec_lubricants.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Tribology
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sec_general_tribology.html">General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_contact_mechanics.html">Contact Mechanics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_ehd_lubrication.html">EHD Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_lubricants.html">Lubricants and Lubrication</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Methods for Data Import</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_constants.html">Constants for Tribology</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Tribology</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Methods for Data Import</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sec_data_import.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="methods-for-data-import">
+<h1>Methods for Data Import<a class="headerlink" href="#methods-for-data-import" title="Permalink to this headline">¶</a></h1>
+<p>All of the below methods can be found in the <code class="code docutils literal"><span class="pre">data_import</span></code>
+module of the package.</p>
+<span class="target" id="module-data_import"></span><p>Import delimited data files.</p>
+<dl class="function">
+<dt id="data_import.import_dir">
+<code class="descname">import_dir</code><span class="sig-paren">(</span><em>in_dir</em>, <em>in_ext=’txt’</em>, <em>recursive=False</em>, <em>force=False</em>, <em>deli=’\t’</em>, <em>dec_mark=’.’</em>, <em>out_ext=’npz’</em>, <em>out_dir=”</em>, <em>print_stat=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import all delimited data files in a directory into Numpy or Matlab
+database format. Optionally, all data files in a directory and all its
+child directories can be imported.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>in_dir</strong> (<em>str</em>) – Path to directory for which to import all files with extension
+<code class="code docutils literal"><span class="pre">in_ext</span></code>. If <code class="code docutils literal"><span class="pre">recursive=True</span></code>, imports are performed for all
+files with extension <code class="code docutils literal"><span class="pre">in_ext</span></code> in the directory tree with parent
+<code class="code docutils literal"><span class="pre">in_dir</span></code>.</li>
+<li><strong>in_ext</strong> (<em>str, optional</em>) – File extension of files to import (without dot). Default is <code class="code docutils literal"><span class="pre">txt</span></code>.</li>
+<li><strong>recursive</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, all files in <code class="code docutils literal"><span class="pre">in_dir</span></code> and all its child
+directories are imported. Output files are saved to the same directory
+as source files irrespective of <code class="code docutils literal"><span class="pre">out_dir</span></code> value. Default
+is <code class="code docutils literal"><span class="pre">False</span></code>.</li>
+<li><strong>force</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, existing output files will be overwritten during
+import. Default is <code class="code docutils literal"><span class="pre">False</span></code>.</li>
+<li><strong>deli</strong> (<em>str, optional</em>) – The delimiter used to separate data columns in the delimited file.
+Default is tab.</li>
+<li><strong>dec_mark</strong> (<em>str, optional</em>) – The decimal mark of the data file. Default is dot.</li>
+<li><strong>out_ext</strong> (<em>str, optional</em>) – The file extension (format) of the output file. Default is <code class="code docutils literal"><span class="pre">npz</span></code>
+for Numpy database format. Alternative is <code class="code docutils literal"><span class="pre">mat</span></code> for Matlab
+database format.</li>
+<li><strong>out_dir</strong> (<em>str, optional</em>) – The path to the output directory where output databases are stored after
+import. By default, files are stored in <code class="code docutils literal"><span class="pre">in_dir</span></code> if
+<code class="code docutils literal"><span class="pre">recursive=False</span></code>. If <code class="code docutils literal"><span class="pre">recursive=True</span></code>, files are stored in
+the respective child directories of <code class="code docutils literal"><span class="pre">in_dir</span></code>.</li>
+<li><strong>print_stat</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, the current import status is printed to the console.
+Default is <code class="code docutils literal"><span class="pre">False</span></code>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>in_files</strong> (<em>list of strings</em>) – The file handles of all files for which import was attempted.</li>
+<li><strong>out_files</strong> (<em>list of strings</em>) – The file handles of all output files that were generated during the
+import process.</li>
+<li><strong>import_status</strong> (<em>list of bools</em>) – The import status of for each file in <code class="code docutils literal"><span class="pre">in_files</span></code>. If <code class="code docutils literal"><span class="pre">True</span></code>,
+the file was successfully imported. If ‘False’, file import was
+attempted and failed. If ‘None’, file import was not attempted (most
+likely because an output file with the same name already exists).</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_import.import_txt">
+<code class="descname">import_txt</code><span class="sig-paren">(</span><em>in_file</em>, <em>force=False</em>, <em>deli=’\t’</em>, <em>dec_mark=’.’</em>, <em>out_ext=’npz’</em>, <em>out_dir=”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_txt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import a delimited data file into Numpy or Matlab database format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>in_file</strong> (<em>str</em>) – The file handle of the delimited file that is to be imported.</li>
+<li><strong>force</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, existing output files will be overwritten during
+import. Default is <code class="code docutils literal"><span class="pre">False</span></code>.</li>
+<li><strong>deli</strong> (<em>str, optional</em>) – The delimiter used to separate data columns in the delimited file.
+Default is tab.</li>
+<li><strong>dec_mark</strong> (<em>str, optional</em>) – The decimal mark of the data file. Default is dot.</li>
+<li><strong>out_ext</strong> (<em>str, optional</em>) – The file extension (format) of the output file. Default is <code class="code docutils literal"><span class="pre">npz</span></code>
+for Numpy database format. Alternative is <code class="code docutils literal"><span class="pre">mat</span></code> for Matlab
+database format.</li>
+<li><strong>out_dir</strong> (<em>str, optional</em>) – The absolute or relative path to the output directory. Default is the
+current working directory.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>out_file</strong> (<em>str</em>) – A handle to the output file that was generated during import.</li>
+<li><strong>import_status</strong> (<em>str</em>) – The import status of <code class="code docutils literal"><span class="pre">in_file</span></code>. If <code class="code docutils literal"><span class="pre">True</span></code>, the file was
+successfully imported. If ‘False’, file import was attempted and failed.
+If ‘None’, file import was not attempted (most likely because an output
+file with the same name already exists).</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sec_constants.html" class="btn btn-neutral float-right" title="Constants for Tribology" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sec_lubricants.html" class="btn btn-neutral" title="Lubricants and Lubrication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Moritz Ploss.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

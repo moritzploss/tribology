@@ -36,7 +36,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Tribology  documentation" href="index.html"/>
-        <link rel="next" title="Constants for Tribology" href="sec_constants.html"/>
+        <link rel="next" title="Methods for Data Import" href="sec_data_import.html"/>
         <link rel="prev" title="EHD Lubrication" href="sec_ehd_lubrication.html"/> 
 
   
@@ -92,6 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="sec_contact_mechanics.html">Contact Mechanics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_ehd_lubrication.html">EHD Lubrication</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Lubricants and Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_data_import.html">Methods for Data Import</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_constants.html">Constants for Tribology</a></li>
 </ul>
 
@@ -171,13 +172,13 @@ viscosity at atmospheric pressure and the pressure-viscosity coefficient.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>eta_0</strong> (<em>scalar</em>) &#8211; The dynamic viscosity at atmospheric pressure.</li>
-<li><strong>alpha_p</strong> (<em>scalar</em>) &#8211; The pressure-viscosity coefficient of the fluid.</li>
-<li><strong>pressure</strong> (<em>scalar</em>) &#8211; The pressure at which to calculate the dynamic viscosity.</li>
+<li><strong>eta_0</strong> (<em>scalar</em>) – The dynamic viscosity at atmospheric pressure.</li>
+<li><strong>alpha_p</strong> (<em>scalar</em>) – The pressure-viscosity coefficient of the fluid.</li>
+<li><strong>pressure</strong> (<em>scalar</em>) – The pressure at which to calculate the dynamic viscosity.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>eta_p</strong> &#8211; The dynamic viscosity at pressure <cite>pressure</cite>.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>eta_p</strong> – The dynamic viscosity at pressure <cite>pressure</cite>.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
@@ -196,12 +197,12 @@ viscosity at atmospheric pressure and the pressure-viscosity coefficient.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dyn</strong> (<em>ndarray, scalar</em>) &#8211; The dynamic viscosity of the lubricant.</li>
-<li><strong>density</strong> (<em>ndarray, scalar</em>) &#8211; The density of the lubricant.</li>
+<li><strong>dyn</strong> (<em>ndarray, scalar</em>) – The dynamic viscosity of the lubricant.</li>
+<li><strong>density</strong> (<em>ndarray, scalar</em>) – The density of the lubricant.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>kin</strong> &#8211; The kinematic viscosity of the lubricant.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>kin</strong> – The kinematic viscosity of the lubricant.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
@@ -220,12 +221,12 @@ viscosity at atmospheric pressure and the pressure-viscosity coefficient.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>kin</strong> (<em>ndarray, scalar</em>) &#8211; The kinematic viscosity of the lubricant.</li>
-<li><strong>density</strong> (<em>ndarray, scalar</em>) &#8211; The density of the lubricant.</li>
+<li><strong>kin</strong> (<em>ndarray, scalar</em>) – The kinematic viscosity of the lubricant.</li>
+<li><strong>density</strong> (<em>ndarray, scalar</em>) – The density of the lubricant.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>dyn</strong> &#8211; The dynamic viscosity of the lubricant.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>dyn</strong> – The dynamic viscosity of the lubricant.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray, scalar</p>
@@ -245,14 +246,14 @@ cone-on-plate rheometer.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>eta</strong> (<em>scalar</em>) &#8211; The dynamic viscosity of the fluid.</li>
-<li><strong>alpha</strong> (<em>scalar</em>) &#8211; The cone angle in radians.</li>
-<li><strong>omega</strong> (<em>scalar</em>) &#8211; The angular velocity of the rotating plate (in radians per second).</li>
-<li><strong>r_a</strong> (<em>scalar</em>) &#8211; The outer diameter of the rotating plate.</li>
+<li><strong>eta</strong> (<em>scalar</em>) – The dynamic viscosity of the fluid.</li>
+<li><strong>alpha</strong> (<em>scalar</em>) – The cone angle in radians.</li>
+<li><strong>omega</strong> (<em>scalar</em>) – The angular velocity of the rotating plate (in radians per second).</li>
+<li><strong>r_a</strong> (<em>scalar</em>) – The outer diameter of the rotating plate.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>torque</strong> &#8211; The torque required to rotate the rotating plate.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>torque</strong> – The torque required to rotate the rotating plate.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
@@ -272,14 +273,14 @@ plate-on-plate rheometer.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>eta</strong> (<em>scalar</em>) &#8211; The dynamic viscosity of the fluid.</li>
-<li><strong>gap_height</strong> (<em>scalar</em>) &#8211; The gap height between the stationary and the rotating plate.</li>
-<li><strong>omega</strong> (<em>scalar</em>) &#8211; The angular velocity of the rotating plate (in radians per second).</li>
-<li><strong>r_a</strong> (<em>scalar</em>) &#8211; The outer diameter of the rotating plate.</li>
+<li><strong>eta</strong> (<em>scalar</em>) – The dynamic viscosity of the fluid.</li>
+<li><strong>gap_height</strong> (<em>scalar</em>) – The gap height between the stationary and the rotating plate.</li>
+<li><strong>omega</strong> (<em>scalar</em>) – The angular velocity of the rotating plate (in radians per second).</li>
+<li><strong>r_a</strong> (<em>scalar</em>) – The outer diameter of the rotating plate.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>torque</strong> &#8211; The torque required to rotate the rotating plate.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>torque</strong> – The torque required to rotate the rotating plate.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
@@ -299,14 +300,14 @@ in a cone-on-plate rheometer.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>torque</strong> (<em>scalar</em>) &#8211; The torque required to rotate the rotating plate.</li>
-<li><strong>alpha</strong> (<em>scalar</em>) &#8211; The cone angle in radians.</li>
-<li><strong>omega</strong> (<em>scalar</em>) &#8211; The angular velocity of the rotating plate (in radians per second).</li>
-<li><strong>r_a</strong> (<em>scalar</em>) &#8211; The outer diameter of the rotating plate.</li>
+<li><strong>torque</strong> (<em>scalar</em>) – The torque required to rotate the rotating plate.</li>
+<li><strong>alpha</strong> (<em>scalar</em>) – The cone angle in radians.</li>
+<li><strong>omega</strong> (<em>scalar</em>) – The angular velocity of the rotating plate (in radians per second).</li>
+<li><strong>r_a</strong> (<em>scalar</em>) – The outer diameter of the rotating plate.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>eta</strong> &#8211; The dynamic viscosity of the fluid.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>eta</strong> – The dynamic viscosity of the fluid.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
@@ -326,14 +327,14 @@ in a plate-on-plate rheometer.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>torque</strong> (<em>scalar</em>) &#8211; The torque required to rotate the rotating plate.</li>
-<li><strong>gap_height</strong> (<em>scalar</em>) &#8211; The gap height between the stationary and the rotating plate.</li>
-<li><strong>omega</strong> (<em>scalar</em>) &#8211; The angular velocity of the rotating plate (in radians per second).</li>
-<li><strong>r_a</strong> (<em>scalar</em>) &#8211; The outer diameter of the rotating plate.</li>
+<li><strong>torque</strong> (<em>scalar</em>) – The torque required to rotate the rotating plate.</li>
+<li><strong>gap_height</strong> (<em>scalar</em>) – The gap height between the stationary and the rotating plate.</li>
+<li><strong>omega</strong> (<em>scalar</em>) – The angular velocity of the rotating plate (in radians per second).</li>
+<li><strong>r_a</strong> (<em>scalar</em>) – The outer diameter of the rotating plate.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>eta</strong> &#8211; The dynamic viscosity of the fluid.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>eta</strong> – The dynamic viscosity of the fluid.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
@@ -354,18 +355,18 @@ implementation follows standard ASTM D341.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>temp_1</strong> (<em>scalar</em>) &#8211; The temperature in <span class="math">\(^{\circ}\text{C}\)</span> that corresponds to the
+<li><strong>temp_1</strong> (<em>scalar</em>) – The temperature in <span class="math">\(^{\circ}\text{C}\)</span> that corresponds to the
 kinematic viscosity <code class="code docutils literal"><span class="pre">nu_1</span></code>.</li>
-<li><strong>nu_1</strong> (<em>scalar</em>) &#8211; The kinematic viscosity in cSt at temperature <code class="code docutils literal"><span class="pre">temp_1</span></code>.</li>
-<li><strong>temp_2</strong> (<em>scalar</em>) &#8211; The temperature in <span class="math">\(^{\circ}\text{C}\)</span> that corresponds to the
+<li><strong>nu_1</strong> (<em>scalar</em>) – The kinematic viscosity in cSt at temperature <code class="code docutils literal"><span class="pre">temp_1</span></code>.</li>
+<li><strong>temp_2</strong> (<em>scalar</em>) – The temperature in <span class="math">\(^{\circ}\text{C}\)</span> that corresponds to the
 kinematic viscosity <code class="code docutils literal"><span class="pre">nu_2</span></code>.</li>
-<li><strong>nu_2</strong> (<em>scalar</em>) &#8211; The kinematic viscosity in cSt at temperature <code class="code docutils literal"><span class="pre">temp_2</span></code>.</li>
-<li><strong>temp_3</strong> (<em>scalar</em>) &#8211; The temperature in <span class="math">\(^{\circ}\text{C}\)</span> for which to calculate the
+<li><strong>nu_2</strong> (<em>scalar</em>) – The kinematic viscosity in cSt at temperature <code class="code docutils literal"><span class="pre">temp_2</span></code>.</li>
+<li><strong>temp_3</strong> (<em>scalar</em>) – The temperature in <span class="math">\(^{\circ}\text{C}\)</span> for which to calculate the
 kinematic viscosity.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>nu_3</strong> &#8211; The kinematic viscosity in cSt at temperature <code class="code docutils literal"><span class="pre">temp_3</span></code>.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>nu_3</strong> – The kinematic viscosity in cSt at temperature <code class="code docutils literal"><span class="pre">temp_3</span></code>.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
@@ -387,7 +388,7 @@ kinematic viscosity.</li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="sec_constants.html" class="btn btn-neutral float-right" title="Constants for Tribology" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="sec_data_import.html" class="btn btn-neutral float-right" title="Methods for Data Import" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="sec_ehd_lubrication.html" class="btn btn-neutral" title="EHD Lubrication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -431,7 +432,7 @@ kinematic viscosity.</li>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
