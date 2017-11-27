@@ -19,7 +19,6 @@ bumpversion patch
 fi
 
 git push origin master && git push origin master --tags
-pip install tribology --upgrade --no-cache-dir
 echo "deployed successfully as $1"
 
 else
