@@ -9,15 +9,12 @@ git commit -m "deploy $1"
 
 if [ "$1" ==  "major" ]
 then
-echo $1
 bumpversion major
 elif [ "$1" ==  "minor" ]
 then
-echo $1
 bumpversion minor
 elif [ "$1" == "patch" ] || [ "$1" == "p" ];
 then
-echo $1
 bumpversion patch
 fi
 
