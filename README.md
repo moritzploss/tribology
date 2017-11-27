@@ -2,9 +2,10 @@
 
 # tribology
 This package is a collection of methods and classes for tribology
-research and education, including contact mechanics and lubrication
-science. It provides implementations of analytical and numerical
-calculation routines together with frequently used constants.
+research and education, including contact mechanics, lubrication
+science and data handling. It provides implementations of analytical
+and numerical calculation routines together with frequently used
+constants.
 
 The **tribology** package is currently hosted on GitHub:
 
@@ -43,8 +44,8 @@ release listed below.
 
 #### Latest Development Version
 
-- module `data_import` added. the mpdule contains methods for data
-import from delimited data files into Numpy and Matlab databse format.
+- module `data_import` added. the module contains methods for data
+import from delimited data files into Numpy and Matlab database format.
 - modules renamed, removed leading `tribology_` in module names
 - refactoring
 - auto-release on PyPI

@@ -112,7 +112,7 @@ class TestDataImport(unittest.TestCase):
         """
         check if simple txt file can be imported to npz format
         """
-        f_out, status = td.import_txt(self.demo_1_txt)
+        f_out, status, _ = td.import_txt(self.demo_1_txt)
         self.assertEqual(status, True)
         os.remove(f_out)
 
@@ -120,7 +120,7 @@ class TestDataImport(unittest.TestCase):
         """
         check if database is created correctly
         """
-        f_out, status = td.import_txt(self.demo_1_txt)
+        f_out, status, _ = td.import_txt(self.demo_1_txt)
         database = np.load(f_out)
         self.assertEqual(database['fx_n'][0], 0.211219)
         os.remove(f_out)
@@ -129,7 +129,7 @@ class TestDataImport(unittest.TestCase):
         """
         check if simple txt file can be imported to mat format
         """
-        f_out, status = td.import_txt(self.demo_1_txt, out_ext='mat')
+        f_out, status, _ = td.import_txt(self.demo_1_txt, out_ext='mat')
         self.assertEqual(status, True)
         os.remove(f_out)
 

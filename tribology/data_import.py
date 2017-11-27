@@ -398,6 +398,8 @@ def import_txt(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
     out_dir: str, optional
         The absolute or relative path to the output directory. Default is the
         current working directory.
+    retdat: bool, optional
+        If :code:`True`, a dictionary containing all data is returned.
 
     Returns
     -------
@@ -405,9 +407,11 @@ def import_txt(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
         A handle to the output file that was generated during import.
     import_status: str
         The import status of :code:`in_file`. If :code:`True`, the file was
-        successfully imported. If 'False', file import was attempted and failed.
-        If 'None', file import was not attempted (most likely because an output
-        file with the same name already exists).
+        successfully imported. If :code:`False`, file import was attempted and
+        failed. If :code:`None`, file import was not attempted (most likely
+        because an output file with the same name already exists).
+    output_dict: dict
+        The data that was imported from :code:`in_file`.
 
     """
     if out_dir == '':
@@ -420,6 +424,7 @@ def import_txt(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
     out_file_exists = (os.path.isfile(out_file))
     import_status = None
     out_file = None
+    output_dict = None
 
     if (not out_file_exists) or (force is True):
         try:
@@ -429,7 +434,8 @@ def import_txt(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
             import_status = True
         except ValueError:
             import_status = False
-    return out_file, import_status
+
+    return out_file, import_status, output_dict
 
 
 def __print_import_stats(in_file, status):
@@ -441,17 +447,18 @@ def __print_import_stats(in_file, status):
     ----------
     in_file: str
         The file name of the file for which to print the status.
-    status: bool, None
+    status: True, False, None
         The import status of :code:`in_file`.
 
     """
-    out_str = ': '.join([str(status), str(in_file)])
     if status is False:
         out_col = _Colors.FAIL
     elif status is True:
         out_col = _Colors.OKGREEN
     else:
         out_col = _Colors.WARNING
+
+    out_str = ': '.join([str(status), str(in_file)])
     __print_status(out_str, out_col)
 
 
@@ -474,9 +481,7 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
         File extension of files to import (without dot). Default is :code:`txt`.
     recursive: bool, optional
         If :code:`True`, all files in :code:`in_dir` and all its child
-        directories are imported. Output files are saved to the same directory
-        as source files irrespective of :code:`out_dir` value. Default
-        is :code:`False`.
+        directories are imported. Default is :code:`False`.
     force: bool, optional
         If :code:`True`, existing output files will be overwritten during
         import. Default is :code:`False`.
@@ -508,10 +513,10 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
         The file handles of all output files that were generated during the
         import process.
     import_status: list of bools
-        The import status of for each file in :code:`in_files`. If :code:`True`,
-        the file was successfully imported. If 'False', file import was
-        attempted and failed. If 'None', file import was not attempted (most
-        likely because an output file with the same name already exists).
+        The import status of each file in :code:`in_files`. If :code:`True`,
+        the file was successfully imported. If :code:`False`, file import was
+        attempted and failed. If :code:`None`, file import was not attempted
+        (most likely because an output file with the same name already exists).
 
     """
     in_files = __get_file_handles(in_dir, in_ext, recursive)
@@ -523,11 +528,12 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
 
     for in_file in in_files:
 
-        out_file, status = import_txt(in_file, force=force, deli=deli,
-                                      dec_mark=dec_mark, out_ext=out_ext,
-                                      out_dir=out_dir)
+        out_file, status, _ = import_txt(in_file, force=force, deli=deli,
+                                         dec_mark=dec_mark, out_ext=out_ext,
+                                         out_dir=out_dir)
         out_files.append(out_file)
         import_status.append(status)
+
         if print_stat:
             __print_import_stats(in_file, status)
 
@@ -535,7 +541,7 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
 
 
 if __name__ == "__main__":
-    # If the file is executed from as a script, import all data files in the
+    # if the file is executed as a script, import all data files in the
     # current working directory based on the parser arguments provided.
     ARGS = __parse_args()
     import_dir(os.getcwd(), ARGS.extension, ARGS.recursive,
