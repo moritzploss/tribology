@@ -42,7 +42,7 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
-#### Latest Development Version
+#### Latest Neutral Build
 
 - module `data_import` added. the module contains methods for data
 import from delimited data files into Numpy and Matlab database format.
