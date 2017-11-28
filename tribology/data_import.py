@@ -9,6 +9,8 @@ import argparse
 import glob
 import os
 import re
+import copy
+import math
 
 import numpy as np
 import scipy.io
@@ -96,7 +98,7 @@ def __assemble_data_table(num_data_tables, max_num_data_length):
     return num_data
 
 
-def __write_to_out_dict(num_data, column_headers):
+def __write_to_out_dict(num_data, column_headers, pcs=False):
     """
 
     Extract the data columns from the num_data array and write them to a
@@ -111,25 +113,34 @@ def __write_to_out_dict(num_data, column_headers):
 
     Returns
     -------
-    output_dict: dict
+    out_dict: dict
         A dictionary containing all data that is to be saved to the output
         database. Keys are based on column headers, values are data columns of
         num_data.
 
     """
-    output_dict = {'column_headers': column_headers}
+    out_dict = {'column_headers': column_headers}
     for idx, column in enumerate(column_headers):
+        # explicitly take care of the fact that PCS forgot a '\tab' character in
+        # their data export implementation
+        if column == 'image_file_name' and \
+                math.isnan(float(num_data[0, idx])) and not \
+                column_headers[column_headers.tolist().index(column) - 1] and \
+                pcs is True:
+            out_dict[column] = num_data[:, idx - 1].astype(object)[:, None]
+        # take care of all other columns
         # if empty data columns are not padded with tabs
-        if idx >= num_data.shape[1]:
-            output_dict[column] = np.zeros(num_data.shape[1]) * float('nan')
-        else:
-            # if data is of numeric type
-            if __is_floatable(num_data[0, idx]):
-                output_dict[column] = num_data[:, idx].astype(float)[:, None]
-            # if data is of other type (string)
+        elif column:
+            if idx >= num_data.shape[1]:
+                out_dict[column] = np.zeros(num_data.shape[1]) * float('nan')
             else:
-                output_dict[column] = num_data[:, idx].astype(object)[:, None]
-    return output_dict
+                # if data is of numeric type
+                if __is_floatable(num_data[0, idx]):
+                    out_dict[column] = num_data[:, idx].astype(float)[:, None]
+                # if data is of other type (string)
+                else:
+                    out_dict[column] = num_data[:, idx].astype(object)[:, None]
+    return out_dict
 
 
 def __process_header(prev_line):
@@ -145,17 +156,17 @@ def __process_header(prev_line):
 
     Returns
     -------
-    col_headers: ndarray (dtype = object)
+    col_heads: ndarray (dtype = object)
         The re-formated column headers.
 
     """
 
     # replace non-alphanumeric characters and trailing underscores
-    col_headers = [re.sub("\W+", '_', item.lower()).strip('_')
-                   for item in prev_line]
+    col_heads = [re.sub("\W+", '_', item.lower()).strip('_')
+                 for item in prev_line]
     # convert data type for easy matlab export
-    col_headers = np.asarray(col_headers, dtype='object')
-    return col_headers
+    col_heads = np.asarray(col_heads, dtype='object')
+    return col_heads
 
 
 def __process_data(split_line, num_dat, max_len, num_data_tables):
@@ -197,7 +208,7 @@ def __process_data(split_line, num_dat, max_len, num_data_tables):
     return num_dat
 
 
-def __process_file(in_file, dec_mark, deli, padding=0):
+def __process_file(in_file, dec_mark, deli, pad=0):
     """
 
     Extract data from a delimited text file and return a dictionary containing
@@ -211,14 +222,14 @@ def __process_file(in_file, dec_mark, deli, padding=0):
         The decimal mark of the data file.
     deli: str
         The delimiter used to separate data columns in the delimited file.
-    padding: positive int
+    pad: positive int
         Ignore the first :code:`n` leading columns in the delimited file, where
-        :code:`n = padding`. For example, if padding = 8, the first 8 columns
+        :code:`n = pad`. For example, if pad = 8, the first 8 columns
         are ignored.
 
     Returns
     -------
-    output_dict: dict
+    out_dict: dict
         A dictionary containing all data that is to be saved to the output
         database. Keys are based on column headers, values are data columns of
         num_data.
@@ -226,13 +237,16 @@ def __process_file(in_file, dec_mark, deli, padding=0):
     """
     max_len = 1000
     num_dat = []
-    col_headers = []
+    col_heads = []
     num_data_tables = []
     prev_line = ''
 
     with open(in_file) as dat_file:
         for line in dat_file:
             split_line = line.replace(dec_mark, '.').split(deli)
+
+            if len(split_line) > pad:
+                split_line = split_line[pad:]
 
             # get rid of trailing newline characters
             if split_line[-1] == '\n':
@@ -249,9 +263,9 @@ def __process_file(in_file, dec_mark, deli, padding=0):
             # fields with 'nan'
             split_line[:] = (item or 'nan' for item in split_line)
             # if this is the first data-containing line...
-            if not len(col_headers):
+            if not len(col_heads):
                 # get the column headers
-                col_headers = __process_header(prev_line)
+                col_heads = __process_header(prev_line)
                 # write the first line to the data table
                 num_dat = np.asarray(
                     [__to_float(item.rstrip('\n'))
@@ -263,42 +277,8 @@ def __process_file(in_file, dec_mark, deli, padding=0):
     # assemble the complete data table and create output dictionary
     num_data_tables.append(num_dat)
     num_dat = __assemble_data_table(num_data_tables, max_len)
-    output_dict = __write_to_out_dict(num_dat, col_headers)
 
-    return output_dict
-
-
-def __parse_args():
-    """
-
-    Parse all parser arguments that are provided when the script is running in
-    a terminal.
-
-    Returns
-    -------
-    args: Namespace
-        The parsed parser arguments.
-
-    """
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-f', '--force', action="store_true", default=False,
-                        help='overwrite existing database files during import')
-    parser.add_argument('-e', '--extension', action="store", default='txt',
-                        help='specify file extension. default is "txt"')
-    parser.add_argument('-d', '--delimiter', action="store", default='\t',
-                        help='specify column delimiter. default is tab (\\t)')
-    parser.add_argument('-m', '--mark', action="store", default='.',
-                        help='specify decimal mark for numeric data. default is'
-                             ' dot (.)')
-    parser.add_argument('-o', '--outformat', action="store", default='npz',
-                        help='specify output database format. default is "npz"'
-                             ' for numpy database. use "mat" for matlab '
-                             ' database format.')
-    parser.add_argument('-r', '--recursive', action="store_true", default=False,
-                        help='recursively walk through all sub-directories of'
-                             ' current working directory')
-    args = parser.parse_args()
-    return args
+    return num_dat, col_heads
 
 
 def __get_file_handles(in_dir, ext, recursive=False):
@@ -334,7 +314,7 @@ def __get_file_handles(in_dir, ext, recursive=False):
     return in_files
 
 
-def __save_out_file(f_no_ext, output_dict, out_ext, out_dir):
+def __save_out_file(out_file, out_dict, out_ext):
     """
 
     Save the imported data to an output database, either in Numpy or Matlab
@@ -344,7 +324,7 @@ def __save_out_file(f_no_ext, output_dict, out_ext, out_dir):
     ----------
     f_no_ext: str
         The import file name without file extension.
-    output_dict: dict
+    out_dict: dict
         The output data stored in a dictionary where keys correspond to column
         headers, values correspond to data.
     out_ext: str
@@ -359,18 +339,46 @@ def __save_out_file(f_no_ext, output_dict, out_ext, out_dir):
         A handle to the output file that was generated after import.
 
     """
-    out_file = ''
     if out_ext == 'mat':
-        out_file = '{}/{}.mat'.format(out_dir, f_no_ext)
-        scipy.io.savemat(out_file, output_dict)
+        out_file = '{}.mat'.format(out_file)
+        scipy.io.savemat(out_file, out_dict)
     elif out_ext == 'npz':
-        out_file = '{}/{}.npz'.format(out_dir, f_no_ext)
-        np.savez(out_file, **output_dict)
+        out_file = '{}.npz'.format(out_file)
+        np.savez(out_file, **out_dict)
     return out_file
 
 
-def import_txt(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
-               out_dir=''):
+def __get_out_file(in_file, out_dir):
+    if out_dir == '':
+        out_dir = os.getcwd()
+        file_no_ext = os.path.splitext(in_file)[0]
+    else:
+        file_no_ext = os.path.splitext(in_file)[0].split(os.sep)[-1]
+    out_file = '{}/{}'.format(out_dir, file_no_ext)
+    return file_no_ext, out_dir, out_file
+
+
+def __import_file(in_file, out_file,  out_ext, force=False, deli='\t',
+                  dec_mark='.', pad=0):
+
+    import_status = None
+    num_dat = None
+    col_heads = None
+    out_file_exists = os.path.isfile('{}.{}'.format(out_file, out_ext))
+
+    if (not out_file_exists) or (force is True):
+        try:
+            num_dat, col_heads = __process_file(in_file, dec_mark, deli,
+                                                pad=pad)
+            import_status = True
+        except ValueError:
+            import_status = False
+
+    return num_dat, col_heads, import_status
+
+
+def import_del(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
+               out_dir='', pad=0):
     """
 
     Import a delimited data file into Numpy or Matlab database format.
@@ -394,6 +402,9 @@ def import_txt(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
     out_dir: str, optional
         The absolute or relative path to the output directory. Default is the
         current working directory.
+    pad: positive int
+        The numbers of data columns to skip. For :code:`pad = n`, the first
+        :code:`n` data columns will not be imported.
 
     Returns
     -------
@@ -404,32 +415,158 @@ def import_txt(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
         successfully imported. If :code:`False`, file import was attempted and
         failed. If :code:`None`, file import was not attempted (most likely
         because an output file with the same name already exists).
-    output_dict: dict
+    out_dict: dict
         The data that was imported from :code:`in_file`.
 
     """
-    if out_dir == '':
-        out_dir = os.getcwd()
-        file_no_ext = os.path.splitext(in_file)[0]
+    file_no_ext, out_dir, out_file_no_ext = __get_out_file(in_file, out_dir)
+    out_dict = None
+
+    num_dat, col_heads, import_status = \
+        __import_file(in_file, out_file_no_ext, out_ext, force=force, deli=deli,
+                      dec_mark=dec_mark, pad=pad)
+
+    if import_status is True:
+        out_dict = __write_to_out_dict(num_dat, col_heads)
+        out_file = __save_out_file(out_file_no_ext, out_dict, out_ext)
     else:
-        file_no_ext = os.path.splitext(in_file)[0].split(os.sep)[-1]
+        out_file = None
 
-    out_file = os.sep.join([out_dir, ".".join([file_no_ext, out_ext])])
-    out_file_exists = (os.path.isfile(out_file))
-    import_status = None
+    return out_file, import_status, out_dict
+
+
+def __gen_acc_time(step_time, outformat='npz'):
+    """
+
+    For files produced by PCS Instrument test rigs, generate a continuous time
+    axis by combining all step times from all steps.
+
+    """
+    # get index of last data point of each step
+    current_step_end = np.where(np.subtract(step_time[1:], step_time[0:-1]) < 0)
+    step_end = np.append(current_step_end[0], [step_time.shape[0] - 1])
+    # get index of first data point of each step
+    step_start = np.append([0], [step_end[0:-1] + 1])
+    # loop over steps and create continuous time axis
+    time_accumulated_s = copy.copy(step_time)
+    offset = 0
+    for step in range(1, len(step_end)):
+        offset += step_time[step_end[step - 1]]
+        time_accumulated_s[step_start[step]:step_end[step] + 1] += offset
+    # save data to dictionary
+    if outformat == 'mat':
+        sub_dict = {'time_accumulated_s': time_accumulated_s,
+                    'step_start': step_start + 1,
+                    'step_end': step_end + 1}
+    else:
+        sub_dict = {'time_accumulated_s': time_accumulated_s,
+                    'step_start': step_start,
+                    'step_end': step_end}
+    return sub_dict
+
+
+def __post_process_image_data(out_dict):
+    """
+
+    For SLIM Mapper Analysis files produced by PCS Instrument test rigs,
+    extract the (x, y) coordinate system, generate an (x, y) grid and map the
+    film thickness data to the grid.
+
+    """
+    img_dat = {}
+
+    # get (unique) x and y axis values and allocate film thickness matrix
+    x = out_dict['x']
+    y = out_dict['y']
+    x_uniq = np.unique(x)
+    y_uniq = np.unique(y)
+    x_index = np.zeros(len(x))
+    y_index = np.zeros(len(y))
+    film = np.zeros((x_uniq.size, y_uniq.size)) * float('nan')
+
+    # get unique rank index for each element in x and y
+    for idx, rank_value in enumerate(sorted(x_uniq)):
+        x_index[np.where(x == rank_value)[0]] = idx
+    for idx, rank_value in enumerate(sorted(y_uniq)):
+        y_index[np.where(y == rank_value)[0]] = idx
+
+    # combine x and y indices in a list that can be used to index the film array
+    arr_idx = [x_index.astype(int), y_index.astype(int)]
+
+    # assign all measured film thickness values to film thickness matrix
+    film[arr_idx] = out_dict['film'][:, 0]
+
+    # create variables that simplify plotting of film thickness data in
+    # Matlab/Matplotlib
+    img_dat['film_surf'] = film
+    img_dat['x_set'] = np.asarray(list(x_uniq))[:, None]
+    img_dat['y_set'] = np.asarray(list(y_uniq))[:, None]
+    img_dat['x_grid'], img_dat['y_grid'] = \
+        np.meshgrid(img_dat['x_set'], img_dat['y_set'], indexing='ij')
+
+    return img_dat
+
+
+def import_pcs(in_file, force=False, out_ext='npz', out_dir=''):
+    """
+
+    Import a delimited data file that was produced by an MTM or EHD2 test rig
+    manufactured by PCS Instruments. The method calls the :code:`import_del`
+    method to perform a basic import of a delimited text file, and generates
+    additional output variables that simplify data analysis.
+
+    Parameters
+    ----------
+    in_file: str
+        The file handle of the delimited file that is to be imported.
+    force: bool, optional
+        If :code:`True`, existing output files will be overwritten during
+        import. Default is :code:`False`.
+    out_ext: str, optional
+        The file extension (format) of the output file. Default is :code:`npz`
+        for Numpy database format. Alternative is :code:`mat` for Matlab
+        database format.
+    out_dir: str, optional
+        The absolute or relative path to the output directory. Default is the
+        current working directory.
+
+    Returns
+    -------
+    out_file: str
+        A handle to the output file that was generated during import.
+    import_status: str
+        The import status of :code:`in_file`. If :code:`True`, the file was
+        successfully imported. If :code:`False`, file import was attempted and
+        failed. If :code:`None`, file import was not attempted (most likely
+        because an output file with the same name already exists).
+    out_dict: dict
+        The data that was imported from :code:`in_file`.
+
+    """
+    file_no_ext, out_dir, out_file_no_ext = __get_out_file(in_file, out_dir)
+    out_dict = None
     out_file = None
-    output_dict = None
 
-    if (not out_file_exists) or (force is True):
+    num_dat, col_heads, import_status = \
+        __import_file(in_file, out_file_no_ext, out_ext, force=force, deli='\t',
+                      dec_mark='.', pad=8)
+
+    if import_status is True:
+        out_dict = __write_to_out_dict(num_dat, col_heads, pcs=True)
+
+        if 'step_time_s' in out_dict:
+            t_dict = \
+                __gen_acc_time(out_dict['step_time_s'].astype(float), out_ext)
+            out_dict = {**out_dict, **t_dict}
+
         try:
-            output_dict = __process_file(in_file, dec_mark, deli)
-            out_file = __save_out_file(file_no_ext, output_dict, out_ext,
-                                       out_dir)
-            import_status = True
-        except ValueError:
-            import_status = False
+            out_dict = {**out_dict, **__post_process_image_data(out_dict)}
+        except KeyError:
+            pass
 
-    return out_file, import_status, output_dict
+        out_file = __save_out_file(out_file_no_ext, out_dict, out_ext)
+
+    return out_file, import_status, out_dict
 
 
 def __print_import_stats(in_file, status):
@@ -456,13 +593,50 @@ def __print_import_stats(in_file, status):
     __print_status(out_str, out_col)
 
 
+def __parse_args():
+    """
+
+    Parse all parser arguments that are provided when the script is running in
+    a terminal.
+
+    Returns
+    -------
+    args: Namespace
+        The parsed parser arguments.
+
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f', '--force', action="store_true", default=False,
+                        help='overwrite existing database files during import')
+    parser.add_argument('-e', '--extension', action="store", default='txt',
+                        help='specify file extension. default is "txt"')
+    parser.add_argument('-d', '--delimiter', action="store", default='\t',
+                        help='specify column delimiter. default is tab (\\t)')
+    parser.add_argument('-m', '--mark', action="store", default='.',
+                        help='specify decimal mark for numeric data. default is'
+                             ' dot (.)')
+    parser.add_argument('-o', '--outformat', action="store", default='npz',
+                        help='specify output database format. default is "npz"'
+                             ' for numpy database. use "mat" for matlab '
+                             ' database format.')
+    parser.add_argument('-r', '--recursive', action="store_true", default=False,
+                        help='recursively walk through all sub-directories of'
+                             ' current working directory')
+    parser.add_argument('-p', '--pcs', action="store_true", default=False,
+                        help='indicate if files are pcs files.')
+    args = parser.parse_args()
+    return args
+
+
 def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
-               dec_mark='.', out_ext='npz', out_dir='', print_stat=False):
+               dec_mark='.', out_ext='npz', out_dir='', print_stat=False,
+               pcs=False):
     """
 
     Import all delimited data files in a directory into Numpy or Matlab
     database format. Optionally, all data files in a directory and all its
-    child directories can be imported.
+    child directories can be imported. The method can be applied to regular
+    delimited files as files generated by test rigs made by PCS Instruments.
 
     Parameters
     ----------
@@ -497,6 +671,9 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
     print_stat: bool, optional
         If :code:`True`, the current import status is printed to the console.
         Default is :code:`False`.
+    pcs: bool, optional
+        If :code:`True`, the delimited files are treated like files that were
+        generated using an MTM or EHD2 test rig manufactured by PCS Instruments.
 
     Returns
     -------
@@ -521,9 +698,14 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
 
     for in_file in in_files:
 
-        out_file, status, _ = import_txt(in_file, force=force, deli=deli,
-                                         dec_mark=dec_mark, out_ext=out_ext,
-                                         out_dir=out_dir)
+        if pcs is False:
+            out_file, status, _ = import_del(in_file, force=force, deli=deli,
+                                             dec_mark=dec_mark, out_ext=out_ext,
+                                             out_dir=out_dir)
+        else:
+            out_file, status, _ = import_pcs(in_file, force=force,
+                                             out_ext=out_ext,
+                                             out_dir=out_dir)
         out_files.append(out_file)
         import_status.append(status)
 
@@ -539,4 +721,4 @@ if __name__ == "__main__":
     ARGS = __parse_args()
     import_dir(os.getcwd(), ARGS.extension, ARGS.recursive,
                ARGS.force, ARGS.delimiter, ARGS.mark,
-               ARGS.outformat, os.getcwd(), True)
+               ARGS.outformat, os.getcwd(), True, pcs=ARGS.pcs)

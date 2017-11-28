@@ -102,17 +102,26 @@ class TestDataImport(unittest.TestCase):
     """
     demo_1 = 'tribology/tests/data_import/demo_1'
     demo_2 = 'tribology/tests/data_import/demo_2'
+    demo_1_pcs = 'tribology/tests/data_import/demo_1_pcs'
+    demo_2_pcs = 'tribology/tests/data_import/demo_2_pcs'
+
     demo_1_txt = '{}.txt'.format(demo_1)
     demo_2_txt = '{}.txt'.format(demo_2)
+    demo_1_pcs_tab = '{}.tab'.format(demo_1_pcs)
+    demo_2_pcs_tab = '{}.tab'.format(demo_2_pcs)
+
     demo_1_npz = '{}.npz'.format(demo_1)
     demo_2_npz = '{}.npz'.format(demo_2)
+    demo_1_pcs_npz = '{}.npz'.format(demo_2_pcs)
+    demo_2_pcs_npz = '{}.npz'.format(demo_2_pcs)
+
     demo_dir = 'tribology/tests/data_import'
 
     def test_import_txt_to_npz(self):
         """
         check if simple txt file can be imported to npz format
         """
-        f_out, status, _ = td.import_txt(self.demo_1_txt)
+        f_out, status, _ = td.import_del(self.demo_1_txt)
         self.assertEqual(status, True)
         os.remove(f_out)
 
@@ -120,7 +129,7 @@ class TestDataImport(unittest.TestCase):
         """
         check if database is created correctly
         """
-        f_out, status, _ = td.import_txt(self.demo_1_txt)
+        f_out, status, _ = td.import_del(self.demo_1_txt)
         database = np.load(f_out)
         self.assertEqual(database['fx_n'][0], 0.211219)
         os.remove(f_out)
@@ -129,18 +138,50 @@ class TestDataImport(unittest.TestCase):
         """
         check if simple txt file can be imported to mat format
         """
-        f_out, status, _ = td.import_txt(self.demo_1_txt, out_ext='mat')
+        f_out, status, _ = td.import_del(self.demo_1_txt, out_ext='mat')
         self.assertEqual(status, True)
         os.remove(f_out)
 
-    def test_import_dir_to_npz(self):
+    def test_import_dir_txt_to_npz(self):
         """
-        check if directory can be imported to npz format
+        check if directory containing delimited txt files can be imported to npz
+        format
         """
         f_in, f_out, status = td.import_dir(self.demo_dir)
         self.assertEqual(f_in, [self.demo_1_txt, self.demo_2_txt])
         self.assertEqual(f_out[0].endswith(self.demo_1_npz), True)
         self.assertEqual(f_out[1].endswith(self.demo_2_npz), True)
+        self.assertEqual(status, [True, True])
+        for file in f_out:
+            os.remove(file)
+
+    def test_import_pcs_mtm_to_npz(self):
+        """
+        check if PCS output file can be imported to mat format
+        """
+        f_out, status, _ = td.import_pcs(self.demo_1_pcs_tab, out_ext='npz')
+        self.assertEqual(status, True)
+        database = np.load(f_out)
+        self.assertEqual(database['step_time_s'][0], 1)
+        os.remove(f_out)
+
+    def test_import_pcs_ehd_to_npz(self):
+        """
+        check if PCS output file can be imported to npz format
+        """
+        f_out, status, _ = td.import_pcs(self.demo_2_pcs_tab, out_ext='npz')
+        self.assertEqual(status, True)
+        database = np.load(f_out)
+        self.assertEqual(database['step_time_s'][0], 17)
+        os.remove(f_out)
+
+    def test_import_dir_pcs_to_npz(self):
+        """
+        check if directory containing pcs files can be imported to npz format
+        """
+        f_in, f_out, status = td.import_dir(self.demo_dir, in_ext='tab',
+                                            pcs=True)
+        self.assertEqual(f_in, [self.demo_1_pcs_tab, self.demo_2_pcs_tab])
         self.assertEqual(status, [True, True])
         for file in f_out:
             os.remove(file)
