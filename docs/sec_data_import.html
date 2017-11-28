@@ -164,11 +164,52 @@ module of the package.</p>
 <span class="target" id="module-data_import"></span><p>The below methods can be used to import delimited data files into Numpy or
 Matlab database format.</p>
 <dl class="function">
+<dt id="data_import.import_del">
+<code class="descname">import_del</code><span class="sig-paren">(</span><em>in_file</em>, <em>force=False</em>, <em>deli=’\t’</em>, <em>dec_mark=’.’</em>, <em>out_ext=’npz’</em>, <em>out_dir=”</em>, <em>pad=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_del"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_del" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import a delimited data file into Numpy or Matlab database format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>in_file</strong> (<em>str</em>) – The file handle of the delimited file that is to be imported.</li>
+<li><strong>force</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, existing output files will be overwritten during
+import. Default is <code class="code docutils literal"><span class="pre">False</span></code>.</li>
+<li><strong>deli</strong> (<em>str, optional</em>) – The delimiter used to separate data columns in the delimited file.
+Default is tab.</li>
+<li><strong>dec_mark</strong> (<em>str, optional</em>) – The decimal mark of the data file. Default is dot.</li>
+<li><strong>out_ext</strong> (<em>str, optional</em>) – The file extension (format) of the output file. Default is <code class="code docutils literal"><span class="pre">npz</span></code>
+for Numpy database format. Alternative is <code class="code docutils literal"><span class="pre">mat</span></code> for Matlab
+database format.</li>
+<li><strong>out_dir</strong> (<em>str, optional</em>) – The absolute or relative path to the output directory. Default is the
+current working directory.</li>
+<li><strong>pad</strong> (<em>positive int</em>) – The numbers of data columns to skip. For <code class="code docutils literal"><span class="pre">pad</span> <span class="pre">=</span> <span class="pre">n</span></code>, the first
+<code class="code docutils literal"><span class="pre">n</span></code> data columns will not be imported.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>out_file</strong> (<em>str</em>) – A handle to the output file that was generated during import.</li>
+<li><strong>import_status</strong> (<em>str</em>) – The import status of <code class="code docutils literal"><span class="pre">in_file</span></code>. If <code class="code docutils literal"><span class="pre">True</span></code>, the file was
+successfully imported. If <code class="code docutils literal"><span class="pre">False</span></code>, file import was attempted and
+failed. If <code class="code docutils literal"><span class="pre">None</span></code>, file import was not attempted (most likely
+because an output file with the same name already exists).</li>
+<li><strong>out_dict</strong> (<em>dict</em>) – The data that was imported from <code class="code docutils literal"><span class="pre">in_file</span></code>.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="data_import.import_dir">
-<code class="descname">import_dir</code><span class="sig-paren">(</span><em>in_dir</em>, <em>in_ext='txt'</em>, <em>recursive=False</em>, <em>force=False</em>, <em>deli='\t'</em>, <em>dec_mark='.'</em>, <em>out_ext='npz'</em>, <em>out_dir=''</em>, <em>print_stat=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_dir" title="Permalink to this definition">¶</a></dt>
+<code class="descname">import_dir</code><span class="sig-paren">(</span><em>in_dir</em>, <em>in_ext=’txt’</em>, <em>recursive=False</em>, <em>force=False</em>, <em>deli=’\t’</em>, <em>dec_mark=’.’</em>, <em>out_ext=’npz’</em>, <em>out_dir=”</em>, <em>print_stat=False</em>, <em>pcs=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import all delimited data files in a directory into Numpy or Matlab
 database format. Optionally, all data files in a directory and all its
-child directories can be imported.</p>
+child directories can be imported. The method can be applied to regular
+delimited files as files generated by test rigs made by PCS Instruments.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -196,6 +237,8 @@ the respective child directories of <code class="code docutils literal"><span cl
 is not specified.</li>
 <li><strong>print_stat</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, the current import status is printed to the console.
 Default is <code class="code docutils literal"><span class="pre">False</span></code>.</li>
+<li><strong>pcs</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, the delimited files are treated like files that were
+generated using an MTM or EHD2 test rig manufactured by PCS Instruments.</li>
 </ul>
 </td>
 </tr>
@@ -216,9 +259,12 @@ attempted and failed. If <code class="code docutils literal"><span class="pre">N
 </dd></dl>
 
 <dl class="function">
-<dt id="data_import.import_txt">
-<code class="descname">import_del</code><span class="sig-paren">(</span><em>in_file</em>, <em>force=False</em>, <em>deli='\t'</em>, <em>dec_mark='.'</em>, <em>out_ext='npz'</em>, <em>out_dir=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_txt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Import a delimited data file into Numpy or Matlab database format.</p>
+<dt id="data_import.import_pcs">
+<code class="descname">import_pcs</code><span class="sig-paren">(</span><em>in_file</em>, <em>force=False</em>, <em>out_ext=’npz’</em>, <em>out_dir=”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_pcs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_pcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import a delimited data file that was produced by an MTM or EHD2 test rig
+manufactured by PCS Instruments. The method calls the <code class="code docutils literal"><span class="pre">import_del</span></code>
+method to perform a basic import of a delimited text file, and generates
+additional output variables that simplify data analysis.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -227,9 +273,6 @@ attempted and failed. If <code class="code docutils literal"><span class="pre">N
 <li><strong>in_file</strong> (<em>str</em>) – The file handle of the delimited file that is to be imported.</li>
 <li><strong>force</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, existing output files will be overwritten during
 import. Default is <code class="code docutils literal"><span class="pre">False</span></code>.</li>
-<li><strong>deli</strong> (<em>str, optional</em>) – The delimiter used to separate data columns in the delimited file.
-Default is tab.</li>
-<li><strong>dec_mark</strong> (<em>str, optional</em>) – The decimal mark of the data file. Default is dot.</li>
 <li><strong>out_ext</strong> (<em>str, optional</em>) – The file extension (format) of the output file. Default is <code class="code docutils literal"><span class="pre">npz</span></code>
 for Numpy database format. Alternative is <code class="code docutils literal"><span class="pre">mat</span></code> for Matlab
 database format.</li>
@@ -244,7 +287,7 @@ current working directory.</li>
 successfully imported. If <code class="code docutils literal"><span class="pre">False</span></code>, file import was attempted and
 failed. If <code class="code docutils literal"><span class="pre">None</span></code>, file import was not attempted (most likely
 because an output file with the same name already exists).</li>
-<li><strong>output_dict</strong> (<em>dict</em>) – The data that was imported from <code class="code docutils literal"><span class="pre">in_file</span></code>.</li>
+<li><strong>out_dict</strong> (<em>dict</em>) – The data that was imported from <code class="code docutils literal"><span class="pre">in_file</span></code>.</li>
 </ul>
 </p>
 </td>
@@ -309,7 +352,7 @@ because an output file with the same name already exists).</li>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
