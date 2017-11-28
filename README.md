@@ -45,7 +45,7 @@ release listed below.
 #### Latest Neutral Build
 
 - the `data_import` module now provides methods to import output files
-from test rigs manufactured by PCS Instruments .
+from PCS Instruments test rigs.
 - module `data_import` added. the module contains methods for data
 import from delimited data files into Numpy and Matlab database format.
 - modules renamed, removed leading `tribology_` in module names
