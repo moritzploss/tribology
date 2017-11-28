@@ -13,7 +13,7 @@ from ..tribology import profball, profrevolve
 from .. import hertz as th
 from .. import lubrication as tl
 from .. import boundary_element as tb
-from ..data_import import import_pcs, import_dir, import_del
+from .. import data_import as td
 
 
 class TestTribology(unittest.TestCase):
@@ -128,7 +128,7 @@ class TestDataImport(unittest.TestCase):
         """
         check if simple txt file can be imported to npz format
         """
-        f_out, status, _ = import_del(self.demo_1_txt)
+        f_out, status, _ = td.import_del(self.demo_1_txt)
         self.assertEqual(status, True)
         os.remove(f_out)
 
@@ -136,7 +136,7 @@ class TestDataImport(unittest.TestCase):
         """
         check if database is created correctly
         """
-        f_out, status, _ = import_del(self.demo_1_txt)
+        f_out, status, _ = td.import_del(self.demo_1_txt)
         database = np.load(f_out)
         self.assertEqual(database['fx_n'][0], 0.211219)
         os.remove(f_out)
@@ -145,7 +145,7 @@ class TestDataImport(unittest.TestCase):
         """
         check if simple txt file can be imported to mat format
         """
-        f_out, status, _ = import_del(self.demo_1_txt, out_ext='mat')
+        f_out, status, _ = td.import_del(self.demo_1_txt, out_ext='mat')
         self.assertEqual(status, True)
         os.remove(f_out)
 
@@ -154,7 +154,7 @@ class TestDataImport(unittest.TestCase):
         check if directory containing delimited txt files can be imported to npz
         format
         """
-        f_in, f_out, status = import_dir(self.demo_dir)
+        f_in, f_out, status = td.import_dir(self.demo_dir)
         self.assertEqual(f_in, [self.demo_1_txt, self.demo_2_txt])
         self.assertEqual(f_out[0].endswith(self.demo_1_npz), True)
         self.assertEqual(f_out[1].endswith(self.demo_2_npz), True)
@@ -166,7 +166,7 @@ class TestDataImport(unittest.TestCase):
         """
         check if PCS output file can be imported to mat format
         """
-        f_out, status, _ = import_pcs(self.demo_1_pcs_tab, out_ext='npz')
+        f_out, status, _ = td.import_pcs(self.demo_1_pcs_tab, out_ext='npz')
         self.assertEqual(status, True)
         database = np.load(f_out)
         self.assertEqual(database['step_time_s'][0], 1)
@@ -176,7 +176,7 @@ class TestDataImport(unittest.TestCase):
         """
         check if PCS output file can be imported to npz format
         """
-        f_out, status, _ = import_pcs(self.demo_2_pcs_tab, out_ext='npz')
+        f_out, status, _ = td.import_pcs(self.demo_2_pcs_tab, out_ext='npz')
         self.assertEqual(status, True)
         database = np.load(f_out)
         self.assertEqual(database['step_time_s'][0], 17)
@@ -186,7 +186,7 @@ class TestDataImport(unittest.TestCase):
         """
         check if directory containing pcs files can be imported to npz format
         """
-        f_in, f_out, status = import_dir(self.demo_dir, in_ext='tab',
+        f_in, f_out, status = td.import_dir(self.demo_dir, in_ext='tab',
                                             pcs=True)
 
         out_files = [self.demo_1_pcs_tab, self.demo_2_pcs_tab,
