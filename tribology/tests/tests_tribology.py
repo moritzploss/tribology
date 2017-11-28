@@ -7,9 +7,10 @@ Test cases for tribology methods
 import unittest
 
 import numpy as np
+import os
 
 from ..tribology import profball, profrevolve
-from .. import hertz as th, os
+from .. import hertz as th
 from .. import lubrication as tl
 from .. import boundary_element as tb
 from .. import data_import as td
