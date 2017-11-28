@@ -14,7 +14,7 @@ import numpy as np
 def profrolleriso(x_axis, diam, length):
     """
 
-    Generate a roller profile according to ISO 281 for rollers with
+    Generate a roller profile according to DIN 26281 for rollers with
     :code:`length` :math:`\\leq` :code:`2.5` :math:`\\cdot` :code:`diam`.
 
     Parameters
@@ -48,6 +48,7 @@ def profrolleriso(x_axis, diam, length):
         x_profile = np.concatenate((diam_arr, np.concatenate((prof, diam_arr))))
     else:
         x_profile = prof
+
     return x_profile
 
 
