@@ -20,7 +20,9 @@ def profrolleriso(x_axis, diam, length):
     Parameters
     ----------
     x_axis: ndarray
-        The x-axis of the roller.
+        The x-axis of the roller. The origin of the axis must be at the center
+        of the roller. To obtain sensible results, the axis limits must be
+        within :code:`+/- length / 2`.
     diam: scalar
         The diameter of the roller.
     length: scalar
@@ -32,11 +34,20 @@ def profrolleriso(x_axis, diam, length):
         The profile heights of the roller along :code:`x_axis`.
 
     """
-    prof = 0.00035 * diam * \
-           np.log(1 / (1 - np.power(((2 * x_axis[1:-1]) / length), 2)))
+    len_ax = abs(max(x_axis) - min(x_axis))
+    if len_ax == length:
+        ax = x_axis[1:-1]
+    else:
+        ax = x_axis
+
+    prof = 0.00035 * diam * np.log(1 / (1 - np.power(((2 * ax) / length), 2)))
     prof += np.min(prof)
-    diam_arr = np.asarray([diam])
-    x_profile = np.concatenate((diam_arr, np.concatenate((prof, diam_arr))))
+
+    if len_ax == length:
+        diam_arr = np.asarray([diam])
+        x_profile = np.concatenate((diam_arr, np.concatenate((prof, diam_arr))))
+    else:
+        x_profile = prof
     return x_profile
 
 

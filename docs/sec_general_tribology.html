@@ -329,7 +329,9 @@ element of the x-axis.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x_axis</strong> (<em>ndarray</em>) – The x-axis of the roller.</li>
+<li><strong>x_axis</strong> (<em>ndarray</em>) – The x-axis of the roller. The origin of the axis must be at the center
+of the roller. To obtain sensible results, the axis limits must be
+within <code class="code docutils literal"><span class="pre">+/-</span> <span class="pre">length</span> <span class="pre">/</span> <span class="pre">2</span></code>.</li>
 <li><strong>diam</strong> (<em>scalar</em>) – The diameter of the roller.</li>
 <li><strong>length</strong> (<em>scalar</em>) – The length of the roller.</li>
 </ul>
