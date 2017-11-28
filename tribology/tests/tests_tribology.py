@@ -104,16 +104,22 @@ class TestDataImport(unittest.TestCase):
     demo_2 = 'tribology/tests/data_import/demo_2'
     demo_1_pcs = 'tribology/tests/data_import/demo_1_pcs'
     demo_2_pcs = 'tribology/tests/data_import/demo_2_pcs'
+    demo_3_pcs = 'tribology/tests/data_import/demo_3_pcs'
+    demo_4_pcs = 'tribology/tests/data_import/demo_4_pcs'
 
     demo_1_txt = '{}.txt'.format(demo_1)
     demo_2_txt = '{}.txt'.format(demo_2)
     demo_1_pcs_tab = '{}.tab'.format(demo_1_pcs)
     demo_2_pcs_tab = '{}.tab'.format(demo_2_pcs)
+    demo_3_pcs_tab = '{}.tab'.format(demo_3_pcs)
+    demo_4_pcs_tab = '{}.tab'.format(demo_4_pcs)
 
     demo_1_npz = '{}.npz'.format(demo_1)
     demo_2_npz = '{}.npz'.format(demo_2)
     demo_1_pcs_npz = '{}.npz'.format(demo_2_pcs)
     demo_2_pcs_npz = '{}.npz'.format(demo_2_pcs)
+    demo_3_pcs_npz = '{}.npz'.format(demo_3_pcs)
+    demo_4_pcs_npz = '{}.npz'.format(demo_4_pcs)
 
     demo_dir = 'tribology/tests/data_import'
 
@@ -181,8 +187,15 @@ class TestDataImport(unittest.TestCase):
         """
         f_in, f_out, status = td.import_dir(self.demo_dir, in_ext='tab',
                                             pcs=True)
-        self.assertEqual(f_in, [self.demo_1_pcs_tab, self.demo_2_pcs_tab])
-        self.assertEqual(status, [True, True])
+
+        out_files = [self.demo_1_pcs_tab, self.demo_2_pcs_tab,
+                     self.demo_3_pcs_tab, self.demo_4_pcs_tab]
+        self.assertEqual(f_in, out_files)
+        self.assertEqual(status, [True for _ in f_out])
+
+        database = np.load(self.demo_4_pcs_npz)
+        self.assertEqual('film_surf' in database, True)
+
         for file in f_out:
             os.remove(file)
 

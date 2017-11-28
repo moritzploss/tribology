@@ -358,7 +358,7 @@ def __get_out_file(in_file, out_dir):
     return file_no_ext, out_dir, out_file
 
 
-def __import_file(in_file, out_file,  out_ext, force=False, deli='\t',
+def __import_file(in_file, out_file, out_ext, force=False, deli='\t',
                   dec_mark='.', pad=0):
 
     import_status = None
@@ -419,7 +419,7 @@ def import_del(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
         The data that was imported from :code:`in_file`.
 
     """
-    file_no_ext, out_dir, out_file_no_ext = __get_out_file(in_file, out_dir)
+    _, out_dir, out_file_no_ext = __get_out_file(in_file, out_dir)
     out_dict = None
 
     num_dat, col_heads, import_status = \
@@ -445,14 +445,18 @@ def __gen_acc_time(step_time, outformat='npz'):
     # get index of last data point of each step
     current_step_end = np.where(np.subtract(step_time[1:], step_time[0:-1]) < 0)
     step_end = np.append(current_step_end[0], [step_time.shape[0] - 1])
+
     # get index of first data point of each step
     step_start = np.append([0], [step_end[0:-1] + 1])
+
     # loop over steps and create continuous time axis
     time_accumulated_s = copy.copy(step_time)
     offset = 0
+
     for step in range(1, len(step_end)):
         offset += step_time[step_end[step - 1]]
         time_accumulated_s[step_start[step]:step_end[step] + 1] += offset
+
     # save data to dictionary
     if outformat == 'mat':
         sub_dict = {'time_accumulated_s': time_accumulated_s,
@@ -476,19 +480,19 @@ def __post_process_image_data(out_dict):
     img_dat = {}
 
     # get (unique) x and y axis values and allocate film thickness matrix
-    x = out_dict['x']
-    y = out_dict['y']
-    x_uniq = np.unique(x)
-    y_uniq = np.unique(y)
-    x_index = np.zeros(len(x))
-    y_index = np.zeros(len(y))
-    film = np.zeros((x_uniq.size, y_uniq.size)) * float('nan')
+    x_ax = out_dict['x']
+    y_ax = out_dict['y']
+    x_uniq = np.unique(x_ax)
+    y_uniq = np.unique(y_ax)
+    x_index = np.zeros(len(x_ax))
+    y_index = np.zeros(len(y_ax))
+    film = np.zeros((len(x_uniq), len(y_uniq))) * float('nan')
 
     # get unique rank index for each element in x and y
     for idx, rank_value in enumerate(sorted(x_uniq)):
-        x_index[np.where(x == rank_value)[0]] = idx
+        x_index[np.where(x_ax == rank_value)[0]] = idx
     for idx, rank_value in enumerate(sorted(y_uniq)):
-        y_index[np.where(y == rank_value)[0]] = idx
+        y_index[np.where(y_ax == rank_value)[0]] = idx
 
     # combine x and y indices in a list that can be used to index the film array
     arr_idx = [x_index.astype(int), y_index.astype(int)]
@@ -543,7 +547,7 @@ def import_pcs(in_file, force=False, out_ext='npz', out_dir=''):
         The data that was imported from :code:`in_file`.
 
     """
-    file_no_ext, out_dir, out_file_no_ext = __get_out_file(in_file, out_dir)
+    _, out_dir, out_file_no_ext = __get_out_file(in_file, out_dir)
     out_dict = None
     out_file = None
 
@@ -719,6 +723,7 @@ if __name__ == "__main__":
     # if the file is executed as a script, import all data files in the
     # current working directory based on the parser arguments provided.
     ARGS = __parse_args()
-    import_dir(os.getcwd(), ARGS.extension, ARGS.recursive,
-               ARGS.force, ARGS.delimiter, ARGS.mark,
-               ARGS.outformat, os.getcwd(), True, pcs=ARGS.pcs)
+    import_dir(os.getcwd(), in_ext=ARGS.extension, recursive=ARGS.recursive,
+               force=ARGS.force, deli=ARGS.delimiter, dec_mark=ARGS.mark,
+               out_ext=ARGS.outformat, out_dir=os.getcwd(), print_stat=True,
+               pcs=ARGS.pcs)
