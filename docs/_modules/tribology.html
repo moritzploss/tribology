@@ -170,6 +170,35 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
+<div class="viewcode-block" id="profrolleriso"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.profrolleriso">[docs]</a><span class="k">def</span> <span class="nf">profrolleriso</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">diam</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Generate a roller profile according to ISO 281 for rollers with</span>
+<span class="sd">    :code:`length` :math:`\\leq` :code:`2.5` :math:`\\cdot` :code:`diam`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x_axis: ndarray</span>
+<span class="sd">        The x-axis of the roller.</span>
+<span class="sd">    diam: scalar</span>
+<span class="sd">        The diameter of the roller.</span>
+<span class="sd">    length: scalar</span>
+<span class="sd">        The length of the roller.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    x_profile: ndarray</span>
+<span class="sd">        The profile heights of the roller along :code:`x_axis`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prof</span> <span class="o">=</span> <span class="mf">0.00035</span> <span class="o">*</span> <span class="n">diam</span> <span class="o">*</span> \
+           <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x_axis</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">length</span><span class="p">),</span> <span class="mi">2</span><span class="p">)))</span>
+    <span class="n">prof</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">prof</span><span class="p">)</span>
+    <span class="n">diam_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">diam</span><span class="p">])</span>
+    <span class="n">x_profile</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">diam_arr</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">prof</span><span class="p">,</span> <span class="n">diam_arr</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">x_profile</span></div>
+
+
 <div class="viewcode-block" id="profball"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.profball">[docs]</a><span class="k">def</span> <span class="nf">profball</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">r_ball</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
@@ -532,6 +561,12 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">x_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">x_profile</span> <span class="o">=</span> <span class="n">profrolleriso</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">x_profile</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="k">pass</span>
 </pre></div>
 

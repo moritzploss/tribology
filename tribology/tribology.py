@@ -11,6 +11,35 @@ from math import sqrt, acos, cos, sin, pi, floor
 import numpy as np
 
 
+def profrolleriso(x_axis, diam, length):
+    """
+
+    Generate a roller profile according to ISO 281 for rollers with
+    :code:`length` :math:`\\leq` :code:`2.5` :math:`\\cdot` :code:`diam`.
+
+    Parameters
+    ----------
+    x_axis: ndarray
+        The x-axis of the roller.
+    diam: scalar
+        The diameter of the roller.
+    length: scalar
+        The length of the roller.
+
+    Returns
+    -------
+    x_profile: ndarray
+        The profile heights of the roller along :code:`x_axis`.
+
+    """
+    prof = 0.00035 * diam * \
+           np.log(1 / (1 - np.power(((2 * x_axis[1:-1]) / length), 2)))
+    prof += np.min(prof)
+    diam_arr = np.asarray([diam])
+    x_profile = np.concatenate((diam_arr, np.concatenate((prof, diam_arr))))
+    return x_profile
+
+
 def profball(x_axis, r_ball):
     """
 
@@ -373,4 +402,10 @@ def abbottfirestone(trace, num_bins=100):
 
 
 if __name__ == "__main__":
+    x_axis = np.linspace(-5, 5, 10)
+    x_profile = profrolleriso(x_axis, 9, 100)
+    import matplotlib.pyplot as plt
+    plt.figure()
+    plt.plot(x_axis, x_profile)
+    plt.show()
     pass
