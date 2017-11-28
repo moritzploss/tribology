@@ -44,6 +44,7 @@ release listed below.
 
 #### Latest Neutral Build
 
+- no longer compatible with Python 3.4 and lower
 - the `data_import` module now provides methods to import output files
 from PCS Instruments test rigs.
 - module `data_import` added. the module contains methods for data
