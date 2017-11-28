@@ -14,7 +14,7 @@ setup(
    license='MIT',
    keywords='tribology machine design research',
    install_requires=['numpy', 'numexpr', 'scipy'],
-   python_requires='>=3.4',
+   python_requires='>=3.5',
    url='https://github.com/moritzploss/tribology',
    classifiers=[
     # How mature is this project? Common values are
@@ -32,7 +32,6 @@ setup(
 
     # Specify the Python versions you support here. In particular, ensure
     # that you indicate whether you support Python 2, Python 3 or both.
-    'Programming Language :: Python :: 3.4',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6'],
 )
