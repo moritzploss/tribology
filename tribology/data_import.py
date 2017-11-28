@@ -500,8 +500,7 @@ def __post_process_image_data(out_dict):
     # assign all measured film thickness values to film thickness matrix
     film[arr_idx] = out_dict['film'][:, 0]
 
-    # create variables that simplify plotting of film thickness data in
-    # Matlab/Matplotlib
+    # create variables that simplify plotting of film thickness data
     img_dat['film_surf'] = film
     img_dat['x_set'] = np.asarray(list(x_uniq))[:, None]
     img_dat['y_set'] = np.asarray(list(y_uniq))[:, None]
