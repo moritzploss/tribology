@@ -483,16 +483,14 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    f_no_ext: str</span>
-<span class="sd">        The import file name without file extension.</span>
+<span class="sd">    out_file: str</span>
+<span class="sd">        A handle to the output file that was generated during import.</span>
 <span class="sd">    out_dict: dict</span>
 <span class="sd">        The output data stored in a dictionary where keys correspond to column</span>
 <span class="sd">        headers, values correspond to data.</span>
 <span class="sd">    out_ext: str</span>
 <span class="sd">        The file extension (format) of the output file. Options are :code:`npz`</span>
 <span class="sd">        for Numpy format and :code:`mat` for Matlab database format.</span>
-<span class="sd">    out_dir: str</span>
-<span class="sd">        The path to the directory in which to save the output file.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -532,7 +530,7 @@
             <span class="n">num_dat</span><span class="p">,</span> <span class="n">col_heads</span> <span class="o">=</span> <span class="n">__process_file</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">dec_mark</span><span class="p">,</span> <span class="n">deli</span><span class="p">,</span>
                                                 <span class="n">pad</span><span class="o">=</span><span class="n">pad</span><span class="p">)</span>
             <span class="n">import_status</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="n">import_status</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">return</span> <span class="n">num_dat</span><span class="p">,</span> <span class="n">col_heads</span><span class="p">,</span> <span class="n">import_status</span>

@@ -324,16 +324,14 @@ def __save_out_file(out_file, out_dict, out_ext):
 
     Parameters
     ----------
-    f_no_ext: str
-        The import file name without file extension.
+    out_file: str
+        A handle to the output file that was generated during import.
     out_dict: dict
         The output data stored in a dictionary where keys correspond to column
         headers, values correspond to data.
     out_ext: str
         The file extension (format) of the output file. Options are :code:`npz`
         for Numpy format and :code:`mat` for Matlab database format.
-    out_dir: str
-        The path to the directory in which to save the output file.
 
     Returns
     -------
@@ -373,7 +371,7 @@ def __import_file(in_file, out_file, out_ext, force=False, deli='\t',
             num_dat, col_heads = __process_file(in_file, dec_mark, deli,
                                                 pad=pad)
             import_status = True
-        except (ValueError, AttributeError):
+        except ValueError:
             import_status = False
 
     return num_dat, col_heads, import_status
