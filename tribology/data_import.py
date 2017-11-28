@@ -373,7 +373,7 @@ def __import_file(in_file, out_file, out_ext, force=False, deli='\t',
             num_dat, col_heads = __process_file(in_file, dec_mark, deli,
                                                 pad=pad)
             import_status = True
-        except ValueError:
+        except (ValueError, AttributeError):
             import_status = False
 
     return num_dat, col_heads, import_status
