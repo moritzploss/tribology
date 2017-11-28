@@ -402,10 +402,4 @@ def abbottfirestone(trace, num_bins=100):
 
 
 if __name__ == "__main__":
-    x_axis = np.linspace(-5, 5, 10)
-    x_profile = profrolleriso(x_axis, 9, 100)
-    import matplotlib.pyplot as plt
-    plt.figure()
-    plt.plot(x_axis, x_profile)
-    plt.show()
     pass
