@@ -16,7 +16,7 @@ import tribology as tr
 
 def __parse_args():
     """
-tus
+
     Parse all parser arguments that are provided when the script is running in
     a terminal.
 
@@ -53,11 +53,11 @@ if __name__ == "__main__":
     """
     
     Use the code:`import_dir` method of the tribology package to import all 
-    data files based on the parser arguments provided.
+    data filesbased on the parser arguments provided.
     
     """
     ARGS = __parse_args()
     tr.import_dir(os.getcwd(), in_ext=ARGS.extension, recursive=ARGS.recursive,
                   force=ARGS.force, deli=ARGS.delimiter, dec_mark=ARGS.mark,
-                  out_ext=ARGS.outformat, out_dir='', print_stat=True,
+                  out_ext=ARGS.outformat, out_dir=os.getcwd(), print_stat=True,
                   pcs=ARGS.pcs)
