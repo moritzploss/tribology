@@ -2,7 +2,7 @@ LabVIEW Measurement
 Writer_Version	2
 Reader_Version	2
 Separator	Tab
-Decimal_Separator	.
+-Decimal_Separator.
 Multi_Headings	Yes
 X_Columns	One
 Time_Pref	Absolute

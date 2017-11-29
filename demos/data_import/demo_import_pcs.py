@@ -16,7 +16,7 @@ import tribology as tr
 
 def __parse_args():
     """
-
+tus
     Parse all parser arguments that are provided when the script is running in
     a terminal.
 
