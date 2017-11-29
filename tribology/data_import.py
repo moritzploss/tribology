@@ -312,7 +312,7 @@ def __get_file_handles(in_dir, ext, recursive=False):
         dir_list = [x[0] + os.sep for x in os.walk(in_dir)]
         for directory in dir_list:
             in_files.extend(sorted(glob.glob('{}*.{}'.format(directory, ext))))
-        in_files = [f.replace(in_dir, '').lstrip(os.sep) for f in in_files]
+        # in_files = [f.replace(in_dir, '').lstrip(os.sep) for f in in_files]
     return in_files
 
 
@@ -350,10 +350,8 @@ def __save_out_file(out_file, out_dict, out_ext):
 
 def __get_out_file(in_file, out_dir):
     if out_dir == '':
-        out_dir = os.getcwd()
-        file_no_ext = os.path.splitext(in_file)[0]
-    else:
-        file_no_ext = os.path.splitext(in_file)[0].split(os.sep)[-1]
+        out_dir = os.path.dirname(in_file)
+    file_no_ext = os.path.splitext(in_file)[0].split(os.sep)[-1]
     out_file = '{}/{}'.format(out_dir, file_no_ext)
     return file_no_ext, out_dir, out_file
 
@@ -592,7 +590,7 @@ def __print_import_stats(in_file, status):
     else:
         out_col = _Colors.WARNING
 
-    out_str = ': '.join([str(status), str(in_file)])
+    out_str = '\t'.join([str(status), str(in_file)])
     __print_status(out_str, out_col)
 
 
@@ -698,7 +696,9 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
     import_status = []
 
     if print_stat:
-        print('importing {} files:'.format(len(in_files)))
+        print('importing {} files'.format(len(in_files)))
+        print('status\tfilename\n'
+              '======\t========')
 
     for in_file in in_files:
 

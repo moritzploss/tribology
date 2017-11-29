@@ -1,0 +1,101 @@
+EHD261 Test Data File
+Profile description:	New EHD profile
+Disc track radius:	36.273
+Lubricant name:
+Lubricant properties file description:	
+Comments:
+
+Number of steps in profile:	7
+Number of steps completed:	7
+Test started at 28/02/2017 15:47
+
+Step 1 "New spacer zero step" started at 28/02/2017 15:48
+Step type	FILM_ZERO	Step description	New spacer zero step
+       Ball load = 19.9 N
+Trigger position = 233
+      Peak order = 3
+ Peak wavelength = 506.7 nm
+Spacer thickness = 519.7 nm
+
+Step 2 "New film step" started at 28/02/2017 16:09
+Step type	FILM	Step description	New film step
+Rolling Speed (mm/s)	Average Film (nm)							Step Time (s)	Lube Temp (°C)	Pot Temp (°C)	Ball Load (N)		Ball Speed 1	Ball Speed 2	Disc Speed 1	Disc Speed 2	Rolling Speed (mm/s)	Sliding Speed (mm/s)	SRR (%)		Traction Force 1 (N)	Traction Force 2 (N)	Traction Force (N)	Traction Coeff (-)		SD Repeat Number (-)	User Repeat Number (-)	Average Film (nm)	Standard Deviation (nm)	Order	Lube Ref Index	Average Wavelength (nm)		Image file name	
+20.2	24.4							10	40.4	41.2	20.025		20.21		20.21		20.21	0.00	0.000		0.7975					1	1	24.4	0.00	3	1.399	528.974			
+25.3	30.6							18	40.4	41.3	19.994		25.32		25.32		25.32	0.00	0.000		0.8714					1	1	30.6	0.00	3	1.399	534.660			
+31.8	37.5							25	40.3	41.2	20.038		31.84		31.84		31.84	0.00	0.000		0.8415					1	1	37.5	0.00	3	1.399	541.028			
+40.0	37.2							35	40.3	41.1	20.050		40.01		40.01		40.01	0.00	0.000		0.8413					1	1	37.2	0.00	3	1.399	540.752			
+50.2	52.1							40	40.3	41.1	19.970		50.25		50.25		50.25	0.00	0.000		0.8306					1	1	52.1	0.00	3	1.398	554.372			
+63.3	58.1							48	40.3	41.2	20.006		63.33		63.33		63.33	0.00	0.000		0.8509					1	1	58.1	0.00	3	1.398	559.830			
+79.8	69.0							53	40.3	41.1	19.973		79.80		79.80		79.80	0.00	0.000		0.8482					1	1	69.0	0.00	3	1.397	569.858			
+100.3	82.2							60	40.3	41.1	19.940		100.33		100.33		100.33	0.00	0.000		0.8071					1	1	82.2	0.00	3	1.397	581.948			
+126.3	92.3							66	40.2	41.0	19.948		126.26		126.26		126.26	0.00	0.000		0.8132					1	1	92.3	0.00	3	1.396	591.225			
+158.9	115.8							72	40.2	41.0	19.950		158.95		158.95		158.95	0.00	0.000		0.8215					1	1	115.8	0.00	3	1.396	612.743			
+199.8	136.5							78	40.2	41.0	19.839		199.77		199.77		199.77	0.00	0.000		0.8064					1	1	136.5	0.00	3	1.395	631.728			
+251.9	156.8							83	40.2	40.9	19.911		251.88		251.88		251.88	0.00	0.000		0.8019					1	1	156.8	0.00	3	1.394	650.272			
+317.4	159.3							89	40.2	41.0	19.847		317.36		317.36		317.36	0.00	0.000		0.7808					1	1	159.3	0.00	4	1.401	491.841			
+398.9	188.6							93	40.2	40.9	19.838		398.89		398.89		398.89	0.00	0.000		0.7638					1	1	188.6	0.00	4	1.400	511.971			
+502.4	222.7							98	40.1	40.9	19.845		502.41		502.41		502.41	0.00	0.000		0.8427					1	1	222.7	0.00	4	1.399	535.336			
+632.4	262.1							103	40.1	40.7	19.904		632.38		632.38		632.38	0.00	0.000		0.8453					1	1	262.1	0.00	4	1.398	562.443			
+796.3	312.6							108	40.0	41.1	19.979		796.33		796.33		796.33	0.00	0.000		0.7865					1	1	312.6	0.00	4	1.396	597.084			
+1002.0	367.0							113	39.9	40.8	19.842		1001.95		1001.95		1001.95	0.00	0.000		0.7994					1	1	367.0	0.00	4	1.395	634.501			
+1262.0	402.9							118	40.1	40.6	19.973		1261.99		1261.99		1261.99	0.00	0.000		0.7977					1	1	402.9	0.00	5	1.399	529.216			
+1588.2	469.1							122	39.8	40.7	19.963		1588.23		1588.23		1588.23	0.00	0.000		0.8314					1	1	469.1	0.00	5	1.398	565.609			
+1999.7	540.2							127	39.9	40.8	19.885		1999.74		1999.74		1999.74	0.00	0.000		0.8708					1	1	540.2	0.00	5	1.396	604.686			
+
+Step 3 "New film zero check step" started at 28/02/2017 16:13
+Step type	ZERO_CHECK	Step description	New film zero check step
+                 Ball load = 20.0 N
+          Trigger position = 233
+                Peak order = 3
+           Peak wavelength = 507.5 nm
+            Film thickness = 0.9 nm
+Lubricant refractive index = 1.400
+
+Step 4 "New heating step" started at 28/02/2017 16:13
+Step type	HEATING	Step description	New heating step
+Controlling temperature to 100.0°C using the pot probe for 00:10:00
+
+Step 5 "New film step" started at 28/02/2017 16:31
+Step type	FILM	Step description	New film step
+Rolling Speed (mm/s)	Average Film (nm)							Step Time (s)	Lube Temp (°C)	Pot Temp (°C)	Ball Load (N)		Ball Speed 1	Ball Speed 2	Disc Speed 1	Disc Speed 2	Rolling Speed (mm/s)	Sliding Speed (mm/s)	SRR (%)		Traction Force 1 (N)	Traction Force 2 (N)	Traction Force (N)	Traction Coeff (-)		SD Repeat Number (-)	User Repeat Number (-)	Average Film (nm)	Standard Deviation (nm)	Order	Lube Ref Index	Average Wavelength (nm)		Image file name	
+20.1	4.8							9	101.1	107.0	20.067		20.10		20.10		20.10	0.00	0.000		0.7823					1	1	4.8	0.00	3	1.400	511.030			
+25.2	6.9							17	101.4	107.0	20.023		25.16		25.16		25.16	0.00	0.000		0.7954					1	1	6.9	0.00	3	1.400	512.978			
+31.7	9.0							24	101.4	106.9	20.050		31.73		31.73		31.73	0.00	0.000		0.7670					1	1	9.0	0.00	3	1.400	514.923			
+40.0	10.2							35	101.4	106.7	20.050		40.00		40.00		40.00	0.00	0.000		0.7214					1	1	10.2	0.00	3	1.400	516.054			
+50.2	10.6							44	101.4	106.4	20.012		50.24		50.24		50.24	0.00	0.000		0.7750					1	1	10.6	0.00	3	1.400	516.375			
+63.3	10.6							51	101.4	106.1	19.998		63.32		63.32		63.32	0.00	0.000		0.7745					1	1	10.6	0.00	3	1.400	516.382			
+79.6	12.3							57	101.2	105.9	19.956		79.60		79.60		79.60	0.00	0.000		0.7558					1	1	12.3	0.00	3	1.400	517.954			
+100.3	17.1							64	101.0	105.6	19.967		100.25		100.25		100.25	0.00	0.000		0.7912					1	1	17.1	0.00	3	1.400	522.324			
+126.5	14.2							70	101.0	105.4	19.856		126.51		126.51		126.51	0.00	0.000		0.8338					1	1	14.2	0.00	3	1.400	519.709			
+158.7	22.9							76	101.0	105.2	20.133		158.70		158.70		158.70	0.00	0.000		0.7883					1	1	22.9	0.00	3	1.399	527.619			
+199.8	23.4							80	101.1	105.1	19.884		199.77		199.77		199.77	0.00	0.000		0.7878					1	1	23.4	0.00	3	1.399	528.125			
+252.1	29.7							86	101.1	105.1	19.950		252.08		252.08		252.08	0.00	0.000		0.7983					1	1	29.7	0.00	3	1.399	533.897			
+317.2	34.3							91	101.0	105.0	19.855		317.18		317.18		317.18	0.00	0.000		0.7810					1	1	34.3	0.00	3	1.399	538.047			
+399.2	40.8							96	100.9	104.7	19.983		399.20		399.20		399.20	0.00	0.000		0.7880					1	1	40.8	0.00	3	1.398	544.029			
+502.2	49.6							101	100.6	104.5	19.832		502.21		502.21		502.21	0.00	0.000		0.7798					1	1	49.6	0.00	3	1.398	552.099			
+632.6	57.6							106	100.4	104.3	19.907		632.56		632.56		632.56	0.00	0.000		0.7746					1	1	57.6	0.00	3	1.398	559.400			
+796.5	68.4							110	100.2	104.3	19.924		796.51		796.51		796.51	0.00	0.000		0.7665					1	1	68.4	0.00	3	1.397	569.321			
+1002.1	79.3							115	99.5	104.0	19.845		1002.14		1002.14		1002.14	0.00	0.000		0.7815					1	1	79.3	0.00	3	1.397	579.259			
+1261.8	92.0							120	99.3	104.0	19.864		1261.77		1261.77		1261.77	0.00	0.000		0.7754					1	1	92.0	0.00	3	1.396	590.868			
+1588.8	105.8							125	99.5	104.2	19.824		1588.80		1588.80		1588.80	0.00	0.000		0.7469					1	1	105.8	0.00	3	1.396	603.514			
+2000.7	123.6							129	99.3	104.1	19.969		2000.71		2000.71		2000.71	0.00	0.000		0.7980					1	1	123.6	0.00	3	1.395	619.835			
+
+Step 6 "New film zero check step" started at 28/02/2017 16:34
+Step type	ZERO_CHECK	Step description	New film zero check step
+                 Ball load = 19.9 N
+          Trigger position = 233
+                Peak order = 3
+           Peak wavelength = 508.8 nm
+            Film thickness = 2.3 nm
+Lubricant refractive index = 1.400
+
+Step 7 "New film zero check step" started at 28/02/2017 16:35
+Step type	ZERO_CHECK	Step description	New film zero check step
+                 Ball load = 19.9 N
+          Trigger position = 233
+                Peak order = 3
+           Peak wavelength = 508.7 nm
+            Film thickness = 2.2 nm
+Lubricant refractive index = 1.400
+
+All steps completed, test completed normally at 28/02/2017 16:35

@@ -48,7 +48,7 @@ release listed below.
 - no longer compatible with Python 3.4 and lower
 - the `data_import` module now provides methods to import output files
 from PCS Instruments test rigs.
-- module `data_import` added. the module contains methods for data
+- module `data_import` added. the modgit gitule contains methods for data
 import from delimited data files into Numpy and Matlab database format.
 - modules renamed, removed leading `tribology_` in module names
 - auto-release on PyPI through Travis CI

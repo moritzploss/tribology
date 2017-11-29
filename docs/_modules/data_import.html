@@ -471,7 +471,7 @@
         <span class="n">dir_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">in_dir</span><span class="p">)]</span>
         <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">dir_list</span><span class="p">:</span>
             <span class="n">in_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">*.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">ext</span><span class="p">))))</span>
-        <span class="n">in_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">in_dir</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">in_files</span><span class="p">]</span>
+        <span class="c1"># in_files = [f.replace(in_dir, &#39;&#39;).lstrip(os.sep) for f in in_files]</span>
     <span class="k">return</span> <span class="n">in_files</span>
 
 
@@ -509,10 +509,8 @@
 
 <span class="k">def</span> <span class="nf">__get_out_file</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">out_dir</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-        <span class="n">out_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-        <span class="n">file_no_ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">in_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">file_no_ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">in_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">out_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">in_file</span><span class="p">)</span>
+    <span class="n">file_no_ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">in_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">out_file</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="n">file_no_ext</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">file_no_ext</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">out_file</span>
 
@@ -659,8 +657,7 @@
     <span class="c1"># assign all measured film thickness values to film thickness matrix</span>
     <span class="n">film</span><span class="p">[</span><span class="n">arr_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;film&#39;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span>
 
-    <span class="c1"># create variables that simplify plotting of film thickness data in</span>
-    <span class="c1"># Matlab/Matplotlib</span>
+    <span class="c1"># create variables that simplify plotting of film thickness data</span>
     <span class="n">img_dat</span><span class="p">[</span><span class="s1">&#39;film_surf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">film</span>
     <span class="n">img_dat</span><span class="p">[</span><span class="s1">&#39;x_set&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">x_uniq</span><span class="p">))[:,</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">img_dat</span><span class="p">[</span><span class="s1">&#39;y_set&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">y_uniq</span><span class="p">))[:,</span> <span class="kc">None</span><span class="p">]</span>
@@ -752,7 +749,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">out_col</span> <span class="o">=</span> <span class="n">_Colors</span><span class="o">.</span><span class="n">WARNING</span>
 
-    <span class="n">out_str</span> <span class="o">=</span> <span class="s1">&#39;: &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">status</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">in_file</span><span class="p">)])</span>
+    <span class="n">out_str</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">status</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">in_file</span><span class="p">)])</span>
     <span class="n">__print_status</span><span class="p">(</span><span class="n">out_str</span><span class="p">,</span> <span class="n">out_col</span><span class="p">)</span>
 
 
@@ -858,7 +855,9 @@
     <span class="n">import_status</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">if</span> <span class="n">print_stat</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;importing </span><span class="si">{}</span><span class="s1"> files:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">in_files</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;importing </span><span class="si">{}</span><span class="s1"> files&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">in_files</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;status</span><span class="se">\t</span><span class="s1">filename</span><span class="se">\n</span><span class="s1">&#39;</span>
+              <span class="s1">&#39;======</span><span class="se">\t</span><span class="s1">========&#39;</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">in_file</span> <span class="ow">in</span> <span class="n">in_files</span><span class="p">:</span>
 

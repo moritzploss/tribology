@@ -103,26 +103,22 @@ class TestDataImport(unittest.TestCase):
     """
     demo_1 = 'tribology/tests/data_import/demo_1'
     demo_2 = 'tribology/tests/data_import/demo_2'
-    demo_1_pcs = 'tribology/tests/data_import/demo_1_pcs'
-    demo_2_pcs = 'tribology/tests/data_import/demo_2_pcs'
-    demo_3_pcs = 'tribology/tests/data_import/demo_3_pcs'
-    demo_4_pcs = 'tribology/tests/data_import/demo_4_pcs'
+    demo_1_pcs = 'tribology/tests/data_import/test_data_pcs/demo_1'
+    demo_2_pcs = 'tribology/tests/data_import/test_data_pcs/demo_2'
 
     demo_1_txt = '{}.txt'.format(demo_1)
     demo_2_txt = '{}.txt'.format(demo_2)
-    demo_1_pcs_tab = '{}.tab'.format(demo_1_pcs)
-    demo_2_pcs_tab = '{}.tab'.format(demo_2_pcs)
-    demo_3_pcs_tab = '{}.tab'.format(demo_3_pcs)
-    demo_4_pcs_tab = '{}.tab'.format(demo_4_pcs)
+    demo_1_pcs_txt = '{}.txt'.format(demo_1_pcs)
+    demo_2_pcs_txt = '{}.txt'.format(demo_2_pcs)
 
     demo_1_npz = '{}.npz'.format(demo_1)
     demo_2_npz = '{}.npz'.format(demo_2)
-    demo_1_pcs_npz = '{}.npz'.format(demo_2_pcs)
+    demo_1_pcs_npz = '{}.npz'.format(demo_1_pcs)
     demo_2_pcs_npz = '{}.npz'.format(demo_2_pcs)
-    demo_3_pcs_npz = '{}.npz'.format(demo_3_pcs)
-    demo_4_pcs_npz = '{}.npz'.format(demo_4_pcs)
 
     demo_dir = 'tribology/tests/data_import'
+    demo_dir_pcs = 'tribology/tests/data_import/test_data_pcs'
+    demo_dir_rec = 'tribology/tests/data_import/test_data_recursive'
 
     def test_import_txt_to_npz(self):
         """
@@ -164,39 +160,55 @@ class TestDataImport(unittest.TestCase):
 
     def test_import_pcs_mtm_to_npz(self):
         """
-        check if PCS output file can be imported to mat format
+        check if MTM (PCS Instruments) output file can be imported to npz
         """
-        f_out, status, _ = td.import_pcs(self.demo_1_pcs_tab, out_ext='npz')
+        f_out, status, _ = td.import_pcs(self.demo_2_pcs_txt, out_ext='npz')
         self.assertEqual(status, True)
         database = np.load(f_out)
-        self.assertEqual(database['step_time_s'][0], 1)
+        self.assertEqual(database['step_time_s'][0], 23)
         os.remove(f_out)
 
     def test_import_pcs_ehd_to_npz(self):
         """
-        check if PCS output file can be imported to npz format
+        check if EHD2 (PCS Instruments) output file can be imported to npz
         """
-        f_out, status, _ = td.import_pcs(self.demo_2_pcs_tab, out_ext='npz')
+        f_out, status, _ = td.import_pcs(self.demo_1_pcs_txt, out_ext='npz')
         self.assertEqual(status, True)
         database = np.load(f_out)
-        self.assertEqual(database['step_time_s'][0], 17)
+        self.assertEqual(database['film'][0], 130)
         os.remove(f_out)
 
     def test_import_dir_pcs_to_npz(self):
         """
         check if directory containing pcs files can be imported to npz format
         """
-        f_in, f_out, status = td.import_dir(self.demo_dir, in_ext='tab',
-                                            pcs=True)
-
-        out_files = [self.demo_1_pcs_tab, self.demo_2_pcs_tab,
-                     self.demo_3_pcs_tab, self.demo_4_pcs_tab]
-        self.assertEqual(f_in, out_files)
+        f_in, f_out, status = td.import_dir(self.demo_dir_pcs, pcs=True)
         self.assertEqual(status, [True for _ in f_out])
-
-        database = np.load(self.demo_4_pcs_npz)
+        database = np.load(self.demo_1_pcs_npz)
         self.assertEqual('film_surf' in database, True)
+        for file in f_out:
+            os.remove(file)
 
+    def test_import_dir_recursive(self):
+        """
+        check if directory tree can be imported recursively and output files are
+        saved together with input files
+        """
+        f_in, f_out, status = td.import_dir(self.demo_dir_rec, recursive=True)
+        self.assertEqual(status, [True for _ in f_out])
+        self.assertEqual(len(f_out), 4)
+        for file in f_out:
+            os.remove(file)
+
+    def test_import_dir_recursive_with_out_dir(self):
+        """
+        check if directory tree can be imported recursively and output files
+        can be written to specified output directory
+        """
+        f_in, f_out, status = td.import_dir(self.demo_dir_rec, recursive=True,
+                                            out_dir=self.demo_dir)
+        self.assertEqual(status, [True for _ in f_out])
+        self.assertEqual(len(f_out), 4)
         for file in f_out:
             os.remove(file)
 
