@@ -1,11 +1,11 @@
 [![Build Status](https://travis-ci.org/moritzploss/tribology.png)](https://travis-ci.org/moritzploss/tribology)
 
 # tribology
-This package is a collection of methods and classes for tribology
-research and education, including contact mechanics, lubrication
-science and data handling. It provides implementations of analytical
-and numerical calculation routines together with frequently used
-constants.
+This Python 3 package is a collection of methods and classes for
+tribology research and education, including contact mechanics,
+lubrication science and data handling. It provides implementations of
+analytical and numerical calculation routines together with frequently
+used constants.
 
 The **tribology** package is currently hosted on GitHub:
 
