@@ -409,7 +409,8 @@ def abbottfirestone(trace, num_bins=100):
     bins = np.linspace(np.amax(trace), np.amin(trace), num_bins)
     prob_dist = []
     for each_bin in bins:
-        prob_dist.append(len(np.where(trace >= each_bin)[0]) / len(trace) * num_bins)
+        prob_dist.append(
+            len(np.where(trace >= each_bin)[0]) / len(trace) * num_bins)
     return bins, prob_dist
 
 
