@@ -53,7 +53,7 @@ if __name__ == "__main__":
     """
     
     Use the code:`import_dir` method of the tribology package to import all 
-    data filesbased on the parser arguments provided.
+    data files based on the parser arguments provided.
     
     """
     ARGS = __parse_args()
