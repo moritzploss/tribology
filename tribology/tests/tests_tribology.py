@@ -5,9 +5,9 @@ Test cases for tribology methods
 """
 
 import unittest
+import os
 
 import numpy as np
-import os
 
 from ..tribology import profball, profrevolve
 from .. import hertz as th
@@ -132,7 +132,7 @@ class TestDataImport(unittest.TestCase):
         """
         check if database is created correctly
         """
-        f_out, status, _ = td.import_del(self.demo_1_txt)
+        f_out, _, _ = td.import_del(self.demo_1_txt)
         database = np.load(f_out)
         self.assertEqual(database['fx_n'][0], 0.211219)
         os.remove(f_out)
@@ -182,7 +182,7 @@ class TestDataImport(unittest.TestCase):
         """
         check if directory containing pcs files can be imported to npz format
         """
-        f_in, f_out, status = td.import_dir(self.demo_dir_pcs, pcs=True)
+        _, f_out, status = td.import_dir(self.demo_dir_pcs, pcs=True)
         self.assertEqual(status, [True for _ in f_out])
         database = np.load(self.demo_1_pcs_npz)
         self.assertEqual('film_surf' in database, True)
@@ -194,19 +194,19 @@ class TestDataImport(unittest.TestCase):
         check if directory tree can be imported recursively and output files are
         saved together with input files
         """
-        f_in, f_out, status = td.import_dir(self.demo_dir_rec, recursive=True)
+        _, f_out, status = td.import_dir(self.demo_dir_rec, recursive=True)
         self.assertEqual(status, [True for _ in f_out])
         self.assertEqual(len(f_out), 4)
         for file in f_out:
             os.remove(file)
 
-    def test_import_dir_recursive_with_out_dir(self):
+    def test_import_dir_recursive_out(self):
         """
         check if directory tree can be imported recursively and output files
         can be written to specified output directory
         """
-        f_in, f_out, status = td.import_dir(self.demo_dir_rec, recursive=True,
-                                            out_dir=self.demo_dir)
+        _, f_out, status = td.import_dir(self.demo_dir_rec, recursive=True,
+                                         out_dir=self.demo_dir)
         self.assertEqual(status, [True for _ in f_out])
         self.assertEqual(len(f_out), 4)
         for file in f_out:

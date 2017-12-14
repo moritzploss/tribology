@@ -7,8 +7,10 @@ Methods related to lubricants and lubrication
 """
 
 
-from math import pi, e
 from math import log10 as lg
+from math import pi, e
+
+import numpy as np
 
 
 def kin2dyn(kin, density):
@@ -122,7 +124,7 @@ def walther(temp_1, nu_1, temp_2, nu_2, temp_3):
 
     Returns
     -------
-    nu_3: scalar
+    nu_3: ndarray
         The kinematic viscosity in cSt at temperature :code:`temp_3`.
 
     """

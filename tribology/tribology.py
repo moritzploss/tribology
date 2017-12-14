@@ -36,11 +36,11 @@ def profrolleriso(x_axis, diam, length):
     """
     len_ax = abs(max(x_axis) - min(x_axis))
     if len_ax == length:
-        ax = x_axis[1:-1]
+        ax_x = x_axis[1:-1]
     else:
-        ax = x_axis
+        ax_x = x_axis
 
-    prof = 0.00035 * diam * np.log(1 / (1 - np.power(((2 * ax) / length), 2)))
+    prof = 0.00035 * diam * np.log(1 / (1 - np.power(((2 * ax_x) / length), 2)))
     prof += np.min(prof)
 
     if len_ax == length:

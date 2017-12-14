@@ -166,8 +166,10 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">e</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">log10</span> <span class="k">as</span> <span class="n">lg</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">e</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
 <div class="viewcode-block" id="kin2dyn"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.kin2dyn">[docs]</a><span class="k">def</span> <span class="nf">kin2dyn</span><span class="p">(</span><span class="n">kin</span><span class="p">,</span> <span class="n">density</span><span class="p">):</span>
@@ -281,7 +283,7 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    nu_3: scalar</span>
+<span class="sd">    nu_3: ndarray</span>
 <span class="sd">        The kinematic viscosity in cSt at temperature :code:`temp_3`.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
