@@ -1,6 +1,6 @@
 """
 
-Short demonstration of how to use methods related to boundary element theory.
+Short demonstration of how to use functions related to boundary element theory.
 
 """
 

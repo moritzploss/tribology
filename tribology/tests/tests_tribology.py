@@ -1,6 +1,6 @@
 """
 
-Test cases for tribology methods
+Test cases for tribology functions
 
 """
 
@@ -18,7 +18,7 @@ from .. import data_import as td
 
 class TestTribology(unittest.TestCase):
     """
-    test case methods for general tribology methods
+    test case methods for general tribology functions
     """
 
     def test_dyn2kin(self):
@@ -50,11 +50,11 @@ class TestTribology(unittest.TestCase):
 
 class TestBoundaryElement(unittest.TestCase):
     """
-    test case methods for tribology methods relate to boundary element codes
+    test case methods for tribology functions relate to boundary element codes
     """
     def test_be(self):
         """
-        base test for combination of boundary element methods
+        base test for combination of boundary element functions
         """
         # inputs for steel ball geometry in contact with steel flat
         r_ball = 6.35
@@ -85,21 +85,21 @@ class TestBoundaryElement(unittest.TestCase):
 
 class TestDowsonHamrock(unittest.TestCase):
     """
-    test case methods for tribology methods relate to Dowson-Hamrock
+    test case methods for tribology functions relate to Dowson-Hamrock
     """
     pass
 
 
 class TestLubrication(unittest.TestCase):
     """
-    test case methods for tribology methods relate to Lubrication
+    test case methods for tribology functions relate to Lubrication
     """
     pass
 
 
 class TestDataImport(unittest.TestCase):
     """
-    test case methods for methods relate to data_import
+    test case methods for functions relate to data_import
     """
     demo_1 = 'tribology/tests/data_import/demo_1'
     demo_2 = 'tribology/tests/data_import/demo_2'
@@ -215,7 +215,7 @@ class TestDataImport(unittest.TestCase):
 
 class TestHertz(unittest.TestCase):
     """
-    test case methods for tribology methods relate to Hertz contact theory
+    test case methods for tribology functions relate to Hertz contact theory
     """
 
     def test_hertz_mean_pressure_ball(self):

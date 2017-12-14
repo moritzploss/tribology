@@ -1,4 +1,4 @@
-Methods for Data Import
+functions for Data Import
 =======================
 
 All of the below methods can be found in the :code:`data_import`

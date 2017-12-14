@@ -1,6 +1,6 @@
 """
 
-Short demonstration of how to use data import methods to import data files from
+Short demonstration of how to use data import function to import data files from
 PCS Instruments test rigs. This script is meant to be run from a terminal and
 can be used to import all files in the current working directory and---depending
 on parser arguments---all its child directories.
@@ -52,7 +52,7 @@ def __parse_args():
 if __name__ == "__main__":
     """
     
-    Use the code:`import_dir` method of the tribology package to import all 
+    Use the code:`import_dir` function of the tribology package to import all 
     data files based on the parser arguments provided.
     
     """

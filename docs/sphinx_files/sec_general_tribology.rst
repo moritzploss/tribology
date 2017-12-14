@@ -1,7 +1,7 @@
 General Tribology
 =================
 
-All of the below methods can be found in the :code:`tribology` module of the
+All of the below functions can be found in the :code:`tribology` module of the
 package.
 
 .. automodule:: tribology

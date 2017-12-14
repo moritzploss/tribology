@@ -2,7 +2,7 @@
 
 """
 
-The below methods can be used to import delimited data files into Numpy or
+The below functions can be used to import delimited data files into Numpy or
 Matlab database format.
 
 """

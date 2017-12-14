@@ -1,6 +1,6 @@
 """
 
-Short demonstration of how to use dowson-hamrock equation for point contact.
+Short demonstration of how to use dowson-hamrock function for point contact.
 
 """
 

@@ -2,9 +2,9 @@
 
 """
 
-This module contains methods related to boundary element solvers for contact
+This module contains functions related to boundary element solvers for contact
 mechanics calculations. Please see the :code:`/demo` directory for minimum
-examples of how to combine the below methods to perform contact mechanics
+examples of how to combine the below functions to perform contact mechanics
 calculations.
 
 """

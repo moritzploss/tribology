@@ -2,7 +2,7 @@
 
 """
 
-Methods related to Hertz contact theory
+This module contains functions related to Hertz contact theory.
 
 """
 
