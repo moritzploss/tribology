@@ -210,7 +210,7 @@ coefficient matrix.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>infl_mat</strong> (<em>ndarray</em>) – The complete influence coefficient matrix.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>reduced_influ_mat</strong> – The reduced influence coefficient matrix. The matrix is square and of
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>reduced_infl_mat</strong> – The reduced influence coefficient matrix. The matrix is square and of
 order <code class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">np.shape(infl_mat)[0]</span></code> <span class="math">\(\times\)</span>
 <code class="docutils literal"><span class="pre">np.shape(infl_mat)[1]</span></code>.</td>
 </tr>
@@ -222,7 +222,7 @@ order <code class="docutils literal"><span class="pre">n</span> <span class="pre
 
 <dl class="function">
 <dt id="boundary_element.besolve">
-<code class="descname">besolve</code><span class="sig-paren">(</span><em>profile_1</em>, <em>profile_2</em>, <em>outer_force</em>, <em>red_influ_mat</em>, <em>delta_x</em>, <em>delta_y</em>, <em>norm_disp=0.1</em>, <em>max_offset=0.005</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/boundary_element.html#besolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#boundary_element.besolve" title="Permalink to this definition">¶</a></dt>
+<code class="descname">besolve</code><span class="sig-paren">(</span><em>profile_1</em>, <em>profile_2</em>, <em>outer_force</em>, <em>red_infl_mat</em>, <em>delta_x</em>, <em>delta_y</em>, <em>norm_disp=0.1</em>, <em>max_offset=0.005</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/boundary_element.html#besolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#boundary_element.besolve" title="Permalink to this definition">¶</a></dt>
 <dd><p>Solve a system of linear equations to find the pressure and displacement
 distribution in a boundary element contact problem:</p>
 <blockquote>
@@ -244,7 +244,7 @@ allowed discrepancy between inner and outer forces is defined by the
 <li><strong>profile_2</strong> (<em>ndarray</em>) – A matrix containing the profile heights of body 2. The matrix must have
 the same size and grid spacing (in unit length) as <code class="docutils literal"><span class="pre">profile_1</span></code>.</li>
 <li><strong>outer_force</strong> (<em>scalar</em>) – The (outer) normal force acting on the contact.</li>
-<li><strong>red_influ_mat</strong> (<em>ndarray</em>) – The reduced influence matrix calculated using the <code class="docutils literal"><span class="pre">beinflumatred</span></code>
+<li><strong>red_infl_mat</strong> (<em>ndarray</em>) – The reduced influence matrix calculated using the <code class="docutils literal"><span class="pre">beinflumatred</span></code>
 method.</li>
 <li><strong>delta_x</strong> (<em>scalar</em>) – The grid spacing of the profile matrices in unit length in x-direction.</li>
 <li><strong>delta_y</strong> (<em>scalar</em>) – The grid spacing of the profile matrices in unit length in y-direction.</li>

@@ -96,7 +96,7 @@ def beinflumatred(infl_mat):
 
     Returns
     -------
-    reduced_influ_mat: ndarray
+    reduced_infl_mat: ndarray
         The reduced influence coefficient matrix. The matrix is square and of
         order ``n = np.shape(infl_mat)[0]`` :math:`\\times`
         ``np.shape(infl_mat)[1]``.
@@ -104,14 +104,14 @@ def beinflumatred(infl_mat):
     """
     shape_mat = np.shape(infl_mat)
     len_mat = shape_mat[0] * shape_mat[1]
-    reduced_influ_mat = np.zeros((len_mat, len_mat))
+    reduced_infl_mat = np.zeros((len_mat, len_mat))
     counter = 0
     for i in range(0, shape_mat[0]):
         for j in range(0, shape_mat[1]):
-            reduced_influ_mat[counter, :] = \
+            reduced_infl_mat[counter, :] = \
                 np.reshape(infl_mat[i, j, :, :], len_mat)
             counter += 1
-    return reduced_influ_mat
+    return reduced_infl_mat
 
 
 def beinflumat(x_axis, y_axis, e_eff):
@@ -225,7 +225,7 @@ def __begetd(profile, norm_disp):
     return disp
 
 
-def __solvepress(red_influ_mat, disp):
+def __solvepress(red_infl_mat, disp):
     """
 
     Solve for pressure distribution by removing negative pressure elements from
@@ -233,7 +233,7 @@ def __solvepress(red_influ_mat, disp):
 
     Parameters
     ----------
-    red_influ_mat: ndarray
+    red_infl_mat: ndarray
         The recued influence matrix of the contact problem.
     disp: ndarray
         The (combined) displacement field of the contact problem.
@@ -246,7 +246,7 @@ def __solvepress(red_influ_mat, disp):
     """
 
     # find negative pressure arguments
-    pressure = spla.gmres(red_influ_mat, disp)[0]
+    pressure = spla.gmres(red_infl_mat, disp)[0]
     p_index = np.zeros(len(pressure))
     negative_p = np.where(pressure < 0)[0]
     p_neg = copy.deepcopy(negative_p)
@@ -255,7 +255,7 @@ def __solvepress(red_influ_mat, disp):
         pressure[p_neg] = 0
         p_index[p_neg] = 1
         u_new_reduced = np.delete(disp, [p_neg], axis=0)
-        g_new_reduced = np.delete(red_influ_mat, [p_neg], axis=0)
+        g_new_reduced = np.delete(red_infl_mat, [p_neg], axis=0)
         g_new_reduced = np.delete(g_new_reduced, [p_neg], axis=1)
         if pressure[np.where(p_index == 0)].size > 0:
             pressure[np.where(p_index == 0)] = \
@@ -267,7 +267,7 @@ def __solvepress(red_influ_mat, disp):
 
 
 def besolve(profile_1, profile_2, outer_force,
-            red_influ_mat, delta_x, delta_y,
+            red_infl_mat, delta_x, delta_y,
             norm_disp=0.1, max_offset=0.005):
     """
 
@@ -295,7 +295,7 @@ def besolve(profile_1, profile_2, outer_force,
         the same size and grid spacing (in unit length) as ``profile_1``.
     outer_force: scalar
         The (outer) normal force acting on the contact.
-    red_influ_mat: ndarray
+    red_infl_mat: ndarray
         The reduced influence matrix calculated using the ``beinflumatred``
         method.
     delta_x: scalar
@@ -333,7 +333,7 @@ def besolve(profile_1, profile_2, outer_force,
 
         # update local displacements
         disp = __begetd(profile, norm_disp)
-        pressure = __solvepress(red_influ_mat, disp)
+        pressure = __solvepress(red_infl_mat, disp)
 
         # calculate resulting force and adjust displacement for next loop
         pressure = np.reshape(pressure, (profile.shape[0], profile.shape[1]))
