@@ -116,9 +116,9 @@ def walther(temp_1, nu_1, temp_2, nu_2, temp_3):
         kinematic viscosity :code:`nu_2`.
     nu_2: scalar
         The kinematic viscosity in cSt at temperature :code:`temp_2`.
-    temp_3: scalar
-        The temperature in :math:`^{\\circ}\\text{C}` for which to calculate the
-        kinematic viscosity.
+    temp_3: ndarray
+        The temperature in :math:`^{\\circ}\\text{C}` for which to calculate
+        the kinematic viscosity.
 
     Returns
     -------
@@ -135,7 +135,7 @@ def walther(temp_1, nu_1, temp_2, nu_2, temp_3):
                lg(thetas[0]) / lg(thetas[1])) / \
               (1 - lg(thetas[0]) / lg(thetas[1]))
     const_b = (const_a - lg(lg(zed[1]))) / lg(thetas[1])
-    nu_3 = __nuwalther(10 ** 10 ** (const_a - const_b * lg(thetas[2])))
+    nu_3 = __nuwalther(10 ** 10 ** (const_a - const_b * np.log10(thetas[2])))
     return nu_3
 
 

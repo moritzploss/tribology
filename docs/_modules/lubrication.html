@@ -275,9 +275,9 @@
 <span class="sd">        kinematic viscosity :code:`nu_2`.</span>
 <span class="sd">    nu_2: scalar</span>
 <span class="sd">        The kinematic viscosity in cSt at temperature :code:`temp_2`.</span>
-<span class="sd">    temp_3: scalar</span>
-<span class="sd">        The temperature in :math:`^{\\circ}\\text{C}` for which to calculate the</span>
-<span class="sd">        kinematic viscosity.</span>
+<span class="sd">    temp_3: ndarray</span>
+<span class="sd">        The temperature in :math:`^{\\circ}\\text{C}` for which to calculate</span>
+<span class="sd">        the kinematic viscosity.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -294,7 +294,7 @@
                <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">/</span> \
               <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
     <span class="n">const_b</span> <span class="o">=</span> <span class="p">(</span><span class="n">const_a</span> <span class="o">-</span> <span class="n">lg</span><span class="p">(</span><span class="n">lg</span><span class="p">(</span><span class="n">zed</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span> <span class="o">/</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">nu_3</span> <span class="o">=</span> <span class="n">__nuwalther</span><span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">const_a</span> <span class="o">-</span> <span class="n">const_b</span> <span class="o">*</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
+    <span class="n">nu_3</span> <span class="o">=</span> <span class="n">__nuwalther</span><span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">const_a</span> <span class="o">-</span> <span class="n">const_b</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
     <span class="k">return</span> <span class="n">nu_3</span></div>
 
 

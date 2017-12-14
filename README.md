@@ -44,6 +44,7 @@ release listed below.
 
 #### Latest Neutral Build
 
+- method `walther` now supports `ndarray` arguments
 - method `profrolleriso` added to `tribology` module
 - no longer compatible with Python 3.4 and lower
 - the `data_import` module now provides methods to import output files
