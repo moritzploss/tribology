@@ -242,7 +242,7 @@
     <span class="k">return</span> <span class="n">infl_mat_grid</span>
 
 
-<div class="viewcode-block" id="beinflumatred"><a class="viewcode-back" href="../sec_contact_mechanics.html#boundary_element.beinflumatred">[docs]</a><span class="k">def</span> <span class="nf">beinflumatred</span><span class="p">(</span><span class="n">influ_mat</span><span class="p">):</span>
+<div class="viewcode-block" id="beinflumatred"><a class="viewcode-back" href="../sec_contact_mechanics.html#boundary_element.beinflumatred">[docs]</a><span class="k">def</span> <span class="nf">beinflumatred</span><span class="p">(</span><span class="n">infl_mat</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Calculate a reduced influence coefficient matrix from a complete influence</span>
@@ -250,25 +250,25 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    influ_mat: ndarray</span>
+<span class="sd">    infl_mat: ndarray</span>
 <span class="sd">        The complete influence coefficient matrix.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    reduced_influ_mat: ndarray</span>
 <span class="sd">        The reduced influence coefficient matrix. The matrix is square and of</span>
-<span class="sd">        order ``n = np.shape(influ_mat)[0]`` :math:`\\times`</span>
-<span class="sd">        ``np.shape(influ_mat)[1]``.</span>
+<span class="sd">        order ``n = np.shape(infl_mat)[0]`` :math:`\\times`</span>
+<span class="sd">        ``np.shape(infl_mat)[1]``.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">shape_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">influ_mat</span><span class="p">)</span>
+    <span class="n">shape_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">infl_mat</span><span class="p">)</span>
     <span class="n">len_mat</span> <span class="o">=</span> <span class="n">shape_mat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">shape_mat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">reduced_influ_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">len_mat</span><span class="p">,</span> <span class="n">len_mat</span><span class="p">))</span>
     <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">shape_mat</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">shape_mat</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
             <span class="n">reduced_influ_mat</span><span class="p">[</span><span class="n">counter</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> \
-                <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">influ_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">len_mat</span><span class="p">)</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">infl_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">len_mat</span><span class="p">)</span>
             <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">reduced_influ_mat</span></div>
 

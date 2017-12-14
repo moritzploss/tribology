@@ -83,7 +83,7 @@ def __beinflumatgrid(axis):
     return infl_mat_grid
 
 
-def beinflumatred(influ_mat):
+def beinflumatred(infl_mat):
     """
 
     Calculate a reduced influence coefficient matrix from a complete influence
@@ -91,25 +91,25 @@ def beinflumatred(influ_mat):
 
     Parameters
     ----------
-    influ_mat: ndarray
+    infl_mat: ndarray
         The complete influence coefficient matrix.
 
     Returns
     -------
     reduced_influ_mat: ndarray
         The reduced influence coefficient matrix. The matrix is square and of
-        order ``n = np.shape(influ_mat)[0]`` :math:`\\times`
-        ``np.shape(influ_mat)[1]``.
+        order ``n = np.shape(infl_mat)[0]`` :math:`\\times`
+        ``np.shape(infl_mat)[1]``.
 
     """
-    shape_mat = np.shape(influ_mat)
+    shape_mat = np.shape(infl_mat)
     len_mat = shape_mat[0] * shape_mat[1]
     reduced_influ_mat = np.zeros((len_mat, len_mat))
     counter = 0
     for i in range(0, shape_mat[0]):
         for j in range(0, shape_mat[1]):
             reduced_influ_mat[counter, :] = \
-                np.reshape(influ_mat[i, j, :, :], len_mat)
+                np.reshape(infl_mat[i, j, :, :], len_mat)
             counter += 1
     return reduced_influ_mat
 
