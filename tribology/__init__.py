@@ -1,5 +1,7 @@
 """
-Methods related to general tribology
+
+Python init file for tribology package
+
 """
 
 __all__ = ['tribology',

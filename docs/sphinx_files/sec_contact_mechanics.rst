@@ -5,7 +5,7 @@ Contact Mechanics
 Boundary Element Theory
 -----------------------
 
-All of the below methods can be found in the :code:`boundary_element`
+All of the below functions can be found in the :code:`boundary_element`
 module of the package.
 
 .. automodule:: boundary_element
@@ -15,7 +15,7 @@ module of the package.
 Hertzian Contact Theory
 -----------------------
 
-All of the below methods can be found in the :code:`hertz`
+All of the below functions can be found in the :code:`hertz`
 module of the package.
 
 .. automodule:: hertz

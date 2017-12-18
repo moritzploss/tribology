@@ -2,7 +2,8 @@
 
 """
 
-Methods related to Dowson-Hamrock film thickness calculations
+This module contains functions related to Dowson-Hamrock film thickness
+calculations.
 
 """
 

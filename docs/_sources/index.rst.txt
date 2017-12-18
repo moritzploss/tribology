@@ -6,7 +6,7 @@
 Welcome to Tribology's Documentation!
 =====================================
 
-This Python 3 package is a collection of methods and classes for tribology
+This Python 3 package is a collection of functions and classes for tribology
 research and education, including contact mechanics, lubrication
 science and data handling. The project is hosted on GitHub:
 
@@ -22,7 +22,7 @@ You can install the tribology package using pip:
 
 It is generally recommended to :code:`import` the tribology package as follows.
 This will import all modules of the package and you can use all classes and
-methods without ever worrying about modules:
+functions without ever worrying about modules:
 
 .. code-block:: python
 

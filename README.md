@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/moritzploss/tribology.png)](https://travis-ci.org/moritzploss/tribology)
 
 # tribology
-This Python 3 package is a collection of methods and classes for
+This Python 3 package is a collection of functions and classes for
 tribology research and education, including contact mechanics,
 lubrication science and data handling. It provides implementations of
 analytical and numerical calculation routines together with frequently
@@ -48,9 +48,9 @@ release listed below.
 - method `walther` now supports `ndarray` arguments
 - method `profrolleriso` added to `tribology` module
 - no longer compatible with Python 3.4 and lower
-- the `data_import` module now provides methods to import output files
+- the `data_import` module now provides functions to import output files
 from PCS Instruments test rigs.
-- module `data_import` added. the module contains methods for data
+- module `data_import` added. the module contains functions for data
 import from delimited data files into Numpy and Matlab database format.
 - modules renamed, removed leading `tribology_` in module names
 - auto-release on PyPI through Travis CI
@@ -72,10 +72,10 @@ https://moritzploss.github.io/tribology
 Non-package files are not checked. Build fails if Pylint error is found.
 - Python 3.4 and 3.5 builds added to Travis CI (now 3.4, 3.5 and 3.6)
 - change log added to `README.md`
-- various methods renamed
+- various functions renamed
 - helper functions made private
 - classifiers added to `setup.py`
-- demo for boundary element methods added (`demo_ball_on_plate.py`)
+- demo for boundary element functions added (`demo_ball_on_plate.py`)
 - refactoring
 
 #### 0.2.0

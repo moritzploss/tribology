@@ -1,7 +1,7 @@
-Methods for Data Import
-=======================
+Functions for Data Import
+=========================
 
-All of the below methods can be found in the :code:`data_import`
+All of the below functions can be found in the :code:`data_import`
 module of the package.
 
 .. automodule:: data_import

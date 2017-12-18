@@ -2,7 +2,7 @@
 
 """
 
-The methods in this module are related to tribology in general.
+The functions in this module are related to tribology in general.
 
 """
 

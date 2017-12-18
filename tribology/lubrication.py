@@ -2,7 +2,7 @@
 
 """
 
-Methods related to lubricants and lubrication
+This module contains functions related to lubricants and lubrication.
 
 """
 
