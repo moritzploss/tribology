@@ -25,11 +25,13 @@ import tribology as tr
 ```
 
 You can refer to the tribology package in **scientific publications** by
-using its DOI. The DOI for the latest release is shown in the top
-section of this page (see badges); DOIs for current and earlier
-releases can be found through Zenodo:
+using its DOI. The following DOI will resolve all releases of the
+package and automatically points to the latest release. A more detailed
+overview of the DOI release history can be found through
+<a href="https://zenodo.org/record/1117728" target="_blank">
+Zenodo</a>:
 
-    https://zenodo.org/badge/latestdoi/110825481
+    DOI:    10.5281/zenodo.1117727
 
 The package
 **<a href="https://moritzploss.github.io/tribology" target="_blank">
