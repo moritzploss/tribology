@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/moritzploss/tribology.png)](https://travis-ci.org/moritzploss/tribology)
+[![DOI](https://zenodo.org/badge/110825481.svg)](https://zenodo.org/badge/110825481.svg)
+
 
 # tribology
 This Python 3 package is a collection of functions and classes for
