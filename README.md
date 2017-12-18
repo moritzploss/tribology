@@ -31,7 +31,7 @@ overview of the DOI release history can be found through
 <a href="https://zenodo.org/record/1117728" target="_blank">
 Zenodo</a>:
 
-    DOI:    10.5281/zenodo.1117727
+    DOI:  10.5281/zenodo.1117727
 
 The package
 **<a href="https://moritzploss.github.io/tribology" target="_blank">
