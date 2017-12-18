@@ -25,9 +25,9 @@ import tribology as tr
 ```
 
 You can refer to the tribology package in **scientific publications** by
-using its DOI. The DOI for the latest release is shown on top of this
-page (see badges); DOIs for current and earlier releases can be found
-through Zenodo:
+using its DOI. The DOI for the latest release is shown in the top
+section of this page (see badges); DOIs for current and earlier
+releases can be found through Zenodo:
 
     https://zenodo.org/badge/latestdoi/110825481
 
