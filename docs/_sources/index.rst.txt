@@ -20,6 +20,17 @@ You can install the tribology package using pip:
 
    pip install tribology
 
+You can refer to the tribology package in **scientific publications** by
+using its DOI. The following DOI will resolve all releases of the
+package and automatically point to the latest release. A more detailed
+overview of the DOI release history can be found through
+<a href="https://zenodo.org/record/1117728" target="_blank">
+Zenodo</a>:
+
+.. code-block:: python
+
+   DOI: 10.5281/zenodo.1117727
+
 It is generally recommended to :code:`import` the tribology package as follows.
 This will import all modules of the package and you can use all classes and
 functions without ever worrying about modules:
