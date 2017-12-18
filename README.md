@@ -9,20 +9,27 @@ lubrication science and data handling. It provides implementations of
 analytical and numerical calculation routines together with frequently
 used constants.
 
-The **tribology** package is currently hosted on GitHub:
+The **tribology package** is currently hosted on GitHub:
 
     https://github.com/moritzploss/tribology
 
-You can also install the package through pip:
+You can also **install** the package through pip:
 
     pip install tribology
 
-After installation, it is recommended to import the package and all its
-modules as follows:
+After installation, it is recommended to **import** the package and all
+its modules as follows:
 
 ```python
 import tribology as tr
 ```
+
+You can refer to the tribology package in **scientific publications** by
+using its DOI. The DOI for the latest release is shown on top of this
+page (see badges); DOIs for current and earlier releases can be found
+through Zenodo:
+
+    https://zenodo.org/badge/latestdoi/110825481
 
 The package
 **<a href="https://moritzploss.github.io/tribology" target="_blank">
