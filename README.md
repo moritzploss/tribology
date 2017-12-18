@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/moritzploss/tribology.png)](https://travis-ci.org/moritzploss/tribology)
-[![DOI](https://zenodo.org/badge/110825481.svg)](https://zenodo.org/badge/110825481.svg)
+![DOI](https://zenodo.org/badge/110825481.svg)
 
 
 # tribology

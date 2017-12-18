@@ -21,5 +21,5 @@ install:
 - pip install -r requirements.txt
 script:
 - pytest tribology/tests/tests_tribology.py
-- pylint --rcfile=tribology.pylintrc tribology -E --extension-pkg-whitelist=numpy
+- pylint tribology -E --extension-pkg-whitelist=numpy
 - sphinx-build -b html docs/sphinx_files/ docs/ -a
