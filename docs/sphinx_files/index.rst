@@ -20,7 +20,7 @@ You can install the tribology package using pip:
 
    pip install tribology
 
-You can refer to the tribology package in **scientific publications** by
+You can refer to the tribology package in scientific publications by
 using its DOI. The following DOI will resolve all releases of the
 package and automatically point to the latest release:
 
