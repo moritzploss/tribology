@@ -9,7 +9,7 @@ lubrication science and data handling. It provides implementations of
 analytical and numerical calculation routines together with frequently
 used constants.
 
-The **tribology package** is currently hosted on GitHub:
+The **tribology package** is hosted on GitHub:
 
     https://github.com/moritzploss/tribology
 
@@ -41,9 +41,9 @@ in the `/docs` directory. Simple examples of how to use the package are
 provided in the `/demos`
 directory.
 
-The package is developed by Moritz Ploss at KTH Royal
-Institute of Technology, Stockholm, Sweden. For questions and comments,
-please **[send an email to Moritz](mailto:moritz.ploss@gmail.com)**.
+The package is developed by Moritz Ploss at KTH Royal Institute of 
+Technology, Stockholm, Sweden. For questions and comments, please 
+send a message through GitHub.
 
 The package is provided under an MIT license. See the `LICENSE.txt` file
 for more information.
