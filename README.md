@@ -13,7 +13,9 @@ The **tribology package** is currently hosted on GitHub:
 
     https://github.com/moritzploss/tribology
 
-You can also **install** the package through pip:
+You can also **install** the package from the 
+<a href="https://pypi.python.org/pypi/tribology" target="_blank"PyPI</a> 
+index using pip:
 
     pip install tribology
 
