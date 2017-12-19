@@ -36,10 +36,9 @@ overview of the DOI release history can be found through
 
 The package
 **<a href="https://moritzploss.github.io/tribology" target="_blank">
-documenation</a>** is provided through GitHub Pages and can be found
-in the `/docs` directory. Simple examples of how to use the package are
-provided in the `/demos`
-directory.
+documenation</a>** is provided through GitHub Pages; the source files
+can be found in the `/docs` directory. Simple examples of how to use 
+the package are provided in the `/demos` directory.
 
 The package is developed by Moritz Ploss at KTH Royal Institute of 
 Technology, Stockholm, Sweden. For questions and comments, please 
