@@ -55,8 +55,8 @@ release listed below.
 
 #### Latest Neutral Build
 
-- Function `fcylrolbear` added to module `roller_bearings`
 - Module `roller_bearings` added
+- Function `fcylrolbear` added to module `roller_bearings`
 
 
 #### 0.2.58
