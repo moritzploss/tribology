@@ -14,7 +14,6 @@ The **tribology package** is currently hosted on GitHub:
     https://github.com/moritzploss/tribology
 
 You can also **install** the package from the 
-<a href="https://pypi.python.org/pypi/tribology" target="_blank”>PyPI</a> 
 index using pip:
 
     pip install tribology
@@ -30,8 +29,7 @@ You can refer to the tribology package in **scientific publications** by
 using its DOI. The following DOI will resolve all releases of the
 package and automatically point to the latest release. A more detailed
 overview of the DOI release history can be found through
-<a href="https://doi.org/10.5281/zenodo.1117727" target="_blank">
-Zenodo</a>:
+<a href="https://doi.org/10.5281/zenodo.1117727" target="_blank">Zenodo</a>:
 
     DOI:  10.5281/zenodo.1117727
 
