@@ -9,7 +9,7 @@ from math import tan
 
 import numpy as np
 
-from boundary_element import *
+from tribology.boundary_element import __secant
 
 
 def fcylrolbear(ang_pos, comb_prof, ax_rol, f_rad, rad_clear=0, max_dif=0.0005):

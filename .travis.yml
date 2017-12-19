@@ -22,4 +22,4 @@ install:
 script:
 - pytest tribology/tests/tests_tribology.py
 - pylint tribology -E --extension-pkg-whitelist=numpy
-- sphinx-build -b html docs/sphinx_files/ docs/ -a
+# - sphinx-build -b html docs/sphinx_files/ docs/ -a
