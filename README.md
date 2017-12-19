@@ -28,7 +28,7 @@ You can refer to the tribology package in **scientific publications** by
 using its DOI. The following DOI will resolve all releases of the
 package and automatically point to the latest release. A more detailed
 overview of the DOI release history can be found through
-<a href="https://zenodo.org/record/1117728" target="_blank">
+<a href="https://doi.org/10.5281/zenodo.1117727" target="_blank">
 Zenodo</a>:
 
     DOI:  10.5281/zenodo.1117727
