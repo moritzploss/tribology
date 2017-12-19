@@ -1,0 +1,338 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>roller_bearings &mdash; Tribology  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Tribology  documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Tribology
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sec_general_tribology.html">General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_contact_mechanics.html">Contact Mechanics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_ehd_lubrication.html">EHD Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_lubricants.html">Lubricants and Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_data_import.html">Functions for Data Import</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_roller_bearings.html">Roller Bearings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_constants.html">Constants for Tribology</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Tribology</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>roller_bearings</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for roller_bearings</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">Functions related to roller bearings.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">tan</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">boundary_element</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="fcylrolbear"><a class="viewcode-back" href="../sec_roller_bearings.html#roller_bearings.fcylrolbear">[docs]</a><span class="k">def</span> <span class="nf">fcylrolbear</span><span class="p">(</span><span class="n">ang_pos</span><span class="p">,</span> <span class="n">comb_prof</span><span class="p">,</span> <span class="n">ax_rol</span><span class="p">,</span> <span class="n">f_rad</span><span class="p">,</span> <span class="n">rad_clear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_dif</span><span class="o">=</span><span class="mf">0.0005</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Caclulate the normal force distribution in a cylindrical roller bearing</span>
+<span class="sd">    according to DIN 26281. For the calculation, each roller is modelled as a</span>
+<span class="sd">    set of neighbouring spring slices with known stiffness. Applying an outer</span>
+<span class="sd">    force :code:`f_rad` leads to an elastic displacement of the spring slices</span>
+<span class="sd">    of each roller. To find the normal force on each roller, the spring slice</span>
+<span class="sd">    displacement is varied systematically until the sum of the inner spring</span>
+<span class="sd">    forces is (approximately) equal to the outer force :code:`f_rad`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ang_pos: ndarray</span>
+<span class="sd">        The angular positions of the rollers in angular coordinates. The length</span>
+<span class="sd">        of the array determines the number of rollers.</span>
+<span class="sd">    comb_prof: ndarray</span>
+<span class="sd">        The combined 1D profile of the roller and the bearing inner/outer ring.</span>
+<span class="sd">    ax_rol: ndarray</span>
+<span class="sd">        The longitudinal axis of the roller with length :code:`len(comb_prof)`.</span>
+<span class="sd">        The length of the axis determines the number of roller spring slices.</span>
+<span class="sd">    f_rad: scalar</span>
+<span class="sd">        The normal force acting on the inner ring of the bearing. The force acts</span>
+<span class="sd">        from the center of the bearing in the direction of the origin of the</span>
+<span class="sd">        polar axis.</span>
+<span class="sd">    rad_clear: scalar, optional</span>
+<span class="sd">        The radial clearance of the bearing. Default is 0.</span>
+<span class="sd">    max_dif: scalar, optional</span>
+<span class="sd">        The maximum allowed difference between the outer force :code:`f_rad` and</span>
+<span class="sd">        the sum over all roller forces (in percent of :code:`f_rad`). Default</span>
+<span class="sd">        is 0.05 %.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    f_rols: ndarray</span>
+<span class="sd">        The roller normal forces for each roller position in :code:`ang_pos`.</span>
+<span class="sd">    disp_rols: ndarray</span>
+<span class="sd">        The elastic normal displacement in the ring-roller contact for each</span>
+<span class="sd">        roller position in :code:`ang_pos`.</span>
+<span class="sd">    delta_f: scalar</span>
+<span class="sd">        The difference between the outer force :code:`f_rad` and the sum over</span>
+<span class="sd">        all roller forces in the direction of applied force (i.e., the</span>
+<span class="sd">        difference between user input force and the force used for the numerical</span>
+<span class="sd">        calculation).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">f_rad</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ang_pos</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ang_pos</span><span class="p">)),</span> <span class="mi">0</span>
+
+    <span class="n">x_axis</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ax_rol</span><span class="p">)</span>
+    <span class="n">len_roll</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ax_rol</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">ax_rol</span><span class="p">)</span>
+    <span class="n">res_x</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_axis</span><span class="p">)</span>
+    <span class="n">num_rols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ang_pos</span><span class="p">)</span>
+    <span class="n">cos_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ang_pos</span><span class="p">)</span>
+
+    <span class="c1"># stiffness constants according to DIN 26281</span>
+    <span class="n">stiff_rol</span> <span class="o">=</span> <span class="mi">35948</span> <span class="o">*</span> <span class="n">len_roll</span><span class="o">**</span><span class="p">(</span><span class="mi">8</span> <span class="o">/</span> <span class="mi">9</span><span class="p">)</span>
+    <span class="n">stiff_slice</span> <span class="o">=</span> <span class="n">stiff_rol</span> <span class="o">/</span> <span class="n">res_x</span>
+
+    <span class="n">sum_re_ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_rols</span><span class="p">)</span>
+    <span class="n">psi_j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_rols</span><span class="p">)</span>
+    <span class="n">delta_j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_rols</span><span class="p">)</span>
+    <span class="n">sum_mns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_rols</span><span class="p">)</span>
+    <span class="n">delta_jk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_rols</span><span class="p">,</span> <span class="n">res_x</span><span class="p">))</span>
+    <span class="n">disp_rols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_rols</span><span class="p">)</span>
+
+    <span class="n">sec</span> <span class="o">=</span> <span class="p">[[],</span> <span class="p">[]]</span>
+
+    <span class="n">delta_r</span> <span class="o">=</span> <span class="n">rad_clear</span> <span class="o">+</span> <span class="n">rad_clear</span> <span class="o">*</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">6</span>
+    <span class="n">delta_f</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">delta_f</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_dif</span> <span class="o">*</span> <span class="n">f_rad</span><span class="p">:</span>
+        <span class="n">sum_slice_disps</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">disp_rols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_rols</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">rol</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rols</span><span class="p">):</span>
+            <span class="n">sum_re_ns</span><span class="p">[</span><span class="n">rol</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">sum_mns</span><span class="p">[</span><span class="n">rol</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">delta_j</span><span class="p">[</span><span class="n">rol</span><span class="p">]</span> <span class="o">=</span> <span class="n">delta_r</span> <span class="o">*</span> <span class="n">cos_pos</span><span class="p">[</span><span class="n">rol</span><span class="p">]</span> <span class="o">-</span> <span class="n">rad_clear</span> <span class="o">/</span> <span class="mi">2</span>
+
+            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">res_x</span><span class="p">):</span>
+                <span class="n">delta_jk</span><span class="p">[</span><span class="n">rol</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">delta_j</span><span class="p">[</span><span class="n">rol</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_axis</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">*</span>
+                                          <span class="n">tan</span><span class="p">(</span><span class="n">psi_j</span><span class="p">[</span><span class="n">rol</span><span class="p">])</span> <span class="o">-</span>
+                                          <span class="mi">2</span> <span class="o">*</span> <span class="n">comb_prof</span><span class="p">[</span><span class="n">idx</span><span class="p">]),</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">sum_re_ns</span><span class="p">[</span><span class="n">rol</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">delta_jk</span><span class="p">[</span><span class="n">rol</span><span class="p">,</span> <span class="n">idx</span><span class="p">],</span> <span class="p">(</span><span class="mi">10</span> <span class="o">/</span> <span class="mi">9</span><span class="p">))</span>
+
+            <span class="n">disp_rols</span><span class="p">[</span><span class="n">rol</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos_pos</span><span class="p">[</span><span class="n">rol</span><span class="p">]</span> <span class="o">*</span> <span class="n">sum_re_ns</span><span class="p">[</span><span class="n">rol</span><span class="p">]</span>
+            <span class="n">sum_slice_disps</span> <span class="o">+=</span> <span class="n">disp_rols</span><span class="p">[</span><span class="n">rol</span><span class="p">]</span>
+
+        <span class="n">delta_f</span> <span class="o">=</span> <span class="n">f_rad</span> <span class="o">-</span> <span class="n">stiff_slice</span> <span class="o">*</span> <span class="n">sum_slice_disps</span>
+        <span class="n">sec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">delta_r</span><span class="p">])</span>
+        <span class="n">sec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sec</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">delta_f</span><span class="p">])</span>
+        <span class="n">delta_r</span> <span class="o">=</span> <span class="n">__secant</span><span class="p">(</span><span class="n">sec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sec</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">f_rols</span> <span class="o">=</span> <span class="n">sum_re_ns</span> <span class="o">*</span> <span class="n">stiff_slice</span>
+
+    <span class="k">return</span> <span class="n">f_rols</span><span class="p">,</span> <span class="n">disp_rols</span><span class="p">,</span> <span class="n">delta_f</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Moritz Ploss.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

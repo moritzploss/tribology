@@ -80,22 +80,8 @@ class LubeDens(Enum):
     Scalar constants for lubricant density in :math:`\\text{g ml}^{-1}`.
     Available values are:
 
-    :NA_LUBE_KR_015:
-    :NYNAS_HP_4:
-    :NYNAS_HP_12:
-    :NYNAS_T_3:
-    :NYNAS_T_9:
-    :NYNAS_T_22:
-    :SIGMA_ALDRICH_MINERAL_OIL_HEAVY:
-
     """
-    NA_LUBE_KR_015 = 0.884
-    NYNAS_HP_4 = 0.852
-    NYNAS_HP_12 = 0.867
-    NYNAS_T_3 = 0.868
-    NYNAS_T_9 = 0.888
-    NYNAS_T_22 = 0.902
-    SIGMA_ALDRICH_MINERAL_OIL_HEAVY = 0.862
+    MINERAL_OIL_GENERIC = 0.862
 
 
 class LubeVisc(Enum):
@@ -109,23 +95,8 @@ class LubeVisc(Enum):
 
     :TEMPS: Tuple containing temperature values of 40 and 100
 
-    :NA_LUBE_KR_015:
-    :NYNAS_HP_4:
-    :NYNAS_HP_12:
-    :NYNAS_T_3:
-    :NYNAS_T_9:
-    :NYNAS_T_22:
-    :SIGMA_ALDRICH_MINERAL_OIL_HEAVY:
-
     """
     TEMPS = (40, 100)
-    NA_LUBE_KR_015 = (114.0, 13.5)
-    NYNAS_HP_4 = (20, 4.2)
-    NYNAS_HP_12 = (110, 12)
-    NYNAS_T_3 = (3.7, 1.3)
-    NYNAS_T_9 = (9.0, 2.2)
-    NYNAS_T_22 = (22.5, 3.6)
-    SIGMA_ALDRICH_MINERAL_OIL_HEAVY = (67.0, 18.9)
 
 
 class PressVisc(Enum):

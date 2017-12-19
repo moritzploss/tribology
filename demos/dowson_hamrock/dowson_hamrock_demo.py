@@ -43,9 +43,9 @@ def dowson_hamrock_demo():
 
     # get material and lube properties
     alpha_p = tr.refix(tr.PressVisc.MINERAL_OIL_GENERIC.value, 'M', '')
-    kin = tr.LubeVisc.SIGMA_ALDRICH_MINERAL_OIL_HEAVY.value
+    kin = (67.0, 18.9)
     lube_temps = tr.LubeVisc.TEMPS.value
-    density = tr.LubeDens.SIGMA_ALDRICH_MINERAL_OIL_HEAVY.value
+    density = tr.LubeDens.MINERAL_OIL_GENERIC.value
 
     # calculate dynamic viscosity at operating temperature
     kin_temp = tr.walther(lube_temps[0], kin[0], lube_temps[1], kin[1], temp)

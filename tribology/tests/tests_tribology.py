@@ -6,6 +6,7 @@ Test cases for tribology functions
 
 import unittest
 import os
+import math
 
 import numpy as np
 
@@ -14,6 +15,7 @@ from .. import hertz as th
 from .. import lubrication as tl
 from .. import boundary_element as tb
 from .. import data_import as td
+from .. import roller_bearings as trb
 
 
 class TestTribology(unittest.TestCase):
@@ -50,7 +52,7 @@ class TestTribology(unittest.TestCase):
 
 class TestBoundaryElement(unittest.TestCase):
     """
-    test case methods for tribology functions relate to boundary element codes
+    test case methods for tribology functions related to boundary element codes
     """
     def test_be(self):
         """
@@ -85,21 +87,36 @@ class TestBoundaryElement(unittest.TestCase):
 
 class TestDowsonHamrock(unittest.TestCase):
     """
-    test case methods for tribology functions relate to Dowson-Hamrock
+    test case methods for tribology functions related to Dowson-Hamrock
     """
     pass
 
 
 class TestLubrication(unittest.TestCase):
     """
-    test case methods for tribology functions relate to Lubrication
+    test case methods for tribology functions related to Lubrication
     """
     pass
 
 
+class TestRollerBearings(unittest.TestCase):
+    """
+    test case methods for functions related to roller_bearings
+    """
+
+    def test_fcylrolbear(self):
+        f_rols, _, _ = trb.fcylrolbear(np.linspace(0, 2 * math.pi, 13),
+                                       np.zeros(31),
+                                       np.linspace(-5, 5, 31),
+                                       3000,
+                                       rad_clear=0.0184,
+                                       max_dif=0.0005)
+        self.assertEqual(round(np.amax(f_rols)), round(967.7))
+
+
 class TestDataImport(unittest.TestCase):
     """
-    test case methods for functions relate to data_import
+    test case methods for functions related to data_import
     """
     demo_1 = 'tribology/tests/data_import/demo_1'
     demo_2 = 'tribology/tests/data_import/demo_2'
@@ -215,7 +232,7 @@ class TestDataImport(unittest.TestCase):
 
 class TestHertz(unittest.TestCase):
     """
-    test case methods for tribology functions relate to Hertz contact theory
+    test case methods for tribology functions related to Hertz contact theory
     """
 
     def test_hertz_mean_pressure_ball(self):

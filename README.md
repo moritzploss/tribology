@@ -55,6 +55,12 @@ release listed below.
 
 #### Latest Neutral Build
 
+- Function `fcylrolbear` added to module `roller_bearings`
+- Module `roller_bearings` added
+
+
+#### 0.2.58
+
 - DOI now indexed through Zenodo
 - method `walther` now supports `ndarray` arguments
 - method `profrolleriso` added to `tribology` module
@@ -67,6 +73,7 @@ import from delimited data files into Numpy and Matlab database format.
 - auto-release on PyPI through Travis CI
 - refactoring
 
+
 #### 0.2.2
 
 - html documentation now with multi-page structure
@@ -75,6 +82,7 @@ import from delimited data files into Numpy and Matlab database format.
 - function `eeff` renamed to `reff`
 - function `meff` renamed to `eeff`
 - helper functions made private
+
 
 #### 0.2.1
 - Sphinx documentation added to GitHub repo, docs available at
