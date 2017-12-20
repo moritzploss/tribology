@@ -4,10 +4,10 @@ setup(
    name='tribology',
    version='0.2.63',
    setup_requires=['setuptools-git-version'],
-   description='methods and classes for tribology research',
-   long_description='collection of methods and classes for tribology research '
-                    'and education, including contact mechanics and '
-                    'lubrication science',
+   description='functions and classes for tribology research',
+   long_description='A collection of functions and classes for tribology research '
+                    'and education, including contact mechanics, '
+                    'lubrication science and data handling.',
    author='Moritz Ploss',
    author_email='moritz.ploss@gmail.com',
    packages=['tribology'],
