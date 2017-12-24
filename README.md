@@ -57,6 +57,7 @@ release listed below.
 
 - Module `roller_bearings` added
 - Function `fcylrolbear` added to module `roller_bearings`
+- Refactoring
 
 
 #### 0.2.58
