@@ -15,7 +15,7 @@ from tribology.boundary_element import __secant
 def fcylrolbear(ang_pos, comb_prof, ax_rol, f_rad, rad_clear=0, max_dif=0.0005):
     """
 
-    Caclulate the normal force distribution in a cylindrical roller bearing
+    Calculate the normal force distribution in a cylindrical roller bearing
     according to DIN 26281. For the calculation, each roller is modelled as a
     set of neighbouring spring slices with known stiffness. Applying an outer
     force :code:`f_rad` leads to an elastic displacement of the spring slices
