@@ -53,9 +53,9 @@ def fcylrolbear(ang_pos, comb_prof, ax_rol, f_rad, rad_clear=0, max_dif=0.0005):
         roller position in :code:`ang_pos`.
     delta_f: scalar
         The difference between the outer force :code:`f_rad` and the sum over
-        all roller forces in the direction of applied force (i.e., the
-        difference between user input force and the force used for the numerical
-        calculation).
+        all roller forces in the direction of applied force, in units of force
+        (i.e., the difference between user input force and the force used for
+        the numerical calculation).
 
     """
 
