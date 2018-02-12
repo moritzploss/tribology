@@ -1,9 +1,5 @@
 jobs:
   include:
-    - stage: unit tests
-      script: "Running unit tests (1)"
-    - stage: unit tests
-      script: "Running unit tests (2)"
     - stage: deploy
       script: skip
       deploy:
