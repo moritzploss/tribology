@@ -3,4 +3,3 @@ numpy
 scipy
 numexpr
 mock
-bumpversion
