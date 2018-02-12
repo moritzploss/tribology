@@ -208,8 +208,8 @@
         <span class="n">x_profile</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">diam_arr</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">prof</span><span class="p">,</span> <span class="n">diam_arr</span><span class="p">))))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">x_profile</span> <span class="o">=</span> <span class="n">prof</span>
-
-    <span class="k">return</span> <span class="n">x_profile</span></div>
+</div>
+    <span class="k">return</span> <span class="n">x_profile</span>
 
 
 <div class="viewcode-block" id="profball"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.profball">[docs]</a><span class="k">def</span> <span class="nf">profball</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">r_ball</span><span class="p">):</span>
@@ -232,8 +232,8 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">prof</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">r_ball</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r_ball</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
-    <span class="n">prof_heights</span> <span class="o">=</span> <span class="n">prof</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">r_ball</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">prof_heights</span></div>
+    <span class="n">prof_heights</span> <span class="o">=</span> <span class="n">prof</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">r_ball</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">prof_heights</span>
 
 
 <div class="viewcode-block" id="profrevolve"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.profrevolve">[docs]</a><span class="k">def</span> <span class="nf">profrevolve</span><span class="p">(</span><span class="n">prof_1d</span><span class="p">,</span> <span class="n">y_axis</span><span class="p">,</span> <span class="n">y_diam</span><span class="p">):</span>
@@ -278,8 +278,8 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">min_prof</span> <span class="o">=</span> <span class="n">prof_2d</span><span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">len_x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">len_x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
     <span class="n">prof_2d</span> <span class="o">=</span> <span class="p">(</span><span class="n">prof_2d</span> <span class="o">-</span> <span class="n">min_prof</span><span class="p">)</span>
-    <span class="n">y_profile</span> <span class="o">=</span> <span class="n">prof_2d</span><span class="p">[:,</span> <span class="n">floor</span><span class="p">(</span><span class="n">len_y</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span>
-    <span class="k">return</span> <span class="n">prof_2d</span><span class="p">,</span> <span class="n">y_profile</span></div>
+    <span class="n">y_profile</span> <span class="o">=</span> <span class="n">prof_2d</span><span class="p">[:,</span> <span class="n">floor</span><span class="p">(</span><span class="n">len_y</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span></div>
+    <span class="k">return</span> <span class="n">prof_2d</span><span class="p">,</span> <span class="n">y_profile</span>
 
 
 <div class="viewcode-block" id="vslide"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.vslide">[docs]</a><span class="k">def</span> <span class="nf">vslide</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">):</span>
@@ -301,8 +301,8 @@
 <span class="sd">        The sliding velocity in the tribological contact.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">vel_slide</span> <span class="o">=</span> <span class="n">vel_1</span> <span class="o">-</span> <span class="n">vel_2</span>
-    <span class="k">return</span> <span class="n">vel_slide</span></div>
+    <span class="n">vel_slide</span> <span class="o">=</span> <span class="n">vel_1</span> <span class="o">-</span> <span class="n">vel_2</span></div>
+    <span class="k">return</span> <span class="n">vel_slide</span>
 
 
 <div class="viewcode-block" id="vroll"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.vroll">[docs]</a><span class="k">def</span> <span class="nf">vroll</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">):</span>
@@ -324,8 +324,8 @@
 <span class="sd">        The rolling velocity in the tribological contact.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">vel_roll</span> <span class="o">=</span> <span class="p">(</span><span class="n">vel_1</span> <span class="o">+</span> <span class="n">vel_2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-    <span class="k">return</span> <span class="n">vel_roll</span></div>
+    <span class="n">vel_roll</span> <span class="o">=</span> <span class="p">(</span><span class="n">vel_1</span> <span class="o">+</span> <span class="n">vel_2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span></div>
+    <span class="k">return</span> <span class="n">vel_roll</span>
 
 
 <div class="viewcode-block" id="srr"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.srr">[docs]</a><span class="k">def</span> <span class="nf">srr</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">):</span>
@@ -347,8 +347,8 @@
 <span class="sd">        The slide-to-roll ratio in the tribological contact.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">val_srr</span> <span class="o">=</span> <span class="n">vslide</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">)</span> <span class="o">/</span> <span class="n">vroll</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">val_srr</span></div>
+    <span class="n">val_srr</span> <span class="o">=</span> <span class="n">vslide</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">)</span> <span class="o">/</span> <span class="n">vroll</span><span class="p">(</span><span class="n">vel_1</span><span class="p">,</span> <span class="n">vel_2</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">val_srr</span>
 
 
 <div class="viewcode-block" id="radpersec2rpm"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.radpersec2rpm">[docs]</a><span class="k">def</span> <span class="nf">radpersec2rpm</span><span class="p">(</span><span class="n">vel_rad_per_sec</span><span class="p">):</span>
@@ -369,8 +369,8 @@
 <span class="sd">        The velocity in rotations per minute.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">vel_rpm</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">rpm2radpersec</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">vel_rad_per_sec</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">vel_rpm</span></div>
+    <span class="n">vel_rpm</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">rpm2radpersec</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">vel_rad_per_sec</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">vel_rpm</span>
 
 
 <div class="viewcode-block" id="rpm2radpersec"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.rpm2radpersec">[docs]</a><span class="k">def</span> <span class="nf">rpm2radpersec</span><span class="p">(</span><span class="n">vel_rpm</span><span class="p">):</span>
@@ -391,8 +391,8 @@
 <span class="sd">         The velocity in radians per second.</span>
 
 <span class="sd">     &quot;&quot;&quot;</span>
-    <span class="n">vel_rad_per_sec</span> <span class="o">=</span> <span class="n">vel_rpm</span> <span class="o">/</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span>
-    <span class="k">return</span> <span class="n">vel_rad_per_sec</span></div>
+    <span class="n">vel_rad_per_sec</span> <span class="o">=</span> <span class="n">vel_rpm</span> <span class="o">/</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span></div>
+    <span class="k">return</span> <span class="n">vel_rad_per_sec</span>
 
 
 <div class="viewcode-block" id="rball3plates"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.rball3plates">[docs]</a><span class="k">def</span> <span class="nf">rball3plates</span><span class="p">(</span><span class="n">r_ball</span><span class="p">,</span> <span class="n">plate_angle</span><span class="o">=</span><span class="mf">1.5708</span><span class="p">):</span>
@@ -414,8 +414,8 @@
 <span class="sd">        The sliding radius.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">r_slide</span> <span class="o">=</span> <span class="n">r_ball</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">((</span><span class="n">pi</span> <span class="o">-</span> <span class="n">plate_angle</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">r_slide</span></div>
+    <span class="n">r_slide</span> <span class="o">=</span> <span class="n">r_ball</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">((</span><span class="n">pi</span> <span class="o">-</span> <span class="n">plate_angle</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">r_slide</span>
 
 
 <div class="viewcode-block" id="fball3plates"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.fball3plates">[docs]</a><span class="k">def</span> <span class="nf">fball3plates</span><span class="p">(</span><span class="n">ax_force</span><span class="p">,</span> <span class="n">plate_angle</span><span class="o">=</span><span class="mf">1.5708</span><span class="p">):</span>
@@ -437,8 +437,8 @@
 <span class="sd">        The normal force acting in each ball-plate contact.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">norm_force</span> <span class="o">=</span> <span class="n">ax_force</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">plate_angle</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">norm_force</span></div>
+    <span class="n">norm_force</span> <span class="o">=</span> <span class="n">ax_force</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">plate_angle</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">norm_force</span>
 
 
 <div class="viewcode-block" id="gfourball"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.gfourball">[docs]</a><span class="k">def</span> <span class="nf">gfourball</span><span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">r_2</span><span class="p">):</span>
@@ -463,8 +463,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">r_circum_circle</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r_2</span>
     <span class="n">contact_angle</span> <span class="o">=</span> <span class="n">acos</span><span class="p">(</span><span class="n">r_circum_circle</span> <span class="o">/</span> <span class="p">(</span><span class="n">r_1</span> <span class="o">+</span> <span class="n">r_2</span><span class="p">))</span>
-    <span class="n">sliding_radius</span> <span class="o">=</span> <span class="n">r_circum_circle</span> <span class="o">-</span> <span class="n">r_2</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">contact_angle</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">sliding_radius</span><span class="p">,</span> <span class="n">contact_angle</span></div>
+    <span class="n">sliding_radius</span> <span class="o">=</span> <span class="n">r_circum_circle</span> <span class="o">-</span> <span class="n">r_2</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">contact_angle</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">sliding_radius</span><span class="p">,</span> <span class="n">contact_angle</span>
 
 
 <div class="viewcode-block" id="ffourball"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.ffourball">[docs]</a><span class="k">def</span> <span class="nf">ffourball</span><span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">r_2</span><span class="p">,</span> <span class="n">ax_force</span><span class="p">):</span>
@@ -488,8 +488,8 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">contact_angle</span> <span class="o">=</span> <span class="n">gfourball</span><span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">r_2</span><span class="p">)</span>
-    <span class="n">norm_force</span> <span class="o">=</span> <span class="n">ax_force</span> <span class="o">/</span> <span class="n">sin</span><span class="p">(</span><span class="n">contact_angle</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
-    <span class="k">return</span> <span class="n">norm_force</span></div>
+    <span class="n">norm_force</span> <span class="o">=</span> <span class="n">ax_force</span> <span class="o">/</span> <span class="n">sin</span><span class="p">(</span><span class="n">contact_angle</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span></div>
+    <span class="k">return</span> <span class="n">norm_force</span>
 
 
 <div class="viewcode-block" id="refix"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.refix">[docs]</a><span class="k">def</span> <span class="nf">refix</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">p_in</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">p_out</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
@@ -539,8 +539,8 @@
               <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">6</span><span class="p">,</span>
               <span class="s1">&#39;G&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">9</span><span class="p">,</span>
               <span class="s1">&#39;T&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">12</span><span class="p">}</span>
-    <span class="n">val_refix</span> <span class="o">=</span> <span class="n">val</span> <span class="o">*</span> <span class="n">prefix</span><span class="p">[</span><span class="n">p_in</span><span class="p">]</span> <span class="o">/</span> <span class="n">prefix</span><span class="p">[</span><span class="n">p_out</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">val_refix</span></div>
+    <span class="n">val_refix</span> <span class="o">=</span> <span class="n">val</span> <span class="o">*</span> <span class="n">prefix</span><span class="p">[</span><span class="n">p_in</span><span class="p">]</span> <span class="o">/</span> <span class="n">prefix</span><span class="p">[</span><span class="n">p_out</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="n">val_refix</span>
 
 
 <div class="viewcode-block" id="abbottfirestone"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.abbottfirestone">[docs]</a><span class="k">def</span> <span class="nf">abbottfirestone</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">num_bins</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
@@ -570,8 +570,8 @@
     <span class="n">prob_dist</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">each_bin</span> <span class="ow">in</span> <span class="n">bins</span><span class="p">:</span>
         <span class="n">prob_dist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">trace</span> <span class="o">&gt;=</span> <span class="n">each_bin</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span> <span class="o">*</span> <span class="n">num_bins</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">bins</span><span class="p">,</span> <span class="n">prob_dist</span></div>
+            <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">trace</span> <span class="o">&gt;=</span> <span class="n">each_bin</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span> <span class="o">*</span> <span class="n">num_bins</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">bins</span><span class="p">,</span> <span class="n">prob_dist</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

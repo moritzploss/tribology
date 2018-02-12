@@ -268,8 +268,8 @@
         <span class="n">delta_r</span> <span class="o">=</span> <span class="n">__secant</span><span class="p">(</span><span class="n">sec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sec</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
     <span class="n">f_rols</span> <span class="o">=</span> <span class="n">sum_re_ns</span> <span class="o">*</span> <span class="n">stiff_slice</span>
-
-    <span class="k">return</span> <span class="n">f_rols</span><span class="p">,</span> <span class="n">disp_rols</span><span class="p">,</span> <span class="n">delta_f</span></div>
+</div>
+    <span class="k">return</span> <span class="n">f_rols</span><span class="p">,</span> <span class="n">disp_rols</span><span class="p">,</span> <span class="n">delta_f</span>
 
 
 <div class="viewcode-block" id="kinaxthrustrolbear"><a class="viewcode-back" href="../sec_roller_bearings.html#roller_bearings.kinaxthrustrolbear">[docs]</a><span class="k">def</span> <span class="nf">kinaxthrustrolbear</span><span class="p">(</span><span class="n">rot_vel_1</span><span class="p">,</span> <span class="n">mean_diam</span><span class="p">,</span> <span class="n">ax_rol</span><span class="p">,</span> <span class="n">diam_rol</span><span class="p">,</span> <span class="n">rot_vel_2</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
@@ -320,8 +320,8 @@
         <span class="o">+</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">diam_rol</span> <span class="o">*</span> <span class="n">omega_rol</span>
     <span class="n">rel_vel</span> <span class="o">=</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">diam_rol</span> <span class="o">*</span> <span class="n">omega_rol</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> \
         <span class="p">(</span><span class="n">mean_diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ax_rol</span><span class="p">)</span> <span class="o">*</span> <span class="n">omega_cage</span>
-    <span class="n">slip_rol</span> <span class="o">=</span> <span class="n">rel_vel</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">mean_diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ax_rol</span><span class="p">)</span> <span class="o">*</span> <span class="n">omega_cage</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">raceway_vel_eff</span><span class="p">,</span> <span class="n">raceway_vel_rol</span><span class="p">,</span> <span class="n">slip_rol</span></div>
+    <span class="n">slip_rol</span> <span class="o">=</span> <span class="n">rel_vel</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">mean_diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ax_rol</span><span class="p">)</span> <span class="o">*</span> <span class="n">omega_cage</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">raceway_vel_eff</span><span class="p">,</span> <span class="n">raceway_vel_rol</span><span class="p">,</span> <span class="n">slip_rol</span>
 </pre></div>
 
            </div>

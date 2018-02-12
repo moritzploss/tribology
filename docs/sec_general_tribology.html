@@ -160,7 +160,7 @@
             
   <div class="section" id="general-tribology">
 <h1>General Tribology<a class="headerlink" href="#general-tribology" title="Permalink to this headline">¶</a></h1>
-<p>All of the below functions can be found in the <code class="code docutils literal"><span class="pre">tribology</span></code> module of the
+<p>All of the below functions can be found in the <code class="code docutils literal notranslate"><span class="pre">tribology</span></code> module of the
 package.</p>
 <span class="target" id="module-tribology"></span><p>The functions in this module are related to tribology in general.</p>
 <dl class="function">
@@ -309,7 +309,7 @@ central axis.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
 <li><strong>prof_2d</strong> (<em>ndarray</em>) – The surface heights of the profile. The array size is
-<code class="code docutils literal"><span class="pre">len(prof_2d)</span></code> <span class="math">\(\times\)</span> <code class="code docutils literal"><span class="pre">len(y_axis)</span></code></li>
+<code class="code docutils literal notranslate"><span class="pre">len(prof_2d)</span></code> <span class="math notranslate">\(\times\)</span> <code class="code docutils literal notranslate"><span class="pre">len(y_axis)</span></code></li>
 <li><strong>y_profile</strong> (<em>ndarray</em>) – The profile heights along the y-direction of the surface at the central
 element of the x-axis.</li>
 </ul>
@@ -324,7 +324,7 @@ element of the x-axis.</li>
 <dt id="tribology.profrolleriso">
 <code class="descname">profrolleriso</code><span class="sig-paren">(</span><em>x_axis</em>, <em>diam</em>, <em>length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#profrolleriso"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.profrolleriso" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a roller profile according to DIN 26281 for rollers with
-<code class="code docutils literal"><span class="pre">length</span></code> <span class="math">\(\leq\)</span> <code class="code docutils literal"><span class="pre">2.5</span></code> <span class="math">\(\cdot\)</span> <code class="code docutils literal"><span class="pre">diam</span></code>.</p>
+<code class="code docutils literal notranslate"><span class="pre">length</span></code> <span class="math notranslate">\(\leq\)</span> <code class="code docutils literal notranslate"><span class="pre">2.5</span></code> <span class="math notranslate">\(\cdot\)</span> <code class="code docutils literal notranslate"><span class="pre">diam</span></code>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -332,13 +332,13 @@ element of the x-axis.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>x_axis</strong> (<em>ndarray</em>) – The x-axis of the roller. The origin of the axis must be at the center
 of the roller. To obtain sensible results, the axis limits must be
-within <code class="code docutils literal"><span class="pre">+/-</span> <span class="pre">length</span> <span class="pre">/</span> <span class="pre">2</span></code>.</li>
+within <code class="code docutils literal notranslate"><span class="pre">+/-</span> <span class="pre">length</span> <span class="pre">/</span> <span class="pre">2</span></code>.</li>
 <li><strong>diam</strong> (<em>scalar</em>) – The diameter of the roller.</li>
 <li><strong>length</strong> (<em>scalar</em>) – The length of the roller.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>x_profile</strong> – The profile heights of the roller along <code class="code docutils literal"><span class="pre">x_axis</span></code>.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>x_profile</strong> – The profile heights of the roller along <code class="code docutils literal notranslate"><span class="pre">x_axis</span></code>.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
@@ -396,28 +396,28 @@ axis of the ball. Default value corresponds to 45 degree.</li>
 <dt id="tribology.refix">
 <code class="descname">refix</code><span class="sig-paren">(</span><em>val</em>, <em>p_in=''</em>, <em>p_out=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#refix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.refix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert between different SI unit prefixes. Available options are:</p>
-<p><code class="code docutils literal"><span class="pre">'T'</span></code>   Terra</p>
-<p><code class="code docutils literal"><span class="pre">'G'</span></code> Giga</p>
-<p><code class="code docutils literal"><span class="pre">'M'</span></code> Mega</p>
-<p><code class="code docutils literal"><span class="pre">'k'</span></code> Kilo</p>
-<p><code class="code docutils literal"><span class="pre">'m'</span></code> Milli</p>
-<p><code class="code docutils literal"><span class="pre">'mu'</span></code> Micro</p>
-<p><code class="code docutils literal"><span class="pre">'n'</span></code> Nano</p>
-<p><code class="code docutils literal"><span class="pre">'p'</span></code> Pico</p>
+<p><code class="code docutils literal notranslate"><span class="pre">'T'</span></code>   Terra</p>
+<p><code class="code docutils literal notranslate"><span class="pre">'G'</span></code> Giga</p>
+<p><code class="code docutils literal notranslate"><span class="pre">'M'</span></code> Mega</p>
+<p><code class="code docutils literal notranslate"><span class="pre">'k'</span></code> Kilo</p>
+<p><code class="code docutils literal notranslate"><span class="pre">'m'</span></code> Milli</p>
+<p><code class="code docutils literal notranslate"><span class="pre">'mu'</span></code> Micro</p>
+<p><code class="code docutils literal notranslate"><span class="pre">'n'</span></code> Nano</p>
+<p><code class="code docutils literal notranslate"><span class="pre">'p'</span></code> Pico</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>val</strong> (<em>scalar</em>) – The value for which to convert the unit prefix.</li>
-<li><strong>p_in</strong> (<em>string, any of the above, optional</em>) – The current prefix of <code class="code docutils literal"><span class="pre">val</span></code>. If <code class="code docutils literal"><span class="pre">p_in</span></code> is undefined,
-<code class="code docutils literal"><span class="pre">val</span></code> has no SI unit prefix.</li>
-<li><strong>p_out</strong> (<em>string, any of the above, optional</em>) – The prefix of <code class="code docutils literal"><span class="pre">val_refix</span></code> after the conversion.  If <code class="code docutils literal"><span class="pre">p_in</span></code>
-is undefined, <code class="code docutils literal"><span class="pre">val_refix</span></code> has no SI unit prefix.</li>
+<li><strong>p_in</strong> (<em>string, any of the above, optional</em>) – The current prefix of <code class="code docutils literal notranslate"><span class="pre">val</span></code>. If <code class="code docutils literal notranslate"><span class="pre">p_in</span></code> is undefined,
+<code class="code docutils literal notranslate"><span class="pre">val</span></code> has no SI unit prefix.</li>
+<li><strong>p_out</strong> (<em>string, any of the above, optional</em>) – The prefix of <code class="code docutils literal notranslate"><span class="pre">val_refix</span></code> after the conversion.  If <code class="code docutils literal notranslate"><span class="pre">p_in</span></code>
+is undefined, <code class="code docutils literal notranslate"><span class="pre">val_refix</span></code> has no SI unit prefix.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>val_refix</strong> – The value in units of prefix <code class="code docutils literal"><span class="pre">p_out</span></code>.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>val_refix</strong> – The value in units of prefix <code class="code docutils literal notranslate"><span class="pre">p_out</span></code>.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>

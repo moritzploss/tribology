@@ -160,7 +160,7 @@
             
   <div class="section" id="roller-bearings">
 <h1>Roller Bearings<a class="headerlink" href="#roller-bearings" title="Permalink to this headline">¶</a></h1>
-<p>All of the below functions can be found in the <code class="code docutils literal"><span class="pre">roller_bearings</span></code>
+<p>All of the below functions can be found in the <code class="code docutils literal notranslate"><span class="pre">roller_bearings</span></code>
 module of the package.</p>
 <span class="target" id="module-roller_bearings"></span><p>Functions related to roller bearings.</p>
 <dl class="function">
@@ -169,10 +169,10 @@ module of the package.</p>
 <dd><p>Calculate the normal force distribution in a cylindrical roller bearing
 according to DIN 26281. For the calculation, each roller is modelled as a
 set of neighbouring spring slices with known stiffness. Applying an outer
-force <code class="code docutils literal"><span class="pre">f_rad</span></code> leads to an elastic displacement of the spring slices
+force <code class="code docutils literal notranslate"><span class="pre">f_rad</span></code> leads to an elastic displacement of the spring slices
 of each roller. To find the normal force on each roller, the spring slice
 displacement is varied systematically until the sum of the inner spring
-forces is (approximately) equal to the outer force <code class="code docutils literal"><span class="pre">f_rad</span></code>.</p>
+forces is (approximately) equal to the outer force <code class="code docutils literal notranslate"><span class="pre">f_rad</span></code>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -181,23 +181,23 @@ forces is (approximately) equal to the outer force <code class="code docutils li
 <li><strong>ang_pos</strong> (<em>ndarray</em>) – The angular positions of the rollers in angular coordinates. The length
 of the array determines the number of rollers.</li>
 <li><strong>comb_prof</strong> (<em>ndarray</em>) – The combined 1D profile of the roller and the bearing inner/outer ring.</li>
-<li><strong>ax_rol</strong> (<em>ndarray</em>) – The longitudinal axis of the roller with length <code class="code docutils literal"><span class="pre">len(comb_prof)</span></code>.
+<li><strong>ax_rol</strong> (<em>ndarray</em>) – The longitudinal axis of the roller with length <code class="code docutils literal notranslate"><span class="pre">len(comb_prof)</span></code>.
 The length of the axis determines the number of roller spring slices.</li>
 <li><strong>f_rad</strong> (<em>scalar</em>) – The normal force acting on the inner ring of the bearing. The force acts
 from the center of the bearing in the direction of the origin of the
 polar axis.</li>
 <li><strong>rad_clear</strong> (<em>scalar, optional</em>) – The radial clearance of the bearing. Default is 0.</li>
-<li><strong>max_dif</strong> (<em>scalar, optional</em>) – The maximum allowed difference between the outer force <code class="code docutils literal"><span class="pre">f_rad</span></code> and
-the sum over all roller forces (in percent of <code class="code docutils literal"><span class="pre">f_rad</span></code>). Default
+<li><strong>max_dif</strong> (<em>scalar, optional</em>) – The maximum allowed difference between the outer force <code class="code docutils literal notranslate"><span class="pre">f_rad</span></code> and
+the sum over all roller forces (in percent of <code class="code docutils literal notranslate"><span class="pre">f_rad</span></code>). Default
 is 0.05 %.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>f_rols</strong> (<em>ndarray</em>) – The roller normal forces for each roller position in <code class="code docutils literal"><span class="pre">ang_pos</span></code>.</li>
+<li><strong>f_rols</strong> (<em>ndarray</em>) – The roller normal forces for each roller position in <code class="code docutils literal notranslate"><span class="pre">ang_pos</span></code>.</li>
 <li><strong>disp_rols</strong> (<em>ndarray</em>) – The elastic normal displacement in the ring-roller contact for each
-roller position in <code class="code docutils literal"><span class="pre">ang_pos</span></code>.</li>
-<li><strong>delta_f</strong> (<em>scalar</em>) – The difference between the outer force <code class="code docutils literal"><span class="pre">f_rad</span></code> and the sum over
+roller position in <code class="code docutils literal notranslate"><span class="pre">ang_pos</span></code>.</li>
+<li><strong>delta_f</strong> (<em>scalar</em>) – The difference between the outer force <code class="code docutils literal notranslate"><span class="pre">f_rad</span></code> and the sum over
 all roller forces in the direction of applied force, in units of force
 (i.e., the difference between user input force and the force used for
 the numerical calculation).</li>
