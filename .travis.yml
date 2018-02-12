@@ -1,11 +1,19 @@
-deploy:
-  provider: pypi
-  user: moritz.ploss
-  password:
-    secure: Ek3K1q3m822DPsEa6FHlMS4CLj4B5bB/e/JVLirEcu8WkFt78slLS4JNc5rokP2u1mJ9Cc71oOsJY+shkBGyx0HC5NX/MW1Ox2mZf9a90e+WJBzr5u7R/DDzzPqVyk0lUac1jlJkj9+I4fxJN2WGzZyCH/wZa4/h2T3Aa/U3hzZAe2FFDn+n0kqRSUBRuh53afMPut1KuLvBzET1TXCRejWCOQxANbpNbMepT3Lf+linb29aWlSoEmQ/agSyyy/sz/12vZgeWJW6zrS45GO+hiLTzW3W98ut8DdABOZiqtlICE1M5ZSku7iCzyVVDPW9yYJ5kNy8dYS++gwpGeIalMdA7fn7WZRlFb/1zYqMWFU+BrMCFI9iS4ku69JnC3JOT/tVgVW17dlLbrKFuKzDX7AnvnEN+FvC19wFsmsRyfnCS7N5qU8YMe0uKHT+IaQ/Ogb8ASbk7fP+2RhXd8MEVEAONqPNQaamCDMpdpU24jcG7KOEJaj3tVbvOmOKgaO6XQL1JZIRzJUthXd0tPZ0Cl1JNswnQijaaGNPop3EIEZuXID3SUBmwzupcZc2wMMKPLtKVREmecDtGI4q47LdNCzqUUvIs5E/vXPPdcEGcqhrxsX0b993dv9r6ofFnSOvZXsCl6D2maLNliDXuqApq99+ljo6rR3f3VB0fIM9inc=
-  distributions: sdist bdist_wheel
-  on:
-    tags: true
+jobs:
+  include:
+    - stage: unit tests
+      script: "Running unit tests (1)"
+    - stage: unit tests
+      script: "Running unit tests (2)"
+    - stage: deploy
+      script: skip
+      deploy:
+        provider: pypi
+        user: moritz.ploss
+        password:
+          secure: Ek3K1q3m822DPsEa6FHlMS4CLj4B5bB/e/JVLirEcu8WkFt78slLS4JNc5rokP2u1mJ9Cc71oOsJY+shkBGyx0HC5NX/MW1Ox2mZf9a90e+WJBzr5u7R/DDzzPqVyk0lUac1jlJkj9+I4fxJN2WGzZyCH/wZa4/h2T3Aa/U3hzZAe2FFDn+n0kqRSUBRuh53afMPut1KuLvBzET1TXCRejWCOQxANbpNbMepT3Lf+linb29aWlSoEmQ/agSyyy/sz/12vZgeWJW6zrS45GO+hiLTzW3W98ut8DdABOZiqtlICE1M5ZSku7iCzyVVDPW9yYJ5kNy8dYS++gwpGeIalMdA7fn7WZRlFb/1zYqMWFU+BrMCFI9iS4ku69JnC3JOT/tVgVW17dlLbrKFuKzDX7AnvnEN+FvC19wFsmsRyfnCS7N5qU8YMe0uKHT+IaQ/Ogb8ASbk7fP+2RhXd8MEVEAONqPNQaamCDMpdpU24jcG7KOEJaj3tVbvOmOKgaO6XQL1JZIRzJUthXd0tPZ0Cl1JNswnQijaaGNPop3EIEZuXID3SUBmwzupcZc2wMMKPLtKVREmecDtGI4q47LdNCzqUUvIs5E/vXPPdcEGcqhrxsX0b993dv9r6ofFnSOvZXsCl6D2maLNliDXuqApq99+ljo6rR3f3VB0fIM9inc=
+        distributions: sdist bdist_wheel
+        on:
+          tags: true
 language: python
 python:
 - '3.5'
