@@ -3,3 +3,8 @@ numpy
 scipy
 numexpr
 mock
+sphinx
+pylint
+sphinxjp.themes.dotted
+sphinx_rtd_theme
+sphinxcontrib-fulltoc

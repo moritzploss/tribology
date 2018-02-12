@@ -166,7 +166,7 @@ module of the package.</p>
 <dl class="function">
 <dt id="roller_bearings.fcylrolbear">
 <code class="descname">fcylrolbear</code><span class="sig-paren">(</span><em>ang_pos</em>, <em>comb_prof</em>, <em>ax_rol</em>, <em>f_rad</em>, <em>rad_clear=0</em>, <em>max_dif=0.0005</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/roller_bearings.html#fcylrolbear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#roller_bearings.fcylrolbear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Caclulate the normal force distribution in a cylindrical roller bearing
+<dd><p>Calculate the normal force distribution in a cylindrical roller bearing
 according to DIN 26281. For the calculation, each roller is modelled as a
 set of neighbouring spring slices with known stiffness. Applying an outer
 force <code class="code docutils literal"><span class="pre">f_rad</span></code> leads to an elastic displacement of the spring slices
@@ -198,9 +198,50 @@ is 0.05 %.</li>
 <li><strong>disp_rols</strong> (<em>ndarray</em>) – The elastic normal displacement in the ring-roller contact for each
 roller position in <code class="code docutils literal"><span class="pre">ang_pos</span></code>.</li>
 <li><strong>delta_f</strong> (<em>scalar</em>) – The difference between the outer force <code class="code docutils literal"><span class="pre">f_rad</span></code> and the sum over
-all roller forces in the direction of applied force (i.e., the
-difference between user input force and the force used for the numerical
-calculation).</li>
+all roller forces in the direction of applied force, in units of force
+(i.e., the difference between user input force and the force used for
+the numerical calculation).</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="roller_bearings.kinaxthrustrolbear">
+<code class="descname">kinaxthrustrolbear</code><span class="sig-paren">(</span><em>rot_vel_1</em>, <em>mean_diam</em>, <em>ax_rol</em>, <em>diam_rol</em>, <em>rot_vel_2=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/roller_bearings.html#kinaxthrustrolbear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#roller_bearings.kinaxthrustrolbear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the kinematics of an axial thrust roller bearing, for example
+a bearing of type 81212. This function calculates the effective velocity
+along the disc (washer) and roller raceway as well as the slip (in percent)
+along the roller’s axis of rotation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rot_vel_1</strong> (<em>scalar</em>) – The rotational velocity (in rpm) of the shaft washer of the bearing.</li>
+<li><strong>mean_diam</strong> (<em>positive scalar</em>) – The mean diameter of the bearing (the diameter of the bearing where
+there is zero slip in the contact).</li>
+<li><strong>ax_rol</strong> (<em>ndarray</em>) – The axis of rotation of the roller, typically spanning from -<cite>length</cite>/2
+to +`length`/2, where <cite>length</cite> is the length of the roller (or the
+section of the roller length that is of interest for the calculation,
+i.e., the points can be asymmetric about the center of the roller).</li>
+<li><strong>diam_rol</strong> (<em>positive scalar</em>) – The diameter of the roller.</li>
+<li><strong>rot_vel_2</strong> (<em>scalar</em>) – The rotational velocity (in rpm) of the housing washer of the bearing.
+By default, it is assumed that the housing washer is not rotating, so
+<cite>rot_vel_2 = 0</cite></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>raceway_vel_eff</strong> (<em>ndarray</em>) – The effective velocity of the shaft washer along the roller axis.</li>
+<li><strong>raceway_vel_rol</strong> (<em>ndarray</em>) – The raceway velocity of the roller along the roller axis.</li>
+<li><strong>slip_rol</strong> (<em>ndarray</em>) – The roller slip (in percent) along the roller axis. This parameter is
+calculated by comparing the raceway velocity of the roller (at each
+point along its axis) to the ideal rolling velocity in the same point
+(the velocity that would lead to zero slip).</li>
 </ul>
 </p>
 </td>

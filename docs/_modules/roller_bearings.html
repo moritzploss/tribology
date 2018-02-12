@@ -165,7 +165,7 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">tan</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">tan</span><span class="p">,</span> <span class="n">pi</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -175,7 +175,7 @@
 <div class="viewcode-block" id="fcylrolbear"><a class="viewcode-back" href="../sec_roller_bearings.html#roller_bearings.fcylrolbear">[docs]</a><span class="k">def</span> <span class="nf">fcylrolbear</span><span class="p">(</span><span class="n">ang_pos</span><span class="p">,</span> <span class="n">comb_prof</span><span class="p">,</span> <span class="n">ax_rol</span><span class="p">,</span> <span class="n">f_rad</span><span class="p">,</span> <span class="n">rad_clear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_dif</span><span class="o">=</span><span class="mf">0.0005</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">    Caclulate the normal force distribution in a cylindrical roller bearing</span>
+<span class="sd">    Calculate the normal force distribution in a cylindrical roller bearing</span>
 <span class="sd">    according to DIN 26281. For the calculation, each roller is modelled as a</span>
 <span class="sd">    set of neighbouring spring slices with known stiffness. Applying an outer</span>
 <span class="sd">    force :code:`f_rad` leads to an elastic displacement of the spring slices</span>
@@ -213,9 +213,9 @@
 <span class="sd">        roller position in :code:`ang_pos`.</span>
 <span class="sd">    delta_f: scalar</span>
 <span class="sd">        The difference between the outer force :code:`f_rad` and the sum over</span>
-<span class="sd">        all roller forces in the direction of applied force (i.e., the</span>
-<span class="sd">        difference between user input force and the force used for the numerical</span>
-<span class="sd">        calculation).</span>
+<span class="sd">        all roller forces in the direction of applied force, in units of force</span>
+<span class="sd">        (i.e., the difference between user input force and the force used for</span>
+<span class="sd">        the numerical calculation).</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -270,6 +270,58 @@
     <span class="n">f_rols</span> <span class="o">=</span> <span class="n">sum_re_ns</span> <span class="o">*</span> <span class="n">stiff_slice</span>
 
     <span class="k">return</span> <span class="n">f_rols</span><span class="p">,</span> <span class="n">disp_rols</span><span class="p">,</span> <span class="n">delta_f</span></div>
+
+
+<div class="viewcode-block" id="kinaxthrustrolbear"><a class="viewcode-back" href="../sec_roller_bearings.html#roller_bearings.kinaxthrustrolbear">[docs]</a><span class="k">def</span> <span class="nf">kinaxthrustrolbear</span><span class="p">(</span><span class="n">rot_vel_1</span><span class="p">,</span> <span class="n">mean_diam</span><span class="p">,</span> <span class="n">ax_rol</span><span class="p">,</span> <span class="n">diam_rol</span><span class="p">,</span> <span class="n">rot_vel_2</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the kinematics of an axial thrust roller bearing, for example</span>
+<span class="sd">    a bearing of type 81212. This function calculates the effective velocity</span>
+<span class="sd">    along the disc (washer) and roller raceway as well as the slip (in percent)</span>
+<span class="sd">    along the roller&#39;s axis of rotation.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rot_vel_1: scalar</span>
+<span class="sd">        The rotational velocity (in rpm) of the shaft washer of the bearing.</span>
+<span class="sd">    mean_diam: positive scalar</span>
+<span class="sd">        The mean diameter of the bearing (the diameter of the bearing where</span>
+<span class="sd">        there is zero slip in the contact).</span>
+<span class="sd">    ax_rol: ndarray</span>
+<span class="sd">        The axis of rotation of the roller, typically spanning from -`length`/2</span>
+<span class="sd">        to +`length`/2, where `length` is the length of the roller (or the</span>
+<span class="sd">        section of the roller length that is of interest for the calculation,</span>
+<span class="sd">        i.e., the points can be asymmetric about the center of the roller).</span>
+<span class="sd">    diam_rol: positive scalar</span>
+<span class="sd">        The diameter of the roller.</span>
+<span class="sd">    rot_vel_2: scalar</span>
+<span class="sd">        The rotational velocity (in rpm) of the housing washer of the bearing.</span>
+<span class="sd">        By default, it is assumed that the housing washer is not rotating, so</span>
+<span class="sd">        `rot_vel_2 = 0`</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    raceway_vel_eff: ndarray</span>
+<span class="sd">        The effective velocity of the shaft washer along the roller axis.</span>
+<span class="sd">    raceway_vel_rol: ndarray</span>
+<span class="sd">        The raceway velocity of the roller along the roller axis.</span>
+<span class="sd">    slip_rol: ndarray</span>
+<span class="sd">        The roller slip (in percent) along the roller axis. This parameter is</span>
+<span class="sd">        calculated by comparing the raceway velocity of the roller (at each</span>
+<span class="sd">        point along its axis) to the ideal rolling velocity in the same point</span>
+<span class="sd">        (the velocity that would lead to zero slip).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">omega</span> <span class="o">=</span> <span class="p">(</span><span class="n">rot_vel_1</span> <span class="o">-</span> <span class="n">rot_vel_2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span>
+    <span class="n">omega_cage</span> <span class="o">=</span> <span class="n">omega</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">omega_rol</span> <span class="o">=</span> <span class="n">mean_diam</span> <span class="o">/</span> <span class="n">diam_rol</span> <span class="o">*</span> <span class="n">omega_cage</span>
+    <span class="n">raceway_vel_eff</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">mean_diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ax_rol</span><span class="p">)</span> <span class="o">*</span> <span class="n">omega</span>
+    <span class="n">raceway_vel_rol</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">mean_diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ax_rol</span><span class="p">)</span> <span class="o">*</span> <span class="n">omega_cage</span> \
+        <span class="o">+</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">diam_rol</span> <span class="o">*</span> <span class="n">omega_rol</span>
+    <span class="n">rel_vel</span> <span class="o">=</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">diam_rol</span> <span class="o">*</span> <span class="n">omega_rol</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> \
+        <span class="p">(</span><span class="n">mean_diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ax_rol</span><span class="p">)</span> <span class="o">*</span> <span class="n">omega_cage</span>
+    <span class="n">slip_rol</span> <span class="o">=</span> <span class="n">rel_vel</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">mean_diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ax_rol</span><span class="p">)</span> <span class="o">*</span> <span class="n">omega_cage</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">raceway_vel_eff</span><span class="p">,</span> <span class="n">raceway_vel_rol</span><span class="p">,</span> <span class="n">slip_rol</span></div>
 </pre></div>
 
            </div>
