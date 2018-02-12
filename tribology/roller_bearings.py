@@ -5,7 +5,7 @@ Functions related to roller bearings.
 
 """
 
-from math import tan
+from math import tan, pi
 
 import numpy as np
 
@@ -110,3 +110,55 @@ def fcylrolbear(ang_pos, comb_prof, ax_rol, f_rad, rad_clear=0, max_dif=0.0005):
     f_rols = sum_re_ns * stiff_slice
 
     return f_rols, disp_rols, delta_f
+
+
+def kinaxthrustrolbear(rot_vel_1, mean_diam, ax_rol, diam_rol, rot_vel_2=0):
+    """
+
+    Calculate the kinematics of an axial thrust roller bearing, for example
+    a bearing of type 81212. This function calculates the effective velocity
+    along the disc (washer) and roller raceway as well as the slip (in percent)
+    along the roller's axis of rotation.
+
+    Parameters
+    ----------
+    rot_vel_1: scalar
+        The rotational velocity (in rpm) of the shaft washer of the bearing.
+    mean_diam: positive scalar
+        The mean diameter of the bearing (the diameter of the bearing where
+        there is zero slip in the contact).
+    ax_rol: ndarray
+        The axis of rotation of the roller, typically spanning from -`length`/2
+        to +`length`/2, where `length` is the length of the roller (or the
+        section of the roller length that is of interest for the calculation,
+        i.e., the points can be asymmetric about the center of the roller).
+    diam_rol: positive scalar
+        The diameter of the roller.
+    rot_vel_2: scalar
+        The rotational velocity (in rpm) of the housing washer of the bearing.
+        By default, it is assumed that the housing washer is not rotating, so
+        `rot_vel_2 = 0`
+
+    Returns
+    -------
+    raceway_vel_eff: ndarray
+        The effective velocity of the shaft washer along the roller axis.
+    raceway_vel_rol: ndarray
+        The raceway velocity of the roller along the roller axis.
+    slip_rol: ndarray
+        The roller slip (in percent) along the roller axis. This parameter is
+        calculated by comparing the raceway velocity of the roller (at each
+        point along its axis) to the ideal rolling velocity in the same point
+        (the velocity that would lead to zero slip).
+
+    """
+    omega = (rot_vel_1 - rot_vel_2) / 60
+    omega_cage = omega / 2
+    omega_rol = mean_diam / diam_rol * omega_cage
+    raceway_vel_eff = 2 * pi * (mean_diam / 2 + ax_rol) * omega
+    raceway_vel_rol = 2 * pi * (mean_diam / 2 + ax_rol) * omega_cage \
+        + pi * diam_rol * omega_rol
+    rel_vel = pi * diam_rol * omega_rol - 2 * pi * \
+        (mean_diam / 2 + ax_rol) * omega_cage
+    slip_rol = rel_vel / (2 * pi * (mean_diam / 2 + ax_rol) * omega_cage)
+    return raceway_vel_eff, raceway_vel_rol, slip_rol

@@ -38,7 +38,7 @@ The package
 **<a href="https://moritzploss.github.io/tribology" target="_blank">
 documenation</a>** is provided through GitHub Pages; the source files
 can be found in the `/docs` directory. Simple examples of how to use 
-the package are provided in the `/demos` directory.
+the package are provided in the `/examples` directory.
 
 The package is developed by Moritz Ploss at KTH Royal Institute of 
 Technology, Stockholm, Sweden. For questions and comments, please 
@@ -55,9 +55,10 @@ release listed below.
 
 #### Latest Neutral Build
 
-- Module `roller_bearings` added
-- Function `fcylrolbear` added to module `roller_bearings`
-- Refactoring
+- module `roller_bearings` added
+- function `fcylrolbear` added to module `roller_bearings`
+- function `kinaxthrustrolbear` added to module `roller_bearings`
+- refactoring
 
 
 #### 0.2.58
