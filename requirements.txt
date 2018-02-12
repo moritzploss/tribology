@@ -1,6 +1,6 @@
 
 numpy
-scipy
+scipy==1.0.0
 numexpr
 mock
 sphinx
