@@ -251,7 +251,7 @@ def __solvepress(red_infl_mat, disp):
     negative_p = np.where(pressure < 0)[0]
     p_neg = copy.deepcopy(negative_p)
 
-    while len(negative_p) > 0:
+    while negative_p:
         pressure[p_neg] = 0
         p_index[p_neg] = 1
         u_new_reduced = np.delete(disp, [p_neg], axis=0)

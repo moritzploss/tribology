@@ -105,6 +105,10 @@ class TestRollerBearings(unittest.TestCase):
     """
 
     def test_fcylrolbear(self):
+        """
+        calculate load distribution in radial roller bearing and compare result
+        to reference result
+        """
         f_rols, _, _ = trb.fcylrolbear(np.linspace(0, 2 * math.pi, 13),
                                        np.zeros(31),
                                        np.linspace(-5, 5, 31),

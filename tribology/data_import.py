@@ -15,6 +15,7 @@ import copy
 import math
 
 import numpy as np
+# pylint: disable=no-member
 import scipy.io
 
 
@@ -266,7 +267,7 @@ def __process_file(in_file, dec_mark, deli, pad=0):
             # fields with 'nan'
             split_line[:] = (item or 'nan' for item in split_line)
             # if this is the first data-containing line...
-            if not len(col_heads):
+            if not col_heads:
                 # get the column headers
                 col_heads = __process_header(prev_line)
                 # write the first line to the data table
