@@ -166,10 +166,10 @@
 <h1>Contact Mechanics<a class="headerlink" href="#contact-mechanics" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="boundary-element-theory">
 <h2>Boundary Element Theory<a class="headerlink" href="#boundary-element-theory" title="Permalink to this headline">¶</a></h2>
-<p>All of the below functions can be found in the <code class="code docutils literal notranslate"><span class="pre">boundary_element</span></code>
+<p>All of the below functions can be found in the <code class="code docutils literal"><span class="pre">boundary_element</span></code>
 module of the package.</p>
 <span class="target" id="module-boundary_element"></span><p>This module contains functions related to boundary element solvers for contact
-mechanics calculations. Please see the <code class="code docutils literal notranslate"><span class="pre">/demo</span></code> directory for minimum
+mechanics calculations. Please see the <code class="code docutils literal"><span class="pre">/demo</span></code> directory for minimum
 examples of how to combine the below functions to perform contact mechanics
 calculations.</p>
 <dl class="function">
@@ -189,8 +189,8 @@ element contact mechanics calculations.</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>infl_mat</strong> – The complete four-dimensional influence coefficient matrix of size
-<code class="docutils literal notranslate"><span class="pre">len(x_axis)</span></code> <span class="math notranslate">\(\times\)</span> <code class="docutils literal notranslate"><span class="pre">len(y_axis)</span></code> <span class="math notranslate">\(\times\)</span>
-<code class="docutils literal notranslate"><span class="pre">len(x_axis)</span></code> <span class="math notranslate">\(\times\)</span> <code class="docutils literal notranslate"><span class="pre">len(y_axis)</span></code>.</p>
+<code class="docutils literal"><span class="pre">len(x_axis)</span></code> <span class="math">\(\times\)</span> <code class="docutils literal"><span class="pre">len(y_axis)</span></code> <span class="math">\(\times\)</span>
+<code class="docutils literal"><span class="pre">len(x_axis)</span></code> <span class="math">\(\times\)</span> <code class="docutils literal"><span class="pre">len(y_axis)</span></code>.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
@@ -212,8 +212,8 @@ coefficient matrix.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>infl_mat</strong> (<em>ndarray</em>) – The complete influence coefficient matrix.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>reduced_infl_mat</strong> – The reduced influence coefficient matrix. The matrix is square and of
-order <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">np.shape(infl_mat)[0]</span></code> <span class="math notranslate">\(\times\)</span>
-<code class="docutils literal notranslate"><span class="pre">np.shape(infl_mat)[1]</span></code>.</td>
+order <code class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">np.shape(infl_mat)[0]</span></code> <span class="math">\(\times\)</span>
+<code class="docutils literal"><span class="pre">np.shape(infl_mat)[1]</span></code>.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
 </tr>
@@ -227,15 +227,15 @@ order <code class="docutils literal notranslate"><span class="pre">n</span> <spa
 <dd><p>Solve a system of linear equations to find the pressure and displacement
 distribution in a boundary element contact problem:</p>
 <blockquote>
-<div><span class="math notranslate">\([\text{pressure}] = [\text{reduced influence matrix}]^{-1}
+<div><span class="math">\([\text{pressure}] = [\text{reduced influence matrix}]^{-1}
 \cdot [\text{displacement}]\)</span></div></blockquote>
 <p>The start value for the relative normal displacement is defined by the
-<code class="docutils literal notranslate"><span class="pre">norm_disp</span></code> parameter. The default value corresponds to 0.1 units of
+<code class="docutils literal"><span class="pre">norm_disp</span></code> parameter. The default value corresponds to 0.1 units of
 length. If the start value of the normal displacement is close to the
 equilibrium displacement, the calculation time may be reduced significantly.</p>
 <p>The solver stops once inner and outer forces are in equilibrium. The maximum
 allowed discrepancy between inner and outer forces is defined by the
-<code class="docutils literal notranslate"><span class="pre">max_offset</span></code> parameter. The default value corresponds to 0.5 %.</p>
+<code class="docutils literal"><span class="pre">max_offset</span></code> parameter. The default value corresponds to 0.5 %.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -243,9 +243,9 @@ allowed discrepancy between inner and outer forces is defined by the
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>profile_1</strong> (<em>ndarray</em>) – A matrix containing the profile heights of body 1.</li>
 <li><strong>profile_2</strong> (<em>ndarray</em>) – A matrix containing the profile heights of body 2. The matrix must have
-the same size and grid spacing (in unit length) as <code class="docutils literal notranslate"><span class="pre">profile_1</span></code>.</li>
+the same size and grid spacing (in unit length) as <code class="docutils literal"><span class="pre">profile_1</span></code>.</li>
 <li><strong>outer_force</strong> (<em>scalar</em>) – The (outer) normal force acting on the contact.</li>
-<li><strong>red_infl_mat</strong> (<em>ndarray</em>) – The reduced influence matrix calculated using the <code class="docutils literal notranslate"><span class="pre">beinflumatred</span></code>
+<li><strong>red_infl_mat</strong> (<em>ndarray</em>) – The reduced influence matrix calculated using the <code class="docutils literal"><span class="pre">beinflumatred</span></code>
 method.</li>
 <li><strong>delta_x</strong> (<em>scalar</em>) – The grid spacing of the profile matrices in unit length in x-direction.</li>
 <li><strong>delta_y</strong> (<em>scalar</em>) – The grid spacing of the profile matrices in unit length in y-direction.</li>
@@ -272,7 +272,7 @@ to determine when solver has completed).</li>
 </div>
 <div class="section" id="hertzian-contact-theory">
 <h2>Hertzian Contact Theory<a class="headerlink" href="#hertzian-contact-theory" title="Permalink to this headline">¶</a></h2>
-<p>All of the below functions can be found in the <code class="code docutils literal notranslate"><span class="pre">hertz</span></code>
+<p>All of the below functions can be found in the <code class="code docutils literal"><span class="pre">hertz</span></code>
 module of the package.</p>
 <span class="target" id="module-hertz"></span><p>This module contains functions related to Hertz contact theory.</p>
 <dl class="function">

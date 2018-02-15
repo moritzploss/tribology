@@ -93,7 +93,7 @@ def fcylrolbear(ang_pos, comb_prof, ax_rol, f_rad, rad_clear=0, max_dif=0.0005):
             sum_mns[rol] = 0
             delta_j[rol] = delta_r * cos_pos[rol] - rad_clear / 2
 
-            for idx in range(0, res_x):
+            for idx in range(res_x):
                 delta_jk[rol, idx] = max((delta_j[rol] - x_axis[idx] *
                                           tan(psi_j[rol]) -
                                           2 * comb_prof[idx]), 0)
