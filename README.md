@@ -58,6 +58,7 @@ release listed below.
 - module `roller_bearings` added
 - function `fcylrolbear` added to module `roller_bearings`
 - function `kinaxthrustrolbear` added to module `roller_bearings`
+- added function `approx_hertz_rad` to module `hertz`
 - refactoring
 
 

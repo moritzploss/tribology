@@ -267,3 +267,13 @@ class TestHertz(unittest.TestCase):
                                      100)
         rounded = [round(var, 3) for var in (ax_a, ax_b, area)]
         self.assertEqual(rounded, [0.175, 0.227, 0.125])
+
+    def test_approx_hertz_rad(self):
+        """
+        base test for approx_hertz_rad
+        """
+        axis = np.asarray([-1, 0, 1])
+        prof = np.asarray([0, 1, 0])
+        self.assertEqual(round(th.approx_hertz_rad(axis, prof)), 1)
+        prof = np.asarray([0, 0, 0])
+        self.assertEqual(th.approx_hertz_rad(axis, prof), float('inf'))

@@ -6,7 +6,7 @@ This module contains functions related to Hertz contact theory.
 
 """
 
-from math import sqrt, pi, log
+from math import sqrt, pi, log, floor
 
 
 def __rred(r_1, r_2):
@@ -285,3 +285,48 @@ def phertz(r_eff, r_eff_x, r_eff_y, e_eff, force):
     _, _, area = ahertz(r_eff, r_eff_x, r_eff_y, e_eff, force)
     p_hertz = force / area
     return p_hertz
+
+
+def approx_hertz_rad(axis, profile):
+    """
+
+    Approximate the Hertz contact radius of a profile, i.e., find the radius
+    of a circle that minimizes the average discrepancy between the actual
+    profile and a circle profile.
+
+    Parameters
+    ----------
+    axis: ndarray
+        The coordinates of the `profile` points along their reference axis. For
+        example, if the `profile` array contains the profile heights along the
+        x-axis in the range [-5, 5], then `axis` contains the corresponding
+        x-axis values.
+    profile: ndarray
+        The profile heights along `axis`.
+
+    Returns
+    -------
+    rad: scalar or inf
+        The radius of the circle that best approximates `profile`. If the
+        profile cannot be approximated with a circle (usually of the profile
+        is a straight line), rad is equal to `inf`.
+
+    """
+    x_1 = axis[0]
+    x_2 = axis[floor(len(axis) / 2)]
+    x_3 = axis[-1]
+    y_1 = profile[0]
+    y_2 = profile[floor(len(axis) / 2)]
+    y_3 = profile[-1]
+
+    a = sqrt((x_1 - x_2) ** 2 + (y_1 - y_2) ** 2)
+    b = sqrt((x_2 - x_3) ** 2 + (y_2 - y_3) ** 2)
+    c = sqrt((x_3 - x_1) ** 2 + (y_3 - y_1) ** 2)
+    s = (a + b + c) / 2
+    d = sqrt(s * (s - a) * (s - b) * (s - c))
+
+    try:
+        rad = a * b * c / (4 * d)
+    except ZeroDivisionError:
+        rad = float('Inf')
+    return rad

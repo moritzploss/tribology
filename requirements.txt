@@ -8,3 +8,4 @@ pylint
 sphinxjp.themes.dotted
 sphinx_rtd_theme
 sphinxcontrib-fulltoc
+bumpversion
