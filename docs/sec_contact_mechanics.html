@@ -305,6 +305,37 @@ module of the package.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="hertz.approx_hertz_rad">
+<code class="descname">approx_hertz_rad</code><span class="sig-paren">(</span><em>axis</em>, <em>profile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#approx_hertz_rad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.approx_hertz_rad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Approximate the Hertz contact radius of a profile, i.e., find the radius
+of a circle that minimizes the average discrepancy between the actual
+profile and a circle profile.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>axis</strong> (<em>ndarray</em>) – The coordinates of the <cite>profile</cite> points along their reference axis. For
+example, if the <cite>profile</cite> array contains the profile heights along the
+x-axis in the range [-5, 5], then <cite>axis</cite> contains the corresponding
+x-axis values.</li>
+<li><strong>profile</strong> (<em>ndarray</em>) – The profile heights along <cite>axis</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>rad</strong> – The radius of the circle that best approximates <cite>profile</cite>. If the
+profile cannot be approximated with a circle (usually of the profile
+is a straight line), rad is equal to <cite>inf</cite>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar or inf</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="hertz.dhertz">
 <code class="descname">dhertz</code><span class="sig-paren">(</span><em>e_eff</em>, <em>r_x_1</em>, <em>r_y_1</em>, <em>r_x_2</em>, <em>r_y_2</em>, <em>force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#dhertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.dhertz" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the elastic normal displacement of a contact problem according
