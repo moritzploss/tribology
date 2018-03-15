@@ -25,4 +25,4 @@ from tribology.roller_bearings import *
 
 import sys
 sys.path.insert(0, "p3can")
-from p3can import p3can, generate_input_file
+from .p3can import *
