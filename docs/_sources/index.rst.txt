@@ -51,6 +51,7 @@ information, package modules are loosely grouped by topic in the following.
    sec_data_import.rst
    sec_roller_bearings.rst
    sec_constants.rst
+   sec_p3can.rst
 
 
 Indices and tables

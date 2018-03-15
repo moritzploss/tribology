@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>p3can &mdash; Tribology  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Tribology  documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Tribology
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sec_general_tribology.html">General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_contact_mechanics.html">Contact Mechanics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_ehd_lubrication.html">EHD Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_lubricants.html">Lubricants and Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_data_import.html">Functions for Data Import</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_roller_bearings.html">Roller Bearings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_constants.html">Constants for Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_p3can.html">P3CAN</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Tribology</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>p3can</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for p3can</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">**Note: The P3CAN project is currently not maintained!**</span>
+
+<span class="sd">The P3CAN project aimed to develop a Python 3 implementation of an open source</span>
+<span class="sd">multi-purpose (tribology) contact analyzer, both for research and higher level</span>
+<span class="sd">educational purposes. However, due to its monolithic structure it proved hard</span>
+<span class="sd">to maintain, and it can be hard for new users to understand the code in its</span>
+<span class="sd">entirety.</span>
+
+<span class="sd">**The P3CAN project precedes the** :code:`tribology` **package and many of its</span>
+<span class="sd">functions and functionalities have since been integrated into the package. This</span>
+<span class="sd">work will be continued in the future.**</span>
+
+<span class="sd">Simply put, P3CAN can be used to calculate parameters such</span>
+<span class="sd">as contact pressure, load distribution and friction energy for various</span>
+<span class="sd">tribological systems.</span>
+
+<span class="sd">P3can currently provides implementations of the following tribological systems:</span>
+<span class="sd">- radial roller bearings</span>
+<span class="sd">- axial thrust roller bearings</span>
+<span class="sd">- pin-on-disk</span>
+<span class="sd">- 4-ball</span>
+<span class="sd">- ball-on-3-plates</span>
+<span class="sd">- ring-on-ring</span>
+
+<span class="sd">You can run P3CAN by calling it with a program specific input file. Templates</span>
+<span class="sd">for user input files can be generated using the `generate_input_file`</span>
+<span class="sd">function below.</span>
+
+<span class="sd">For more information on the P3CAN project, please refer to its GitHub page:</span>
+<span class="sd">https://github.com/moritzploss/p3can</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="kn">from</span> <span class="nn">BluPrintSim</span> <span class="k">import</span> <span class="n">Sim</span>
+<span class="kn">from</span> <span class="nn">Constants</span> <span class="k">import</span> <span class="n">SimType</span>
+<span class="kn">from</span> <span class="nn">generate_latex_output</span> <span class="k">import</span> <span class="n">generate_latex_output</span>
+<span class="kn">from</span> <span class="nn">influ_matrix_management</span> <span class="k">import</span> <span class="n">make_infl_mat_db</span><span class="p">,</span> <span class="n">manage_influ_mat_cache</span>
+<span class="kn">from</span> <span class="nn">setup_tribosystem</span> <span class="k">import</span> <span class="n">setup_cyl_rol_bearing</span><span class="p">,</span> \
+    <span class="n">setup_deep_gro_ball_bearing</span><span class="p">,</span> <span class="n">setup_cyl_rol_thrust_bearing</span><span class="p">,</span> \
+    <span class="n">setup_ball_on_disk</span><span class="p">,</span> <span class="n">setup_pin_on_disk</span><span class="p">,</span> <span class="n">setup_four_ball</span><span class="p">,</span> \
+    <span class="n">setup_ball_on_three_plates</span><span class="p">,</span> <span class="n">setup_ring_on_ring</span>
+<span class="kn">from</span> <span class="nn">system_functions</span> <span class="k">import</span> <span class="n">exit_program</span><span class="p">,</span> <span class="n">print_it</span><span class="p">,</span> <span class="n">in_d</span>
+
+
+<div class="viewcode-block" id="p3can"><a class="viewcode-back" href="../sec_p3can.html#p3can.p3can">[docs]</a><span class="k">def</span> <span class="nf">p3can</span><span class="p">(</span><span class="n">in_file</span><span class="o">=</span><span class="s1">&#39;USER_INPUT.py&#39;</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Start a P3CAN simulation run.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    in_file: str, optional</span>
+<span class="sd">        The file path of the P3CAN input file. The default value is</span>
+<span class="sd">        `USER_INPUT.py`. You can generate `in_file` templates for different</span>
+<span class="sd">        tribological systems using the `generate_input_file` function.</span>
+<span class="sd">    out_dir: str</span>
+<span class="sd">        The directory in which output files will be stored. A folder named</span>
+<span class="sd">        `results` will be created in `out_dir`. The `results` folder then</span>
+<span class="sd">        contains a simulation-specific folder containing all outputs. Default</span>
+<span class="sd">        is the current working directory.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    sim.res_dir: str</span>
+<span class="sd">        The path to the simulation-specific results folder. The path is:</span>
+
+<span class="sd">        `out_dir`/results/&lt;unique simulation name&gt;</span>
+
+<span class="sd">        The unique simulation name is automatically generated by P3CAN.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">out_dir</span><span class="p">:</span>
+        <span class="n">out_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+    <span class="c1"># set-up a simulation</span>
+    <span class="n">sim</span> <span class="o">=</span> <span class="n">Sim</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">)</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">mk_uniq_parameter_id</span><span class="p">()</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">infl_db_file_hand</span> <span class="o">=</span> <span class="n">make_infl_mat_db</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">res_dir</span><span class="p">))</span>
+    <span class="n">tribo_system</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># generate a tribosystem based on user input</span>
+    <span class="n">print_it</span><span class="p">(</span><span class="s1">&#39;initialising contact bodies&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulation_type</span> <span class="o">==</span> <span class="n">SimType</span><span class="o">.</span><span class="n">cyl_rol_bearing</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">roller</span><span class="p">,</span> <span class="n">ring1</span><span class="p">,</span> <span class="n">ring2</span><span class="p">,</span> <span class="n">tribo_system</span> <span class="o">=</span> <span class="n">setup_cyl_rol_bearing</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulation_type</span> <span class="o">==</span> <span class="n">SimType</span><span class="o">.</span><span class="n">deep_gro_ball_bearing</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">setup_deep_gro_ball_bearing</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulation_type</span> <span class="o">==</span> <span class="n">SimType</span><span class="o">.</span><span class="n">cyl_rol_thrust_bearing</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">roller</span><span class="p">,</span> <span class="n">ring1</span><span class="p">,</span> <span class="n">ring2</span><span class="p">,</span> <span class="n">tribo_system</span> <span class="o">=</span> <span class="n">setup_cyl_rol_thrust_bearing</span><span class="p">(</span>
+            <span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulation_type</span> <span class="o">==</span> <span class="n">SimType</span><span class="o">.</span><span class="n">ball_on_disk</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">ball</span><span class="p">,</span> <span class="n">disk</span><span class="p">,</span> <span class="n">tribo_system</span> <span class="o">=</span> <span class="n">setup_ball_on_disk</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulation_type</span> <span class="o">==</span> <span class="n">SimType</span><span class="o">.</span><span class="n">pin_on_disk</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">pin</span><span class="p">,</span> <span class="n">disk</span><span class="p">,</span> <span class="n">tribo_system</span> <span class="o">=</span> <span class="n">setup_pin_on_disk</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulation_type</span> <span class="o">==</span> <span class="n">SimType</span><span class="o">.</span><span class="n">four_ball</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">rot_ball</span><span class="p">,</span> <span class="n">stat_ball</span><span class="p">,</span> <span class="n">tribo_system</span> <span class="o">=</span> <span class="n">setup_four_ball</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulation_type</span> <span class="o">==</span> <span class="n">SimType</span><span class="o">.</span><span class="n">ball_on_three_plates</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">ball</span><span class="p">,</span> <span class="n">plate</span><span class="p">,</span> <span class="n">tribo_system</span> <span class="o">=</span> <span class="n">setup_ball_on_three_plates</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulation_type</span> <span class="o">==</span> <span class="n">SimType</span><span class="o">.</span><span class="n">ring_on_ring</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">sun</span><span class="p">,</span> <span class="n">planet</span><span class="p">,</span> <span class="n">tribo_system</span> <span class="o">=</span> <span class="n">setup_ring_on_ring</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">exit_program</span><span class="p">(</span><span class="s2">&quot;&#39;simulation_type&#39; option &#39;</span><span class="si">{}</span><span class="s2">&#39;not defined&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">sim</span><span class="o">.</span><span class="n">simulation_type</span><span class="p">))</span>
+
+    <span class="c1"># simulate tribosystem</span>
+    <span class="n">tribo_system</span><span class="o">.</span><span class="n">calc_load_distribution</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">res_dir</span><span class="p">)</span>
+    <span class="n">tribo_system</span><span class="o">.</span><span class="n">calc_contact_pressure</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">res_dir</span><span class="p">)</span>
+    <span class="n">tribo_system</span><span class="o">.</span><span class="n">calc_kinematics</span><span class="p">(</span><span class="n">in_d</span><span class="p">(</span><span class="s1">&#39;rot_velocity1&#39;</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                                 <span class="n">in_d</span><span class="p">(</span><span class="s1">&#39;rot_velocity2&#39;</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                                 <span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">res_dir</span><span class="p">)</span>
+    <span class="n">tribo_system</span><span class="o">.</span><span class="n">calc_pv</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">res_dir</span><span class="p">)</span>
+    <span class="n">tribo_system</span><span class="o">.</span><span class="n">calc_e_akin</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">res_dir</span><span class="p">)</span>
+
+    <span class="c1"># generate output plots and pdf report</span>
+    <span class="k">if</span> <span class="n">sim</span><span class="o">.</span><span class="n">auto_plot</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">tribo_system</span><span class="o">.</span><span class="n">plot_it</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">res_dir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sim</span><span class="o">.</span><span class="n">auto_report</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">generate_latex_output</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span> <span class="n">tribo_system</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">ui</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">res_dir</span><span class="p">)</span>
+
+    <span class="c1"># manage the influence matrix cache</span>
+    <span class="n">manage_influ_mat_cache</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">res_dir</span><span class="p">)</span>
+
+    <span class="c1"># finish simulation</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">finished</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">sim</span><span class="o">.</span><span class="n">res_dir</span></div>
+
+
+<div class="viewcode-block" id="generate_input_file"><a class="viewcode-back" href="../sec_p3can.html#p3can.generate_input_file">[docs]</a><span class="k">def</span> <span class="nf">generate_input_file</span><span class="p">(</span><span class="n">temp_type</span><span class="p">,</span> <span class="n">out_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Generate a P3CAN input file based on a user input template.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    temp_type: int</span>
+<span class="sd">        Specifies which type of user input template will be generated:</span>
+
+<span class="sd">        0:  complete set of available parameters</span>
+
+<span class="sd">        1:  template for single row cylindrical roller bearings</span>
+
+<span class="sd">        3:  template for cylindircal roller thrust bearings</span>
+
+<span class="sd">        4:  template for ball-on-disk setup</span>
+
+<span class="sd">        5:  template for pin-on-disk setup</span>
+
+<span class="sd">        6:  template for 4-ball setup</span>
+
+<span class="sd">        7:  template for ball-on-3-plates setup</span>
+
+<span class="sd">        8:  template for ring-on-ring setup</span>
+
+<span class="sd">    out_file: str</span>
+<span class="sd">        The complete file path of the output file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out_file: str</span>
+<span class="sd">        The complete file path of the output file.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+    <span class="n">dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">temp_type</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;Template00_CompleteParameters.py&#39;</span>
+    <span class="k">elif</span> <span class="n">temp_type</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;Template01_SingleRowCylindricalRollerBearing.py&#39;</span>
+    <span class="k">elif</span> <span class="n">temp_type</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;Template03_CylindricalRollerThustBearing.py&#39;</span>
+    <span class="k">elif</span> <span class="n">temp_type</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;Template04_BallOnDisk.py&#39;</span>
+    <span class="k">elif</span> <span class="n">temp_type</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;Template05_PinOnDisk.py&#39;</span>
+    <span class="k">elif</span> <span class="n">temp_type</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;Template06_4Ball.py&#39;</span>
+    <span class="k">elif</span> <span class="n">temp_type</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;Template07_BallOn3Plates.py&#39;</span>
+    <span class="k">elif</span> <span class="n">temp_type</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;Template08_RingOnRing.py&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;temp_type value &#39;</span><span class="si">{}</span><span class="s2">&#39; undefined&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp_type</span><span class="p">))</span>
+
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">dir_path</span><span class="p">,</span> <span class="s1">&#39;UserInputTemplates&#39;</span><span class="p">,</span> <span class="n">template</span><span class="p">]),</span>
+                <span class="n">out_file</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_file</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Moritz Ploss.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>P3CAN &mdash; Tribology  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Tribology  documentation" href="index.html"/>
+        <link rel="prev" title="Constants for Tribology" href="sec_constants.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Tribology
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sec_general_tribology.html">General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_contact_mechanics.html">Contact Mechanics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_ehd_lubrication.html">EHD Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_lubricants.html">Lubricants and Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_data_import.html">Functions for Data Import</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_roller_bearings.html">Roller Bearings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_constants.html">Constants for Tribology</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">P3CAN</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Tribology</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>P3CAN</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sec_p3can.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="p3can">
+<h1>P3CAN<a class="headerlink" href="#p3can" title="Permalink to this headline">¶</a></h1>
+<p>The below functions can be found in the <code class="code docutils literal"><span class="pre">p3can</span></code>
+module of the package.</p>
+<span class="target" id="module-p3can"></span><p><strong>Note: The P3CAN project is currently not maintained!</strong></p>
+<p>The P3CAN project aimed to develop a Python 3 implementation of an open source
+multi-purpose (tribology) contact analyzer, both for research and higher level
+educational purposes. However, due to its monolithic structure it proved hard
+to maintain, and it can be hard for new users to understand the code in its
+entirety.</p>
+<p><strong>The P3CAN project precedes the</strong> <code class="code docutils literal"><span class="pre">tribology</span></code> <strong>package and many of its
+functions and functionalities have since been integrated into the package. This
+work will be continued in the future.</strong></p>
+<p>Simply put, P3CAN can be used to calculate parameters such
+as contact pressure, load distribution and friction energy for various
+tribological systems.</p>
+<p>P3can currently provides implementations of the following tribological systems:
+- radial roller bearings
+- axial thrust roller bearings
+- pin-on-disk
+- 4-ball
+- ball-on-3-plates
+- ring-on-ring</p>
+<p>You can run P3CAN by calling it with a program specific input file. Templates
+for user input files can be generated using the <cite>generate_input_file</cite>
+function below.</p>
+<p>For more information on the P3CAN project, please refer to its GitHub page:
+<a class="reference external" href="https://github.com/moritzploss/p3can">https://github.com/moritzploss/p3can</a></p>
+<dl class="function">
+<dt id="p3can.p3can">
+<code class="descname">p3can</code><span class="sig-paren">(</span><em>in_file='USER_INPUT.py'</em>, <em>out_dir=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/p3can.html#p3can"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#p3can.p3can" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a P3CAN simulation run.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>in_file</strong> (<em>str, optional</em>) – The file path of the P3CAN input file. The default value is
+<cite>USER_INPUT.py</cite>. You can generate <cite>in_file</cite> templates for different
+tribological systems using the <cite>generate_input_file</cite> function.</li>
+<li><strong>out_dir</strong> (<em>str</em>) – The directory in which output files will be stored. A folder named
+<cite>results</cite> will be created in <cite>out_dir</cite>. The <cite>results</cite> folder then
+contains a simulation-specific folder containing all outputs. Default
+is the current working directory.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>sim.res_dir</strong> – The path to the simulation-specific results folder. The path is:</p>
+<p><cite>out_dir</cite>/results/&lt;unique simulation name&gt;</p>
+<p>The unique simulation name is automatically generated by P3CAN.</p>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="p3can.generate_input_file">
+<code class="descname">generate_input_file</code><span class="sig-paren">(</span><em>temp_type</em>, <em>out_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/p3can.html#generate_input_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#p3can.generate_input_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a P3CAN input file based on a user input template.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first">
+<li><p class="first"><strong>temp_type</strong> (<em>int</em>) – Specifies which type of user input template will be generated:</p>
+<p>0:  complete set of available parameters</p>
+<p>1:  template for single row cylindrical roller bearings</p>
+<p>3:  template for cylindircal roller thrust bearings</p>
+<p>4:  template for ball-on-disk setup</p>
+<p>5:  template for pin-on-disk setup</p>
+<p>6:  template for 4-ball setup</p>
+<p>7:  template for ball-on-3-plates setup</p>
+<p>8:  template for ring-on-ring setup</p>
+</li>
+<li><p class="first"><strong>out_file</strong> (<em>str</em>) – The complete file path of the output file.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out_file</strong> – The complete file path of the output file.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="sec_constants.html" class="btn btn-neutral" title="Constants for Tribology" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Moritz Ploss.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

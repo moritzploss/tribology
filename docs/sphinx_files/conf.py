@@ -21,6 +21,7 @@ import os
 import sys
 import mock
 sys.path.insert(0, os.path.abspath('../../tribology'))
+sys.path.insert(0, os.path.abspath('../../tribology/p3can'))
 
 MOCK_MODULES = ['tribology.boundary_element']
 for mod_name in MOCK_MODULES:
