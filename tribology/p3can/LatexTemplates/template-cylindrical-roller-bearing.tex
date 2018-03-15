@@ -1,0 +1,72 @@
+
+\clearpage
+\pagebreak
+\subsection{Contact Geometry}
+\begin{figure}[h!]
+  \centering
+  \subfloat[Contact roller and inner ring]{\includegraphics[width=0.49\textwidth]{\VAR{contact_plot1}}
+  }
+  \hfill
+  \subfloat[Contact roller and outer ring]{\includegraphics[width=0.49\textwidth]{\VAR{contact_plot2}}
+  }
+  \caption{Contact plots.}
+\end{figure}
+
+\pagebreak
+\subsection{Kinematics}
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.45\textwidth]{\VAR{slip_plot1}}
+    \caption{Roller slip (cage rotates counterclockwise)}
+\end{figure}
+
+\pagebreak
+\section{Simulation Results}
+\subsection{Results Summary}
+\begin{tabular}{ l l l l}
+variable & unit & value & status \\
+\midrule
+\BLOCK{ for key, value, unit, status in table_calc_summary}
+\VAR{key}  & \VAR{unit} & \VAR{value} & \VAR{status} \\
+\BLOCK{ endfor }
+\end{tabular}
+\pagebreak
+\clearpage
+
+\subsection{Load Distribution}
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.45\textwidth]{\VAR{load_plot1}}
+    \caption{Load distribution for contact with highest normal force.}
+\end{figure}
+
+\subsection{Contact Pressure}
+\begin{figure}[h!]
+  \centering
+  \subfloat[Contact roller and inner ring]{\includegraphics[width=0.49\textwidth]{\VAR{pressure_plot1}}
+  }
+  \hfill
+  \subfloat[Contact roller and outer ring]{\includegraphics[width=0.49\textwidth]{\VAR{pressure_plot2}}
+  }
+  \caption{Contact pressure at highest normal force.}
+\end{figure}
+
+\pagebreak
+\subsection{Energy Figures}
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=0.5\textwidth]{\VAR{energy_plot1}}
+  \caption{pv\textsubscript{rel,max} inner and outer ring.}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=\VAR{scale_factor_or}\textwidth]{\VAR{energy_plot2}}
+  \caption{e\textsubscript{a,kin} inner ring}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=\VAR{scale_factor_ir}\textwidth]{\VAR{energy_plot3}}
+  \caption{e\textsubscript{a,kin} outer ring.}
+\end{figure}

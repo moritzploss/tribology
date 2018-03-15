@@ -1,0 +1,12 @@
+###### Requirements with Version Specifiers ######
+#   See https://www.python.org/dev/peps/pep-0440/#version-specifiers
+#   Lower versions not tested, but may work as well
+numpy >= 1.11.2
+matplotlib >= 1.5.3
+numexpr >= 2.6.1
+jinja2 >= 1.1
+scipy >= 0.18.1
+
+
+# for rough surface generation, matlab engine compatible to Python-version is
+# required matlab.engine

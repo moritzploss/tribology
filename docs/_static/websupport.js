@@ -269,7 +269,7 @@
   }
 
   /**
-   * Recursively append comments to the main comment list and children
+   * Recursively append comments to the p3can comment list and children
    * lists, creating the comment tree.
    */
   function appendComments(comments, ul) {

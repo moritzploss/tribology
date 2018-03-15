@@ -1,0 +1,36 @@
+
+\pagebreak
+\subsection{Contact Geometry}
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.6\textwidth]{\VAR{contact_plot1}}
+    \caption{Contact rotating ball (top) and stationary ball (bottom)}
+\end{figure}
+
+\pagebreak
+\section{Simulation Results}
+\subsection{Results Summary}
+\begin{tabular}{ l l l l}
+variable & unit & value & status \\
+\midrule
+\BLOCK{ for key, value, unit, status in table_calc_summary}
+\VAR{key}  & \VAR{unit} & \VAR{value} & \VAR{status} \\
+\BLOCK{ endfor }
+\end{tabular}
+\pagebreak
+\clearpage
+
+\subsection{Contact Pressure}
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.6\textwidth]{\VAR{pressure_plot1}}
+    \caption{Pressure distribution highest normal force.}
+\end{figure}
+
+\pagebreak
+\subsection{Energy Figures}
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=0.5\textwidth]{\VAR{energy_plot1}}
+  \caption{pv\textsubscript{rel,max} and e\textsubscript{a,kin} rotating ball.}
+\end{figure}

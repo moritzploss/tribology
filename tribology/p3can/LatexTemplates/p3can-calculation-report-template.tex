@@ -1,0 +1,126 @@
+
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage{todonotes}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{amsmath}
+\usepackage{lipsum}
+\usepackage{geometry}
+\geometry{a4paper}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{upquote}
+\usepackage{array}
+\usepackage{paralist}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{P3CAN Simulation Report}
+\lhead{Generated with P3CAN Version \VAR{threebo_version}}
+\cfoot{Page \thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+\setlength{\headheight}{13.6pt}
+
+\usepackage{sectsty}
+\allsectionsfont{\fontfamily{ptm}}
+
+\usepackage[nottoc,notlof,notlot]{tocbibind}
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\title{P3CAN Simulation Report \\ \VAR{sim_name} }
+\author{\today \\ \VAR{user_name} }
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+\tableofcontents
+\pagebreak
+
+\section*{P3CAN Copyright Notice}
+\addcontentsline{toc}{section}{P3CAN Copyright Notice}
+Copyright (C) 2017 Moritz Ploss (the "copyright holder"), KTH Royal Institute of Technology
+\newline\newline
+\noindent Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+\begin{itemize}
+\item The above copyright notice and all permission notices shall be included in all copies or substantial portions of
+the Software.
+\item If the Software is used, modified or extended as part of work that qualifies for scientific publication, the \emph{P3CAN}
+project shall be credited and, if applicable, authors of scientific publications must clearly state their contribution
+to the \emph{P3CAN} project.
+\end{itemize}
+\noindent THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+\newline\newline
+\noindent Except as contained in this notice, the name of the copyright holder or his affiliation shall not be used in
+advertising or otherwise to promote the sale, use or other dealings in this Software without prior written
+authorization from the copyright holder.
+\pagebreak
+
+
+\section{User Input}
+\subsection{Input Parameters}
+\begin{verbatim}
+\BLOCK{ for key, value in  user_input}
+\VAR{key} = \VAR{value}
+\BLOCK{ endfor }
+\end{verbatim}
+
+\VAR{calc_specific_output}
+
+\pagebreak
+\clearpage
+\section{Simulation Details}
+
+\subsection{Simulation Information}
+\begin{tabular}{ l l}
+  date: & \today \\
+  run time: & \VAR{run_time} \\
+\end{tabular}
+
+\subsection{P3CAN Information}
+\begin{tabular}{ l l}
+  P3CAN version: & \VAR{p3can_version}  \\
+\end{tabular}
+
+\subsection{Python Information}
+\begin{tabular}{l p{0.8\textwidth}}
+  python: & \VAR{python_version} \\
+  matplotlib: & \VAR{mpl_version}  \\
+  numexpr: & \VAR{numexpr_version}  \\
+  numpy: & \VAR{np_version}  \\
+  scipy: & \VAR{sc_version}  \\
+\end{tabular}
+
+\subsection{System Information}
+\begin{tabular}{l p{0.8\textwidth}}
+  user: & \VAR{user_name} \\
+  machine: & \parbox[t]{2cm}{\VAR{machine}}  \\
+  platform: & \VAR{sys_platform}  \\
+  version: & \VAR{platform_version}  \\
+
+\end{tabular}
+
+\end{document}
