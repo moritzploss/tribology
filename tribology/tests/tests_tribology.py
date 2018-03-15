@@ -10,6 +10,9 @@ import math
 
 import numpy as np
 
+import sys
+sys.path.insert(0, "../tribology/p3can")
+
 from ..tribology import profball, profrevolve
 from .. import hertz as th
 from .. import lubrication as tl
