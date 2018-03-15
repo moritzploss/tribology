@@ -23,4 +23,5 @@ from tribology.lubrication import *
 from tribology.roller_bearings import *
 
 import sys
+sys.path.insert(0, "tribology/p3can")
 from tribology.p3can.p3can import *
