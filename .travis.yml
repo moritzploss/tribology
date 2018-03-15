@@ -18,6 +18,6 @@ install:
 - pip install .
 - pip install --upgrade bumpversion
 - pip install -r requirements.txt
-#script:
+script:
 # - pytest tribology/tests/tests_tribology.py
-#- pylint tribology -E
+- pylint tribology -E
