@@ -20,4 +20,4 @@ install:
 - pip install -r requirements.txt
 script:
 - pytest tribology/tests/tests_tribology.py
-- pylint tribology -E --extension-pkg-whitelist=numpy,scipy
+- pylint tribology -E
