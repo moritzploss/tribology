@@ -62,7 +62,7 @@ release listed below.
 - merged <a href="https://github.com/moritzploss/p3can" target="_blank">
 P3CAN project</a> with tribology package. The tribology package now has
 a module `p3can` that allows users to run P3CAN simulation runs. The
-final aim is to split the P3can code into standalone functions and
+final aim is to split the P3CAN code into standalone functions and
 integrate them with the tribology package.
 - refactoring
 
