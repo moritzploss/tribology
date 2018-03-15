@@ -11,8 +11,7 @@ __all__ = ['tribology',
            'dowson_hamrock',
            'hertz',
            'lubrication',
-           'roller_bearings',
-           'p3can']
+           'roller_bearings']
 
 from tribology.tribology import *
 from tribology.boundary_element import *
@@ -24,6 +23,4 @@ from tribology.lubrication import *
 from tribology.roller_bearings import *
 
 import sys
-sys.path.insert(0, "tribology")
-sys.path.insert(0, "tribology/p3can")
 from tribology.p3can.p3can import *
