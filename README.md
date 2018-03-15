@@ -59,6 +59,11 @@ release listed below.
 - function `fcylrolbear` added to module `roller_bearings`
 - function `kinaxthrustrolbear` added to module `roller_bearings`
 - added function `approx_hertz_rad` to module `hertz`
+- merged <a href="https://github.com/moritzploss/p3can" target="_blank">
+P3CAN project</a> with tribology package. The tribology package now has
+a module `p3can` that allows users to run P3CAN simulation runs. The
+final aim is to split the P3can code into standalone functions and
+integrate them with the tribology package.
 - refactoring
 
 
