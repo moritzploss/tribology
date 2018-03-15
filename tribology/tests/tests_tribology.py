@@ -16,7 +16,7 @@ from .. import lubrication as tl
 from .. import boundary_element as tb
 from .. import data_import as td
 from .. import roller_bearings as trb
-from .. import p3can
+from ..p3can import p3can
 
 
 class TestTribology(unittest.TestCase):
