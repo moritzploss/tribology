@@ -12,7 +12,7 @@
 simulation_type = 7  # one of the above type numbers
 simulation_name = 'BallOnThreePlates'
 auto_print = True  # True or False
-auto_plot = True
+auto_plot = False
 auto_report = False
 
 # global test setup / bearing information
