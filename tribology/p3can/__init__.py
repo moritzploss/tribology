@@ -1,3 +1,4 @@
-__all__ = ["p3can"]
+__all__ = ["p3can",
+           "BluPrintSim"]
 
-from p3can.BluPrintSim import *
+from tribology.p3can.BluPrintSim import *
