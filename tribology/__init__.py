@@ -22,7 +22,4 @@ from tribology.dowson_hamrock import *
 from tribology.hertz import *
 from tribology.lubrication import *
 from tribology.roller_bearings import *
-
-import sys
-sys.path.insert(0, "p3can/")
-from tribology.p3can.p3can import p3can, generate_input_file
+from tribology.p3can import *
