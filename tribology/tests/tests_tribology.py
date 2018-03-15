@@ -280,32 +280,32 @@ class TestHertz(unittest.TestCase):
         self.assertEqual(th.approx_hertz_rad(axis, prof), float('inf'))
 
 
-class TestP3can(unittest.TestCase):
-    """
-    integration tests for p3can. load user input templates and check if
-    they run without error.
-    """
-
-    def test_template01(self):
-        out_dir = p3can('tribology/tests/p3can/' +
-                        'Template01_SingleRowCylindricalRollerBearing.py')
-
-    def test_template03(self):
-        out_dir = p3can('tribology/tests/p3can/' +
-                        'Template03_CylindricalRollerThustBearing.py')
-
-    def test_template05(self):
-        out_dir = p3can('tribology/tests/p3can/' +
-                        'Template05_PinOnDisk.py')
-
-    def test_template06(self):
-        out_dir = p3can('tribology/tests/p3can/' +
-                        'Template06_4Ball.py')
-
-    def test_template07(self):
-        out_dir = p3can('tribology/tests/p3can/' +
-                        'Template07_BallOn3Plates.py')
-
-    def test_template08(self):
-        out_dir = p3can('tribology/tests/p3can/' +
-                        'Template08_RingOnRing.py')
+# class TestP3can(unittest.TestCase):
+#     """
+#     integration tests for p3can. load user input templates and check if
+#     they run without error.
+#     """
+#
+#     def test_template01(self):
+#         out_dir = p3can('tribology/tests/p3can/' +
+#                         'Template01_SingleRowCylindricalRollerBearing.py')
+#
+#     def test_template03(self):
+#         out_dir = p3can('tribology/tests/p3can/' +
+#                         'Template03_CylindricalRollerThustBearing.py')
+#
+#     def test_template05(self):
+#         out_dir = p3can('tribology/tests/p3can/' +
+#                         'Template05_PinOnDisk.py')
+#
+#     def test_template06(self):
+#         out_dir = p3can('tribology/tests/p3can/' +
+#                         'Template06_4Ball.py')
+#
+#     def test_template07(self):
+#         out_dir = p3can('tribology/tests/p3can/' +
+#                         'Template07_BallOn3Plates.py')
+#
+#     def test_template08(self):
+#         out_dir = p3can('tribology/tests/p3can/' +
+#                         'Template08_RingOnRing.py')
