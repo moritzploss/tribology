@@ -11,7 +11,7 @@ import math
 import numpy as np
 
 import sys
-sys.path.insert(0, "../tribology/p3can")
+sys.path.insert(0, "tribology/p3can")
 
 from ..tribology import profball, profrevolve
 from .. import hertz as th
@@ -19,7 +19,7 @@ from .. import lubrication as tl
 from .. import boundary_element as tb
 from .. import data_import as td
 from .. import roller_bearings as trb
-from ..p3can.p3can import p3can, generate_input_file
+from ..p3can.p3can import p3can
 
 
 class TestTribology(unittest.TestCase):
