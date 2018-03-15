@@ -6,4 +6,4 @@ Python init file for tribology package
 
 __all__ = ['p3can']
 
-from p3can import *
+from tribology.p3can import *
