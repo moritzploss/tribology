@@ -1,2 +1,3 @@
-__all__ = ["p3can",
-           "BluPrintSim"]
+__all__ = ["p3can"]
+
+from p3can.BluPrintSim import *
