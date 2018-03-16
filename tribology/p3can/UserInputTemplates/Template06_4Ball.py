@@ -16,7 +16,7 @@ auto_plot = True
 auto_report = False  # reporting currently not supported, don't change
 
 # global test setup / bearing information
-tribo_system_name = 'bla'
+tribo_system_name = 'foo'
 
 # Rotating Ball (CB1)
 e_cb1 = 210000  # young's modulus in MPa

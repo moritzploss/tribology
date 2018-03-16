@@ -16,7 +16,7 @@ auto_plot = True
 auto_report = False  # reporting currently not supported, don't change
 
 # global test setup / bearing information
-tribo_system_name = 'bla'
+tribo_system_name = 'foo'
 number_balls = 1
 sliding_diameter = 50  # in mm, sliding diameter on disc
 
