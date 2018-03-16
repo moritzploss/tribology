@@ -53,7 +53,16 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
-#### Latest Neutral Build
+#### latest neutral build
+- README.md updated
+- refactoring
+
+
+#### 0.3.0
+- `p3can` source code now fully merged with tribology package
+
+
+#### 0.2.94
 
 - module `roller_bearings` added
 - function `fcylrolbear` added to module `roller_bearings`
