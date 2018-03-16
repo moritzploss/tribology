@@ -13,7 +13,7 @@ simulation_type = 4  # one of the above types
 simulation_name = 'BallOnDisk'
 auto_print = True  # True or False
 auto_plot = True
-auto_report = False
+auto_report = False  # reporting currently not supported, don't change
 
 # global test setup / bearing information
 tribo_system_name = 'bla'

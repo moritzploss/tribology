@@ -13,7 +13,7 @@ simulation_type = 1  # one of the above type numbers
 simulation_name = 'RadialBearing'
 auto_print = True  # True or False
 auto_plot = True
-auto_report = False
+auto_report = False  # reporting currently not supported, don't change
 
 # global test setup / bearing information
 tribo_system_name = 'bla'
