@@ -12,9 +12,10 @@ setup(
    author_email='moritz.ploss@gmail.com',
    packages=['tribology',
              'tribology.p3can',
-             'tribology.p3can.LatexTemplates',
              'tribology.tests'
              ],
+   package_data={
+       'tribology.p3can': ['*.tex', 'tribology/p3can/LatexTemplates/*.txt']},
    license='MIT',
    keywords='tribology machine design research',
    install_requires=['numpy', 'numexpr', 'scipy'],
