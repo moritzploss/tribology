@@ -16,6 +16,7 @@ setup(
              ],
    package_data={
        'tribology.p3can': ['*.tex', 'tribology/p3can/LatexTemplates/*.txt']},
+   include_package_data=True,
    license='MIT',
    keywords='tribology machine design research',
    install_requires=['numpy', 'numexpr', 'scipy'],
