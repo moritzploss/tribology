@@ -1,2 +1,3 @@
 include README.md
 include tribology/p3can/LatexTemplates/*.tex
+include tribology/p3can/BearingProfiles/*.txt

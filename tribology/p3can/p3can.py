@@ -1,5 +1,10 @@
 """
 
+The below functions are not automatically imported when you import the
+tribology package. They need to be imported on a sub-module level:
+
+:code:`from tribology.p3can.p3can import p3can, generate_input_file`
+
 **Note: The P3CAN project is currently not maintained!**
 
 The P3CAN project aimed to develop a Python 3 implementation of an open source
