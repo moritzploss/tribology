@@ -1,3 +1,4 @@
 include README.md
 include tribology/p3can/LatexTemplates/*.tex
 include tribology/p3can/BearingProfiles/*.txt
+include tribology/p3can/UserInputTemplates/*.py
