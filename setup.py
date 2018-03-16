@@ -10,7 +10,11 @@ setup(
                     'lubrication science and data handling.',
    author='Moritz Ploss',
    author_email='moritz.ploss@gmail.com',
-   packages=['tribology', 'tribology.p3can', 'tribology.tests'],
+   packages=['tribology',
+             'tribology.p3can',
+             'tribology.p3can.LatexTemplates',
+             'tribology.tests'
+             ],
    license='MIT',
    keywords='tribology machine design research',
    install_requires=['numpy', 'numexpr', 'scipy'],
