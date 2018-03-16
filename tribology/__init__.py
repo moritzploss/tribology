@@ -30,5 +30,3 @@ subs_dirs = os.walk(packpath)
 for sub_dir in subs_dirs:
     if not sub_dir[0].endswith('__pycache__'):
         sys.path.insert(0, sub_dir[0])
-
-pass
