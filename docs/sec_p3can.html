@@ -162,7 +162,10 @@
 <h1>P3CAN<a class="headerlink" href="#p3can" title="Permalink to this headline">¶</a></h1>
 <p>The below functions can be found in the <code class="code docutils literal"><span class="pre">p3can</span></code>
 module of the package.</p>
-<span class="target" id="module-p3can"></span><p><strong>Note: The P3CAN project is currently not maintained!</strong></p>
+<span class="target" id="module-p3can"></span><p>The below functions are not automatically imported when you import the
+tribology package. They need to be imported on a sub-module level:</p>
+<p><code class="code docutils literal"><span class="pre">from</span> <span class="pre">tribology.p3can.p3can</span> <span class="pre">import</span> <span class="pre">p3can,</span> <span class="pre">generate_input_file</span></code></p>
+<p><strong>Note: The P3CAN project is currently not maintained!</strong></p>
 <p>The P3CAN project aimed to develop a Python 3 implementation of an open source
 multi-purpose (tribology) contact analyzer, both for research and higher level
 educational purposes. However, due to its monolithic structure it proved hard
