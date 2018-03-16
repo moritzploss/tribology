@@ -14,8 +14,6 @@ setup(
              'tribology.p3can',
              'tribology.tests'
              ],
-   package_data={
-       'tribology': ['*.tex', 'tribology/p3can/LatexTemplates/*.tex']},
    include_package_data=True,
    license='MIT',
    keywords='tribology machine design research',
