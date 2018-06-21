@@ -40,8 +40,8 @@ documenation</a>** is provided through GitHub Pages; the source files
 can be found in the `/docs` directory. Simple examples of how to use 
 the package are provided in the `/examples` directory.
 
-The package is developed by Moritz Ploss at KTH Royal Institute of 
-Technology, Stockholm, Sweden. For questions and comments, please 
+The package is currently developed by Moritz Ploss at KTH Royal Institute of 
+Technology, Stockholm, Sweden. For questions, comments and contributions, please 
 send a message through GitHub.
 
 The package is provided under an MIT license. See the `LICENSE.txt` file
