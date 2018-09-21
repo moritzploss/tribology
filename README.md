@@ -55,6 +55,10 @@ release listed below.
 
 #### latest neutral build
 - README.md updated
+- when importing PCS files using the `import_dir` or `import_del` method of the
+  `data_import` module, steps without numeric data (mapper steps, film zero 
+  steps, ...) are now reflected in the `step_start` and `step_end` variables
+  that are saved to the output file. 
 - refactoring
 
 
