@@ -436,7 +436,7 @@ def import_del(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
     return out_file, import_status, out_dict
 
 
-def __gen_acc_time(step_time, outformat='npz'):
+def __gen_acc_time(step_time, steps, outformat='npz'):
     """
 
     For files produced by PCS Instrument test rigs, generate a continuous time
@@ -450,6 +450,23 @@ def __gen_acc_time(step_time, outformat='npz'):
     # get index of first data point of each step
     step_start = np.append([0], [step_end[0:-1] + 1])
 
+    # add empty steps for mapper steps
+    step_start_with_other = []
+    step_end_with_other = []
+    idx = 0
+    for step_type in steps:
+        if step_type == 'data':
+            step_start_with_other.append(step_start[idx])
+            step_end_with_other.append(step_end[idx])
+            idx += 1
+        elif step_type == 'other':
+            if step_start_with_other:
+                step_start_with_other.append(step_end_with_other[-1])
+                step_end_with_other.append(step_end_with_other[-1])
+            else:
+                step_start_with_other.append(0)
+                step_end_with_other.append(0)
+
     # loop over steps and create continuous time axis
     time_accumulated_s = copy.copy(step_time)
     offset = 0
@@ -461,12 +478,12 @@ def __gen_acc_time(step_time, outformat='npz'):
     # save data to dictionary
     if outformat == 'mat':
         sub_dict = {'time_accumulated_s': time_accumulated_s,
-                    'step_start': step_start + 1,
-                    'step_end': step_end + 1}
+                    'step_start': step_start_with_other + 1,
+                    'step_end': step_end_with_other + 1}
     else:
         sub_dict = {'time_accumulated_s': time_accumulated_s,
-                    'step_start': step_start,
-                    'step_end': step_end}
+                    'step_start': step_start_with_other,
+                    'step_end': step_end_with_other}
     return sub_dict
 
 
@@ -509,6 +526,20 @@ def __post_process_image_data(out_dict):
         np.meshgrid(img_dat['x_set'], img_dat['y_set'], indexing='ij')
 
     return img_dat
+
+
+def get_pcs_steps(in_file):
+    steps = []
+    with open(in_file) as dat_file:
+        for line in dat_file:
+            if line.startswith('Step ') and ' started at ' in line:
+                steps.append('data')
+            if line.startswith('Step type	MAPPER	') or \
+                line.startswith('Step type	ZERO_CHECK	') or \
+                line.startswith('Step type	FILM_ZERO	') or \
+                line.startswith('Step type	HEATING	'):
+                steps[-1] = 'other'
+    return steps
 
 
 def import_pcs(in_file, force=False, out_ext='npz', out_dir=''):
@@ -555,12 +586,15 @@ def import_pcs(in_file, force=False, out_ext='npz', out_dir=''):
         __import_file(in_file, out_file_no_ext, out_ext, force=force, deli='\t',
                       dec_mark='.', pad=8)
 
+    steps = get_pcs_steps(in_file)
+
     if import_status is True:
         out_dict = __write_to_out_dict(num_dat, col_heads, pcs=True)
 
         if 'step_time_s' in out_dict:
             t_dict = \
-                __gen_acc_time(out_dict['step_time_s'].astype(float), out_ext)
+                __gen_acc_time(out_dict['step_time_s'].astype(float), steps,
+                               out_ext)
             out_dict = {**out_dict, **t_dict}
 
         try:

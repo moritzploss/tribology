@@ -212,7 +212,7 @@ class TestDataImport(unittest.TestCase):
         database = np.load(self.demo_1_pcs_npz)
         self.assertEqual('film_surf' in database, True)
         for file in f_out:
-            os.remove(file)
+           os.remove(file)
 
     def test_import_dir_recursive(self):
         """

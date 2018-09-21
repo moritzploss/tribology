@@ -23,7 +23,8 @@ def plot_results(ax_x, ax_y, press):
     # generate plot
     fig = plt.figure()
     ax_3d = fig.add_subplot(111, projection='3d')
-    ax_3d.plot_surface(x_grid, y_grid, press)
+    from matplotlib import cm
+    ax_3d.plot_surface(x_grid, y_grid, press, cmap=cm.PuBu)
     ax_3d.set_xlabel('contact width in mm')
     ax_3d.set_ylabel('contact length in mm')
     ax_3d.set_zlabel('contact pressure in MPa')
