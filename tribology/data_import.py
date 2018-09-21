@@ -537,6 +537,7 @@ def get_pcs_steps(in_file):
             if line.startswith('Step type	MAPPER	') or \
                 line.startswith('Step type	ZERO_CHECK	') or \
                 line.startswith('Step type	FILM_ZERO	') or \
+                line.startswith('Step type	BOD_TIMED	') or \
                 line.startswith('Step type	HEATING	'):
                 steps[-1] = 'other'
     return steps
