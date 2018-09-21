@@ -454,18 +454,19 @@ def __gen_acc_time(step_time, steps, outformat='npz'):
     step_start_with_other = []
     step_end_with_other = []
     idx = 0
-    for step_type in steps:
-        if step_type == 'data':
-            step_start_with_other.append(step_start[idx])
-            step_end_with_other.append(step_end[idx])
-            idx += 1
-        elif step_type == 'other':
-            if step_start_with_other:
-                step_start_with_other.append(step_end_with_other[-1])
-                step_end_with_other.append(step_end_with_other[-1])
-            else:
-                step_start_with_other.append(0)
-                step_end_with_other.append(0)
+    for step_idx, step_type in enumerate(steps):
+        if step_idx + 1 <= len(step_start):
+            if step_type == 'data':
+                step_start_with_other.append(step_start[idx])
+                step_end_with_other.append(step_end[idx])
+                idx += 1
+            elif step_type == 'other':
+                if step_start_with_other:
+                    step_start_with_other.append(step_end_with_other[-1])
+                    step_end_with_other.append(step_end_with_other[-1])
+                else:
+                    step_start_with_other.append(0)
+                    step_end_with_other.append(0)
 
     # loop over steps and create continuous time axis
     time_accumulated_s = copy.copy(step_time)
@@ -537,7 +538,6 @@ def get_pcs_steps(in_file):
             if line.startswith('Step type	MAPPER	') or \
                 line.startswith('Step type	ZERO_CHECK	') or \
                 line.startswith('Step type	FILM_ZERO	') or \
-                line.startswith('Step type	BOD_TIMED	') or \
                 line.startswith('Step type	HEATING	'):
                 steps[-1] = 'other'
     return steps
