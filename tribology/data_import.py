@@ -454,19 +454,18 @@ def __gen_acc_time(step_time, steps, outformat='npz'):
     step_start_with_other = []
     step_end_with_other = []
     idx = 0
-    for step_idx, step_type in enumerate(steps):
-        if step_idx + 1 <= len(step_start):
-            if step_type == 'data':
-                step_start_with_other.append(step_start[idx])
-                step_end_with_other.append(step_end[idx])
-                idx += 1
-            elif step_type == 'other':
-                if step_start_with_other:
-                    step_start_with_other.append(step_end_with_other[-1])
-                    step_end_with_other.append(step_end_with_other[-1])
-                else:
-                    step_start_with_other.append(0)
-                    step_end_with_other.append(0)
+    for step_type in steps:
+        if step_type == 'data':
+            step_start_with_other.append(step_start[idx])
+            step_end_with_other.append(step_end[idx])
+            idx += 1
+        elif step_type == 'other':
+            if step_start_with_other:
+                step_start_with_other.append(step_end_with_other[-1])
+                step_end_with_other.append(step_end_with_other[-1])
+            else:
+                step_start_with_other.append(0)
+                step_end_with_other.append(0)
 
     # loop over steps and create continuous time axis
     time_accumulated_s = copy.copy(step_time)
@@ -592,18 +591,21 @@ def import_pcs(in_file, force=False, out_ext='npz', out_dir=''):
     if import_status is True:
         out_dict = __write_to_out_dict(num_dat, col_heads, pcs=True)
 
-        if 'step_time_s' in out_dict:
-            t_dict = \
-                __gen_acc_time(out_dict['step_time_s'].astype(float), steps,
-                               out_ext)
-            out_dict = {**out_dict, **t_dict}
-
         try:
+            if 'step_time_s' in out_dict:
+                t_dict = \
+                    __gen_acc_time(out_dict['step_time_s'].astype(float), steps,
+                                   out_ext)
+                out_dict = {**out_dict, **t_dict}
             out_dict = {**out_dict, **__post_process_image_data(out_dict)}
         except KeyError:
             pass
+        except IndexError:
+            out_dict = None
+            import_status = False
 
-        out_file = __save_out_file(out_file_no_ext, out_dict, out_ext)
+        if import_status:
+            out_file = __save_out_file(out_file_no_ext, out_dict, out_ext)
 
     return out_file, import_status, out_dict
 
