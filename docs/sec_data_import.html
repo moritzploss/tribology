@@ -161,7 +161,7 @@
             
   <div class="section" id="functions-for-data-import">
 <h1>Functions for Data Import<a class="headerlink" href="#functions-for-data-import" title="Permalink to this headline">¶</a></h1>
-<p>All of the below functions can be found in the <code class="code docutils literal"><span class="pre">data_import</span></code>
+<p>All of the below functions can be found in the <code class="code docutils literal notranslate"><span class="pre">data_import</span></code>
 module of the package.</p>
 <span class="target" id="module-data_import"></span><p>The below functions can be used to import delimited data files into Numpy or
 Matlab database format.</p>
@@ -169,35 +169,35 @@ Matlab database format.</p>
 <dt id="data_import.import_del">
 <code class="descname">import_del</code><span class="sig-paren">(</span><em>in_file</em>, <em>force=False</em>, <em>deli='\t'</em>, <em>dec_mark='.'</em>, <em>out_ext='npz'</em>, <em>out_dir=''</em>, <em>pad=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_del"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_del" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import a delimited data file into Numpy or Matlab database format. The file
-must have at least two data columns that are separated by <code class="code docutils literal"><span class="pre">deli</span></code>.</p>
+must have at least two data columns that are separated by <code class="code docutils literal notranslate"><span class="pre">deli</span></code>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>in_file</strong> (<em>str</em>) – The file handle of the delimited file that is to be imported.</li>
-<li><strong>force</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, existing output files will be overwritten during
-import. Default is <code class="code docutils literal"><span class="pre">False</span></code>.</li>
+<li><strong>force</strong> (<em>bool, optional</em>) – If <code class="code docutils literal notranslate"><span class="pre">True</span></code>, existing output files will be overwritten during
+import. Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.</li>
 <li><strong>deli</strong> (<em>str, optional</em>) – The delimiter used to separate data columns in the delimited file.
 Default is tab.</li>
 <li><strong>dec_mark</strong> (<em>str, optional</em>) – The decimal mark of the data file. Default is dot.</li>
-<li><strong>out_ext</strong> (<em>str, optional</em>) – The file extension (format) of the output file. Default is <code class="code docutils literal"><span class="pre">npz</span></code>
-for Numpy database format. Alternative is <code class="code docutils literal"><span class="pre">mat</span></code> for Matlab
+<li><strong>out_ext</strong> (<em>str, optional</em>) – The file extension (format) of the output file. Default is <code class="code docutils literal notranslate"><span class="pre">npz</span></code>
+for Numpy database format. Alternative is <code class="code docutils literal notranslate"><span class="pre">mat</span></code> for Matlab
 database format.</li>
 <li><strong>out_dir</strong> (<em>str, optional</em>) – The absolute or relative path to the output directory. Default is the
 current working directory.</li>
-<li><strong>pad</strong> (<em>positive int</em>) – The numbers of data columns to skip. For <code class="code docutils literal"><span class="pre">pad</span> <span class="pre">=</span> <span class="pre">n</span></code>, the first
-<code class="code docutils literal"><span class="pre">n</span></code> data columns will not be imported.</li>
+<li><strong>pad</strong> (<em>positive int</em>) – The numbers of data columns to skip. For <code class="code docutils literal notranslate"><span class="pre">pad</span> <span class="pre">=</span> <span class="pre">n</span></code>, the first
+<code class="code docutils literal notranslate"><span class="pre">n</span></code> data columns will not be imported.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
 <li><strong>out_file</strong> (<em>str</em>) – A handle to the output file that was generated during import.</li>
-<li><strong>import_status</strong> (<em>str</em>) – The import status of <code class="code docutils literal"><span class="pre">in_file</span></code>. If <code class="code docutils literal"><span class="pre">True</span></code>, the file was
-successfully imported. If <code class="code docutils literal"><span class="pre">False</span></code>, file import was attempted and
-failed. If <code class="code docutils literal"><span class="pre">None</span></code>, file import was not attempted (most likely
+<li><strong>import_status</strong> (<em>str</em>) – The import status of <code class="code docutils literal notranslate"><span class="pre">in_file</span></code>. If <code class="code docutils literal notranslate"><span class="pre">True</span></code>, the file was
+successfully imported. If <code class="code docutils literal notranslate"><span class="pre">False</span></code>, file import was attempted and
+failed. If <code class="code docutils literal notranslate"><span class="pre">None</span></code>, file import was not attempted (most likely
 because an output file with the same name already exists).</li>
-<li><strong>out_dict</strong> (<em>dict</em>) – The data that was imported from <code class="code docutils literal"><span class="pre">in_file</span></code>.</li>
+<li><strong>out_dict</strong> (<em>dict</em>) – The data that was imported from <code class="code docutils literal notranslate"><span class="pre">in_file</span></code>.</li>
 </ul>
 </p>
 </td>
@@ -214,35 +214,35 @@ database format. Optionally, all data files in a directory and all its
 child directories can be imported. The method can be applied to regular
 delimited files as well as files generated by test rigs made by PCS
 Instruments. All files must have at least two data columns that are
-separated by <code class="code docutils literal"><span class="pre">deli</span></code>.</p>
+separated by <code class="code docutils literal notranslate"><span class="pre">deli</span></code>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>in_dir</strong> (<em>str</em>) – Path to directory for which to import all files with extension
-<code class="code docutils literal"><span class="pre">in_ext</span></code>. If <code class="code docutils literal"><span class="pre">recursive=True</span></code>, imports are performed for all
-files with extension <code class="code docutils literal"><span class="pre">in_ext</span></code> in the directory tree with parent
-<code class="code docutils literal"><span class="pre">in_dir</span></code>.</li>
-<li><strong>in_ext</strong> (<em>str, optional</em>) – File extension of files to import (without dot). Default is <code class="code docutils literal"><span class="pre">txt</span></code>.</li>
-<li><strong>recursive</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, all files in <code class="code docutils literal"><span class="pre">in_dir</span></code> and all its child
-directories are imported. Default is <code class="code docutils literal"><span class="pre">False</span></code>.</li>
-<li><strong>force</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, existing output files will be overwritten during
-import. Default is <code class="code docutils literal"><span class="pre">False</span></code>.</li>
+<code class="code docutils literal notranslate"><span class="pre">in_ext</span></code>. If <code class="code docutils literal notranslate"><span class="pre">recursive=True</span></code>, imports are performed for all
+files with extension <code class="code docutils literal notranslate"><span class="pre">in_ext</span></code> in the directory tree with parent
+<code class="code docutils literal notranslate"><span class="pre">in_dir</span></code>.</li>
+<li><strong>in_ext</strong> (<em>str, optional</em>) – File extension of files to import (without dot). Default is <code class="code docutils literal notranslate"><span class="pre">txt</span></code>.</li>
+<li><strong>recursive</strong> (<em>bool, optional</em>) – If <code class="code docutils literal notranslate"><span class="pre">True</span></code>, all files in <code class="code docutils literal notranslate"><span class="pre">in_dir</span></code> and all its child
+directories are imported. Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.</li>
+<li><strong>force</strong> (<em>bool, optional</em>) – If <code class="code docutils literal notranslate"><span class="pre">True</span></code>, existing output files will be overwritten during
+import. Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.</li>
 <li><strong>deli</strong> (<em>str, optional</em>) – The delimiter used to separate data columns in the delimited file.
 Default is tab.</li>
 <li><strong>dec_mark</strong> (<em>str, optional</em>) – The decimal mark of the data file. Default is dot.</li>
-<li><strong>out_ext</strong> (<em>str, optional</em>) – The file extension (format) of the output file. Default is <code class="code docutils literal"><span class="pre">npz</span></code>
-for Numpy database format. Alternative is <code class="code docutils literal"><span class="pre">mat</span></code> for Matlab
+<li><strong>out_ext</strong> (<em>str, optional</em>) – The file extension (format) of the output file. Default is <code class="code docutils literal notranslate"><span class="pre">npz</span></code>
+for Numpy database format. Alternative is <code class="code docutils literal notranslate"><span class="pre">mat</span></code> for Matlab
 database format.</li>
 <li><strong>out_dir</strong> (<em>str, optional</em>) – The path to the output directory where output databases are stored after
-import. By default, files are stored in <code class="code docutils literal"><span class="pre">in_dir</span></code> if
-<code class="code docutils literal"><span class="pre">recursive=False</span></code>. If <code class="code docutils literal"><span class="pre">recursive=True</span></code>, files are stored in
-the respective child directories of <code class="code docutils literal"><span class="pre">in_dir</span></code> if <code class="code docutils literal"><span class="pre">out_dir</span></code>
+import. By default, files are stored in <code class="code docutils literal notranslate"><span class="pre">in_dir</span></code> if
+<code class="code docutils literal notranslate"><span class="pre">recursive=False</span></code>. If <code class="code docutils literal notranslate"><span class="pre">recursive=True</span></code>, files are stored in
+the respective child directories of <code class="code docutils literal notranslate"><span class="pre">in_dir</span></code> if <code class="code docutils literal notranslate"><span class="pre">out_dir</span></code>
 is not specified.</li>
-<li><strong>print_stat</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, the current import status is printed to the console.
-Default is <code class="code docutils literal"><span class="pre">False</span></code>.</li>
-<li><strong>pcs</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, the delimited files are treated like files that were
+<li><strong>print_stat</strong> (<em>bool, optional</em>) – If <code class="code docutils literal notranslate"><span class="pre">True</span></code>, the current import status is printed to the console.
+Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.</li>
+<li><strong>pcs</strong> (<em>bool, optional</em>) – If <code class="code docutils literal notranslate"><span class="pre">True</span></code>, the delimited files are treated like files that were
 generated using an MTM or EHD2 test rig manufactured by PCS Instruments.</li>
 </ul>
 </td>
@@ -251,9 +251,9 @@ generated using an MTM or EHD2 test rig manufactured by PCS Instruments.</li>
 <li><strong>in_files</strong> (<em>ls of strings</em>) – The file handles of all files for which import was attempted.</li>
 <li><strong>out_files</strong> (<em>ls of strings</em>) – The file handles of all output files that were generated during the
 import process.</li>
-<li><strong>import_status</strong> (<em>ls of bools</em>) – The import status of each file in <code class="code docutils literal"><span class="pre">in_files</span></code>. If <code class="code docutils literal"><span class="pre">True</span></code>,
-the file was successfully imported. If <code class="code docutils literal"><span class="pre">False</span></code>, file import was
-attempted and failed. If <code class="code docutils literal"><span class="pre">None</span></code>, file import was not attempted
+<li><strong>import_status</strong> (<em>ls of bools</em>) – The import status of each file in <code class="code docutils literal notranslate"><span class="pre">in_files</span></code>. If <code class="code docutils literal notranslate"><span class="pre">True</span></code>,
+the file was successfully imported. If <code class="code docutils literal notranslate"><span class="pre">False</span></code>, file import was
+attempted and failed. If <code class="code docutils literal notranslate"><span class="pre">None</span></code>, file import was not attempted
 (most likely because an output file with the same name already exists).</li>
 </ul>
 </p>
@@ -267,7 +267,7 @@ attempted and failed. If <code class="code docutils literal"><span class="pre">N
 <dt id="data_import.import_pcs">
 <code class="descname">import_pcs</code><span class="sig-paren">(</span><em>in_file</em>, <em>force=False</em>, <em>out_ext='npz'</em>, <em>out_dir=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_pcs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_pcs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import a delimited data file that was produced by an MTM or EHD2 test rig
-manufactured by PCS Instruments. The method calls the <code class="code docutils literal"><span class="pre">import_del</span></code>
+manufactured by PCS Instruments. The method calls the <code class="code docutils literal notranslate"><span class="pre">import_del</span></code>
 method to perform a basic import of a delimited text file, and generates
 additional output variables that simplify data analysis.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -276,10 +276,10 @@ additional output variables that simplify data analysis.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>in_file</strong> (<em>str</em>) – The file handle of the delimited file that is to be imported.</li>
-<li><strong>force</strong> (<em>bool, optional</em>) – If <code class="code docutils literal"><span class="pre">True</span></code>, existing output files will be overwritten during
-import. Default is <code class="code docutils literal"><span class="pre">False</span></code>.</li>
-<li><strong>out_ext</strong> (<em>str, optional</em>) – The file extension (format) of the output file. Default is <code class="code docutils literal"><span class="pre">npz</span></code>
-for Numpy database format. Alternative is <code class="code docutils literal"><span class="pre">mat</span></code> for Matlab
+<li><strong>force</strong> (<em>bool, optional</em>) – If <code class="code docutils literal notranslate"><span class="pre">True</span></code>, existing output files will be overwritten during
+import. Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.</li>
+<li><strong>out_ext</strong> (<em>str, optional</em>) – The file extension (format) of the output file. Default is <code class="code docutils literal notranslate"><span class="pre">npz</span></code>
+for Numpy database format. Alternative is <code class="code docutils literal notranslate"><span class="pre">mat</span></code> for Matlab
 database format.</li>
 <li><strong>out_dir</strong> (<em>str, optional</em>) – The absolute or relative path to the output directory. Default is the
 current working directory.</li>
@@ -288,11 +288,11 @@ current working directory.</li>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
 <li><strong>out_file</strong> (<em>str</em>) – A handle to the output file that was generated during import.</li>
-<li><strong>import_status</strong> (<em>str</em>) – The import status of <code class="code docutils literal"><span class="pre">in_file</span></code>. If <code class="code docutils literal"><span class="pre">True</span></code>, the file was
-successfully imported. If <code class="code docutils literal"><span class="pre">False</span></code>, file import was attempted and
-failed. If <code class="code docutils literal"><span class="pre">None</span></code>, file import was not attempted (most likely
+<li><strong>import_status</strong> (<em>str</em>) – The import status of <code class="code docutils literal notranslate"><span class="pre">in_file</span></code>. If <code class="code docutils literal notranslate"><span class="pre">True</span></code>, the file was
+successfully imported. If <code class="code docutils literal notranslate"><span class="pre">False</span></code>, file import was attempted and
+failed. If <code class="code docutils literal notranslate"><span class="pre">None</span></code>, file import was not attempted (most likely
 because an output file with the same name already exists).</li>
-<li><strong>out_dict</strong> (<em>dict</em>) – The data that was imported from <code class="code docutils literal"><span class="pre">in_file</span></code>.</li>
+<li><strong>out_dict</strong> (<em>dict</em>) – The data that was imported from <code class="code docutils literal notranslate"><span class="pre">in_file</span></code>.</li>
 </ul>
 </p>
 </td>

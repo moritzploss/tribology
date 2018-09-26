@@ -593,11 +593,11 @@
         <span class="n">out_file</span> <span class="o">=</span> <span class="n">__save_out_file</span><span class="p">(</span><span class="n">out_file_no_ext</span><span class="p">,</span> <span class="n">out_dict</span><span class="p">,</span> <span class="n">out_ext</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">out_file</span> <span class="o">=</span> <span class="kc">None</span>
+</div>
+    <span class="k">return</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">import_status</span><span class="p">,</span> <span class="n">out_dict</span>
 
-    <span class="k">return</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">import_status</span><span class="p">,</span> <span class="n">out_dict</span></div>
 
-
-<span class="k">def</span> <span class="nf">__gen_acc_time</span><span class="p">(</span><span class="n">step_time</span><span class="p">,</span> <span class="n">outformat</span><span class="o">=</span><span class="s1">&#39;npz&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">__gen_acc_time</span><span class="p">(</span><span class="n">step_time</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">outformat</span><span class="o">=</span><span class="s1">&#39;npz&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    For files produced by PCS Instrument test rigs, generate a continuous time</span>
@@ -611,6 +611,23 @@
     <span class="c1"># get index of first data point of each step</span>
     <span class="n">step_start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">step_end</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
 
+    <span class="c1"># add empty steps for mapper steps</span>
+    <span class="n">step_start_with_other</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">step_end_with_other</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">step_type</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">step_type</span> <span class="o">==</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span>
+            <span class="n">step_start_with_other</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">step_start</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="n">step_end_with_other</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">step_end</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">step_type</span> <span class="o">==</span> <span class="s1">&#39;other&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">step_start_with_other</span><span class="p">:</span>
+                <span class="n">step_start_with_other</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">step_end_with_other</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">step_end_with_other</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">step_end_with_other</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">step_start_with_other</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">step_end_with_other</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
     <span class="c1"># loop over steps and create continuous time axis</span>
     <span class="n">time_accumulated_s</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">step_time</span><span class="p">)</span>
     <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
@@ -622,12 +639,12 @@
     <span class="c1"># save data to dictionary</span>
     <span class="k">if</span> <span class="n">outformat</span> <span class="o">==</span> <span class="s1">&#39;mat&#39;</span><span class="p">:</span>
         <span class="n">sub_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;time_accumulated_s&#39;</span><span class="p">:</span> <span class="n">time_accumulated_s</span><span class="p">,</span>
-                    <span class="s1">&#39;step_start&#39;</span><span class="p">:</span> <span class="n">step_start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
-                    <span class="s1">&#39;step_end&#39;</span><span class="p">:</span> <span class="n">step_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
+                    <span class="s1">&#39;step_start&#39;</span><span class="p">:</span> <span class="n">step_start_with_other</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="s1">&#39;step_end&#39;</span><span class="p">:</span> <span class="n">step_end_with_other</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">sub_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;time_accumulated_s&#39;</span><span class="p">:</span> <span class="n">time_accumulated_s</span><span class="p">,</span>
-                    <span class="s1">&#39;step_start&#39;</span><span class="p">:</span> <span class="n">step_start</span><span class="p">,</span>
-                    <span class="s1">&#39;step_end&#39;</span><span class="p">:</span> <span class="n">step_end</span><span class="p">}</span>
+                    <span class="s1">&#39;step_start&#39;</span><span class="p">:</span> <span class="n">step_start_with_other</span><span class="p">,</span>
+                    <span class="s1">&#39;step_end&#39;</span><span class="p">:</span> <span class="n">step_end_with_other</span><span class="p">}</span>
     <span class="k">return</span> <span class="n">sub_dict</span>
 
 
@@ -670,6 +687,36 @@
         <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">img_dat</span><span class="p">[</span><span class="s1">&#39;x_set&#39;</span><span class="p">],</span> <span class="n">img_dat</span><span class="p">[</span><span class="s1">&#39;y_set&#39;</span><span class="p">],</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">img_dat</span>
+
+
+<span class="k">def</span> <span class="nf">__get_pcs_steps</span><span class="p">(</span><span class="n">in_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Get a list indicating the type of step for each step in a PCS data file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    in_file: str</span>
+<span class="sd">        Path to PCS file</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    steps: list</span>
+<span class="sd">        A list of step types. for numeric data, the step type is &#39;data&#39;, for</span>
+<span class="sd">        other step types &#39;other&#39;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">steps</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">in_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">dat_file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">dat_file</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Step &#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">&#39; started at &#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">steps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Step type	MAPPER	&#39;</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Step type	ZERO_CHECK	&#39;</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Step type	FILM_ZERO	&#39;</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Step type	HEATING	&#39;</span><span class="p">):</span>
+                <span class="n">steps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;other&#39;</span>
+    <span class="k">return</span> <span class="n">steps</span>
 
 
 <div class="viewcode-block" id="import_pcs"><a class="viewcode-back" href="../sec_data_import.html#data_import.import_pcs">[docs]</a><span class="k">def</span> <span class="nf">import_pcs</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">out_ext</span><span class="o">=</span><span class="s1">&#39;npz&#39;</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
@@ -716,22 +763,28 @@
         <span class="n">__import_file</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">out_file_no_ext</span><span class="p">,</span> <span class="n">out_ext</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">deli</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span>
                       <span class="n">dec_mark</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 
+    <span class="n">steps</span> <span class="o">=</span> <span class="n">__get_pcs_steps</span><span class="p">(</span><span class="n">in_file</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">import_status</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">out_dict</span> <span class="o">=</span> <span class="n">__write_to_out_dict</span><span class="p">(</span><span class="n">num_dat</span><span class="p">,</span> <span class="n">col_heads</span><span class="p">,</span> <span class="n">pcs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="s1">&#39;step_time_s&#39;</span> <span class="ow">in</span> <span class="n">out_dict</span><span class="p">:</span>
-            <span class="n">t_dict</span> <span class="o">=</span> \
-                <span class="n">__gen_acc_time</span><span class="p">(</span><span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;step_time_s&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span> <span class="n">out_ext</span><span class="p">)</span>
-            <span class="n">out_dict</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">out_dict</span><span class="p">,</span> <span class="o">**</span><span class="n">t_dict</span><span class="p">}</span>
-
         <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;step_time_s&#39;</span> <span class="ow">in</span> <span class="n">out_dict</span><span class="p">:</span>
+                <span class="n">t_dict</span> <span class="o">=</span> \
+                    <span class="n">__gen_acc_time</span><span class="p">(</span><span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;step_time_s&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span> <span class="n">steps</span><span class="p">,</span>
+                                   <span class="n">out_ext</span><span class="p">)</span>
+                <span class="n">out_dict</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">out_dict</span><span class="p">,</span> <span class="o">**</span><span class="n">t_dict</span><span class="p">}</span>
             <span class="n">out_dict</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">out_dict</span><span class="p">,</span> <span class="o">**</span><span class="n">__post_process_image_data</span><span class="p">(</span><span class="n">out_dict</span><span class="p">)}</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">pass</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="n">out_dict</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">import_status</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="n">out_file</span> <span class="o">=</span> <span class="n">__save_out_file</span><span class="p">(</span><span class="n">out_file_no_ext</span><span class="p">,</span> <span class="n">out_dict</span><span class="p">,</span> <span class="n">out_ext</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">import_status</span><span class="p">,</span> <span class="n">out_dict</span></div>
+        <span class="k">if</span> <span class="n">import_status</span><span class="p">:</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="n">__save_out_file</span><span class="p">(</span><span class="n">out_file_no_ext</span><span class="p">,</span> <span class="n">out_dict</span><span class="p">,</span> <span class="n">out_ext</span><span class="p">)</span>
+</div>
+    <span class="k">return</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">import_status</span><span class="p">,</span> <span class="n">out_dict</span>
 
 
 <span class="k">def</span> <span class="nf">__print_import_stats</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
@@ -880,8 +933,8 @@
 
         <span class="k">if</span> <span class="n">print_stat</span><span class="p">:</span>
             <span class="n">__print_import_stats</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">in_files</span><span class="p">,</span> <span class="n">out_files</span><span class="p">,</span> <span class="n">import_status</span></div>
+</div>
+    <span class="k">return</span> <span class="n">in_files</span><span class="p">,</span> <span class="n">out_files</span><span class="p">,</span> <span class="n">import_status</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

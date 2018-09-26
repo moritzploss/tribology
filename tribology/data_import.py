@@ -528,7 +528,23 @@ def __post_process_image_data(out_dict):
     return img_dat
 
 
-def get_pcs_steps(in_file):
+def __get_pcs_steps(in_file):
+    """
+
+    Get a list indicating the type of step for each step in a PCS data file.
+
+    Parameters
+    ----------
+    in_file: str
+        Path to PCS file
+
+    Returns
+    -------
+    steps: list
+        A list of step types. for numeric data, the step type is 'data', for
+        other step types 'other'
+
+    """
     steps = []
     with open(in_file) as dat_file:
         for line in dat_file:
@@ -586,7 +602,7 @@ def import_pcs(in_file, force=False, out_ext='npz', out_dir=''):
         __import_file(in_file, out_file_no_ext, out_ext, force=force, deli='\t',
                       dec_mark='.', pad=8)
 
-    steps = get_pcs_steps(in_file)
+    steps = __get_pcs_steps(in_file)
 
     if import_status is True:
         out_dict = __write_to_out_dict(num_dat, col_heads, pcs=True)
