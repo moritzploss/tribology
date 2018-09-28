@@ -54,7 +54,19 @@ neutral builds includes changes with respect to the latest numbered
 release listed below.
 
 #### latest neutral build
-- README.md updated
+
+#### 0.4.0
+- module `process_slim_mapper` added. the module contains function for automated
+  processing of SLIM mapper bitmap images as obtained from test rigs by PCS 
+  Instruments.
+- fixed a bug that lead to a `permission denied` error using the `import_del`
+  function (and related functions) if the imported file is in the current working
+  directory and the function is called within a program that runs in an IDE.
+- README updated
+
+
+#### 0.3.4
+- README updated
 - when importing PCS files using the `import_dir` or `import_del` method of the
   `data_import` module, steps without numeric data (mapper steps, film zero 
   steps, ...) are now reflected in the `step_start` and `step_end` variables

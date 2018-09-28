@@ -11,3 +11,6 @@ sphinxcontrib-fulltoc
 bumpversion
 matplotlib
 pytest
+opencv-python==3.4.0.12
+pillow==5.0.0
+

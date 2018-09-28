@@ -354,7 +354,9 @@ def __get_out_file(in_file, out_dir):
     if out_dir == '':
         out_dir = os.path.dirname(in_file)
     file_no_ext = os.path.splitext(in_file)[0].split(os.sep)[-1]
-    out_file = '{}/{}'.format(out_dir, file_no_ext)
+    if out_dir == '':
+        out_dir = '.'
+    out_file = '/'.join([out_dir, file_no_ext])
     return file_no_ext, out_dir, out_file
 
 
