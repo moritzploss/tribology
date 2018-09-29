@@ -55,7 +55,7 @@ release listed below.
 
 #### latest neutral build
 
-#### 0.4.0
+#### 0.4.0 (to be released soon)
 - module `process_slim_mapper` added. the module contains function for automated
   processing of SLIM mapper bitmap images as obtained from test rigs by PCS 
   Instruments.
