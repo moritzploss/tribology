@@ -56,9 +56,9 @@ release listed below.
 #### latest neutral build
 
 #### 0.4.0 (to be released soon)
-- module `process_slim_mapper` added. the module contains function for automated
-  processing of SLIM mapper bitmap images as obtained from test rigs by PCS 
-  Instruments.
+- module `process_slim_mapper` added. the module contains functions for 
+  automated processing of SLIM mapper bitmap images as obtained from test rigs 
+  by PCS Instruments.
 - fixed a bug that lead to a `permission denied` error using the `import_del`
   function (and related functions) if the imported file is in the current working
   directory and the function is called within a program that runs in an IDE.

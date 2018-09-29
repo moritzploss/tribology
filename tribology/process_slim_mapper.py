@@ -22,7 +22,7 @@ import cv2
 def __print_progress(current, to_reach):
     """
 
-    Print progress bar to terminal based on ratio of current / to_reach.
+    Print progress bar to console based on ratio of current / to_reach.
 
     Parameters
     ----------
