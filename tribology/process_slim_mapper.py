@@ -131,8 +131,8 @@ def __find_mean_circles(img_gray):
         circles = cv2.HoughCircles(img_gray, cv2.HOUGH_GRADIENT, par, 1500,
                                    param1=50, param2=30, minRadius=200,
                                    maxRadius=0)
-        circles = np.int16(np.around(circles))
-        for circ in circles[0, :]:
+        new_circles = np.int16(np.around(circles))
+        for circ in new_circles[0, :]:
             rads.append(circ[2])
             x.append(circ[0])
             y.append(circ[1])
