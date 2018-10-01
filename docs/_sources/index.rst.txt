@@ -40,9 +40,10 @@ Alternatively, you can perform module level imports using the moule names given
 in the remainder of this documentation. For quick access to relevant
 information, package modules are loosely grouped by topic in the following.
 
+Contents
+========
 .. toctree::
    :maxdepth: 3
-   :caption: Contents:
 
    sec_general_tribology.rst
    sec_contact_mechanics.rst

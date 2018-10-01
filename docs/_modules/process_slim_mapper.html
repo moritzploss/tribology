@@ -1,0 +1,865 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>process_slim_mapper &#8212; Tribology  documentation</title>
+    <link rel="stylesheet" href="../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Tribology  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Table Of Contents</h2>
+  </div>
+  <div class="sidebar-toc">
+    
+    
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../sec_general_tribology.html">General Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_contact_mechanics.html">Contact Mechanics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_ehd_lubrication.html">EHD Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_lubricants.html">Lubricants and Lubrication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_data_import.html">Functions for Data Import</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_process_slim_mapper.html">Process SLIM Mapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_roller_bearings.html">Roller Bearings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_constants.html">Constants for Tribology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sec_p3can.html">P3CAN</a></li>
+</ul>
+
+    
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../index.html">Docs</a></li>
+              
+                <li><a href="index.html">Module code</a></li>
+              
+              <li>process_slim_mapper</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <h1>Source code for process_slim_mapper</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">The below functions can be used to post-process SLIM mapper bitmap files created</span>
+<span class="sd">by MTM or EHD test rigs by PCS Instruments.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="k">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+
+<span class="k">def</span> <span class="nf">__print_progress</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">to_reach</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Print progress bar to console based on ratio of current / to_reach.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    current: int</span>
+<span class="sd">        Current iteration number.</span>
+<span class="sd">    to_reach: int</span>
+<span class="sd">        Final iteration number to reach.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    current: int</span>
+<span class="sd">        The next iteration number.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">current</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">prog_bar_len</span> <span class="o">=</span> <span class="mi">25</span>
+    <span class="n">approximate_progress</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">current</span> <span class="o">/</span> <span class="n">to_reach</span> <span class="o">*</span> <span class="n">prog_bar_len</span><span class="p">))</span>
+    <span class="n">progress_bar</span> <span class="o">=</span> <span class="n">approximate_progress</span> <span class="o">*</span> <span class="s1">&#39;#&#39;</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span> <span class="o">+</span> \
+        <span class="p">(</span><span class="n">prog_bar_len</span> <span class="o">-</span> <span class="n">approximate_progress</span><span class="p">)</span> <span class="o">*</span> <span class="s1">&#39; &#39;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">progress: |</span><span class="si">{}</span><span class="s2">| (</span><span class="si">{}</span><span class="s2"> %)</span><span class="si">{}</span><span class="s2">&quot;</span>
+                     <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">progress_bar</span><span class="p">,</span>
+                             <span class="nb">round</span><span class="p">(</span><span class="n">current</span> <span class="o">/</span> <span class="n">to_reach</span> <span class="o">*</span> <span class="mi">100</span><span class="p">),</span>
+                             <span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="n">current</span> <span class="o">!=</span> <span class="n">to_reach</span> <span class="k">else</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">current</span>
+
+
+<div class="viewcode-block" id="load_npz"><a class="viewcode-back" href="../sec_process_slim_mapper.html#process_slim_mapper.load_npz">[docs]</a><span class="k">def</span> <span class="nf">load_npz</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Load an npz database file into a mutable dictionary.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file: str</span>
+<span class="sd">        Path to npz database file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dat_cop: dict</span>
+<span class="sd">        Loaded data.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">dat_cop</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">dat</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+        <span class="n">dat_cop</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="n">var</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">dat_cop</span></div>
+
+
+<span class="k">def</span> <span class="nf">__show_circles</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rads</span><span class="p">,</span> <span class="n">img_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Plot an image where the automatically detected circles are overlayed over</span>
+<span class="sd">    the original bitmap file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    img: ndarray</span>
+<span class="sd">        Array with image data.</span>
+<span class="sd">    x: list</span>
+<span class="sd">        Pixel coordinates of radii centers in x-direction</span>
+<span class="sd">    y: list</span>
+<span class="sd">        Pixel coordinates of radii centers in y-direction</span>
+<span class="sd">    rads: list</span>
+<span class="sd">        Radii of detected circles in units of pixels</span>
+<span class="sd">    img_path:</span>
+<span class="sd">        Path of original bitmap file</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">))),</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rads</span><span class="p">)),</span>
+               <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># draw center of circle</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">))),</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;detected circles &#39;</span> <span class="o">+</span> <span class="n">img_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">img</span><span class="p">)</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">20000</span><span class="p">)</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">__find_mean_circles</span><span class="p">(</span><span class="n">img_gray</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Call the HoughCircles function using a range of fit parameters, then</span>
+<span class="sd">    average over all detected circles to find mean center (x, y) and radius.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    img_gray: ndarray</span>
+<span class="sd">        Array containing grayscale image data.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    x: list</span>
+<span class="sd">        List of x-coordinates of radii centers</span>
+<span class="sd">    y: list</span>
+<span class="sd">        List of y-coordinates of radii centers</span>
+<span class="sd">    rads: list</span>
+<span class="sd">        list of radii</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rads</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">40</span><span class="p">):</span>
+        <span class="n">circles</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">HoughCircles</span><span class="p">(</span><span class="n">img_gray</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">HOUGH_GRADIENT</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="mi">1500</span><span class="p">,</span>
+                                   <span class="n">param1</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">param2</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">minRadius</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+                                   <span class="n">maxRadius</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># pylint: disable=unsubscriptable-object</span>
+        <span class="n">new_circles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">circles</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">circ</span> <span class="ow">in</span> <span class="n">new_circles</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]:</span>
+            <span class="n">rads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">circ</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">circ</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">circ</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rads</span>
+
+
+<span class="k">def</span> <span class="nf">__dist_2d</span><span class="p">(</span><span class="n">x_1</span><span class="p">,</span> <span class="n">y_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">,</span> <span class="n">y_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the absolute distance between two points in the x-y plane.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x_1: float</span>
+<span class="sd">        x-coordinate of first point.</span>
+<span class="sd">    y_1: float</span>
+<span class="sd">        y-coordinate of first point.</span>
+<span class="sd">    x_2: float</span>
+<span class="sd">        x-coordinate of second point.</span>
+<span class="sd">    y_2: float</span>
+<span class="sd">        y-coordinate of second point.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    distance: float</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x_1</span> <span class="o">-</span> <span class="n">x_2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y_1</span> <span class="o">-</span> <span class="n">y_2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">__plot_thick</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">thick</span><span class="p">,</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">skip</span><span class="p">,</span> <span class="n">crop</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Plot the evaluated film thickness data in a 2D plot, using the extracted</span>
+<span class="sd">    rgb values.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file: str</span>
+<span class="sd">        Path to the bitmap file.</span>
+<span class="sd">    thick: ndarray</span>
+<span class="sd">        The thickness values for each pixel.</span>
+<span class="sd">    x_vals: tuple</span>
+<span class="sd">        Minimum and maximum evaluated pixel coordinates in x-direction.</span>
+<span class="sd">    y_vals: tuple</span>
+<span class="sd">        Minimum and maximum evaluated pixel coordinates in y-direction.</span>
+<span class="sd">    rgb: ndarray</span>
+<span class="sd">        Array of rgb tuples, containing color information for each pixel.</span>
+<span class="sd">    skip: int</span>
+<span class="sd">        The skip value provided by the user.</span>
+<span class="sd">    crop: float</span>
+<span class="sd">        The crop value provided by the user.</span>
+<span class="sd">    out_dir: str</span>
+<span class="sd">        Path to output directory.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out_file: str</span>
+<span class="sd">        Path to plot file.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x_grid</span><span class="p">,</span> <span class="n">y_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">thick</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">thick</span><span class="p">)[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+    <span class="n">ar_shape</span> <span class="o">=</span> <span class="n">x_grid</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">nu_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">ar_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">ar_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_grid</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nu_shape</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y_grid</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nu_shape</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fliplr</span><span class="p">(</span><span class="n">thick</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nu_shape</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
+               <span class="n">c</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fliplr</span><span class="p">(</span><span class="n">rgb</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nu_shape</span><span class="p">))[</span><span class="n">idx</span><span class="p">]),</span>
+               <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">skip</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_dir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="n">out_dir</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;.bmp&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> \
+        <span class="o">+</span> <span class="s1">&#39;-crop-</span><span class="si">{}</span><span class="s1">-skip-</span><span class="si">{}</span><span class="s1">.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">crop</span><span class="p">,</span> <span class="n">skip</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+    <span class="c1"># plt.show()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_file</span>
+
+
+<span class="k">def</span> <span class="nf">__adjust_rad_for_skip</span><span class="p">(</span><span class="n">diam</span><span class="p">,</span> <span class="n">skip</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    If necessary, increase the crop circle diameter (radius) for the chosen</span>
+<span class="sd">    skip value. This is required because the diameter must be divisible by</span>
+<span class="sd">    skip without rest.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    diam: int</span>
+<span class="sd">        Initial diameter of crop circle (in pixels).</span>
+<span class="sd">    skip: int</span>
+<span class="sd">        The numbers of pixels to skip when evaluating film thickness</span>
+<span class="sd">        information.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    diam: int</span>
+<span class="sd">        Diameter of circle that is divisible by skip without rest.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="n">diam</span> <span class="o">%</span> <span class="n">skip</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">diam</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">diam</span>
+
+
+<span class="k">def</span> <span class="nf">__distance</span><span class="p">(</span><span class="n">c_1</span><span class="p">,</span> <span class="n">c_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Get the absolute distance between two rgb color tuples in the 3D rgb space.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    c_1: tuple</span>
+<span class="sd">        First set of rgb values.</span>
+<span class="sd">    c_2: tuple</span>
+<span class="sd">        Second set of rgb values.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dist: float</span>
+<span class="sd">        Absolute distance between color tuples.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">g_1</span><span class="p">,</span> <span class="n">b_1</span><span class="p">)</span> <span class="o">=</span> <span class="n">c_1</span>
+    <span class="p">(</span><span class="n">r_2</span><span class="p">,</span> <span class="n">g_2</span><span class="p">,</span> <span class="n">b_2</span><span class="p">)</span> <span class="o">=</span> <span class="n">c_2</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">r_1</span> <span class="o">-</span> <span class="n">r_2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">g_1</span> <span class="o">-</span> <span class="n">g_2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">b_1</span> <span class="o">-</span> <span class="n">b_2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dist</span>
+
+
+<span class="k">def</span> <span class="nf">__rgb_to_thick</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">rgb_map</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Find rgb value that matches pixels best, then extract corresponding film</span>
+<span class="sd">    thickness value.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    point: tuple</span>
+<span class="sd">        rgb value of point as extracted from bitmap file</span>
+<span class="sd">    rgb_map: dict</span>
+<span class="sd">        rgb map created from SLIM Spacer Calibration file, with rgb-tuples as</span>
+<span class="sd">        keys and film thickness values as values.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    film_thick: float</span>
+<span class="sd">        Film thickness value for current pixel</span>
+<span class="sd">    rgb_norm: tuple</span>
+<span class="sd">        rgb value for pixel as extracted from color map, normalized to range 0-1</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rgb_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">closest_colors</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">color</span><span class="p">:</span> <span class="n">__distance</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">point</span><span class="p">))</span>
+    <span class="n">rgb</span> <span class="o">=</span> <span class="n">closest_colors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">film_thick</span> <span class="o">=</span> <span class="n">rgb_map</span><span class="p">[</span><span class="n">rgb</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">rgb_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span><span class="o">/</span><span class="mi">255</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">rgb</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">film_thick</span><span class="p">,</span> <span class="n">rgb_norm</span>
+
+
+<span class="k">def</span> <span class="nf">__set_aperture</span><span class="p">(</span><span class="n">ap_in</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Make sure that aperture dictionary has correct format.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ap_in: dict</span>
+<span class="sd">        Aperture as defined by user.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ap_out: dict</span>
+<span class="sd">        Correctly formated and complete aperture dictionary</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sides</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">]</span>
+    <span class="n">ap_out</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">side</span> <span class="ow">in</span> <span class="n">sides</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ap_in</span> <span class="ow">and</span> <span class="n">side</span> <span class="ow">in</span> <span class="n">ap_in</span><span class="p">:</span>
+            <span class="n">ap_out</span><span class="p">[</span><span class="n">side</span><span class="p">]</span> <span class="o">=</span> <span class="n">ap_in</span><span class="p">[</span><span class="n">side</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ap_out</span><span class="p">[</span><span class="n">side</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">ap_out</span>
+
+
+<span class="k">def</span> <span class="nf">__get_thick</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rads</span><span class="p">,</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">,</span> <span class="n">r_mean</span><span class="p">,</span> <span class="n">rgb_map</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">crop</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">aperture</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Get the film thickness values for each pixel of the bitmap image file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file: str</span>
+<span class="sd">        Path to bitmap image.</span>
+<span class="sd">    x: list</span>
+<span class="sd">        Centers of automatically detected circle centers in x-direction.</span>
+<span class="sd">    y: list</span>
+<span class="sd">        Centers of automatically detected circle centers in y-direction.</span>
+<span class="sd">    rads: ndarray</span>
+<span class="sd">        Radii of automatically detected circle centers.</span>
+<span class="sd">    x_vals: tuple</span>
+<span class="sd">        Minimum and maximum evaluated pixel values in x-direction.</span>
+<span class="sd">    y_vals: tuple</span>
+<span class="sd">        Minimum and maximum evaluated pixel values in y-direction.</span>
+<span class="sd">    r_mean: int</span>
+<span class="sd">        Radius of automatically detected circles.</span>
+<span class="sd">    rgb_map: dict</span>
+<span class="sd">        Dictionary mapping rgb tuples (keys) to thickness values (val).</span>
+<span class="sd">    skip: int</span>
+<span class="sd">        Skip value as defined by user.</span>
+<span class="sd">    crop: float</span>
+<span class="sd">        Crop value as defined by user.</span>
+<span class="sd">    aperture: dict</span>
+<span class="sd">        Aperture as defined by user.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    thick: ndarray</span>
+<span class="sd">        Thickness values for each pixel of bitmap image.</span>
+<span class="sd">    rgb: ndarray</span>
+<span class="sd">        Array of rgb tuples for each pixel of bitmap image.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">pixels</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+    <span class="n">diam</span> <span class="o">=</span> <span class="n">__adjust_rad_for_skip</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r_mean</span><span class="p">,</span> <span class="n">skip</span><span class="p">)</span>
+    <span class="n">mat_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">diam</span> <span class="o">/</span> <span class="n">skip</span><span class="p">)</span>
+    <span class="n">thick</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">mat_size</span><span class="p">,</span> <span class="n">mat_size</span><span class="p">))</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)</span>
+    <span class="n">rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">mat_size</span><span class="p">,</span> <span class="n">mat_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+    <span class="n">rgb</span><span class="p">[:][:]</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span>
+    <span class="n">x_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">y_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="n">aperture</span> <span class="o">=</span> <span class="n">__set_aperture</span><span class="p">(</span><span class="n">aperture</span><span class="p">)</span>
+
+    <span class="n">r_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rads</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx_1</span><span class="p">,</span> <span class="n">x_idx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">x_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">skip</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">idx_2</span><span class="p">,</span> <span class="n">y_idx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">y_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">skip</span><span class="p">)):</span>
+            <span class="n">position</span> <span class="o">=</span> <span class="n">__dist_2d</span><span class="p">(</span><span class="n">x_idx</span><span class="p">,</span> <span class="n">y_idx</span><span class="p">,</span> <span class="n">x_mean</span><span class="p">,</span> <span class="n">y_mean</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">position</span> <span class="o">&lt;=</span> <span class="n">r_mean</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">crop</span><span class="p">)</span> <span class="ow">and</span> \
+                    <span class="n">y_idx</span> <span class="o">&lt;=</span> <span class="n">y_mean</span> <span class="o">+</span> <span class="n">r_mean</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aperture</span><span class="p">[</span><span class="s1">&#39;bottom&#39;</span><span class="p">])</span> <span class="ow">and</span> \
+                    <span class="n">y_idx</span> <span class="o">&gt;=</span> <span class="n">y_mean</span> <span class="o">-</span> <span class="n">r_mean</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aperture</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">])</span> <span class="ow">and</span> \
+                    <span class="n">x_idx</span> <span class="o">&lt;=</span> <span class="n">x_mean</span> <span class="o">+</span> <span class="n">r_mean</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aperture</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">])</span> <span class="ow">and</span> \
+                    <span class="n">x_idx</span> <span class="o">&gt;=</span> <span class="n">x_mean</span> <span class="o">-</span> <span class="n">r_mean</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aperture</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">]):</span>
+                <span class="n">pix</span> <span class="o">=</span> <span class="n">pixels</span><span class="p">[</span><span class="n">x_idx</span><span class="p">,</span> <span class="n">y_idx</span><span class="p">]</span>
+                <span class="n">thick</span><span class="p">[</span><span class="n">idx_1</span><span class="p">,</span> <span class="n">idx_2</span><span class="p">],</span> <span class="n">rgb</span><span class="p">[</span><span class="n">idx_1</span><span class="p">,</span> <span class="n">idx_2</span><span class="p">]</span> <span class="o">=</span> <span class="n">__rgb_to_thick</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span>
+                                                                        <span class="n">rgb_map</span><span class="p">)</span>
+
+
+    <span class="k">return</span> <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span>
+
+
+<span class="k">def</span> <span class="nf">__get_extrema</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r_mean</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Get the minima and maxima of x and y circle center coordinates.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x: list</span>
+<span class="sd">        x-coordinates</span>
+<span class="sd">    y: list</span>
+<span class="sd">        y-coordinates</span>
+<span class="sd">    r_mean: int</span>
+<span class="sd">        mean radius</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    x_vals: tuple</span>
+<span class="sd">        Containing minimum and maximum x-value</span>
+<span class="sd">    y_vals: tuple</span>
+<span class="sd">        Containing minimum and maximum y-value</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x_mean</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">y_mean</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+
+    <span class="n">x_min</span> <span class="o">=</span> <span class="n">x_mean</span> <span class="o">-</span> <span class="n">r_mean</span>
+    <span class="n">x_max</span> <span class="o">=</span> <span class="n">x_mean</span> <span class="o">+</span> <span class="n">r_mean</span>
+    <span class="n">y_min</span> <span class="o">=</span> <span class="n">y_mean</span> <span class="o">-</span> <span class="n">r_mean</span>
+    <span class="n">y_max</span> <span class="o">=</span> <span class="n">y_mean</span> <span class="o">+</span> <span class="n">r_mean</span>
+
+    <span class="n">x_vals</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
+    <span class="n">y_vals</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span>
+
+
+<span class="k">def</span> <span class="nf">__load_grayscale_img</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Load an image file into an array.</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image: str</span>
+<span class="sd">        The path to a PIL-compatible image file in BMP format.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    img_gray: ndarray</span>
+<span class="sd">        Array containing grayscale image data.</span>
+<span class="sd">    img_orig: ndarray</span>
+<span class="sd">        Array containing original image data.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">img_orig</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">img_gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">img_gray</span><span class="p">,</span> <span class="n">img_orig</span>
+
+
+<span class="k">def</span> <span class="nf">__load_rgb_map</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Load a npz database containing an imported PCS Spacer Calibration data set.</span>
+
+<span class="sd">    To create an npz database from a PCS Spacer Calibration file, the</span>
+<span class="sd">    `import_del` function of the `data_import` module should be used.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file: str</span>
+<span class="sd">        Path to npz database.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    rgb_dat: dict</span>
+<span class="sd">        Dictionary mapping rgb tuples (keys) to thickness values (val).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">spacer_calib</span> <span class="o">=</span> <span class="n">load_npz</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">rgb_dat</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">film</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">spacer_calib</span><span class="p">[</span><span class="s1">&#39;film&#39;</span><span class="p">]):</span>
+        <span class="n">rgb_dat</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{(</span><span class="n">spacer_calib</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+              <span class="n">spacer_calib</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+              <span class="n">spacer_calib</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span> <span class="n">film</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">rgb_dat</span>
+
+
+<span class="k">def</span> <span class="nf">__get_data_at_step</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mtm_dat</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Find the data step that corresponds to an BPM image file and get the</span>
+<span class="sd">    corresponding data (key `var`) from an MTM data file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file: str</span>
+<span class="sd">        The path to a BMP image file. The file name given by the PCS instrument</span>
+<span class="sd">        may not be changed, otherwise the step extraction may fail.</span>
+<span class="sd">    mtm_dat: dict</span>
+<span class="sd">        Instrument output data loaded from npz database file.</span>
+<span class="sd">    var: str</span>
+<span class="sd">        A key in the npz database.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dat: ndarray</span>
+<span class="sd">        An array containing a single data point (float, int)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.bmp&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+    <span class="n">step_idx</span> <span class="o">=</span> <span class="n">mtm_dat</span><span class="p">[</span><span class="s1">&#39;step_start&#39;</span><span class="p">][</span><span class="n">step</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="n">mtm_dat</span><span class="p">[</span><span class="n">var</span><span class="p">][</span><span class="n">step_idx</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">dat</span>
+
+
+<span class="k">def</span> <span class="nf">__calc_mean_thick</span><span class="p">(</span><span class="n">thick</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the mean value of the thickness data.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    thick: ndarray</span>
+<span class="sd">        Pixel-by-pixel thickness data.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Mean thickness: float</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">thick</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="slim2thick"><a class="viewcode-back" href="../sec_process_slim_mapper.html#process_slim_mapper.slim2thick">[docs]</a><span class="k">def</span> <span class="nf">slim2thick</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">rgb_map</span><span class="p">,</span> <span class="n">rads</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">aperture</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Extract film thickness data from a PCS Instruments SLIM image file in BMP</span>
+<span class="sd">    format. To obtain the thickness data, the color information of the BMP is</span>
+<span class="sd">    converted to thickness information according to the rgb color map (Spacer</span>
+<span class="sd">    Calibration file) provided by the instrument.</span>
+
+<span class="sd">    The center point of the relevant (circular) contact area between the ball</span>
+<span class="sd">    and the glass window is automatically detected. The radius of the contact</span>
+<span class="sd">    area is automatically detected if `rads` is not provided. Thickness</span>
+<span class="sd">    information outside of the detected area is discarded. The `crop` and</span>
+<span class="sd">    `aperture` parameters can be used to further constrain the area of interest.</span>
+
+<span class="sd">    The `skip` parameter determines the number of data points that is evaluated.</span>
+<span class="sd">    For example, for `skip = 1`, every pixel within the area of interest is</span>
+<span class="sd">    evaluated; for `skip = 10` every 10th pixel is evaluated.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file: str</span>
+<span class="sd">        Path to a PCS bitmap 3D SLIM mapper output file</span>
+<span class="sd">    rgb_map: str</span>
+<span class="sd">        Path to a PCS Spacer Calibration file in npz format. The original</span>
+<span class="sd">        instrument output file needs to be imported into npz database format</span>
+<span class="sd">        using the `import_del` function of the `data_import` module first.</span>
+<span class="sd">    rads: int, float, list, ndarray, optional</span>
+<span class="sd">        The contact radius (in pixels) of the circular contact area between</span>
+<span class="sd">        ball and glass window. If several radii are provided, the mean value</span>
+<span class="sd">        will be used.</span>
+<span class="sd">    skip: positive int, optional</span>
+<span class="sd">        The number of pixels to skip (in both x and y direction). Higher skip</span>
+<span class="sd">        numbers will lead to faster processing; lower skip numbers to higher</span>
+<span class="sd">        accuracies.</span>
+<span class="sd">    crop: float, optional</span>
+<span class="sd">        Determines by how much the radius of the contact area is cropped</span>
+<span class="sd">        during the data processing step. Value needs to be in the range [0, 1].</span>
+<span class="sd">        A crop value of 0.5 will reduce the radius by 50 %.</span>
+<span class="sd">    aperture: dict, optional</span>
+<span class="sd">        A dictionary defining a rectangular area relative to the crop radius.</span>
+<span class="sd">        Data points outside the rectangular area are not evaluated. The borders</span>
+<span class="sd">        of the rectangle are defined relative to the crop radius. Values in the</span>
+<span class="sd">        range [0, 1] may be defined for the following keys:</span>
+
+<span class="sd">        - top</span>
+<span class="sd">        - right</span>
+<span class="sd">        - bottom</span>
+<span class="sd">        - left</span>
+
+<span class="sd">        If the aperture value is 0, the borders of the rectangle</span>
+<span class="sd">        intersect with the crop radius on all four sides (i.e., the aperture</span>
+<span class="sd">        has no effect). The following will reduce the crop radius on the top and</span>
+<span class="sd">        bottom by 30 %:</span>
+
+<span class="sd">        aperture = {&#39;top&#39;: 0.3, &#39;bottom&#39;: 0.3}</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    thick: ndarray</span>
+<span class="sd">        Film thickness in nanometer for each evaluated pixel.</span>
+<span class="sd">    rgb: ndarray</span>
+<span class="sd">        Best matching RGB tuple for each evaluated pixel obtained by comparison</span>
+<span class="sd">        of bitmap image and SLIM Spacer Calibration file.</span>
+<span class="sd">    rads: ndarray</span>
+<span class="sd">        The automatically detected radii of the contact between ball and window.</span>
+<span class="sd">        If `rads` is provided as an argument, `rads` is simply returned.</span>
+<span class="sd">    x_vals: tuple</span>
+<span class="sd">        Minimum and maximum evaluated pixel coordinate (in x-direction)</span>
+<span class="sd">    y_vals: tuple</span>
+<span class="sd">        Minimum and maximum evaluated pixel coordinate (in y-direction)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">img_gray</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">__load_grayscale_img</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">rgb_dat</span> <span class="o">=</span> <span class="n">__load_rgb_map</span><span class="p">(</span><span class="n">rgb_map</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">rads</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rads</span> <span class="o">=</span> <span class="n">__find_mean_circles</span><span class="p">(</span><span class="n">img_gray</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">__find_mean_circles</span><span class="p">(</span><span class="n">img_gray</span><span class="p">)</span>
+
+    <span class="c1"># __show_circles(img_orig, x, y, rads, file)</span>
+
+    <span class="n">r_mean</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rads</span><span class="p">))</span>
+    <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span> <span class="o">=</span> <span class="n">__get_extrema</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r_mean</span><span class="p">)</span>
+    <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span> <span class="o">=</span> <span class="n">__get_thick</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rads</span><span class="p">,</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">,</span> <span class="n">r_mean</span><span class="p">,</span>
+                             <span class="n">rgb_dat</span><span class="p">,</span> <span class="n">skip</span><span class="p">,</span> <span class="n">crop</span><span class="p">,</span> <span class="n">aperture</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">rads</span><span class="p">,</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span></div>
+
+
+<div class="viewcode-block" id="slim2thick_batch"><a class="viewcode-back" href="../sec_process_slim_mapper.html#process_slim_mapper.slim2thick_batch">[docs]</a><span class="k">def</span> <span class="nf">slim2thick_batch</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">zero_bmp</span><span class="p">,</span> <span class="n">rgb_map</span><span class="p">,</span> <span class="n">mtm_file</span><span class="p">,</span>
+                     <span class="n">relative</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pcs_vars</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;time_accumulated_s&#39;</span><span class="p">,),</span>
+                     <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">plt_dir</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">print_prog</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                     <span class="n">crop</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">aperture</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Batch process a number of PCS Spacer Layer image files that share the same</span>
+<span class="sd">    zero step, instrument output file and spacer layer calibration file.</span>
+
+<span class="sd">    This function is a wrapper function for `slim_to_thick`. See the docstring</span>
+<span class="sd">    for more information.</span>
+
+<span class="sd">    Returns a dictionary containing mean film thickness values and, depending</span>
+<span class="sd">    on user input, corresponding MTM variable values at the time of the film</span>
+<span class="sd">    thickness measurement step.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    files: tuple, list</span>
+<span class="sd">        Paths to spacer layer bitmap files as list/tuple of strings.</span>
+<span class="sd">    zero_bmp: str</span>
+<span class="sd">        Path to bitmap image that corresponds to initial zero step of</span>
+<span class="sd">        experiment.</span>
+<span class="sd">    rgb_map: str</span>
+<span class="sd">        Path to the shared spacer layer calibration file, imported into npz</span>
+<span class="sd">        database format using the `import_del` function of the `import_data`</span>
+<span class="sd">        module.</span>
+<span class="sd">    mtm_file: str</span>
+<span class="sd">        Path to the shared instrument output file, imported into npz database</span>
+<span class="sd">        format using the `import_del` function of the `import_data` module.</span>
+<span class="sd">    relative: bool, optional</span>
+<span class="sd">        If True, the mean film thickness value is calculated relative to the</span>
+<span class="sd">        mean film thickness of the zero step; if False, the absolute mean</span>
+<span class="sd">        film thickness is calculated.</span>
+<span class="sd">    pcs_vars: list, optional</span>
+<span class="sd">        A list of MTM variables. Variable names must match those used in npz</span>
+<span class="sd">        database created using the `import_del` function of the `import_data`</span>
+<span class="sd">        module. By default, values for variable `time_accumulated_s` are</span>
+<span class="sd">        included.</span>
+<span class="sd">    plot: bool, optional</span>
+<span class="sd">        If True, film thickness plots will be created for each image.</span>
+<span class="sd">    plt_dir: str, optional</span>
+<span class="sd">        Path to the output directroy in which to store plots.</span>
+<span class="sd">    print_prog: bool</span>
+<span class="sd">        If true, status updates are printed to the command line.</span>
+<span class="sd">    skip: positive int, optional</span>
+<span class="sd">        See function `slim_to_thick`</span>
+<span class="sd">    crop: float, optional</span>
+<span class="sd">        See function `slim_to_thick`</span>
+<span class="sd">    aperture: dict, optional</span>
+<span class="sd">        See function `slim_to_thick`</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    outdict: dict</span>
+<span class="sd">        The mean film thickness data for each bitmap file, along with extracted</span>
+<span class="sd">        data from instrument output files (depending on user inputs).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">print_prog</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;analyzing </span><span class="si">{}</span><span class="s1"> images&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)))</span>
+
+    <span class="c1"># initialize dictionary that holds outputs</span>
+    <span class="n">out_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mean_thickness_nm&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">pcs_vars</span><span class="p">:</span>
+        <span class="n">out_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">var</span><span class="p">:</span> <span class="p">[]})</span>
+    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+        <span class="n">out_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;plots&#39;</span><span class="p">:</span> <span class="p">[]})</span>
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;crop&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">crop</span>
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;skip&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">skip</span>
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;aperture&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">aperture</span>
+
+    <span class="c1"># get mean film thickness of zero step</span>
+    <span class="n">mean_zero_thick</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">zero_thick</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">rads</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">slim2thick</span><span class="p">(</span><span class="n">zero_bmp</span><span class="p">,</span> <span class="n">rgb_map</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">,</span>
+                                           <span class="n">crop</span><span class="o">=</span><span class="n">crop</span><span class="p">,</span> <span class="n">aperture</span><span class="o">=</span><span class="n">aperture</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">relative</span><span class="p">:</span>
+        <span class="n">mean_zero_thick</span> <span class="o">=</span> <span class="n">__calc_mean_thick</span><span class="p">(</span><span class="n">zero_thick</span><span class="p">)</span>
+
+    <span class="c1"># loop over images and extract film thickness for all steps</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+
+        <span class="c1"># calculate mean film thickness from image data</span>
+        <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">xtrem</span><span class="p">,</span> <span class="n">ytrem</span> <span class="o">=</span> <span class="n">slim2thick</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">rgb_map</span><span class="p">,</span> <span class="n">rads</span><span class="o">=</span><span class="n">rads</span><span class="p">,</span>
+                                                 <span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="n">crop</span><span class="p">,</span>
+                                                 <span class="n">aperture</span><span class="o">=</span><span class="n">aperture</span><span class="p">)</span>
+        <span class="n">mean_thick</span> <span class="o">=</span> <span class="n">__calc_mean_thick</span><span class="p">(</span><span class="n">thick</span><span class="p">)</span> <span class="o">-</span> <span class="n">mean_zero_thick</span>
+
+        <span class="c1"># store data in output dictionary</span>
+        <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;mean_thickness_nm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_thick</span><span class="p">)</span>
+        <span class="n">mtm_dat</span> <span class="o">=</span> <span class="n">load_npz</span><span class="p">(</span><span class="n">mtm_file</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">pcs_vars</span><span class="p">:</span>
+            <span class="n">out_dict</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">__get_data_at_step</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mtm_dat</span><span class="p">,</span> <span class="n">var</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+            <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;plots&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">__plot_thick</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">thick</span><span class="p">,</span> <span class="n">xtrem</span><span class="p">,</span> <span class="n">ytrem</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">skip</span><span class="p">,</span> <span class="n">crop</span><span class="p">,</span>
+                             <span class="n">plt_dir</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">print_prog</span><span class="p">:</span>
+            <span class="n">__print_progress</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">out_dict</span></div>
+</pre></div>
+
+          </div>
+            
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Tribology  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 2017-2018, Moritz Ploss. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

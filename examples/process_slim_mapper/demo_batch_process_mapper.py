@@ -40,8 +40,7 @@ def batch_process_mapper():
     # save file handles to zero bitmap file and all other bitmaps
     bmp_dir = 'demo mapper images'
     zero_bmp = bmp_dir + '/demo-3D_ZERO.bmp'
-    bitmaps = tuple(sorted(glob.glob(bmp_dir + '/*3D_Step_*.bmp',
-                                     recursive=True)))
+    bitmaps = sorted(glob.glob(bmp_dir + '/*3D_Step_*.bmp', recursive=True))
 
     # define where to save output plots
     out_dir = 'demo plots'

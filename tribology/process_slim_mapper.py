@@ -571,7 +571,7 @@ def slim2thick(file, rgb_map, rads=None, skip=1, crop=0.0, aperture=None):
         The number of pixels to skip (in both x and y direction). Higher skip
         numbers will lead to faster processing; lower skip numbers to higher
         accuracies.
-    crop: positive float, optional
+    crop: float, optional
         Determines by how much the radius of the contact area is cropped
         during the data processing step. Value needs to be in the range [0, 1].
         A crop value of 0.5 will reduce the radius by 50 %.
@@ -580,14 +580,18 @@ def slim2thick(file, rgb_map, rads=None, skip=1, crop=0.0, aperture=None):
         Data points outside the rectangular area are not evaluated. The borders
         of the rectangle are defined relative to the crop radius. Values in the
         range [0, 1] may be defined for the following keys:
+
         - top
         - right
         - bottom
         - left
+
         If the aperture value is 0, the borders of the rectangle
         intersect with the crop radius on all four sides (i.e., the aperture
         has no effect). The following will reduce the crop radius on the top and
-        bottom by 30 %: aperture = {'top': 0.3, 'bottom': 0.3}
+        bottom by 30 %:
+
+        aperture = {'top': 0.3, 'bottom': 0.3}
 
     Returns
     -------
@@ -641,7 +645,7 @@ def slim2thick_batch(files, zero_bmp, rgb_map, mtm_file,
 
     Parameters
     ----------
-    files: tuple
+    files: tuple, list
         Paths to spacer layer bitmap files as list/tuple of strings.
     zero_bmp: str
         Path to bitmap image that corresponds to initial zero step of
@@ -670,7 +674,7 @@ def slim2thick_batch(files, zero_bmp, rgb_map, mtm_file,
         If true, status updates are printed to the command line.
     skip: positive int, optional
         See function `slim_to_thick`
-    crop: positive float, optional
+    crop: float, optional
         See function `slim_to_thick`
     aperture: dict, optional
         See function `slim_to_thick`
