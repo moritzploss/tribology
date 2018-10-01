@@ -5,9 +5,9 @@
 # tribology
 This Python 3 package is a collection of functions and classes for
 tribology research and education, including contact mechanics,
-lubrication science and data handling. It provides implementations of
-analytical and numerical calculation routines together with frequently
-used constants.
+lubrication science, data handling and data processing. It provides 
+implementations of analytical and numerical calculation routines together with 
+frequently used constants.
 
 The **tribology package** is hosted on GitHub:
 
