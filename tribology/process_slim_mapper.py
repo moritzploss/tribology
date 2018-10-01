@@ -41,7 +41,7 @@ def __print_progress(current, to_reach):
     prog_bar_len = 25
     approximate_progress = int(math.floor(current / to_reach * prog_bar_len))
     progress_bar = approximate_progress * '#' + '' + \
-                   (prog_bar_len - approximate_progress) * ' '
+        (prog_bar_len - approximate_progress) * ' '
     sys.stdout.write("\rprogress: |{}| ({} %){}"
                      .format(progress_bar,
                              round(current / to_reach * 100),
@@ -204,13 +204,13 @@ def __plot_thick(file, thick, x_vals, y_vals, rgb, skip, crop, out_dir):
     fig = plt.figure(dpi=300)
     ax = fig.add_subplot(111)
     ar_shape = x_grid.shape
-    new_shape = (ar_shape[0] * ar_shape[1], 1)
-    x = x_grid.reshape(new_shape)
-    y = y_grid.reshape(new_shape)
-    z = np.fliplr(thick).reshape(new_shape)
+    nu_shape = (ar_shape[0] * ar_shape[1], 1)
+    x = x_grid.reshape(nu_shape)
+    y = y_grid.reshape(nu_shape)
+    z = np.fliplr(thick).reshape(nu_shape)
     idx = np.where(np.isnan(z) == False)
     ax.scatter(x[idx], y[idx],
-               c=list(list(l) for l in (np.fliplr(rgb).reshape(new_shape))[idx]),
+               c=list(list(l) for l in (np.fliplr(rgb).reshape(nu_shape))[idx]),
                marker='s', s=0.5 * skip)
     ax.set_xlabel('x')
     ax.set_ylabel('y')
@@ -343,9 +343,9 @@ def __get_thick(file, x, y, rads, x_vals, y_vals, r_mean, rgb_map, skip=1,
     ----------
     file: str
         Path to bitmap image.
-    x: ndarray
+    x: list
         Centers of automatically detected circle centers in x-direction.
-    y: ndarray
+    y: list
         Centers of automatically detected circle centers in y-direction.
     rads: ndarray
         Radii of automatically detected circle centers.
@@ -395,7 +395,8 @@ def __get_thick(file, x, y, rads, x_vals, y_vals, r_mean, rgb_map, skip=1,
                     x_idx <= x_mean + r_mean * (1 - aperture['right']) and \
                     x_idx >= x_mean - r_mean * (1 - aperture['left']):
                 pix = pixels[x_idx, y_idx]
-                thick[idx_1, idx_2], rgb[idx_1, idx_2] = __rgb_to_thick(pix, rgb_map)
+                thick[idx_1, idx_2], rgb[idx_1, idx_2] = __rgb_to_thick(pix,
+                                                                        rgb_map)
 
     return thick, rgb
 
@@ -411,8 +412,8 @@ def __get_extrema(x, y, r_mean):
         x-coordinates
     y: list
         y-coordinates
-    r_mean: list
-        radii
+    r_mean: int
+        mean radius
 
     Returns
     -------
@@ -511,7 +512,7 @@ def __get_data_at_step(file, mtm_dat, var):
         An array containing a single data point (float, int)
 
     """
-    step = int(file.split('_')[-1].replace(('.bmp'), ''))
+    step = int(file.split('_')[-1].replace('.bmp', ''))
     step_idx = mtm_dat['step_start'][step-1]
     dat = mtm_dat[var][step_idx]
     return dat
@@ -646,8 +647,8 @@ def slim2thick_batch(files, zero_bmp, rgb_map, mtm_file,
 
     Parameters
     ----------
-    files: list of str
-        Paths to spacer layer bitmap files.
+    files: tuple
+        Paths to spacer layer bitmap files as list/tuple of strings.
     zero_bmp: str
         Path to bitmap image that corresponds to initial zero step of
         experiment.
@@ -723,7 +724,8 @@ def slim2thick_batch(files, zero_bmp, rgb_map, mtm_file,
             out_dict[var].append(__get_data_at_step(file, mtm_dat, var))
         if plot:
             out_dict['plots'].append(
-                __plot_thick(file, thick, xtrem, ytrem, rgb, skip, crop, plt_dir))
+                __plot_thick(file, thick, xtrem, ytrem, rgb, skip, crop,
+                             plt_dir))
         if print_prog:
             __print_progress(idx, len(files))
 
