@@ -13,8 +13,8 @@ The **tribology package** is hosted on GitHub:
 
     https://github.com/moritzploss/tribology
 
-You can also **install** the package from the
-<a href="https://pypi.python.org/pypi/tribology" target="_blank">PyPI</a>
+You can **install** the package from the
+**<a href="https://pypi.python.org/pypi/tribology" target="_blank">PyPI</a>**
 index using pip:
 
     pip install tribology
@@ -30,22 +30,22 @@ You can refer to the tribology package in **scientific publications** by
 using its DOI. The following DOI will resolve all releases of the
 package and automatically point to the latest release. A more detailed
 overview of the DOI release history can be found through
-<a href="https://doi.org/10.5281/zenodo.1117727" target="_blank">Zenodo</a>:
+**<a href="https://doi.org/10.5281/zenodo.1117727" target="_blank">Zenodo</a>**:
 
     DOI:  10.5281/zenodo.1117727
 
 The package
 **<a href="https://moritzploss.github.io/tribology" target="_blank">
-documenation</a>** is provided through GitHub Pages; the source files
-can be found in the `/docs` directory. Simple examples of how to use 
-the package are provided in the `/examples` directory.
+documenation</a>** is provided through GitHub Pages; the Sphinx source files
+can be found in the [`/docs`](./docs) directory. Simple examples of how to use 
+the package are provided in the [`/examples`](./examples) directory.
 
 The package is currently developed by Moritz Ploss at KTH Royal Institute of 
 Technology, Stockholm, Sweden. For questions, comments and contributions, please 
 send a message through GitHub.
 
-The package is provided under an MIT license. See the `LICENSE.txt` file
-for more information.
+The package is provided under an MIT license. See the 
+[`LICENSE.txt`](LICENSE.txt) file for more information.
 
 # version history
 
