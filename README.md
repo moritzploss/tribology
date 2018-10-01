@@ -56,17 +56,18 @@ release listed below.
 
 
 #### latest version on GitHub
+- README updated
 
+
+#### 0.4.0
 - module `process_slim_mapper` added. the module contains functions for 
   automated processing of SLIM mapper bitmap images as obtained from test rigs 
   by PCS Instruments.
 - fixed a bug that lead to a `permission denied` error using the `import_del`
   function (and related functions) if the imported file is in the current working
   directory and the function is called within a program that runs in an IDE.
-- README updated
-
-
-#### latest neutral build on PyPI
+- docs theme changed to guzzle sphinx due to unresolvable compile problem with 
+  rtd
 - README updated
 
 
