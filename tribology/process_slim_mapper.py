@@ -398,6 +398,7 @@ def __get_thick(file, x, y, rads, x_vals, y_vals, r_mean, rgb_map, skip=1,
                 thick[idx_1, idx_2], rgb[idx_1, idx_2] = __rgb_to_thick(pix,
                                                                         rgb_map)
 
+
     return thick, rgb
 
 
@@ -579,21 +580,14 @@ def slim2thick(file, rgb_map, rads=None, skip=1, crop=0.0, aperture=None):
         Data points outside the rectangular area are not evaluated. The borders
         of the rectangle are defined relative to the crop radius. Values in the
         range [0, 1] may be defined for the following keys:
-
         - top
         - right
         - bottom
         - left
-
         If the aperture value is 0, the borders of the rectangle
         intersect with the crop radius on all four sides (i.e., the aperture
         has no effect). The following will reduce the crop radius on the top and
-        bottom by 30 %:
-
-        aperture = {
-            'top': 0.3,
-            'bottom': 0.3,
-        }
+        bottom by 30 %: aperture = {'top': 0.3, 'bottom': 0.3}
 
     Returns
     -------

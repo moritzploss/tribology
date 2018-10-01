@@ -69,7 +69,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Tribology'
-copyright = '2017, Moritz Ploss'
+copyright = '2017-2018, Moritz Ploss'
 author = 'Moritz Ploss'
 
 # The version info for the project you're documenting, acts as replacement for

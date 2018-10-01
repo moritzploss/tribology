@@ -246,7 +246,7 @@ def __solvepress(red_infl_mat, disp):
     """
 
     # find negative pressure arguments
-    pressure = spla.gmres(red_infl_mat, disp)[0]
+    pressure = spla.gmres(red_infl_mat, disp, atol='legacy')[0]
     p_index = np.zeros(len(pressure))
     negative_p = np.where(pressure < 0)[0]
     p_neg = copy.deepcopy(negative_p)
@@ -259,7 +259,7 @@ def __solvepress(red_infl_mat, disp):
         g_new_reduced = np.delete(g_new_reduced, [p_neg], axis=1)
         if pressure[np.where(p_index == 0)].size > 0:
             pressure[np.where(p_index == 0)] = \
-                spla.gmres(g_new_reduced, u_new_reduced)[0]
+                spla.gmres(g_new_reduced, u_new_reduced, atol='legacy')[0]
         negative_p = np.where(pressure < 0)[0]
         p_neg = np.append(p_neg, negative_p)
 

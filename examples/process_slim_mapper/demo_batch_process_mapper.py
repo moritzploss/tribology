@@ -7,6 +7,7 @@ thickness data.
 """
 
 import glob
+import os
 import tribology as tr
 import matplotlib.pyplot as plt
 
@@ -39,7 +40,8 @@ def batch_process_mapper():
     # save file handles to zero bitmap file and all other bitmaps
     bmp_dir = 'demo mapper images'
     zero_bmp = bmp_dir + '/demo-3D_ZERO.bmp'
-    bitmaps = sorted(glob.glob(bmp_dir + '/*3D_Step_*.bmp', recursive=True))
+    bitmaps = tuple(sorted(glob.glob(bmp_dir + '/*3D_Step_*.bmp',
+                                     recursive=True)))
 
     # define where to save output plots
     out_dir = 'demo plots'
@@ -77,10 +79,14 @@ def batch_process_mapper():
     )
 
     # print film thickness data to console (unit nanometer)
-    print(dat['film_thickness_nm'])
+    print(dat['mean_thickness_nm'])
 
     # plot traction coefficient and film thickness as a function of time
     plot_results(dat, mtm_file)
+
+    # remove npz database files
+    os.remove(mtm_file)
+    os.remove(slim_calib_file)
 
 
 if __name__ == "__main__":

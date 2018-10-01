@@ -19,6 +19,7 @@ from .. import lubrication as tl
 from .. import boundary_element as tb
 from .. import data_import as td
 from .. import roller_bearings as trb
+from .. import process_slim_mapper as psm
 from ..p3can.p3can import p3can
 
 
@@ -281,6 +282,32 @@ class TestHertz(unittest.TestCase):
         self.assertEqual(round(th.approx_hertz_rad(axis, prof)), 1)
         prof = np.asarray([0, 0, 0])
         self.assertEqual(th.approx_hertz_rad(axis, prof), float('inf'))
+
+
+class TestSlimMapper(unittest.TestCase):
+    """
+    test case methods for tribology functions related to SLIM mapper processing
+    """
+
+    def test_slim2thick(self):
+        spacer, status, _ = td.import_pcs(
+            'tribology/tests/process_slim_mapper/demo-3D_SpacerCalibration.txt')
+
+        thick, rgb, _, _, _ = psm.slim2thick(
+            'tribology/tests/process_slim_mapper/demo-slim-mapper.bmp',
+            spacer,
+            skip=5,
+            crop=0.2,
+            aperture={
+                'top': 0.667,
+                'bottom': 0.667,
+            }
+        )
+
+        self.assertEqual(np.round(np.nanmean(thick), 2), 54.17)
+        self.assertEqual(([np.round(c, 3) for c in rgb[31][40]]),
+                         [0.525, 0.439, 0.357])
+        os.remove(spacer)
 
 
 class TestP3can(unittest.TestCase):
