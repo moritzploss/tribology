@@ -304,7 +304,7 @@ class TestSlimMapper(unittest.TestCase):
             }
         )
 
-        self.assertEqual(np.round(np.nanmean(thick), 2), 54.17)
+        self.assertEqual(np.round(np.nanmean(thick), 2), 54.25)
         self.assertEqual(([np.round(c, 3) for c in rgb[31][40]]),
                          [0.525, 0.439, 0.357])
         os.remove(spacer)
