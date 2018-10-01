@@ -47,6 +47,7 @@ send a message through GitHub.
 The package is provided under an MIT license. See the 
 [`LICENSE.txt`](LICENSE.txt) file for more information.
 
+
 # version history
 
 Neutral builds are continuously deployed to PyPI. The log for
@@ -136,3 +137,11 @@ Non-package files are not checked. Build fails if Pylint error is found.
 
 #### 0.2.0
 first release on PyPI
+
+
+# scientific publications
+This package has been used for the following scientific publications:
+
+- M. Ploss and M. Bocoi. The P3CAN project: Open-source friction energy analysis 
+  for research and education. *NORDTRIB 2018*, Uppsala, Sweden, 21-06-2018.
+
