@@ -112,13 +112,15 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
 <span class="c1"># pylint: disable=no-member</span>
 <span class="kn">import</span> <span class="nn">scipy.io</span>
 
@@ -138,6 +140,89 @@
     <span class="n">ENDC</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0m&#39;</span>
     <span class="n">BOLD</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[1m&#39;</span>
     <span class="n">UNDERLINE</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[4m&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">_TextSnippets</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Text snippets to be used when merging dellimited files.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="s2">&quot;This file was automatically generated using the merge_del</span><span class="se">\n</span><span class="s2">&quot;</span> \
+             <span class="s2">&quot;function of the Python tribology package, version </span><span class="si">{}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span> \
+             <span class="s2">&quot;The file contains data from the following source files &quot;</span> \
+             <span class="s2">&quot;(in  order):</span><span class="se">\n</span><span class="s2">&quot;</span> \
+             <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="n">seperator</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="s2">&quot;Beginning of file:</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span> \
+                <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">__get_version</span><span class="p">(</span><span class="n">package</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Get the version of a Python package.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    package: str</span>
+<span class="sd">        The name of the package</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Version number as string.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">get_distribution</span><span class="p">(</span><span class="n">package</span><span class="p">)</span><span class="o">.</span><span class="n">version</span>
+
+
+<div class="viewcode-block" id="merge_del"><a class="viewcode-back" href="../sec_data_import.html#data_import.merge_del">[docs]</a><span class="k">def</span> <span class="nf">merge_del</span><span class="p">(</span><span class="n">in_files</span><span class="p">,</span> <span class="n">out_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Merge several delimited data files into a single file. The merged</span>
+<span class="sd">    file contains all data from the data files, in the order given in the</span>
+<span class="sd">    `in_files` argument.</span>
+
+<span class="sd">    No checks are performed to ensure that the data files</span>
+<span class="sd">    have a compatible format, for example the same number of data columns.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    in_files: list</span>
+<span class="sd">        File paths to the miles to be merged. Files will be merged in order.</span>
+<span class="sd">    out_file: str</span>
+<span class="sd">        Path to output file, including file extension.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out_file_abs: str</span>
+<span class="sd">        Absolute path to the merged file.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">in_files_abs</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">in_files</span><span class="p">]</span>
+    <span class="n">out_file_abs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+    <span class="n">max_len_path</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">in_files_abs</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_file_abs</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">txt_file</span><span class="p">:</span>
+
+        <span class="c1"># write header</span>
+        <span class="n">txt_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_TextSnippets</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">__get_version</span><span class="p">(</span><span class="s2">&quot;tribology&quot;</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">in_file</span> <span class="ow">in</span> <span class="n">in_files_abs</span><span class="p">:</span>
+            <span class="n">txt_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">in_file</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># write files</span>
+        <span class="k">for</span> <span class="n">in_file</span> <span class="ow">in</span> <span class="n">in_files_abs</span><span class="p">:</span>
+            <span class="n">txt_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;#&#39;</span> <span class="o">*</span> <span class="n">max_len_path</span><span class="p">)</span>
+            <span class="n">txt_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_TextSnippets</span><span class="o">.</span><span class="n">seperator</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">in_file</span><span class="p">))</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">in_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="n">txt_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="n">txt_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">out_file_abs</span></div>
 
 
 <span class="k">def</span> <span class="nf">__print_status</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">status_color</span><span class="o">=</span><span class="n">_Colors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">):</span>

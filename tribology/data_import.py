@@ -8,13 +8,15 @@ Matlab database format.
 """
 
 import argparse
+import copy
 import glob
+import math
 import os
 import re
-import copy
-import math
+from enum import Enum
 
 import numpy as np
+import pkg_resources
 # pylint: disable=no-member
 import scipy.io
 
@@ -34,6 +36,89 @@ class _Colors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
+
+class _TextSnippets(Enum):
+    """
+
+    Text snippets to be used when merging dellimited files.
+
+    """
+    header = "This file was automatically generated using the merge_del\n" \
+             "function of the Python tribology package, version {}.\n" \
+             "The file contains data from the following source files " \
+             "(in  order):\n" \
+             "\n"
+
+    seperator = "\n" \
+                "Beginning of file:\n" \
+                "{}" \
+                "\n"
+
+
+def __get_version(package):
+    """
+
+    Get the version of a Python package.
+
+    Parameters
+    ----------
+    package: str
+        The name of the package
+
+    Returns
+    -------
+    Version number as string.
+
+    """
+    return pkg_resources.get_distribution(package).version
+
+
+def merge_del(in_files, out_file):
+    """
+
+    Merge several delimited data files into a single file. The merged
+    file contains all data from the data files, in the order given in the
+    `in_files` argument.
+
+    No checks are performed to ensure that the data files
+    have a compatible format, for example the same number of data columns.
+
+    Parameters
+    ----------
+    in_files: list
+        File paths to the miles to be merged. Files will be merged in order.
+    out_file: str
+        Path to output file, including file extension.
+
+    Returns
+    -------
+    out_file_abs: str
+        Absolute path to the merged file.
+
+    """
+    in_files_abs = [os.path.abspath(file) for file in in_files]
+    out_file_abs = os.path.abspath(out_file)
+    max_len_path = max(len(file) for file in in_files_abs)
+
+    with open(out_file_abs, "w") as txt_file:
+
+        # write header
+        txt_file.write(str(_TextSnippets.header.value).format(
+            __get_version("tribology")))
+        for in_file in in_files_abs:
+            txt_file.write(in_file + "\n")
+
+        # write files
+        for in_file in in_files_abs:
+            txt_file.write('\n' + '#' * max_len_path)
+            txt_file.write(str(_TextSnippets.seperator.value).format(in_file))
+            with open(in_file) as file:
+                for line in file:
+                    txt_file.write(line)
+                txt_file.write("\n\n")
+
+    return out_file_abs
 
 
 def __print_status(message, status_color=_Colors.ENDC):

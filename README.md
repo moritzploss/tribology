@@ -58,6 +58,8 @@ release listed below.
 #### latest version on GitHub
 - README updated
 
+#### 0.4.1
+- function `merge_del` added to `data_import` module
 
 #### 0.4.0
 - module `process_slim_mapper` added. the module contains functions for 
