@@ -79,7 +79,7 @@ def merge_del(in_files, out_file):
 
     Merge several delimited data files into a single file. The merged
     file contains all data from the data files, in the order given in the
-    `in_files` argument.
+    :code:`in_files` argument.
 
     No checks are performed to ensure that the data files
     have a compatible format, for example the same number of data columns.
@@ -87,7 +87,7 @@ def merge_del(in_files, out_file):
     Parameters
     ----------
     in_files: list
-        File paths to the miles to be merged. Files will be merged in order.
+        File paths to the files to be merged. Files will be merged in order.
     out_file: str
         Path to output file, including file extension.
 
