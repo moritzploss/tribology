@@ -2,8 +2,8 @@
 
 """
 
-The below functions can be used to post-process SLIM mapper bitmap files created
-by MTM or EHD test rigs by PCS Instruments.
+The below functions can be used to post-process SLIM (spacer layer imaging method)
+mapper bitmap files created by MTM or EHD test rigs by PCS Instruments.
 
 """
 
