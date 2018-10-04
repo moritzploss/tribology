@@ -205,7 +205,7 @@ If <cite>rads</cite> is provided as an argument, <cite>rads</cite> is simply ret
 
 <dl class="function">
 <dt id="process_slim_mapper.slim2thick_batch">
-<code class="descname">slim2thick_batch</code><span class="sig-paren">(</span><em>files</em>, <em>zero_bmp</em>, <em>rgb_map</em>, <em>mtm_file</em>, <em>relative=False</em>, <em>pcs_vars=('time_accumulated_s'</em>, <em>)</em>, <em>plot=False</em>, <em>plt_dir=''</em>, <em>print_prog=True</em>, <em>skip=1</em>, <em>crop=0.0</em>, <em>aperture=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_slim_mapper.html#slim2thick_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process_slim_mapper.slim2thick_batch" title="Permalink to this definition">¶</a></dt>
+<code class="descname">slim2thick_batch</code><span class="sig-paren">(</span><em>bitmaps</em>, <em>zero_bmp</em>, <em>rgb_map</em>, <em>mtm_file</em>, <em>relative=False</em>, <em>pcs_vars=('time_accumulated_s'</em>, <em>)</em>, <em>plot=False</em>, <em>plt_dir=''</em>, <em>print_prog=True</em>, <em>skip=1</em>, <em>crop=0.0</em>, <em>aperture=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_slim_mapper.html#slim2thick_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process_slim_mapper.slim2thick_batch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch process a number of PCS Spacer Layer image files that share the same
 zero step, instrument output file and spacer layer calibration file.</p>
 <p>This function is a wrapper function for <cite>slim_to_thick</cite>. See the docstring
@@ -218,7 +218,7 @@ thickness measurement step.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>files</strong> (<em>tuple, list</em>) – Paths to spacer layer bitmap files as list/tuple of strings.</li>
+<li><strong>bitmaps</strong> (<em>tuple, list</em>) – Paths to spacer layer bitmap files as list/tuple of strings.</li>
 <li><strong>zero_bmp</strong> (<em>str</em>) – Path to bitmap image that corresponds to initial zero step of
 experiment.</li>
 <li><strong>rgb_map</strong> (<em>str</em>) – Path to the shared spacer layer calibration file, imported into npz

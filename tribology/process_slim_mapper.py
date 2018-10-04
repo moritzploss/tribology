@@ -513,7 +513,10 @@ def __get_data_at_step(file, mtm_dat, var):
         An array containing a single data point (float, int)
 
     """
-    step = int(file.split('_')[-1].replace('.bmp', ''))
+    if '_ZERO.bmp' in file:
+        step = 1
+    else:
+        step = int(file.split('_')[-1].replace('.bmp', ''))
     step_idx = mtm_dat['step_start'][step-1]
     dat = mtm_dat[var][step_idx]
     return dat
@@ -627,7 +630,7 @@ def slim2thick(file, rgb_map, rads=None, skip=1, crop=0.0, aperture=None):
     return thick, rgb, rads, x_vals, y_vals
 
 
-def slim2thick_batch(files, zero_bmp, rgb_map, mtm_file,
+def slim2thick_batch(bitmaps, zero_bmp, rgb_map, mtm_file,
                      relative=False, pcs_vars=('time_accumulated_s',),
                      plot=False, plt_dir='', print_prog=True, skip=1,
                      crop=0.0, aperture=None):
@@ -645,7 +648,7 @@ def slim2thick_batch(files, zero_bmp, rgb_map, mtm_file,
 
     Parameters
     ----------
-    files: tuple, list
+    bitmaps: tuple, list
         Paths to spacer layer bitmap files as list/tuple of strings.
     zero_bmp: str
         Path to bitmap image that corresponds to initial zero step of
@@ -686,8 +689,7 @@ def slim2thick_batch(files, zero_bmp, rgb_map, mtm_file,
         data from instrument output files (depending on user inputs).
 
     """
-    if print_prog:
-        print('analyzing {} images'.format(len(files)))
+    mtm_dat = load_npz(mtm_file)
 
     # initialize dictionary that holds outputs
     out_dict = {'mean_thickness_nm': []}
@@ -699,25 +701,32 @@ def slim2thick_batch(files, zero_bmp, rgb_map, mtm_file,
     out_dict['skip'] = skip
     out_dict['aperture'] = aperture
 
-    # get mean film thickness of zero step
-    mean_zero_thick = 0
-    zero_thick, _, rads, _, _ = slim2thick(zero_bmp, rgb_map, skip=skip,
-                                           crop=crop, aperture=aperture)
-    if relative:
-        mean_zero_thick = __calc_mean_thick(zero_thick)
+    files = [zero_bmp] + list(bitmaps)
+    zero_thick = 0
+    rads = None
+
+    if print_prog:
+        print('analyzing {} images'.format(len(files)))
 
     # loop over images and extract film thickness for all steps
     for idx, file in enumerate(files):
 
         # calculate mean film thickness from image data
-        thick, rgb, _, xtrem, ytrem = slim2thick(file, rgb_map, rads=rads,
-                                                 skip=skip, crop=crop,
-                                                 aperture=aperture)
-        mean_thick = __calc_mean_thick(thick) - mean_zero_thick
+        if "_ZERO" in file:
+            thick, rgb, rads, xtrem, ytrem = slim2thick(zero_bmp, rgb_map,
+                                                        skip=skip, crop=crop,
+                                                        aperture=aperture)
+            zero_thick = __calc_mean_thick(thick)
+        else:
+            thick, rgb, _, xtrem, ytrem = slim2thick(file, rgb_map, rads=rads,
+                                                     skip=skip, crop=crop,
+                                                     aperture=aperture)
+        mean_thick = __calc_mean_thick(thick)
+        if relative:
+            mean_thick -= zero_thick
 
         # store data in output dictionary
         out_dict['mean_thickness_nm'].append(mean_thick)
-        mtm_dat = load_npz(mtm_file)
         for var in pcs_vars:
             out_dict[var].append(__get_data_at_step(file, mtm_dat, var))
         if plot:

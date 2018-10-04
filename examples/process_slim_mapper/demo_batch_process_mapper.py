@@ -72,13 +72,10 @@ def batch_process_mapper():
     # evaluate the mean film thickness for all bitmaps. the thickness will be
     # given relative to the mean thickness of `zero_bmp` since relative=True.
     dat = tr.slim2thick_batch(
-        bitmaps, zero_bmp, slim_calib_file, mtm_file,
+        tuple(bitmaps), zero_bmp, slim_calib_file, mtm_file,
         plot=True, plt_dir=out_dir, skip=skip, crop=crop,
         relative=True, aperture=aperture, pcs_vars=pcs_vars
     )
-
-    # print film thickness data to console (unit nanometer)
-    print(dat['mean_thickness_nm'])
 
     # plot traction coefficient and film thickness as a function of time
     plot_results(dat, mtm_file)

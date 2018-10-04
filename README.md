@@ -54,7 +54,11 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
-#### 0.4.x
+#### 0.4.3
+- function `slim2thick_batch` now also returns mean thickness data for the SLIM
+  mapper ZERO step
+
+#### 0.4.2
 - providing an output file name to the `merge_del` function is now optional 
 
 #### 0.4.1
