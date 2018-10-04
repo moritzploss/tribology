@@ -150,14 +150,16 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">header</span> <span class="o">=</span> <span class="s2">&quot;This file was automatically generated using the merge_del</span><span class="se">\n</span><span class="s2">&quot;</span> \
              <span class="s2">&quot;function of the Python tribology package, version </span><span class="si">{}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span> \
+             <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+             <span class="s2">&quot;See here for more information:</span><span class="se">\n</span><span class="s2">&quot;</span> \
+             <span class="s2">&quot;https://pypi.org/project/tribology/</span><span class="se">\n</span><span class="s2">&quot;</span>\
+             <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>\
              <span class="s2">&quot;The file contains data from the following source files &quot;</span> \
-             <span class="s2">&quot;(in  order):</span><span class="se">\n</span><span class="s2">&quot;</span> \
-             <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+             <span class="s2">&quot;(in  order):</span><span class="se">\n</span><span class="s2">&quot;</span>
 
     <span class="n">seperator</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
                 <span class="s2">&quot;Beginning of file:</span><span class="se">\n</span><span class="s2">&quot;</span> \
-                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span> \
-                <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span>
 
 
 <span class="k">def</span> <span class="nf">__get_version</span><span class="p">(</span><span class="n">package</span><span class="p">):</span>
@@ -178,7 +180,37 @@
     <span class="k">return</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">get_distribution</span><span class="p">(</span><span class="n">package</span><span class="p">)</span><span class="o">.</span><span class="n">version</span>
 
 
-<div class="viewcode-block" id="merge_del"><a class="viewcode-back" href="../sec_data_import.html#data_import.merge_del">[docs]</a><span class="k">def</span> <span class="nf">merge_del</span><span class="p">(</span><span class="n">in_files</span><span class="p">,</span> <span class="n">out_file</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">__long_substr</span><span class="p">(</span><span class="n">strings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Returns longest common substring of list of strings. taken from:</span>
+<span class="sd">    # https://stackoverflow.com/questions/2892931/longest-common-substring-</span>
+<span class="sd">    from-more-than-two-strings-python</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    strings: list</span>
+<span class="sd">        A list of strings.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    substr: str</span>
+<span class="sd">        The longest common substring of all list elements. For a list with only</span>
+<span class="sd">        one element, the list element is returned; for an empty list, and empty</span>
+<span class="sd">        string is returned.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">substr</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">strings</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">strings</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">strings</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">substr</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">strings</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span>
+                                           <span class="n">strings</span><span class="p">):</span>
+                    <span class="n">substr</span> <span class="o">=</span> <span class="n">strings</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">substr</span>
+
+
+<div class="viewcode-block" id="merge_del"><a class="viewcode-back" href="../sec_data_import.html#data_import.merge_del">[docs]</a><span class="k">def</span> <span class="nf">merge_del</span><span class="p">(</span><span class="n">in_files</span><span class="p">,</span> <span class="n">out_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Merge several delimited data files into a single file. The merged</span>
@@ -192,8 +224,9 @@
 <span class="sd">    ----------</span>
 <span class="sd">    in_files: list</span>
 <span class="sd">        File paths to the files to be merged. Files will be merged in order.</span>
-<span class="sd">    out_file: str</span>
-<span class="sd">        Path to output file, including file extension.</span>
+<span class="sd">    out_file: str, optional</span>
+<span class="sd">        Path to output file, including file extension. If no path is provided,</span>
+<span class="sd">        a file name is generated based on the input file names.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -201,8 +234,17 @@
 <span class="sd">        Absolute path to the merged file.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">in_files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;need at least one file to merge&#39;</span><span class="p">)</span>
+
     <span class="n">in_files_abs</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">in_files</span><span class="p">]</span>
-    <span class="n">out_file_abs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">out_file</span><span class="p">:</span>
+        <span class="n">out_file_abs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="n">__long_substr</span><span class="p">(</span><span class="n">in_files_abs</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">out_file_abs</span> <span class="o">=</span> <span class="n">out_file</span> <span class="o">+</span> <span class="s1">&#39;xxx-merged.txt&#39;</span>
+
     <span class="n">max_len_path</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">in_files_abs</span><span class="p">)</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_file_abs</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">txt_file</span><span class="p">:</span>
@@ -217,10 +259,10 @@
         <span class="k">for</span> <span class="n">in_file</span> <span class="ow">in</span> <span class="n">in_files_abs</span><span class="p">:</span>
             <span class="n">txt_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;#&#39;</span> <span class="o">*</span> <span class="n">max_len_path</span><span class="p">)</span>
             <span class="n">txt_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_TextSnippets</span><span class="o">.</span><span class="n">seperator</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">in_file</span><span class="p">))</span>
+            <span class="n">txt_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#&#39;</span> <span class="o">*</span> <span class="n">max_len_path</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">in_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
                     <span class="n">txt_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-                <span class="n">txt_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">out_file_abs</span></div>
 

@@ -140,6 +140,7 @@ def merge_del(in_files, out_file=None):
     else:
         out_file = __long_substr(in_files_abs).split('.')[0]
         out_file_abs = out_file + 'xxx-merged.txt'
+
     max_len_path = max(len(file) for file in in_files_abs)
 
     with open(out_file_abs, "w") as txt_file:
