@@ -54,9 +54,8 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
-
-#### latest version on GitHub
-- README updated
+#### 0.4.x
+- providing an output file name to the `merge_del` function is now optional 
 
 #### 0.4.1
 - function `merge_del` added to `data_import` module
