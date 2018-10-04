@@ -46,14 +46,16 @@ class _TextSnippets(Enum):
     """
     header = "This file was automatically generated using the merge_del\n" \
              "function of the Python tribology package, version {}.\n" \
+             "\n" \
+             "See here for more information:\n" \
+             "https://pypi.org/project/tribology/\n"\
+             "\n"\
              "The file contains data from the following source files " \
-             "(in  order):\n" \
-             "\n"
+             "(in  order):\n"
 
     seperator = "\n" \
                 "Beginning of file:\n" \
-                "{}" \
-                "\n"
+                "{}\n"
 
 
 def __get_version(package):
@@ -74,7 +76,37 @@ def __get_version(package):
     return pkg_resources.get_distribution(package).version
 
 
-def merge_del(in_files, out_file):
+def __long_substr(strings):
+    """
+
+    Returns longest common substring of list of strings. taken from:
+    # https://stackoverflow.com/questions/2892931/longest-common-substring-
+    from-more-than-two-strings-python
+
+    Parameters
+    ----------
+    strings: list
+        A list of strings.
+
+    Returns
+    -------
+    substr: str
+        The longest common substring of all list elements. For a list with only
+        one element, the list element is returned; for an empty list, and empty
+        string is returned.
+
+    """
+    substr = ''
+    if len(strings) > 1 and len(strings[0]) > 0:
+        for i in range(len(strings[0])):
+            for j in range(len(strings[0]) - i + 1):
+                if j > len(substr) and all(strings[0][i:i + j] in x for x in
+                                           strings):
+                    substr = strings[0][i:i + j]
+    return substr
+
+
+def merge_del(in_files, out_file=None):
     """
 
     Merge several delimited data files into a single file. The merged
@@ -88,8 +120,9 @@ def merge_del(in_files, out_file):
     ----------
     in_files: list
         File paths to the files to be merged. Files will be merged in order.
-    out_file: str
-        Path to output file, including file extension.
+    out_file: str, optional
+        Path to output file, including file extension. If no path is provided,
+        a file name is generated based on the input file names.
 
     Returns
     -------
@@ -97,8 +130,16 @@ def merge_del(in_files, out_file):
         Absolute path to the merged file.
 
     """
+    if len(in_files) == 0:
+        raise ValueError('need at least one file to merge')
+
     in_files_abs = [os.path.abspath(file) for file in in_files]
-    out_file_abs = os.path.abspath(out_file)
+
+    if out_file:
+        out_file_abs = os.path.abspath(out_file)
+    else:
+        out_file = __long_substr(in_files_abs).split('.')[0]
+        out_file_abs = out_file + 'xxx-merged.txt'
     max_len_path = max(len(file) for file in in_files_abs)
 
     with open(out_file_abs, "w") as txt_file:
@@ -113,10 +154,10 @@ def merge_del(in_files, out_file):
         for in_file in in_files_abs:
             txt_file.write('\n' + '#' * max_len_path)
             txt_file.write(str(_TextSnippets.seperator.value).format(in_file))
+            txt_file.write('#' * max_len_path + '\n')
             with open(in_file) as file:
                 for line in file:
                     txt_file.write(line)
-                txt_file.write("\n\n")
 
     return out_file_abs
 
