@@ -3,14 +3,13 @@
 Test cases for tribology functions
 
 """
-import glob
 import unittest
 import os
 import math
+import sys
 
 import numpy as np
 
-import sys
 sys.path.insert(0, "tribology/p3can")
 
 from ..tribology import profball, profrevolve
@@ -150,8 +149,8 @@ class TestDataImport(unittest.TestCase):
         """
         check if npz database files can be merged
         """
-        file_1, status, _ = td.import_del(self.demo_1_txt)
-        file_2, status, _ = td.import_del(self.demo_2_txt)
+        file_1, _, _ = td.import_del(self.demo_1_txt)
+        file_2, _, _ = td.import_del(self.demo_2_txt)
         files = [file_1, file_2]
         merged = td.merge_npz(files)
         self.assertEqual(merged['fx_n'][35], 0.20669)
@@ -162,8 +161,8 @@ class TestDataImport(unittest.TestCase):
         """
         check if npz accumulated data can be generated during import
         """
-        file_1, status, _ = td.import_del(self.demo_1_txt)
-        file_2, status, _ = td.import_del(self.demo_2_txt)
+        file_1, _, _ = td.import_del(self.demo_1_txt)
+        file_2, _, _ = td.import_del(self.demo_2_txt)
         files = [file_1, file_2]
         merged = td.merge_npz(files, accum=['fx_n'])
         self.assertEqual(merged['fx_n'][35], 0.41338)
@@ -175,8 +174,8 @@ class TestDataImport(unittest.TestCase):
         check that safe merge throws exception if database keys don't
         match
         """
-        file_1, status, _ = td.import_del(self.demo_1_txt)
-        file_2, status, _ = td.import_del(self.demo_1_pcs_txt)
+        file_1, _, _ = td.import_del(self.demo_1_txt)
+        file_2, _, _ = td.import_del(self.demo_1_pcs_txt)
         files = [file_1, file_2]
         self.assertRaises(KeyError, td.merge_npz, files, accum=['foo'])
         for file in files:
@@ -259,7 +258,7 @@ class TestDataImport(unittest.TestCase):
         database = np.load(self.demo_1_pcs_npz)
         self.assertEqual('film_surf' in database, True)
         for file in f_out:
-           os.remove(file)
+            os.remove(file)
 
     def test_import_dir_recursive(self):
         """
@@ -336,6 +335,9 @@ class TestSlimMapper(unittest.TestCase):
     """
 
     def test_slim2thick(self):
+        """
+        check that processing of image gives specified thickness and rgb values
+        """
         spacer, status, _ = td.import_pcs(
             'tribology/tests/process_slim_mapper/demo-3D_SpacerCalibration.txt')
 
@@ -379,8 +381,8 @@ class TestP3can(unittest.TestCase):
 #                         'Template06_4Ball.py')
 #
     def test_template07(self):
-        out_dir = p3can('tribology/tests/p3can/' +
-                        'Template07_BallOn3Plates.py')
+        _ = p3can('tribology/tests/p3can/' +
+                  'Template07_BallOn3Plates.py')
 #
 #     def test_template08(self):
 #         out_dir = p3can('tribology/tests/p3can/' +

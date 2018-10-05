@@ -162,6 +162,83 @@
                 <span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span>
 
 
+<span class="k">def</span> <span class="nf">__verify_merge</span><span class="p">(</span><span class="n">in_files</span><span class="p">,</span> <span class="n">accum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Check if all npz files have same set of keys and contain all keys in accum.</span>
+<span class="sd">    Throw exception if not.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    in_files: list</span>
+<span class="sd">        Paths to database files to merge. Files are merged in order.</span>
+<span class="sd">    accum: list</span>
+<span class="sd">        Database keys for which values should be accumulated. Values must be</span>
+<span class="sd">        numeric.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ref_keys</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">in_files</span><span class="p">):</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ref_keys</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">keys</span> <span class="o">!=</span> <span class="n">ref_keys</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;keys in npz databases 0 and </span><span class="si">{}</span><span class="s1"> differ&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">accum</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">accum</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;key(s) defined in accum not in npz database </span><span class="si">{}</span><span class="s1">&#39;</span>
+                           <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="merge_npz"><a class="viewcode-back" href="../sec_data_import.html#data_import.merge_npz">[docs]</a><span class="k">def</span> <span class="nf">merge_npz</span><span class="p">(</span><span class="n">in_files</span><span class="p">,</span> <span class="n">accum</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">safe</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Merge npz databases by concatenating all databases in :code:`in_files`.</span>
+<span class="sd">    Databases are concatenated in the order given in :code:`in_files`.</span>
+
+<span class="sd">    Database keys for which values are to be accumulated can be given as a list</span>
+<span class="sd">    using the :code:`accum` argument. For examples, if all databases have the</span>
+<span class="sd">    key :code:`time`, then :code:`accum=[&#39;time&#39;]` will produce a continuous</span>
+<span class="sd">    time axis, adding the last time value of the first database to all time</span>
+<span class="sd">    values of the second database (and so on).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    in_files: list</span>
+<span class="sd">        Paths to database files to merge. Files are merged in order.</span>
+<span class="sd">    accum: list</span>
+<span class="sd">        Database keys for which values should be accumulated. Values must be</span>
+<span class="sd">        numeric.</span>
+<span class="sd">    safe: bool</span>
+<span class="sd">        If True, checks will be performed to ensure that all databases share the</span>
+<span class="sd">        exact same set of keys and that all keys in :code:`accum` are in all</span>
+<span class="sd">        databases. An exception (type KeyError) will be raised if not.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    merged: dict</span>
+<span class="sd">        Merged data.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">safe</span><span class="p">:</span>
+        <span class="n">__verify_merge</span><span class="p">(</span><span class="n">in_files</span><span class="p">,</span> <span class="n">accum</span><span class="p">)</span>
+
+    <span class="n">merged</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">in_files</span><span class="p">:</span>
+        <span class="n">in_dat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">in_dat</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">merged</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">accum</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">accum</span><span class="p">:</span>
+                    <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">],</span>
+                                            <span class="n">in_dat</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+</span> <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">in_dat</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">in_dat</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">merged</span></div>
+
+
 <span class="k">def</span> <span class="nf">__get_version</span><span class="p">(</span><span class="n">package</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 

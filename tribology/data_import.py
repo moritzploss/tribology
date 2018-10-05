@@ -122,7 +122,7 @@ def merge_npz(in_files, accum=None, safe=True):
     merged = {}
     for file in in_files:
         in_dat = np.load(file)
-        for key, val in in_dat.items():
+        for key in in_dat.keys():
             if key in merged:
                 if accum and key in accum:
                     merged[key] = np.append(merged[key],

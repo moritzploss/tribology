@@ -277,6 +277,40 @@ a file name is generated based on the input file names.</li>
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="data_import.merge_npz">
+<code class="descname">merge_npz</code><span class="sig-paren">(</span><em>in_files</em>, <em>accum=None</em>, <em>safe=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#merge_npz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.merge_npz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merge npz databases by concatenating all databases in <code class="code docutils literal notranslate"><span class="pre">in_files</span></code>.
+Databases are concatenated in the order given in <code class="code docutils literal notranslate"><span class="pre">in_files</span></code>.</p>
+<p>Database keys for which values are to be accumulated can be given as a list
+using the <code class="code docutils literal notranslate"><span class="pre">accum</span></code> argument. For examples, if all databases have the
+key <code class="code docutils literal notranslate"><span class="pre">time</span></code>, then <code class="code docutils literal notranslate"><span class="pre">accum=['time']</span></code> will produce a continuous
+time axis, adding the last time value of the first database to all time
+values of the second database (and so on).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>in_files</strong> (<em>list</em>) – Paths to database files to merge. Files are merged in order.</li>
+<li><strong>accum</strong> (<em>list</em>) – Database keys for which values should be accumulated. Values must be
+numeric.</li>
+<li><strong>safe</strong> (<em>bool</em>) – If True, checks will be performed to ensure that all databases share the
+exact same set of keys and that all keys in <code class="code docutils literal notranslate"><span class="pre">accum</span></code> are in all
+databases. An exception (type KeyError) will be raised if not.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>merged</strong> – Merged data.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 
