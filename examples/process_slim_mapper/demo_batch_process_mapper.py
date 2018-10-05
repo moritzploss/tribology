@@ -72,7 +72,7 @@ def batch_process_mapper():
     # evaluate the mean film thickness for all bitmaps. the thickness will be
     # given relative to the mean thickness of `zero_bmp` since relative=True.
     dat = tr.slim2thick_batch(
-        tuple(bitmaps), zero_bmp, slim_calib_file, mtm_file,
+        bitmaps, zero_bmp, slim_calib_file, mtm_file,
         plot=True, plt_dir=out_dir, skip=skip, crop=crop,
         relative=True, aperture=aperture, pcs_vars=pcs_vars
     )

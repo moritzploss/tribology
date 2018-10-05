@@ -58,6 +58,83 @@ class _TextSnippets(Enum):
                 "{}\n"
 
 
+def __verify_merge(in_files, accum):
+    """
+
+    Check if all npz files have same set of keys and contain all keys in accum.
+    Throw exception if not.
+
+    Parameters
+    ----------
+    in_files: list
+        Paths to database files to merge. Files are merged in order.
+    accum: list
+        Database keys for which values should be accumulated. Values must be
+        numeric.
+
+    """
+    ref_keys = []
+    for idx, file in enumerate(in_files):
+        keys = sorted(np.load(file).keys())
+        if idx == 0:
+            ref_keys = copy.deepcopy(keys)
+        if keys != ref_keys:
+            raise KeyError('keys in npz databases 0 and {} differ'.format(idx))
+        if accum and not all(key in keys for key in accum):
+            raise KeyError('key(s) defined in accum not in npz database {}'
+                           .format(file))
+
+
+def merge_npz(in_files, accum=None, safe=True):
+    """
+
+    Merge npz databases by concatenating all databases in :code:`in_files`.
+    Databases are concatenated in the order given in :code:`in_files`.
+
+    Database keys for which values are to be accumulated can be given as a list
+    using the :code:`accum` argument. For examples, if all databases have the
+    key :code:`time`, then :code:`accum=['time']` will produce a continuous
+    time axis, adding the last time value of the first database to all time
+    values of the second database (and so on).
+
+    Parameters
+    ----------
+    in_files: list
+        Paths to database files to merge. Files are merged in order.
+    accum: list
+        Database keys for which values should be accumulated. Values must be
+        numeric.
+    safe: bool
+        If True, checks will be performed to ensure that all databases share the
+        exact same set of keys and that all keys in :code:`accum` are in all
+        databases. An exception (type KeyError) will be raised if not.
+
+    Returns
+    -------
+    merged: dict
+        Merged data.
+
+    """
+
+    if safe:
+        __verify_merge(in_files, accum)
+
+    merged = {}
+    for file in in_files:
+        in_dat = np.load(file)
+        for key, val in in_dat.items():
+            if key in merged:
+                if accum and key in accum:
+                    merged[key] = np.append(merged[key],
+                                            in_dat[key] + merged[key][-1])
+                else:
+                    merged[key] = np.append(merged[key], in_dat[key])
+            else:
+                merged[key] = in_dat[key]
+
+    return merged
+
+
 def __get_version(package):
     """
 

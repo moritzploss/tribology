@@ -54,6 +54,9 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
+#### 0.4.4
+- function `merge_npz` added to `data_import` module
+
 #### 0.4.3
 - function `slim2thick_batch` now also returns mean thickness data for the SLIM
   mapper ZERO step

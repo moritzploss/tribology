@@ -146,6 +146,52 @@ class TestDataImport(unittest.TestCase):
     demo_dir_pcs = 'tribology/tests/data_import/test_data_pcs'
     demo_dir_rec = 'tribology/tests/data_import/test_data_recursive'
 
+    def test_merged_npz(self):
+        """
+        check if npz database files can be merged
+        """
+        file_1, status, _ = td.import_del(self.demo_1_txt)
+        file_2, status, _ = td.import_del(self.demo_2_txt)
+        files = [file_1, file_2]
+        merged = td.merge_npz(files)
+        self.assertEqual(merged['fx_n'][35], 0.20669)
+        for file in files:
+            os.remove(file)
+
+    def test_merged_accum_npz(self):
+        """
+        check if npz accumulated data can be generated during import
+        """
+        file_1, status, _ = td.import_del(self.demo_1_txt)
+        file_2, status, _ = td.import_del(self.demo_2_txt)
+        files = [file_1, file_2]
+        merged = td.merge_npz(files, accum=['fx_n'])
+        self.assertEqual(merged['fx_n'][35], 0.41338)
+        for file in files:
+            os.remove(file)
+
+    def test_merged_safe_keys_npz(self):
+        """
+        check that safe merge throws exception if database keys don't
+        match
+        """
+        file_1, status, _ = td.import_del(self.demo_1_txt)
+        file_2, status, _ = td.import_del(self.demo_1_pcs_txt)
+        files = [file_1, file_2]
+        self.assertRaises(KeyError, td.merge_npz, files, accum=['foo'])
+        for file in files:
+            os.remove(file)
+
+    def test_merged_safe_accum_npz(self):
+        """
+        check that safe merge throws exception if key(s) in accum are not in
+        database
+        """
+        file_1, status, _ = td.import_del(self.demo_1_txt)
+        files = [file_1, file_1]
+        self.assertRaises(KeyError, td.merge_npz, files, accum=['foo'])
+        os.remove(file_1)
+
     def test_import_txt_to_npz(self):
         """
         check if simple txt file can be imported to npz format
