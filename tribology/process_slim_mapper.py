@@ -648,7 +648,7 @@ def slim2thick_batch(bitmaps, zero_bmp, rgb_map, mtm_file,
     Batch process a number of PCS Spacer Layer image files that share the same
     zero step, instrument output file and spacer layer calibration file.
 
-    This function is a wrapper function for `slim_to_thick`. See the docstring
+    This function is a wrapper function for :code:`slim2thick`. See docstring
     for more information.
 
     Returns a dictionary containing mean film thickness values and, depending
