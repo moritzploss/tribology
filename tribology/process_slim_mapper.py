@@ -297,14 +297,17 @@ def __rgb_to_thick(point, rgb_map):
         Film thickness value for current pixel
     rgb_norm: tuple
         rgb value for pixel as extracted from color map, normalized to range 0-1
+    dist: float
+        Distance in RGB space between actual color and closest color
 
     """
     colors = list(rgb_map.keys())
     closest_colors = sorted(colors, key=lambda color: __distance(color, point))
+    dist = __distance(colors[0], point)
     rgb = closest_colors[0]
     film_thick = rgb_map[rgb][0]
     rgb_norm = (c/255 for c in rgb)
-    return film_thick, rgb_norm
+    return film_thick, rgb_norm, dist
 
 
 def __set_aperture(ap_in):
@@ -370,6 +373,9 @@ def __get_thick(file, x, y, rads, x_vals, y_vals, r_mean, rgb_map, skip=1,
         Thickness values for each pixel of bitmap image.
     rgb: ndarray
         Array of rgb tuples for each pixel of bitmap image.
+    dist: ndarray
+        Array of distance values between actual color and closest known color
+        in the RGB space.
 
     """
     img = Image.open(file)
@@ -378,6 +384,7 @@ def __get_thick(file, x, y, rads, x_vals, y_vals, r_mean, rgb_map, skip=1,
     diam = __adjust_rad_for_skip(2 * r_mean, skip)
     mat_size = int(diam / skip)
     thick = np.ones((mat_size, mat_size)) * float('nan')
+    dist = np.ones((mat_size, mat_size)) * float('nan')
     rgb = np.zeros((mat_size, mat_size), dtype=object)
     rgb[:][:] = "white"
     x_mean = np.mean(x)
@@ -395,11 +402,10 @@ def __get_thick(file, x, y, rads, x_vals, y_vals, r_mean, rgb_map, skip=1,
                     x_idx <= x_mean + r_mean * (1 - aperture['right']) and \
                     x_idx >= x_mean - r_mean * (1 - aperture['left']):
                 pix = pixels[x_idx, y_idx]
-                thick[idx_1, idx_2], rgb[idx_1, idx_2] = __rgb_to_thick(pix,
-                                                                        rgb_map)
+                thick[idx_1, idx_2], rgb[idx_1, idx_2], dist[idx_1, idx_2] = \
+                    __rgb_to_thick(pix, rgb_map)
 
-
-    return thick, rgb
+    return thick, rgb, dist
 
 
 def __get_extrema(x, y, r_mean):
@@ -610,6 +616,9 @@ def slim2thick(file, rgb_map, rads=None, skip=1, crop=0.0, aperture=None):
         Minimum and maximum evaluated pixel coordinate (in x-direction)
     y_vals: tuple
         Minimum and maximum evaluated pixel coordinate (in y-direction)
+    dist: ndarray
+        Array of distance values between actual color and closest known color
+        in the RGB space, normalized to 255.
 
     """
     img_gray, _ = __load_grayscale_img(file)
@@ -624,10 +633,10 @@ def slim2thick(file, rgb_map, rads=None, skip=1, crop=0.0, aperture=None):
 
     r_mean = int(np.mean(rads))
     x_vals, y_vals = __get_extrema(x, y, r_mean)
-    thick, rgb = __get_thick(file, x, y, rads, x_vals, y_vals, r_mean,
-                             rgb_dat, skip, crop, aperture)
+    thick, rgb, dist = __get_thick(file, x, y, rads, x_vals, y_vals, r_mean,
+                                   rgb_dat, skip, crop, aperture)
 
-    return thick, rgb, rads, x_vals, y_vals
+    return thick, rgb, rads, x_vals, y_vals, dist
 
 
 def slim2thick_batch(bitmaps, zero_bmp, rgb_map, mtm_file,
@@ -692,7 +701,10 @@ def slim2thick_batch(bitmaps, zero_bmp, rgb_map, mtm_file,
     mtm_dat = load_npz(mtm_file)
 
     # initialize dictionary that holds outputs
-    out_dict = {'mean_thickness_nm': []}
+    out_dict = {
+        'mean_thickness_nm': [],
+        'mean_color_error': [],
+    }
     for var in pcs_vars:
         out_dict.update({var: []})
     if plot:
@@ -713,20 +725,21 @@ def slim2thick_batch(bitmaps, zero_bmp, rgb_map, mtm_file,
 
         # calculate mean film thickness from image data
         if "_ZERO" in file:
-            thick, rgb, rads, xtrem, ytrem = slim2thick(zero_bmp, rgb_map,
-                                                        skip=skip, crop=crop,
-                                                        aperture=aperture)
+            thick, rgb, rads, xtrem, ytrem, dist = slim2thick(
+                zero_bmp, rgb_map, skip=skip, crop=crop, aperture=aperture)
             zero_thick = __calc_mean_thick(thick)
         else:
-            thick, rgb, _, xtrem, ytrem = slim2thick(file, rgb_map, rads=rads,
-                                                     skip=skip, crop=crop,
-                                                     aperture=aperture)
+            thick, rgb, _, xtrem, ytrem, dist = slim2thick(
+                file, rgb_map, rads=rads, skip=skip, crop=crop,
+                aperture=aperture)
         mean_thick = __calc_mean_thick(thick)
+
         if relative:
             mean_thick -= zero_thick
 
         # store data in output dictionary
         out_dict['mean_thickness_nm'].append(mean_thick)
+        out_dict['mean_color_error'].append(np.nanmean(dist))
         for var in pcs_vars:
             out_dict[var].append(__get_data_at_step(file, mtm_dat, var))
         if plot:

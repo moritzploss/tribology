@@ -341,7 +341,7 @@ class TestSlimMapper(unittest.TestCase):
         spacer, status, _ = td.import_pcs(
             'tribology/tests/process_slim_mapper/demo-3D_SpacerCalibration.txt')
 
-        thick, rgb, _, _, _ = psm.slim2thick(
+        thick, rgb, _, _, _, _ = psm.slim2thick(
             'tribology/tests/process_slim_mapper/demo-slim-mapper.bmp',
             spacer,
             skip=5,
