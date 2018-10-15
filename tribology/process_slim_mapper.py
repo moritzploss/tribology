@@ -685,11 +685,11 @@ def slim2thick_batch(bitmaps, zero_bmp, rgb_map, mtm_file,
     print_prog: bool
         If true, status updates are printed to the command line.
     skip: positive int, optional
-        See function `slim_to_thick`
+        See function :code:`slim2thick`
     crop: float, optional
-        See function `slim_to_thick`
+        See function :code:`slim2thick`
     aperture: dict, optional
-        See function `slim_to_thick`
+        See function :code:`slim2thick`
 
     Returns
     -------
