@@ -401,14 +401,17 @@
 <span class="sd">        Film thickness value for current pixel</span>
 <span class="sd">    rgb_norm: tuple</span>
 <span class="sd">        rgb value for pixel as extracted from color map, normalized to range 0-1</span>
+<span class="sd">    dist: float</span>
+<span class="sd">        Distance in RGB space between actual color and closest color</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">colors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rgb_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
     <span class="n">closest_colors</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">color</span><span class="p">:</span> <span class="n">__distance</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">point</span><span class="p">))</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">__distance</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">point</span><span class="p">)</span>
     <span class="n">rgb</span> <span class="o">=</span> <span class="n">closest_colors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">film_thick</span> <span class="o">=</span> <span class="n">rgb_map</span><span class="p">[</span><span class="n">rgb</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">rgb_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span><span class="o">/</span><span class="mi">255</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">rgb</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">film_thick</span><span class="p">,</span> <span class="n">rgb_norm</span>
+    <span class="k">return</span> <span class="n">film_thick</span><span class="p">,</span> <span class="n">rgb_norm</span><span class="p">,</span> <span class="n">dist</span>
 
 
 <span class="k">def</span> <span class="nf">__set_aperture</span><span class="p">(</span><span class="n">ap_in</span><span class="p">):</span>
@@ -474,6 +477,9 @@
 <span class="sd">        Thickness values for each pixel of bitmap image.</span>
 <span class="sd">    rgb: ndarray</span>
 <span class="sd">        Array of rgb tuples for each pixel of bitmap image.</span>
+<span class="sd">    dist: ndarray</span>
+<span class="sd">        Array of distance values between actual color and closest known color</span>
+<span class="sd">        in the RGB space.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
@@ -482,6 +488,7 @@
     <span class="n">diam</span> <span class="o">=</span> <span class="n">__adjust_rad_for_skip</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r_mean</span><span class="p">,</span> <span class="n">skip</span><span class="p">)</span>
     <span class="n">mat_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">diam</span> <span class="o">/</span> <span class="n">skip</span><span class="p">)</span>
     <span class="n">thick</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">mat_size</span><span class="p">,</span> <span class="n">mat_size</span><span class="p">))</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">mat_size</span><span class="p">,</span> <span class="n">mat_size</span><span class="p">))</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)</span>
     <span class="n">rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">mat_size</span><span class="p">,</span> <span class="n">mat_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
     <span class="n">rgb</span><span class="p">[:][:]</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span>
     <span class="n">x_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -499,11 +506,10 @@
                     <span class="n">x_idx</span> <span class="o">&lt;=</span> <span class="n">x_mean</span> <span class="o">+</span> <span class="n">r_mean</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aperture</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">])</span> <span class="ow">and</span> \
                     <span class="n">x_idx</span> <span class="o">&gt;=</span> <span class="n">x_mean</span> <span class="o">-</span> <span class="n">r_mean</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aperture</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">]):</span>
                 <span class="n">pix</span> <span class="o">=</span> <span class="n">pixels</span><span class="p">[</span><span class="n">x_idx</span><span class="p">,</span> <span class="n">y_idx</span><span class="p">]</span>
-                <span class="n">thick</span><span class="p">[</span><span class="n">idx_1</span><span class="p">,</span> <span class="n">idx_2</span><span class="p">],</span> <span class="n">rgb</span><span class="p">[</span><span class="n">idx_1</span><span class="p">,</span> <span class="n">idx_2</span><span class="p">]</span> <span class="o">=</span> <span class="n">__rgb_to_thick</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span>
-                                                                        <span class="n">rgb_map</span><span class="p">)</span>
+                <span class="n">thick</span><span class="p">[</span><span class="n">idx_1</span><span class="p">,</span> <span class="n">idx_2</span><span class="p">],</span> <span class="n">rgb</span><span class="p">[</span><span class="n">idx_1</span><span class="p">,</span> <span class="n">idx_2</span><span class="p">],</span> <span class="n">dist</span><span class="p">[</span><span class="n">idx_1</span><span class="p">,</span> <span class="n">idx_2</span><span class="p">]</span> <span class="o">=</span> \
+                    <span class="n">__rgb_to_thick</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">rgb_map</span><span class="p">)</span>
 
-
-    <span class="k">return</span> <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span>
+    <span class="k">return</span> <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">dist</span>
 
 
 <span class="k">def</span> <span class="nf">__get_extrema</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r_mean</span><span class="p">):</span>
@@ -714,6 +720,9 @@
 <span class="sd">        Minimum and maximum evaluated pixel coordinate (in x-direction)</span>
 <span class="sd">    y_vals: tuple</span>
 <span class="sd">        Minimum and maximum evaluated pixel coordinate (in y-direction)</span>
+<span class="sd">    dist: ndarray</span>
+<span class="sd">        Array of distance values between actual color and closest known color</span>
+<span class="sd">        in the RGB space, normalized to 255.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">img_gray</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">__load_grayscale_img</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
@@ -728,10 +737,10 @@
 
     <span class="n">r_mean</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rads</span><span class="p">))</span>
     <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span> <span class="o">=</span> <span class="n">__get_extrema</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r_mean</span><span class="p">)</span>
-    <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span> <span class="o">=</span> <span class="n">__get_thick</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rads</span><span class="p">,</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">,</span> <span class="n">r_mean</span><span class="p">,</span>
-                             <span class="n">rgb_dat</span><span class="p">,</span> <span class="n">skip</span><span class="p">,</span> <span class="n">crop</span><span class="p">,</span> <span class="n">aperture</span><span class="p">)</span>
+    <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">__get_thick</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rads</span><span class="p">,</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">,</span> <span class="n">r_mean</span><span class="p">,</span>
+                                   <span class="n">rgb_dat</span><span class="p">,</span> <span class="n">skip</span><span class="p">,</span> <span class="n">crop</span><span class="p">,</span> <span class="n">aperture</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">rads</span><span class="p">,</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span></div>
+    <span class="k">return</span> <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">rads</span><span class="p">,</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">,</span> <span class="n">dist</span></div>
 
 
 <div class="viewcode-block" id="slim2thick_batch"><a class="viewcode-back" href="../sec_process_slim_mapper.html#process_slim_mapper.slim2thick_batch">[docs]</a><span class="k">def</span> <span class="nf">slim2thick_batch</span><span class="p">(</span><span class="n">bitmaps</span><span class="p">,</span> <span class="n">zero_bmp</span><span class="p">,</span> <span class="n">rgb_map</span><span class="p">,</span> <span class="n">mtm_file</span><span class="p">,</span>
@@ -796,14 +805,16 @@
     <span class="n">mtm_dat</span> <span class="o">=</span> <span class="n">load_npz</span><span class="p">(</span><span class="n">mtm_file</span><span class="p">)</span>
 
     <span class="c1"># initialize dictionary that holds outputs</span>
-    <span class="n">out_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mean_thickness_nm&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="n">out_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;mean_thickness_nm&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;mean_color_error&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;skip&#39;</span><span class="p">:</span> <span class="n">skip</span><span class="p">,</span>
+        <span class="s1">&#39;crop&#39;</span><span class="p">:</span> <span class="n">crop</span><span class="p">,</span>
+        <span class="s1">&#39;aperture&#39;</span><span class="p">:</span> <span class="n">aperture</span><span class="p">,</span>
+        <span class="s1">&#39;plots&#39;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">}</span>
     <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">pcs_vars</span><span class="p">:</span>
         <span class="n">out_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">var</span><span class="p">:</span> <span class="p">[]})</span>
-    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
-        <span class="n">out_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;plots&#39;</span><span class="p">:</span> <span class="p">[]})</span>
-    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;crop&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">crop</span>
-    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;skip&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">skip</span>
-    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;aperture&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">aperture</span>
 
     <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">zero_bmp</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">bitmaps</span><span class="p">)</span>
     <span class="n">zero_thick</span> <span class="o">=</span> <span class="mi">0</span>
@@ -817,20 +828,21 @@
 
         <span class="c1"># calculate mean film thickness from image data</span>
         <span class="k">if</span> <span class="s2">&quot;_ZERO&quot;</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
-            <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">rads</span><span class="p">,</span> <span class="n">xtrem</span><span class="p">,</span> <span class="n">ytrem</span> <span class="o">=</span> <span class="n">slim2thick</span><span class="p">(</span><span class="n">zero_bmp</span><span class="p">,</span> <span class="n">rgb_map</span><span class="p">,</span>
-                                                        <span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="n">crop</span><span class="p">,</span>
-                                                        <span class="n">aperture</span><span class="o">=</span><span class="n">aperture</span><span class="p">)</span>
+            <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">rads</span><span class="p">,</span> <span class="n">xtrem</span><span class="p">,</span> <span class="n">ytrem</span><span class="p">,</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">slim2thick</span><span class="p">(</span>
+                <span class="n">zero_bmp</span><span class="p">,</span> <span class="n">rgb_map</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="n">crop</span><span class="p">,</span> <span class="n">aperture</span><span class="o">=</span><span class="n">aperture</span><span class="p">)</span>
             <span class="n">zero_thick</span> <span class="o">=</span> <span class="n">__calc_mean_thick</span><span class="p">(</span><span class="n">thick</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">xtrem</span><span class="p">,</span> <span class="n">ytrem</span> <span class="o">=</span> <span class="n">slim2thick</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">rgb_map</span><span class="p">,</span> <span class="n">rads</span><span class="o">=</span><span class="n">rads</span><span class="p">,</span>
-                                                     <span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="n">crop</span><span class="p">,</span>
-                                                     <span class="n">aperture</span><span class="o">=</span><span class="n">aperture</span><span class="p">)</span>
+            <span class="n">thick</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">xtrem</span><span class="p">,</span> <span class="n">ytrem</span><span class="p">,</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">slim2thick</span><span class="p">(</span>
+                <span class="n">file</span><span class="p">,</span> <span class="n">rgb_map</span><span class="p">,</span> <span class="n">rads</span><span class="o">=</span><span class="n">rads</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="n">crop</span><span class="p">,</span>
+                <span class="n">aperture</span><span class="o">=</span><span class="n">aperture</span><span class="p">)</span>
         <span class="n">mean_thick</span> <span class="o">=</span> <span class="n">__calc_mean_thick</span><span class="p">(</span><span class="n">thick</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">relative</span><span class="p">:</span>
             <span class="n">mean_thick</span> <span class="o">-=</span> <span class="n">zero_thick</span>
 
         <span class="c1"># store data in output dictionary</span>
         <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;mean_thickness_nm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_thick</span><span class="p">)</span>
+        <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;mean_color_error&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">dist</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">pcs_vars</span><span class="p">:</span>
             <span class="n">out_dict</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">__get_data_at_step</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mtm_dat</span><span class="p">,</span> <span class="n">var</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>

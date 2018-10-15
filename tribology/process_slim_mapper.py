@@ -704,14 +704,13 @@ def slim2thick_batch(bitmaps, zero_bmp, rgb_map, mtm_file,
     out_dict = {
         'mean_thickness_nm': [],
         'mean_color_error': [],
+        'skip': skip,
+        'crop': crop,
+        'aperture': aperture,
+        'plots': []
     }
     for var in pcs_vars:
         out_dict.update({var: []})
-    if plot:
-        out_dict.update({'plots': []})
-    out_dict['crop'] = crop
-    out_dict['skip'] = skip
-    out_dict['aperture'] = aperture
 
     files = [zero_bmp] + list(bitmaps)
     zero_thick = 0
