@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <!-- Licensed under the Apache 2.0 License -->
@@ -18,11 +18,11 @@
     <title>dowson_hamrock &#8212; Tribology  documentation</title>
     <link rel="stylesheet" href="../_static/guzzle.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
   
@@ -160,8 +160,8 @@
 <span class="sd">        The elasticity parameter of the contact problem.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">param_elasticity</span> <span class="o">=</span> <span class="n">alpha_p</span> <span class="o">*</span> <span class="n">e_eff</span></div>
-    <span class="k">return</span> <span class="n">param_elasticity</span>
+    <span class="n">param_elasticity</span> <span class="o">=</span> <span class="n">alpha_p</span> <span class="o">*</span> <span class="n">e_eff</span>
+    <span class="k">return</span> <span class="n">param_elasticity</span></div>
 
 
 <div class="viewcode-block" id="vdowham"><a class="viewcode-back" href="../sec_ehd_lubrication.html#dowson_hamrock.vdowham">[docs]</a><span class="k">def</span> <span class="nf">vdowham</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">vel_entrain</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">):</span>
@@ -187,8 +187,8 @@
 <span class="sd">        The velocity parameter of the contact problem.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">param_velocity</span> <span class="o">=</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">vel_entrain</span> <span class="o">/</span> <span class="p">(</span><span class="n">e_eff</span> <span class="o">*</span> <span class="n">r_eff</span><span class="p">)</span></div>
-    <span class="k">return</span> <span class="n">param_velocity</span>
+    <span class="n">param_velocity</span> <span class="o">=</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">vel_entrain</span> <span class="o">/</span> <span class="p">(</span><span class="n">e_eff</span> <span class="o">*</span> <span class="n">r_eff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">param_velocity</span></div>
 
 
 <div class="viewcode-block" id="dowhamline"><a class="viewcode-back" href="../sec_ehd_lubrication.html#dowson_hamrock.dowhamline">[docs]</a><span class="k">def</span> <span class="nf">dowhamline</span><span class="p">(</span><span class="n">vel_entrain</span><span class="p">,</span> <span class="n">force</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">l_eff</span><span class="p">):</span>
@@ -223,8 +223,8 @@
     <span class="n">param_g</span> <span class="o">=</span> <span class="n">edowham</span><span class="p">(</span><span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">)</span>
     <span class="n">param_u</span> <span class="o">=</span> <span class="n">vdowham</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">vel_entrain</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">)</span>
     <span class="n">param_w</span> <span class="o">=</span> <span class="n">force</span> <span class="o">/</span> <span class="p">(</span><span class="n">l_eff</span> <span class="o">*</span> <span class="n">r_eff</span> <span class="o">*</span> <span class="n">e_eff</span><span class="p">)</span>
-    <span class="n">h_0</span> <span class="o">=</span> <span class="mf">2.69</span> <span class="o">*</span> <span class="n">__dowson_hamrock_parameters</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">param_g</span><span class="p">,</span> <span class="n">param_u</span><span class="p">,</span> <span class="n">param_w</span><span class="p">)</span></div>
-    <span class="k">return</span> <span class="n">h_0</span>
+    <span class="n">h_0</span> <span class="o">=</span> <span class="mf">2.69</span> <span class="o">*</span> <span class="n">__dowson_hamrock_parameters</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">param_g</span><span class="p">,</span> <span class="n">param_u</span><span class="p">,</span> <span class="n">param_w</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">h_0</span></div>
 
 
 <div class="viewcode-block" id="dowhampoint"><a class="viewcode-back" href="../sec_ehd_lubrication.html#dowson_hamrock.dowhampoint">[docs]</a><span class="k">def</span> <span class="nf">dowhampoint</span><span class="p">(</span><span class="n">vel_entrain</span><span class="p">,</span> <span class="n">force</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">,</span> <span class="n">eta</span><span class="p">):</span>
@@ -257,8 +257,8 @@
     <span class="n">param_g</span> <span class="o">=</span> <span class="n">edowham</span><span class="p">(</span><span class="n">alpha_p</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">)</span>
     <span class="n">param_u</span> <span class="o">=</span> <span class="n">vdowham</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">vel_entrain</span><span class="p">,</span> <span class="n">e_eff</span><span class="p">,</span> <span class="n">r_eff</span><span class="p">)</span>
     <span class="n">param_w</span> <span class="o">=</span> <span class="n">force</span> <span class="o">/</span> <span class="p">(</span><span class="n">r_eff</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">e_eff</span><span class="p">)</span>
-    <span class="n">h_0</span> <span class="o">=</span> <span class="mf">1.9</span> <span class="o">*</span> <span class="n">__dowson_hamrock_parameters</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">param_g</span><span class="p">,</span> <span class="n">param_u</span><span class="p">,</span> <span class="n">param_w</span><span class="p">)</span></div>
-    <span class="k">return</span> <span class="n">h_0</span>
+    <span class="n">h_0</span> <span class="o">=</span> <span class="mf">1.9</span> <span class="o">*</span> <span class="n">__dowson_hamrock_parameters</span><span class="p">(</span><span class="n">r_eff</span><span class="p">,</span> <span class="n">param_g</span><span class="p">,</span> <span class="n">param_u</span><span class="p">,</span> <span class="n">param_w</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">h_0</span></div>
 </pre></div>
 
           </div>
