@@ -54,6 +54,9 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
+#### 0.4.8
+- fixed bug that lead to data import error when using `mat` output format
+
 
 #### 0.4.7
 - added missing package dependencies that may lead to an import error when using

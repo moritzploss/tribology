@@ -684,8 +684,8 @@ def __gen_acc_time(step_time, steps, outformat='npz'):
     # save data to dictionary
     if outformat == 'mat':
         sub_dict = {'time_accumulated_s': time_accumulated_s,
-                    'step_start': step_start_with_other + 1,
-                    'step_end': step_end_with_other + 1}
+                    'step_start': [s + 1 for s in step_start_with_other],
+                    'step_end': [s + 1 for s in step_end_with_other]}
     else:
         sub_dict = {'time_accumulated_s': time_accumulated_s,
                     'step_start': step_start_with_other,

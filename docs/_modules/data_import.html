@@ -788,8 +788,8 @@
     <span class="c1"># save data to dictionary</span>
     <span class="k">if</span> <span class="n">outformat</span> <span class="o">==</span> <span class="s1">&#39;mat&#39;</span><span class="p">:</span>
         <span class="n">sub_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;time_accumulated_s&#39;</span><span class="p">:</span> <span class="n">time_accumulated_s</span><span class="p">,</span>
-                    <span class="s1">&#39;step_start&#39;</span><span class="p">:</span> <span class="n">step_start_with_other</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
-                    <span class="s1">&#39;step_end&#39;</span><span class="p">:</span> <span class="n">step_end_with_other</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
+                    <span class="s1">&#39;step_start&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">s</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">step_start_with_other</span><span class="p">],</span>
+                    <span class="s1">&#39;step_end&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">s</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">step_end_with_other</span><span class="p">]}</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">sub_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;time_accumulated_s&#39;</span><span class="p">:</span> <span class="n">time_accumulated_s</span><span class="p">,</span>
                     <span class="s1">&#39;step_start&#39;</span><span class="p">:</span> <span class="n">step_start_with_other</span><span class="p">,</span>

@@ -23,7 +23,6 @@ setup(
        'scipy',
        'opencv-python==3.4.2.16',
        'matplotlib',
-       'pillow==5.0.0',
    ],
    python_requires='>=3.5',
    url='https://github.com/moritzploss/tribology',
