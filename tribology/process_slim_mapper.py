@@ -648,7 +648,7 @@ def slim2thick_batch(bitmaps, zero_bmp, rgb_map, mtm_file,
     Batch process a number of PCS Spacer Layer image files that share the same
     zero step, instrument output file and spacer layer calibration file.
 
-    This function is a wrapper function for `slim_to_thick`. See the docstring
+    This function is a wrapper function for :code:`slim2thick`. See docstring
     for more information.
 
     Returns a dictionary containing mean film thickness values and, depending
@@ -685,11 +685,11 @@ def slim2thick_batch(bitmaps, zero_bmp, rgb_map, mtm_file,
     print_prog: bool
         If true, status updates are printed to the command line.
     skip: positive int, optional
-        See function `slim_to_thick`
+        See function :code:`slim2thick`
     crop: float, optional
-        See function `slim_to_thick`
+        See function :code:`slim2thick`
     aperture: dict, optional
-        See function `slim_to_thick`
+        See function :code:`slim2thick`
 
     Returns
     -------
@@ -704,14 +704,13 @@ def slim2thick_batch(bitmaps, zero_bmp, rgb_map, mtm_file,
     out_dict = {
         'mean_thickness_nm': [],
         'mean_color_error': [],
+        'skip': skip,
+        'crop': crop,
+        'aperture': aperture,
+        'plots': []
     }
     for var in pcs_vars:
         out_dict.update({var: []})
-    if plot:
-        out_dict.update({'plots': []})
-    out_dict['crop'] = crop
-    out_dict['skip'] = skip
-    out_dict['aperture'] = aperture
 
     files = [zero_bmp] + list(bitmaps)
     zero_thick = 0

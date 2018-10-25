@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <!-- Licensed under the Apache 2.0 License -->
@@ -18,11 +18,11 @@
     <title>lubrication &#8212; Tribology  documentation</title>
     <link rel="stylesheet" href="../_static/guzzle.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
   
@@ -135,8 +135,8 @@
 <span class="sd">        The dynamic viscosity of the lubricant.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">dyn</span> <span class="o">=</span> <span class="n">kin</span> <span class="o">/</span> <span class="n">density</span>
-    <span class="k">return</span> <span class="n">dyn</span></div>
+    <span class="n">dyn</span> <span class="o">=</span> <span class="n">kin</span> <span class="o">/</span> <span class="n">density</span></div>
+    <span class="k">return</span> <span class="n">dyn</span>
 
 
 <div class="viewcode-block" id="dyn2kin"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.dyn2kin">[docs]</a><span class="k">def</span> <span class="nf">dyn2kin</span><span class="p">(</span><span class="n">dyn</span><span class="p">,</span> <span class="n">density</span><span class="p">):</span>
@@ -157,8 +157,8 @@
 <span class="sd">        The kinematic viscosity of the lubricant.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">kin</span> <span class="o">=</span> <span class="n">dyn</span> <span class="o">*</span> <span class="n">density</span>
-    <span class="k">return</span> <span class="n">kin</span></div>
+    <span class="n">kin</span> <span class="o">=</span> <span class="n">dyn</span> <span class="o">*</span> <span class="n">density</span></div>
+    <span class="k">return</span> <span class="n">kin</span>
 
 
 <span class="k">def</span> <span class="nf">__zedwalther</span><span class="p">(</span><span class="n">kin</span><span class="p">):</span>
@@ -241,8 +241,8 @@
                <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">/</span> \
               <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
     <span class="n">const_b</span> <span class="o">=</span> <span class="p">(</span><span class="n">const_a</span> <span class="o">-</span> <span class="n">lg</span><span class="p">(</span><span class="n">lg</span><span class="p">(</span><span class="n">zed</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span> <span class="o">/</span> <span class="n">lg</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">nu_3</span> <span class="o">=</span> <span class="n">__nuwalther</span><span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">const_a</span> <span class="o">-</span> <span class="n">const_b</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
-    <span class="k">return</span> <span class="n">nu_3</span></div>
+    <span class="n">nu_3</span> <span class="o">=</span> <span class="n">__nuwalther</span><span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">const_a</span> <span class="o">-</span> <span class="n">const_b</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span></div>
+    <span class="k">return</span> <span class="n">nu_3</span>
 
 
 <div class="viewcode-block" id="trheomflat"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.trheomflat">[docs]</a><span class="k">def</span> <span class="nf">trheomflat</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">gap_height</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
@@ -268,8 +268,8 @@
 <span class="sd">        The torque required to rotate the rotating plate.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">torque</span> <span class="o">=</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">r_a</span> <span class="o">**</span> <span class="mi">4</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">gap_height</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">torque</span></div>
+    <span class="n">torque</span> <span class="o">=</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">r_a</span> <span class="o">**</span> <span class="mi">4</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">gap_height</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">torque</span>
 
 
 <div class="viewcode-block" id="viscrheomflat"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.viscrheomflat">[docs]</a><span class="k">def</span> <span class="nf">viscrheomflat</span><span class="p">(</span><span class="n">torque</span><span class="p">,</span> <span class="n">gap_height</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
@@ -295,8 +295,8 @@
 <span class="sd">        The dynamic viscosity of the fluid.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">eta</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">gap_height</span> <span class="o">*</span> <span class="n">torque</span> <span class="o">/</span> <span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">r_a</span> <span class="o">**</span> <span class="mi">4</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">eta</span></div>
+    <span class="n">eta</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">gap_height</span> <span class="o">*</span> <span class="n">torque</span> <span class="o">/</span> <span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">r_a</span> <span class="o">**</span> <span class="mi">4</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">eta</span>
 
 
 <div class="viewcode-block" id="trheomcone"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.trheomcone">[docs]</a><span class="k">def</span> <span class="nf">trheomcone</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
@@ -322,8 +322,8 @@
 <span class="sd">        The torque required to rotate the rotating plate.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">torque</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">r_a</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">torque</span></div>
+    <span class="n">torque</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">r_a</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">torque</span>
 
 
 <div class="viewcode-block" id="viscrheomcone"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.viscrheomcone">[docs]</a><span class="k">def</span> <span class="nf">viscrheomcone</span><span class="p">(</span><span class="n">torque</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">r_a</span><span class="p">):</span>
@@ -349,8 +349,8 @@
 <span class="sd">        The dynamic viscosity of the fluid.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">eta</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">torque</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">r_a</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">eta</span></div>
+    <span class="n">eta</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">torque</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">r_a</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">eta</span>
 
 
 <div class="viewcode-block" id="barus"><a class="viewcode-back" href="../sec_lubricants.html#lubrication.barus">[docs]</a><span class="k">def</span> <span class="nf">barus</span><span class="p">(</span><span class="n">eta_0</span><span class="p">,</span> <span class="n">alpha_p</span><span class="p">,</span> <span class="n">pressure</span><span class="p">):</span>
@@ -374,8 +374,8 @@
 <span class="sd">        The dynamic viscosity at pressure `pressure`.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">eta_p</span> <span class="o">=</span> <span class="n">eta_0</span> <span class="o">*</span> <span class="n">e</span> <span class="o">**</span> <span class="p">(</span><span class="n">alpha_p</span> <span class="o">*</span> <span class="n">pressure</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">eta_p</span></div>
+    <span class="n">eta_p</span> <span class="o">=</span> <span class="n">eta_0</span> <span class="o">*</span> <span class="n">e</span> <span class="o">**</span> <span class="p">(</span><span class="n">alpha_p</span> <span class="o">*</span> <span class="n">pressure</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">eta_p</span>
 </pre></div>
 
           </div>
