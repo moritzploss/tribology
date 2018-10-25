@@ -55,6 +55,11 @@ neutral builds includes changes with respect to the latest numbered
 release listed below.
 
 
+#### 0.4.7
+- added missing package dependencies that may lead to an import error when using
+  data import or slim mapper processing functions
+
+
 #### 0.4.5
 - functions `slim2thick` and `slim2thick_batch` now return color error values
   for each image 

@@ -17,7 +17,14 @@ setup(
    include_package_data=True,
    license='MIT',
    keywords='tribology machine design research',
-   install_requires=['numpy', 'numexpr', 'scipy', 'opencv-python==3.4.0.12'],
+   install_requires=[
+       'numpy',
+       'numexpr',
+       'scipy',
+       'opencv-python==3.4.0.12',
+       'matplotlib',
+       'pillow==5.0.0',
+   ],
    python_requires='>=3.5',
    url='https://github.com/moritzploss/tribology',
    classifiers=[
