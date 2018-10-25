@@ -21,7 +21,7 @@ setup(
        'numpy',
        'numexpr',
        'scipy',
-       'opencv-python==3.4.0.12',
+       'opencv-python==3.4.2.16',
        'matplotlib',
        'pillow==5.0.0',
    ],
