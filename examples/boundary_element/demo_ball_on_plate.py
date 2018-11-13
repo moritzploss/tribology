@@ -45,7 +45,7 @@ def demo_ball_on_plate():
     r_ball = tr.RadBall.HInch.value
     f_outer = 10
     e_eff = tr.eeff(tr.YoungsMod.STEEL.value, tr.PoissonRatio.STEEL.value,
-                    tr.YoungsMod.STEEL.value, tr.PoissonRatio.STEEL.value)
+                    315000, 0.26)
     r_eff, r_eff_x, r_eff_y = tr.reff(r_ball, r_ball, 0, 0)
 
     # create 3d profile for ball and flat plate. calculate Hertz contact width

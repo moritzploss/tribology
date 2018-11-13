@@ -54,7 +54,11 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
-#### 0.4.8
+#### 0.5.0
+- module `rough_surfaces` added
+
+
+#### 0.4.9
 - fixed bug that lead to data import error when using `mat` output format
 
 

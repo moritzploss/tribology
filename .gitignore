@@ -110,3 +110,6 @@ ENV/
 
 # results files
 results/
+
+# files in user sandbox
+sandbox/*

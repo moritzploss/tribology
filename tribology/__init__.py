@@ -12,6 +12,7 @@ __all__ = ['tribology',
            'hertz',
            'lubrication',
            'process_slim_mapper',
+           'rough_surfaces',
            'roller_bearings',]
 
 from tribology.tribology import *
@@ -22,6 +23,7 @@ from tribology.dowson_hamrock import *
 from tribology.hertz import *
 from tribology.lubrication import *
 from tribology.process_slim_mapper import *
+from tribology.rough_surfaces import *
 from tribology.roller_bearings import *
 
 import sys

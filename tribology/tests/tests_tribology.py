@@ -19,6 +19,7 @@ from .. import boundary_element as tb
 from .. import data_import as td
 from .. import roller_bearings as trb
 from .. import process_slim_mapper as psm
+from .. import rough_surfaces as rs
 from ..p3can.p3can import p3can
 
 
@@ -327,6 +328,23 @@ class TestHertz(unittest.TestCase):
         self.assertEqual(round(th.approx_hertz_rad(axis, prof)), 1)
         prof = np.asarray([0, 0, 0])
         self.assertEqual(th.approx_hertz_rad(axis, prof), float('inf'))
+
+
+class TestRoughSurfaces(unittest.TestCase):
+    """
+    test case methods for tribology functions related to Hertz contact theory
+    """
+
+    def test_randsurf(self):
+        """
+        base test for randsurf method
+        """
+        ax_x, delta_x = np.linspace(-20, 20, 51, retstep=True)
+        ax_y, delta_y = np.linspace(-20, 20, 101, retstep=True)
+        heights = rs.randsurf(len(ax_x), len(ax_y), delta_x, delta_y, 0.1, 0.5,
+                              0.5)
+        self.assertEqual(np.std(heights), 0.1)
+        self.assertLess(abs(np.mean(heights)), 0.01)
 
 
 class TestSlimMapper(unittest.TestCase):

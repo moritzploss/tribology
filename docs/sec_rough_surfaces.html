@@ -15,7 +15,7 @@
   <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-    <title>Python Module Index &#8212; Tribology  documentation</title>
+    <title>Rough Surfaces &#8212; Tribology  documentation</title>
     <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -25,15 +25,10 @@
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-
+    <link rel="next" title="Roller Bearings" href="sec_roller_bearings.html" />
+    <link rel="prev" title="Process SLIM Mapper" href="sec_process_slim_mapper.html" />
   
    
-
-
-    <script type="text/javascript">
-      DOCUMENTATION_OPTIONS.COLLAPSE_INDEX = true;
-    </script>
-
 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -43,8 +38,14 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="#" title="Python Module Index"
+          <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="sec_roller_bearings.html" title="Roller Bearings"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sec_process_slim_mapper.html" title="Process SLIM Mapper"
+             accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Tribology  documentation</a> &#187;</li> 
       </ul>
     </div>
@@ -62,14 +63,14 @@
   <div class="sidebar-toc">
     
     
-      <ul>
+      <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="sec_general_tribology.html">General Tribology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_contact_mechanics.html">Contact Mechanics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_ehd_lubrication.html">EHD Lubrication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_lubricants.html">Lubricants and Lubrication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_data_import.html">Functions for Data Import</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_process_slim_mapper.html">Process SLIM Mapper</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sec_rough_surfaces.html">Rough Surfaces</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Rough Surfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_roller_bearings.html">Roller Bearings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_constants.html">Constants for Tribology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_p3can.html">P3CAN</a></li>
@@ -100,111 +101,78 @@
             <ol class="breadcrumb">
               <li><a href="index.html">Docs</a></li>
               
-              <li>Python Module Index</li>
+              <li>Rough Surfaces</li>
             </ol>
           </div>
           
           <div class="document clearer body">
             
+  <div class="section" id="rough-surfaces">
+<h1>Rough Surfaces<a class="headerlink" href="#rough-surfaces" title="Permalink to this headline">¶</a></h1>
+<p>All of the below functions can be found in the <code class="code docutils literal notranslate"><span class="pre">rough_surfaces</span></code>
+module of the package.</p>
+<span class="target" id="module-rough_surfaces"></span><p>This module contains functions related to rough surfaces. Please see the
+<code class="code docutils literal notranslate"><span class="pre">/demo</span></code> directory for minimum examples.</p>
+<dl class="function">
+<dt id="rough_surfaces.randsurf">
+<code class="descname">randsurf</code><span class="sig-paren">(</span><em>n_x</em>, <em>n_y</em>, <em>delta_x</em>, <em>delta_y</em>, <em>s_q</em>, <em>lambda_x</em>, <em>lambda_y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rough_surfaces.html#randsurf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rough_surfaces.randsurf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a random rough surface in the x-y-plane. The surface has a Gaussian
+roughness distribution, a mean surface roughness of (approximately) 0, and
+a standard deviation of <code class="code docutils literal notranslate"><span class="pre">s_a</span></code>.</p>
+<p>The correlation length can be specified separately in x and y; however,
+the correlation length and grid spacing need to be constant in both
+directions. The computational cost increases with increasing correlation
+length in either direction.</p>
+<p>The implementation follows the approach described in the appendix of:</p>
+<p>N. Patir and H. S. Cheng, An Average Flow Model for Determining Effects
+of Three-Dimensional Roughness on Partial Hydrodynamic Lubrication, Journal
+of Lubrication Technology, 100(1), pages 12-17, 1978. doi:10.1115/1.3453103</p>
+<p>The implementation is similar to that used by Björklund and Andersson:</p>
+<p>S. Björklund and S. Andersson, A numerical method for real elastic contacts
+subjected to normal and tangential loading, Wear, 179, pages 117-122, 1994.
+doi: 10.1016/0043-1648(94)90228-3</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_x</strong> (<em>int</em>) – Number of grid points along x-axis.</li>
+<li><strong>n_y</strong> (<em>int</em>) – Number of grid points along y-axis.</li>
+<li><strong>delta_x</strong> (<em>float</em>) – Distance between grid points along the x-axis</li>
+<li><strong>delta_y</strong> (<em>float</em>) – Distance between grid points along the y-axis.</li>
+<li><strong>s_q</strong> (<em>float</em>) – Standard deviation of the surface roughness.</li>
+<li><strong>lambda_x</strong> (<em>float</em>) – Correlation length along the x-axis.</li>
+<li><strong>lambda_y</strong> (<em>float</em>) – Correlation length along the y-axis.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>heights</strong> – Surface heights in the x-y-plane.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
-   <h1>Python Module Index</h1>
-
-   <div class="modindex-jumpbox">
-   <a href="#cap-b"><strong>b</strong></a> | 
-   <a href="#cap-c"><strong>c</strong></a> | 
-   <a href="#cap-d"><strong>d</strong></a> | 
-   <a href="#cap-h"><strong>h</strong></a> | 
-   <a href="#cap-l"><strong>l</strong></a> | 
-   <a href="#cap-p"><strong>p</strong></a> | 
-   <a href="#cap-r"><strong>r</strong></a> | 
-   <a href="#cap-t"><strong>t</strong></a>
-   </div>
-
-   <table class="indextable modindextable">
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-b"><td></td><td>
-       <strong>b</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="sec_contact_mechanics.html#module-boundary_element"><code class="xref">boundary_element</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-c"><td></td><td>
-       <strong>c</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="sec_constants.html#module-constants"><code class="xref">constants</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-d"><td></td><td>
-       <strong>d</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="sec_data_import.html#module-data_import"><code class="xref">data_import</code></a></td><td>
-       <em></em></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="sec_ehd_lubrication.html#module-dowson_hamrock"><code class="xref">dowson_hamrock</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-h"><td></td><td>
-       <strong>h</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="sec_contact_mechanics.html#module-hertz"><code class="xref">hertz</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-l"><td></td><td>
-       <strong>l</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="sec_lubricants.html#module-lubrication"><code class="xref">lubrication</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-p"><td></td><td>
-       <strong>p</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="sec_p3can.html#module-p3can"><code class="xref">p3can</code></a></td><td>
-       <em></em></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="sec_process_slim_mapper.html#module-process_slim_mapper"><code class="xref">process_slim_mapper</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-r"><td></td><td>
-       <strong>r</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="sec_roller_bearings.html#module-roller_bearings"><code class="xref">roller_bearings</code></a></td><td>
-       <em></em></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="sec_rough_surfaces.html#module-rough_surfaces"><code class="xref">rough_surfaces</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-t"><td></td><td>
-       <strong>t</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="sec_general_tribology.html#module-tribology"><code class="xref">tribology</code></a></td><td>
-       <em></em></td></tr>
-   </table>
+</div>
 
 
           </div>
             
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="sec_process_slim_mapper.html" title="previous chapter (use the left arrow)">Process SLIM Mapper</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="sec_roller_bearings.html" title="next chapter (use the right arrow)">Roller Bearings</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
         </div>
         <div class="clearfix"></div>
     </div>
@@ -215,8 +183,14 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="#" title="Python Module Index"
+          <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="sec_roller_bearings.html" title="Roller Bearings"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="sec_process_slim_mapper.html" title="Process SLIM Mapper"
+             >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Tribology  documentation</a> &#187;</li> 
       </ul>
     </div>

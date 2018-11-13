@@ -51,6 +51,7 @@ Contents
    sec_lubricants.rst
    sec_data_import.rst
    sec_process_slim_mapper.rst
+   sec_rough_surfaces.rst
    sec_roller_bearings.rst
    sec_constants.rst
    sec_p3can.rst
