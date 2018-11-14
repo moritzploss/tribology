@@ -344,7 +344,7 @@ class TestRoughSurfaces(unittest.TestCase):
         heights = rs.randsurf(len(ax_x), len(ax_y), delta_x, delta_y, 0.1, 0.5,
                               0.5)
         self.assertEqual(np.std(heights), 0.1)
-        self.assertLess(abs(np.mean(heights)), 0.01)
+        self.assertLess(abs(np.mean(heights)), 10**-16)
 
 
 class TestSlimMapper(unittest.TestCase):

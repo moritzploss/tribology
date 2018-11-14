@@ -54,6 +54,10 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
+#### 0.5.1
+- refactoring
+
+
 #### 0.5.0
 - module `rough_surfaces` added
 
@@ -166,7 +170,7 @@ first release on PyPI
 
 
 # scientific publications
-This package has been used for the following scientific publications:
+This package has been used to prepare the following scientific publications:
 
 - M. Ploss and M. Bocoi. The P3CAN project: Open-source friction energy analysis 
   for research and education. *NORDTRIB 2018*, Uppsala, Sweden, 21-06-2018.

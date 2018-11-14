@@ -70,10 +70,11 @@ def randsurf(n_x, n_y, delta_x, delta_y, s_q, lambda_x, lambda_y):
 
         for i in range(0, n_x):
             for j in range(0, n_y):
-                heights[i, j] = np.sum(np.sum(
-                    surf_rand[i + 1:i + m + 1, j + 1:j + n + 1]
-                ))
+                heights[i, j] = np.sum(
+                    surf_rand[i + 1:i + m + 1, j + 1:j + n + 1])
 
-        heights = heights / np.std(heights[:]) * s_q
+        # set std according to s_q argument, and mean equal to zero
+        heights = heights / np.std(heights) * s_q
+        heights -= np.mean(heights)
 
     return heights
