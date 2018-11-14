@@ -6,7 +6,6 @@ This module contains functions related to Hertz contact theory.
 
 """
 
-import numpy as np
 from math import sqrt, pi, log, floor
 
 
