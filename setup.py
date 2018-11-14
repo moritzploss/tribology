@@ -5,9 +5,9 @@ setup(
    version='0.5.2',
    setup_requires=['setuptools-git-version'],
    description='functions and classes for tribology research',
-   long_description='A collection of functions and classes for tribology research '
-                    'and education, including contact mechanics, '
-                    'lubrication science and data handling.',
+   long_description='A collection of functions and constants for tribology '
+                    'research and education, including contact mechanics, '
+                    'lubrication science, data processing and data analysis.',
    author='Moritz Ploss',
    author_email='moritz.ploss@gmail.com',
    packages=['tribology',
