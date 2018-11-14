@@ -343,7 +343,7 @@ class TestRoughSurfaces(unittest.TestCase):
         ax_y, delta_y = np.linspace(-20, 20, 101, retstep=True)
         heights = rs.randsurf(len(ax_x), len(ax_y), delta_x, delta_y, 0.1, 0.5,
                               0.5)
-        self.assertEqual(np.std(heights), 0.1)
+        self.assertEqual(np.round(np.std(heights), 5), 0.1)
         self.assertLess(abs(np.mean(heights)), 10**-16)
 
 
