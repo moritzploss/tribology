@@ -6,6 +6,7 @@ This module contains functions related to Hertz contact theory.
 
 """
 
+import numpy as np
 from math import sqrt, pi, log, floor
 
 
@@ -140,6 +141,10 @@ def __auxparamshertz(r_eff_x, r_eff_y):
         param_lambda = 0
     else:
         param_lambda = min(r_eff_x / r_eff_y, r_eff_y / r_eff_x)
+
+    if param_lambda == 0:
+        param_lambda = 10**-256
+
     kappa = 1 / (1 + sqrt(log(16 / param_lambda) / (2 * param_lambda)) -
                  sqrt(log(4)) + 0.16 * log(param_lambda))
     a_ast = kappa * (1 + (2 * (1 - kappa ** 2)) / (pi * kappa ** 2) -
