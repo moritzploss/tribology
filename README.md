@@ -56,7 +56,7 @@ release listed below.
 
 #### 0.5.2
 - fixed bug in Hertz pressure calculation that may lead to wrong results for
-  for elliptical contacts if one of the contact bodies is completely flat
+  elliptical contacts if one of the contact bodies is completely flat
 
 #### 0.5.1
 - refactoring
