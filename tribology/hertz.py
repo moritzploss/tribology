@@ -293,7 +293,7 @@ def phertz(r_eff, r_eff_x, r_eff_y, e_eff, force, ret='mean'):
     Returns
     -------
     p_hertz: scalar
-        The mean Hertzian contact pressure in the contact.
+        The Hertzian contact pressure in the contact.
 
     """
     _, _, area = ahertz(r_eff, r_eff_x, r_eff_y, e_eff, force)
