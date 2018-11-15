@@ -12,7 +12,7 @@ import numpy as np
 
 sys.path.insert(0, "tribology/p3can")
 
-from ..tribology import profball, profrevolve
+from ..tribology import profball, profrevolve, profrolleriso
 from .. import hertz as th
 from .. import lubrication as tl
 from .. import boundary_element as tb
@@ -378,10 +378,27 @@ class TestHertz(unittest.TestCase):
         base test for approx_hertz_rad
         """
         axis = np.asarray([-1, 0, 1])
-        prof = np.asarray([0, 1, 0])
-        self.assertEqual(round(th.approx_hertz_rad(axis, prof)), 1)
+        prof = np.asarray([0, -1, 0])
+        self.assertEqual(round(th.approx_hertz_rad(axis, prof), 3), 1)
         prof = np.asarray([0, 0, 0])
         self.assertEqual(th.approx_hertz_rad(axis, prof), float('inf'))
+
+    def test_approx_hertz_rad_roller(self):
+        """
+        base test for approx_hertz_rad, using roller with ISO geometry
+        """
+        axis = np.linspace(-4.99, 4.99, 201)
+        prof = profrolleriso(axis, 9, 10)
+        self.assertEqual(round(th.approx_hertz_rad(axis, prof)), 2114)
+
+    def test_approx_hertz_rad_half_roller(self):
+        """
+        assert that same result is obtained for half ISO roller as for complete
+        roller
+        """
+        axis = np.linspace(0, 4.99, 101)
+        prof = profrolleriso(axis, 9, 10)
+        self.assertEqual(round(th.approx_hertz_rad(axis, prof)), 2114)
 
 
 class TestRoughSurfaces(unittest.TestCase):

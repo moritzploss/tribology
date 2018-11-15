@@ -11,6 +11,11 @@ implemented.
 
 from math import sqrt, pi, log, floor
 
+import numpy as np
+
+from tribology.boundary_element import __secant
+from tribology.tribology import profball
+
 
 def __rred(r_1, r_2):
     """
@@ -309,12 +314,16 @@ def phertz(r_eff, r_eff_x, r_eff_y, e_eff, force, ret='mean'):
     return p_hertz
 
 
-def approx_hertz_rad(axis, profile):
+def approx_hertz_rad(axis, profile, iterations=10):
     """
 
     Approximate the Hertz contact radius of a profile, i.e., find the radius
     of a circle that minimizes the average discrepancy between the actual
-    profile and a circle profile.
+    profile and a circle profile. The secant method is used to find the circle
+    approximation.
+
+    This method has been tested for continuous (or at least semi-continuous)
+    profiles only.
 
     Parameters
     ----------
@@ -325,30 +334,51 @@ def approx_hertz_rad(axis, profile):
         x-axis values.
     profile: ndarray
         The profile heights along `axis`.
+    iterations: int, optional
+        Number of times the secant method is applied before the radius is
+        returned.
 
     Returns
     -------
     rad: scalar or inf
         The radius of the circle that best approximates `profile`. If the
-        profile cannot be approximated with a circle (usually of the profile
-        is a straight line), rad is equal to `inf`.
+        profile cannot be approximated with a circle (usually if the profile
+        is a straight line), the function returns `inf`.
 
     """
-    x_1 = axis[0]
-    x_2 = axis[floor(len(axis) / 2)]
-    x_3 = axis[-1]
-    y_1 = profile[0]
-    y_2 = profile[floor(len(axis) / 2)]
-    y_3 = profile[-1]
+    cen_idx = floor(len(axis) / 2)
 
-    a = sqrt((x_1 - x_2) ** 2 + (y_1 - y_2) ** 2)
-    b = sqrt((x_2 - x_3) ** 2 + (y_2 - y_3) ** 2)
-    c = sqrt((x_3 - x_1) ** 2 + (y_3 - y_1) ** 2)
+    # flip the profile so that lower points are in the center
+    if profile[cen_idx] > profile[0] and profile[cen_idx] > profile[-1]:
+        profile *= -1
+
+    profile -= np.amin(profile)
+
+    # approximate profile with circle through three points (left, center, right)
+    x = [axis[0], axis[cen_idx], axis[-1]]
+    y = [profile[0], profile[cen_idx], profile[-1]]
+
+    a = sqrt((x[0] - x[1]) ** 2 + (y[0] - y[1]) ** 2)
+    b = sqrt((x[1] - x[2]) ** 2 + (y[1] - y[2]) ** 2)
+    c = sqrt((x[2] - x[0]) ** 2 + (y[2] - y[0]) ** 2)
     s = (a + b + c) / 2
     d = sqrt(s * (s - a) * (s - b) * (s - c))
 
     try:
         rad = a * b * c / (4 * d)
     except ZeroDivisionError:
-        rad = float('Inf')
+        return float('Inf')
+
+    # apply secant method to find circle radius
+    radii = []
+    deltas = []
+    for _ in range(iterations):
+        circ_prof = profball(axis, rad)
+        circ_prof[np.where(np.isnan(circ_prof))] = 0
+        delta = np.sum(circ_prof - profile)
+
+        radii = np.append(radii, [rad])
+        deltas = np.append(deltas, [delta])
+        rad = __secant(radii, deltas)
+
     return rad

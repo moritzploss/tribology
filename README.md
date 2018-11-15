@@ -77,6 +77,8 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
+#### 0.5.4
+- method `approx_hertz_rad` improved.
 
 #### 0.5.3
 - function `phertz` now has additional argument to indicate if mean or maximum
