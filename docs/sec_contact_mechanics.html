@@ -223,11 +223,15 @@ to determine when solver has completed).</li>
 <h2>Hertzian Contact Theory<a class="headerlink" href="#hertzian-contact-theory" title="Permalink to this headline">¶</a></h2>
 <p>All of the below functions can be found in the <code class="code docutils literal notranslate"><span class="pre">hertz</span></code>
 module of the package.</p>
-<span class="target" id="module-hertz"></span><p>This module contains functions related to Hertz contact theory.</p>
+<span class="target" id="module-hertz"></span><p>This module contains functions related to Hertz contact theory. As of now, the
+equations are limited to elliptical and circular contacts. Equations for line
+contacts (cylinder-on-flat or cylinder-on-cylinder) are currently not
+implemented.</p>
 <dl class="function">
 <dt id="hertz.ahertz">
 <code class="descname">ahertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#ahertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.ahertz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the contact area according to Hertzian contact theory.</p>
+<dd><p>Calculate the contact area in an elliptic (including circular) Hertzian
+contact.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -287,8 +291,8 @@ is a straight line), rad is equal to <cite>inf</cite>.</p>
 <dl class="function">
 <dt id="hertz.dhertz">
 <code class="descname">dhertz</code><span class="sig-paren">(</span><em>e_eff</em>, <em>r_x_1</em>, <em>r_y_1</em>, <em>r_x_2</em>, <em>r_y_2</em>, <em>force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#dhertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.dhertz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the elastic normal displacement of a contact problem according
-to Hertzian contact theory.</p>
+<dd><p>Calculate the elastic normal displacement in an elliptic (including
+circular) Hertzian contact.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -343,7 +347,8 @@ to Hertzian contact theory.</p>
 <dl class="function">
 <dt id="hertz.fhertz">
 <code class="descname">fhertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>p_critical</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#fhertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.fhertz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the load carrying capacity of a Hertzian contact.</p>
+<dd><p>Calculate the load carrying capacity of an elliptic (including circular)
+Hertzian contact.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -370,8 +375,10 @@ without plastic deformation.</li>
 
 <dl class="function">
 <dt id="hertz.phertz">
-<code class="descname">phertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#phertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.phertz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the mean contact pressure in a Hertzian contact.</p>
+<code class="descname">phertz</code><span class="sig-paren">(</span><em>r_eff</em>, <em>r_eff_x</em>, <em>r_eff_y</em>, <em>e_eff</em>, <em>force</em>, <em>ret='mean'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hertz.html#phertz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hertz.phertz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the contact pressure in an elliptic (including circular) Hertzian
+contact. By default, the mean pressure is returned. Use <code class="code docutils literal notranslate"><span class="pre">ret='max'</span></code>
+for maximum pressure.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -382,6 +389,8 @@ without plastic deformation.</li>
 <li><strong>r_eff_y</strong> (<em>scalar</em>) – The effective radius of the contact problem in y-direction.</li>
 <li><strong>e_eff</strong> (<em>scalar</em>) – The effective modulus of the contact problem.</li>
 <li><strong>force</strong> (<em>scalar</em>) – The normal force in the contact.</li>
+<li><strong>ret</strong> (<em>str, optional</em>) – Return mean Hertzian pressure for <code class="code docutils literal notranslate"><span class="pre">'mean'</span></code> and maximum pressure
+for <code class="code docutils literal notranslate"><span class="pre">'max'</span></code></li>
 </ul>
 </td>
 </tr>

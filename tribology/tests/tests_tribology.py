@@ -292,16 +292,34 @@ class TestHertz(unittest.TestCase):
 
     def test_hertz_mean_pressure_circle(self):
         """
-        base test for phertz
+        base test for phertz circle
         """
         e_eff = th.eeff(210000, 0.3, 210000, 0.3)
         r_eff, r_eff_x, r_eff_y = th.reff(6.35, 6.35, 0, 0)
         p_mean = th.phertz(r_eff, r_eff_x, r_eff_y, e_eff, 10)
         self.assertEqual(round(p_mean), 574)
 
-    def test_hertz_mean_pressure_ellipse(self):
+    def test_hertz_max_pressure_circle(self):
+        """
+        base test for phertz circle
+        """
+        e_eff = th.eeff(210000, 0.3, 210000, 0.3)
+        r_eff, r_eff_x, r_eff_y = th.reff(6.35, 6.35, 0, 0)
+        p_mean = th.phertz(r_eff, r_eff_x, r_eff_y, e_eff, 10, ret='max')
+        self.assertEqual(round(p_mean), 861)
+
+    def test_hertz_pressure_valueerror(self):
         """
         base test for phertz
+        """
+        e_eff = th.eeff(210000, 0.3, 210000, 0.3)
+        r_eff, r_eff_x, r_eff_y = th.reff(6.35, 6.35, 0, 0)
+        with self.assertRaises(ValueError):
+            th.phertz(r_eff, r_eff_x, r_eff_y, e_eff, 10, ret='foo')
+
+    def test_hertz_mean_pressure_ellipse(self):
+        """
+        base test for phertz ellipse
         """
         e_eff = th.eeff(210000, 0.3, 210000, 0.3)
         r_eff, r_eff_x, r_eff_y = th.reff(15, 5, 0, 0)
@@ -310,7 +328,25 @@ class TestHertz(unittest.TestCase):
 
     def test_hertz_mean_pressure_ellipse_2(self):
         """
-        base test for phertz
+        base test for phertz ellipse
+        """
+        e_eff = th.eeff(210000, 0.3, 210000, 0.3)
+        r_eff, r_eff_x, r_eff_y = th.reff(0, 0, 5, 15)
+        p_mean = th.phertz(r_eff, r_eff_x, r_eff_y, e_eff, 500)
+        self.assertEqual(round(p_mean / 1000, 2), 1.78)
+
+    def test_hertz_mean_pressure_ellipse_pos(self):
+        """
+        base test for phertz ellipse two bodies negative
+        """
+        e_eff = th.eeff(210000, 0.3, 210000, 0.3)
+        r_eff, r_eff_x, r_eff_y = th.reff(15, 5, 20, 15)
+        p_mean = th.phertz(r_eff, r_eff_x, r_eff_y, e_eff, 500)
+        self.assertEqual(round(p_mean / 1000, 2), 2.33)
+
+    def test_hertz_mean_pressure_ellipse_neg(self):
+        """
+        base test for phertz ellipse two bodies negative
         """
         e_eff = th.eeff(210000, 0.3, 210000, 0.3)
         r_eff, r_eff_x, r_eff_y = th.reff(15, 5, -20, -15)

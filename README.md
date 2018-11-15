@@ -48,11 +48,31 @@ The package is provided under an MIT license. See the
 [`LICENSE.txt`](LICENSE.txt) file for more information.
 
 
+# known issues
+Some older versions of the package (0.4 <= version < 0.5) may raise the 
+following error when imported:
+
+    ModuleNotFoundError: No module named 'cv2'
+
+This is caused by a missing `install_requires` argument in
+[`setup.py`](./setup.py). To fix this, either update to a later version of the
+package, or install the missing `cv2` package manually:
+
+    pip install opencv-python
+
+
 # version history
 
 Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
+
+#### 0.5.3
+- function `phertz` now has additional argument to indicate if mean or maximum
+  pressure should be returned
+- clarified that Hertz equations are only valid for elliptical and circular
+  contacts; equations for line contacts are not implemented at the moment
+- added additional test cases for Hertz equations
 
 #### 0.5.2
 - fixed bug in Hertz pressure calculation that may lead to wrong results for

@@ -2,7 +2,10 @@
 
 """
 
-This module contains functions related to Hertz contact theory.
+This module contains functions related to Hertz contact theory. As of now, the
+equations are limited to elliptical and circular contacts. Equations for line
+contacts (cylinder-on-flat or cylinder-on-cylinder) are currently not
+implemented.
 
 """
 
@@ -155,8 +158,8 @@ def __auxparamshertz(r_eff_x, r_eff_y):
 def dhertz(e_eff, r_x_1, r_y_1, r_x_2, r_y_2, force):
     """
 
-    Calculate the elastic normal displacement of a contact problem according
-    to Hertzian contact theory.
+    Calculate the elastic normal displacement in an elliptic (including
+    circular) Hertzian contact.
 
     Parameters
     ----------
@@ -200,7 +203,8 @@ def dhertz(e_eff, r_x_1, r_y_1, r_x_2, r_y_2, force):
 def ahertz(r_eff, r_eff_x, r_eff_y, e_eff, force):
     """
 
-    Calculate the contact area according to Hertzian contact theory.
+    Calculate the contact area in an elliptic (including circular) Hertzian
+    contact.
 
     Parameters
     ----------
@@ -235,7 +239,8 @@ def ahertz(r_eff, r_eff_x, r_eff_y, e_eff, force):
 def fhertz(r_eff, r_eff_x, r_eff_y, e_eff, p_critical):
     """
 
-    Calculate the load carrying capacity of a Hertzian contact.
+    Calculate the load carrying capacity of an elliptic (including circular)
+    Hertzian contact.
 
     Parameters
     ----------
@@ -262,10 +267,12 @@ def fhertz(r_eff, r_eff_x, r_eff_y, e_eff, p_critical):
     return f_crit
 
 
-def phertz(r_eff, r_eff_x, r_eff_y, e_eff, force):
+def phertz(r_eff, r_eff_x, r_eff_y, e_eff, force, ret='mean'):
     """
 
-    Calculate the mean contact pressure in a Hertzian contact.
+    Calculate the contact pressure in an elliptic (including circular) Hertzian
+    contact. By default, the mean pressure is returned. Use :code:`ret='max'`
+    for maximum pressure.
 
     Parameters
     ----------
@@ -279,6 +286,9 @@ def phertz(r_eff, r_eff_x, r_eff_y, e_eff, force):
         The effective modulus of the contact problem.
     force: scalar
         The normal force in the contact.
+    ret: str, optional
+        Return mean Hertzian pressure for :code:`'mean'` and maximum pressure
+        for :code:`'max'`
 
     Returns
     -------
@@ -288,6 +298,14 @@ def phertz(r_eff, r_eff_x, r_eff_y, e_eff, force):
     """
     _, _, area = ahertz(r_eff, r_eff_x, r_eff_y, e_eff, force)
     p_hertz = force / area
+
+    if ret == 'mean':
+        pass
+    elif ret == 'max':
+        p_hertz *= 1.5
+    else:
+        raise ValueError("argument 'ret' must have value 'max' or 'mean'")
+
     return p_hertz
 
 
