@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
    name='tribology',
-   version='0.5.3',
+   version='0.5.4',
    setup_requires=['setuptools-git-version'],
    description='functions and classes for tribology research',
    long_description='A collection of functions and constants for tribology '
