@@ -66,8 +66,7 @@ cite the package:
     Research and Education, version v[x.x.x] ([date]). doi: [DOI] 
 
 
-# contributors
-A list of contributors. Please use this list for citations as outlined above.
+List of contributors:
 
 - **Moritz Ploss**, KTH Royal Institute of Technology, Stockholm, Sweden
 
