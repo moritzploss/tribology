@@ -26,23 +26,11 @@ its modules as follows:
 import tribology as tr
 ```
 
-You can refer to the tribology package in **scientific publications** by
-using its DOI. The following DOI will resolve all releases of the
-package and automatically point to the latest release. A more detailed
-overview of the DOI release history can be found through
-**<a href="https://doi.org/10.5281/zenodo.1117727" target="_blank">Zenodo</a>**:
-
-    DOI:  10.5281/zenodo.1117727
-
 The package
 **<a href="https://moritzploss.github.io/tribology" target="_blank">
 documenation</a>** is provided through GitHub Pages; the Sphinx source files
 can be found in the [`/docs`](./docs) directory. Simple examples of how to use 
 the package are provided in the [`/examples`](./examples) directory.
-
-The package is currently developed by Moritz Ploss at KTH Royal Institute of 
-Technology, Stockholm, Sweden. For questions, comments and contributions, please 
-send a message through GitHub.
 
 The package is provided under an MIT license. See the 
 [`LICENSE.txt`](LICENSE.txt) file for more information.
@@ -61,11 +49,35 @@ package, or install the missing `cv2` package manually:
     pip install opencv-python
 
 
+# use in scientific publications
+
+You can refer to the tribology package in **scientific publications** by
+using its DOI. The following DOI will resolve all releases of the
+package and automatically point to the latest release. A more detailed
+overview of the DOI release history can be found through
+**<a href="https://doi.org/10.5281/zenodo.1117727" target="_blank">Zenodo</a>**:
+
+    DOI:  10.5281/zenodo.1117727
+
+Please refer to the list of contributors below and use the following format to 
+cite the package:
+
+    [List of contributors] et al., Tribology -- A Python Package for Tribology 
+    Research and Education, version v[x.x.x] ([date]). doi: [DOI] 
+
+
+# contributors
+A list of contributors. Please use this list for citations as outlined above.
+
+- **Moritz Ploss**, KTH Royal Institute of Technology, Stockholm, Sweden
+
+
 # version history
 
 Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
+
 
 #### 0.5.3
 - function `phertz` now has additional argument to indicate if mean or maximum
@@ -81,10 +93,10 @@ release listed below.
 #### 0.5.1
 - refactoring
 
-
-### 0.5.0
+#### 0.5.0
 - module `rough_surfaces` added
 
+##
 
 #### 0.4.9
 - fixed bug that lead to data import error when using `mat` output format
@@ -112,7 +124,7 @@ release listed below.
 #### 0.4.1
 - function `merge_del` added to `data_import` module
 
-### 0.4.0
+#### 0.4.0
 - module `process_slim_mapper` added. the module contains functions for 
   automated processing of SLIM mapper bitmap images as obtained from test rigs 
   by PCS Instruments.
@@ -123,6 +135,7 @@ release listed below.
   rtd
 - README updated
 
+##
 
 #### 0.3.4
 - README updated
@@ -133,9 +146,10 @@ release listed below.
 - refactoring
 
 
-### 0.3.0
+#### 0.3.0
 - `p3can` source code now fully merged with tribology package
 
+##
 
 #### 0.2.94
 
@@ -189,13 +203,5 @@ Non-package files are not checked. Build fails if Pylint error is found.
 - demo for boundary element functions added (`demo_ball_on_plate.py`)
 - refactoring
 
-### 0.2.0
+#### 0.2.0
 first release on PyPI
-
-
-# scientific publications
-This package has been used to prepare the following scientific publications:
-
-- M. Ploss and M. Bocoi. The P3CAN project: Open-source friction energy analysis 
-  for research and education. *NORDTRIB 2018*, Uppsala, Sweden, 21-06-2018.
-
