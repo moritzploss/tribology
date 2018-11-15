@@ -82,7 +82,7 @@ release listed below.
 - refactoring
 
 
-#### 0.5.0
+### 0.5.0
 - module `rough_surfaces` added
 
 
@@ -112,7 +112,7 @@ release listed below.
 #### 0.4.1
 - function `merge_del` added to `data_import` module
 
-#### 0.4.0
+### 0.4.0
 - module `process_slim_mapper` added. the module contains functions for 
   automated processing of SLIM mapper bitmap images as obtained from test rigs 
   by PCS Instruments.
@@ -133,7 +133,7 @@ release listed below.
 - refactoring
 
 
-#### 0.3.0
+### 0.3.0
 - `p3can` source code now fully merged with tribology package
 
 
@@ -189,7 +189,7 @@ Non-package files are not checked. Build fails if Pylint error is found.
 - demo for boundary element functions added (`demo_ball_on_plate.py`)
 - refactoring
 
-#### 0.2.0
+### 0.2.0
 first release on PyPI
 
 
