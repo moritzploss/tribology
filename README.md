@@ -78,7 +78,7 @@ neutral builds includes changes with respect to the latest numbered
 release listed below.
 
 #### 0.5.4
-- method `approx_hertz_rad` improved.
+- method `approx_hertz_rad` improved; provides more accurate approximation now
 
 #### 0.5.3
 - function `phertz` now has additional argument to indicate if mean or maximum
