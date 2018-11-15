@@ -4,7 +4,7 @@ setup(
    name='tribology',
    version='0.5.4',
    setup_requires=['setuptools-git-version'],
-   description='functions and classes for tribology research',
+   description='functions and constants for tribology research',
    long_description='A collection of functions and constants for tribology '
                     'research and education, including contact mechanics, '
                     'lubrication science, data processing and data analysis.',
