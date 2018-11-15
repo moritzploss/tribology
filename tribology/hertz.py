@@ -343,7 +343,7 @@ def approx_hertz_rad(axis, profile, iterations=10):
     rad: scalar or inf
         The radius of the circle that best approximates `profile`. If the
         profile cannot be approximated with a circle (usually if the profile
-        is a straight line), the function returns `inf`.
+        is a straight line), the function returns :code:`inf`.
 
     """
     cen_idx = floor(len(axis) / 2)
