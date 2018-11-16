@@ -314,6 +314,40 @@ def phertz(r_eff, r_eff_x, r_eff_y, e_eff, force, ret='mean'):
     return p_hertz
 
 
+def __circ3points(x_cords, y_cords):
+    """
+
+    Calculate the radius of a circle that goes through three arbitratry
+    points in the x-y plane.
+
+    Parameters
+    ----------
+    x_cords: tuple
+        x-coordinates of the three points: (x1, x2, x3)
+    y_cords: tuple
+        y-coordinates of the three points: (y1, y2, y3)
+
+    Returns
+    -------
+    rad: float
+        The radius of the circle. If all points are on a straight line, rad
+        will be :code:`Inf`
+
+    """
+    a = sqrt((x_cords[0] - x_cords[1]) ** 2 + (y_cords[0] - y_cords[1]) ** 2)
+    b = sqrt((x_cords[1] - x_cords[2]) ** 2 + (y_cords[1] - y_cords[2]) ** 2)
+    c = sqrt((x_cords[2] - x_cords[0]) ** 2 + (y_cords[2] - y_cords[0]) ** 2)
+    s = (a + b + c) / 2
+    d = sqrt(s * (s - a) * (s - b) * (s - c))
+
+    try:
+        rad = a * b * c / (4 * d)
+    except ZeroDivisionError:
+        rad = float('Inf')
+
+    return rad
+
+
 def approx_hertz_rad(axis, profile, iterations=10):
     """
 
@@ -354,20 +388,10 @@ def approx_hertz_rad(axis, profile, iterations=10):
 
     profile -= np.amin(profile)
 
-    # approximate profile with circle through three points (left, center, right)
-    x = [axis[0], axis[cen_idx], axis[-1]]
-    y = [profile[0], profile[cen_idx], profile[-1]]
-
-    a = sqrt((x[0] - x[1]) ** 2 + (y[0] - y[1]) ** 2)
-    b = sqrt((x[1] - x[2]) ** 2 + (y[1] - y[2]) ** 2)
-    c = sqrt((x[2] - x[0]) ** 2 + (y[2] - y[0]) ** 2)
-    s = (a + b + c) / 2
-    d = sqrt(s * (s - a) * (s - b) * (s - c))
-
-    try:
-        rad = a * b * c / (4 * d)
-    except ZeroDivisionError:
-        return float('Inf')
+    # approximate profile with circle
+    rad = __circ3points(
+        (axis[0], axis[cen_idx], axis[-1]),
+        (profile[0], profile[cen_idx], profile[-1]))
 
     # apply secant method to find circle radius
     radii = []
