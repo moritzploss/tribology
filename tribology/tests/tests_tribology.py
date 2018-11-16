@@ -400,7 +400,7 @@ class TestHertz(unittest.TestCase):
         axis = np.linspace(0, 4.99, 101)
         prof = profrolleriso(axis, 9, 10)
         rad, _, _ = th.approx_hertz_rad(axis, prof)
-        rad_neg, _, _ = th.approx_hertz_rad(axis, -prof)
+        rad_neg, _, _ = th.approx_hertz_rad(axis, -1 * prof)
         self.assertEqual(rad, rad_neg)
 
     def test_approx_hertz_rad_pos_neg_ax(self):
@@ -411,7 +411,7 @@ class TestHertz(unittest.TestCase):
         axis = np.linspace(0, 4.99, 101)
         prof = profrolleriso(axis, 9, 10)
         rad, _, _ = th.approx_hertz_rad(axis, prof)
-        rad_neg, _, _ = th.approx_hertz_rad(-axis, prof)
+        rad_neg, _, _ = th.approx_hertz_rad(-1 * axis, prof)
         self.assertEqual(rad, rad_neg)
 
 
