@@ -8,7 +8,8 @@ contacts (cylinder-on-flat or cylinder-on-cylinder) are currently not
 implemented.
 
 """
-
+import copy
+import warnings
 from math import sqrt, pi, log, floor
 
 import numpy as np
@@ -357,7 +358,11 @@ def approx_hertz_rad(axis, profile, iterations=10):
     approximation.
 
     This method has been tested for continuous (or at least semi-continuous)
-    profiles only.
+    profiles only. It works best for cases where the circle radius is larger
+    than the absolute minimum and maximum of the profile axis.
+
+    The function will not produce sensible results for profiles where the
+    maximum profile height is large compared to the axis length.
 
     Parameters
     ----------
@@ -374,35 +379,63 @@ def approx_hertz_rad(axis, profile, iterations=10):
 
     Returns
     -------
-    rad: scalar or inf
+    rad: scalar
         The radius of the circle that best approximates `profile`. If the
         profile cannot be approximated with a circle (usually if the profile
         is a straight line), the function returns :code:`inf`.
+    ax_approx: ndarray
+        The elements of :code:`axis` that were used for the approximation.
+    prof_approx: ndarray
+        The elements of :code:`profile` that were used for the approximation.
 
     """
+
+    if abs(np.amax(profile) - np.amin(profile)) > \
+            abs(np.amax(axis) - np.amin(axis)):
+        warnings.warn('profile range larger than axis range')
+
     cen_idx = floor(len(axis) / 2)
 
-    # flip the profile so that lower points are in the center
-    if profile[cen_idx] > profile[0] and profile[cen_idx] > profile[-1]:
+    # flip profile so that lowest point is not at the edges and minimum at zero
+    if (profile[cen_idx] > profile[0] and profile[cen_idx] > profile[-1]) or \
+            profile[0] > profile[cen_idx] > profile[-1]:
         profile *= -1
-
     profile -= np.amin(profile)
 
-    # approximate profile with circle
+    # approximate profile with circle for initial guess of rad
+    if profile[0] <= profile[-1]:
+        idx = np.argmin(np.abs(profile[cen_idx:-1] - profile[0])) - 1
+    else:
+        idx = np.argmin(np.abs(profile[0:cen_idx] - profile[-1])) + 1
     rad = __circ3points(
-        (axis[0], axis[cen_idx], axis[-1]),
-        (profile[0], profile[cen_idx], profile[-1]))
+        (axis[0], axis[cen_idx], axis[idx]),
+        (profile[0], profile[cen_idx], profile[idx]))
 
-    # apply secant method to find circle radius
+    # improve guess with secant method
     radii = []
     deltas = []
-    for _ in range(iterations):
-        circ_prof = profball(axis, rad)
-        circ_prof[np.where(np.isnan(circ_prof))] = 0
-        delta = np.sum(circ_prof - profile)
+    ax_approx = copy.deepcopy(axis)
+    prof_approx = copy.deepcopy(profile)
 
+    for _ in range(iterations):
+        ax_approx = copy.deepcopy(axis)
+        prof_approx = copy.deepcopy(profile)
+
+        # remove axis elements that lie outside the circle
+        while abs(ax_approx[-1]) >= rad:
+            idx = len(ax_approx) - 1
+            ax_approx = np.delete(ax_approx, idx)
+            prof_approx = np.delete(prof_approx, idx)
+        while abs(prof_approx[0]) >= rad:
+            ax_approx = np.delete(ax_approx, 0)
+            prof_approx = np.delete(prof_approx, 0)
+
+        # apply secant method
         radii = np.append(radii, [rad])
+        delta = np.sum(profball(ax_approx, rad) - prof_approx)
         deltas = np.append(deltas, [delta])
         rad = __secant(radii, deltas)
+        if rad < 0:
+            rad *= -1
 
-    return rad
+    return rad, ax_approx, prof_approx

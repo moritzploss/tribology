@@ -373,23 +373,14 @@ class TestHertz(unittest.TestCase):
         rounded = [round(var, 3) for var in (ax_a, ax_b, area)]
         self.assertEqual(rounded, [0.175, 0.227, 0.125])
 
-    def test_approx_hertz_rad(self):
-        """
-        base test for approx_hertz_rad
-        """
-        axis = np.asarray([-1, 0, 1])
-        prof = np.asarray([0, -1, 0])
-        self.assertEqual(round(th.approx_hertz_rad(axis, prof), 3), 1)
-        prof = np.asarray([0, 0, 0])
-        self.assertEqual(th.approx_hertz_rad(axis, prof), float('inf'))
-
     def test_approx_hertz_rad_roller(self):
         """
         base test for approx_hertz_rad, using roller with ISO geometry
         """
         axis = np.linspace(-4.99, 4.99, 201)
         prof = profrolleriso(axis, 9, 10)
-        self.assertEqual(round(th.approx_hertz_rad(axis, prof)), 2114)
+        rad, _, _ = th.approx_hertz_rad(axis, prof)
+        self.assertEqual(round(rad), 2114)
 
     def test_approx_hertz_rad_half_roller(self):
         """
@@ -398,7 +389,30 @@ class TestHertz(unittest.TestCase):
         """
         axis = np.linspace(0, 4.99, 101)
         prof = profrolleriso(axis, 9, 10)
-        self.assertEqual(round(th.approx_hertz_rad(axis, prof)), 2114)
+        rad, _, _ = th.approx_hertz_rad(axis, prof)
+        self.assertEqual(round(rad), 2114)
+
+    def test_approx_hertz_rad_pos_neg_prof(self):
+        """
+        assert that same result is obtained for negative profile as for positive
+        roller
+        """
+        axis = np.linspace(0, 4.99, 101)
+        prof = profrolleriso(axis, 9, 10)
+        rad, _, _ = th.approx_hertz_rad(axis, prof)
+        rad_neg, _, _ = th.approx_hertz_rad(axis, -prof)
+        self.assertEqual(rad, rad_neg)
+
+    def test_approx_hertz_rad_pos_neg_ax(self):
+        """
+        assert that same result is obtained for negative profile as for positive
+        roller
+        """
+        axis = np.linspace(0, 4.99, 101)
+        prof = profrolleriso(axis, 9, 10)
+        rad, _, _ = th.approx_hertz_rad(axis, prof)
+        rad_neg, _, _ = th.approx_hertz_rad(-axis, prof)
+        self.assertEqual(rad, rad_neg)
 
 
 class TestRoughSurfaces(unittest.TestCase):
