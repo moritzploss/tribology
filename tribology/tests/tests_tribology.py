@@ -440,8 +440,7 @@ class TestHertz(unittest.TestCase):
 
     def test_approx_hertz_straight_line(self):
         """
-        assert that same result is obtained for negative profile as for positive
-        roller
+        assert that approx_hertz_rad function returns inf for straight line
         """
         axis = np.linspace(0, 1, 101)
         prof = np.zeros(101)
