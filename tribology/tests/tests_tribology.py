@@ -438,6 +438,16 @@ class TestHertz(unittest.TestCase):
         rad_neg, _, _ = th.approx_hertz_rad(-1 * axis, prof)
         self.assertEqual(rad, rad_neg)
 
+    def test_approx_hertz_straight_line(self):
+        """
+        assert that same result is obtained for negative profile as for positive
+        roller
+        """
+        axis = np.linspace(0, 1, 101)
+        prof = np.zeros(101)
+        rad, _, _ = th.approx_hertz_rad(axis, prof)
+        self.assertEqual(rad, float('Inf'))
+
 
 class TestRoughSurfaces(unittest.TestCase):
     """

@@ -516,32 +516,33 @@
         <span class="p">(</span><span class="n">axis</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="p">[</span><span class="n">cen_idx</span><span class="p">],</span> <span class="n">axis</span><span class="p">[</span><span class="n">idx</span><span class="p">]),</span>
         <span class="p">(</span><span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">profile</span><span class="p">[</span><span class="n">cen_idx</span><span class="p">],</span> <span class="n">profile</span><span class="p">[</span><span class="n">idx</span><span class="p">]))</span>
 
-    <span class="c1"># improve guess with secant method</span>
-    <span class="n">radii</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">deltas</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">ax_approx</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
     <span class="n">prof_approx</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
-        <span class="n">ax_approx</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
-        <span class="n">prof_approx</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
+    <span class="c1"># improve guess with secant method</span>
+    <span class="k">if</span> <span class="n">rad</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;Inf&#39;</span><span class="p">):</span>
+        <span class="n">radii</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">deltas</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+            <span class="n">ax_approx</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+            <span class="n">prof_approx</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
 
-        <span class="c1"># remove axis elements that lie outside the circle</span>
-        <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">rad</span><span class="p">:</span>
-            <span class="n">idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-            <span class="n">ax_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
-            <span class="n">prof_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">prof_approx</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
-        <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">prof_approx</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">rad</span><span class="p">:</span>
-            <span class="n">ax_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="n">prof_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">prof_approx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="c1"># remove axis elements that lie outside the circle</span>
+            <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">rad</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">ax_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+                <span class="n">prof_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">prof_approx</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+            <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">prof_approx</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">rad</span><span class="p">:</span>
+                <span class="n">ax_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">prof_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">prof_approx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
-        <span class="c1"># apply secant method</span>
-        <span class="n">radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span> <span class="p">[</span><span class="n">rad</span><span class="p">])</span>
-        <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">profball</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">,</span> <span class="n">rad</span><span class="p">)</span> <span class="o">-</span> <span class="n">prof_approx</span><span class="p">)</span>
-        <span class="n">deltas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">deltas</span><span class="p">,</span> <span class="p">[</span><span class="n">delta</span><span class="p">])</span>
-        <span class="n">rad</span> <span class="o">=</span> <span class="n">__secant</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span> <span class="n">deltas</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">rad</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">rad</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="c1"># apply secant method</span>
+            <span class="n">radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span> <span class="p">[</span><span class="n">rad</span><span class="p">])</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">profball</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">,</span> <span class="n">rad</span><span class="p">)</span> <span class="o">-</span> <span class="n">prof_approx</span><span class="p">)</span>
+            <span class="n">deltas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">deltas</span><span class="p">,</span> <span class="p">[</span><span class="n">delta</span><span class="p">])</span>
+            <span class="n">rad</span> <span class="o">=</span> <span class="n">__secant</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span> <span class="n">deltas</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rad</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">rad</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="k">return</span> <span class="n">rad</span><span class="p">,</span> <span class="n">ax_approx</span><span class="p">,</span> <span class="n">prof_approx</span></div>
 </pre></div>

@@ -411,31 +411,32 @@ def approx_hertz_rad(axis, profile, iterations=10):
         (axis[0], axis[cen_idx], axis[idx]),
         (profile[0], profile[cen_idx], profile[idx]))
 
-    # improve guess with secant method
-    radii = []
-    deltas = []
     ax_approx = copy.deepcopy(axis)
     prof_approx = copy.deepcopy(profile)
 
-    for _ in range(iterations):
-        ax_approx = copy.deepcopy(axis)
-        prof_approx = copy.deepcopy(profile)
+    # improve guess with secant method
+    if rad != float('Inf'):
+        radii = []
+        deltas = []
+        for _ in range(iterations):
+            ax_approx = copy.deepcopy(axis)
+            prof_approx = copy.deepcopy(profile)
 
-        # remove axis elements that lie outside the circle
-        while abs(ax_approx[-1]) >= rad:
-            idx = len(ax_approx) - 1
-            ax_approx = np.delete(ax_approx, idx)
-            prof_approx = np.delete(prof_approx, idx)
-        while abs(prof_approx[0]) >= rad:
-            ax_approx = np.delete(ax_approx, 0)
-            prof_approx = np.delete(prof_approx, 0)
+            # remove axis elements that lie outside the circle
+            while abs(ax_approx[-1]) >= rad:
+                idx = len(ax_approx) - 1
+                ax_approx = np.delete(ax_approx, idx)
+                prof_approx = np.delete(prof_approx, idx)
+            while abs(prof_approx[0]) >= rad:
+                ax_approx = np.delete(ax_approx, 0)
+                prof_approx = np.delete(prof_approx, 0)
 
-        # apply secant method
-        radii = np.append(radii, [rad])
-        delta = np.sum(profball(ax_approx, rad) - prof_approx)
-        deltas = np.append(deltas, [delta])
-        rad = __secant(radii, deltas)
-        if rad < 0:
-            rad *= -1
+            # apply secant method
+            radii = np.append(radii, [rad])
+            delta = np.sum(profball(ax_approx, rad) - prof_approx)
+            deltas = np.append(deltas, [delta])
+            rad = __secant(radii, deltas)
+            if rad < 0:
+                rad *= -1
 
     return rad, ax_approx, prof_approx
