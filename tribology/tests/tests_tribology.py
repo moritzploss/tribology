@@ -187,7 +187,7 @@ class TestDataImport(unittest.TestCase):
         check that safe merge throws exception if key(s) in accum are not in
         database
         """
-        file_1, status, _ = td.import_del(self.demo_1_txt)
+        file_1, _, _ = td.import_del(self.demo_1_txt)
         files = [file_1, file_1]
         self.assertRaises(KeyError, td.merge_npz, files, accum=['foo'])
         os.remove(file_1)
@@ -283,6 +283,30 @@ class TestDataImport(unittest.TestCase):
         self.assertEqual(len(f_out), 4)
         for file in f_out:
             os.remove(file)
+
+    def test_import_multineline_header(self):
+        """
+        check if multiline column header import works as expected
+        """
+        f_out, status, _ = td.import_del(
+            'tribology/tests/data_import/multicolumn/demo_multiline_header.txt',
+            colheadlines=2)
+        self.assertEqual(status, True)
+        dat = np.load(f_out)
+        self.assertEqual(dat['force_n'][2], 8)
+        os.remove(f_out)
+
+    def test_import_trios(self):
+        """
+        check if trios output file can be imported successfully
+        """
+        f_out, status, _ = td.import_del(
+            'tribology/tests/data_import/multicolumn/trios_demo.txt',
+            colheadlines=2)
+        self.assertEqual(status, True)
+        dat = np.load(f_out)
+        self.assertEqual(dat['viscosity_pa_s'][50], 0.0363864)
+        os.remove(f_out)
 
 
 class TestHertz(unittest.TestCase):
@@ -441,7 +465,7 @@ class TestSlimMapper(unittest.TestCase):
         """
         check that processing of image gives specified thickness and rgb values
         """
-        spacer, status, _ = td.import_pcs(
+        spacer, _, _ = td.import_pcs(
             'tribology/tests/process_slim_mapper/demo-3D_SpacerCalibration.txt')
 
         thick, rgb, _, _, _, _ = psm.slim2thick(
@@ -484,9 +508,8 @@ class TestP3can(unittest.TestCase):
 #                         'Template06_4Ball.py')
 #
     def test_template07(self):
+        """
+        Test if P3CAN runs successfully with given template
+        """
         _ = p3can('tribology/tests/p3can/' +
                   'Template07_BallOn3Plates.py')
-#
-#     def test_template08(self):
-#         out_dir = p3can('tribology/tests/p3can/' +
-#                         'Template08_RingOnRing.py')

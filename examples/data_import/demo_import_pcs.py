@@ -45,6 +45,8 @@ def __parse_args():
                              ' current working directory')
     parser.add_argument('-p', '--pcs', action="store_true", default=True,
                         help='indicate if files are pcs files.')
+    parser.add_argument('-c', '--colheadlines', action="store", default='1',
+                        help='number of lines spanned by the column headers')
     args = parser.parse_args()
     return args
 
@@ -60,4 +62,4 @@ if __name__ == "__main__":
     tr.import_dir(os.getcwd(), in_ext=ARGS.extension, recursive=ARGS.recursive,
                   force=ARGS.force, deli=ARGS.delimiter, dec_mark=ARGS.mark,
                   out_ext=ARGS.outformat, out_dir=os.getcwd(), print_stat=True,
-                  pcs=ARGS.pcs)
+                  pcs=ARGS.pcs, colheadlines=int(ARGS.colheadlines))

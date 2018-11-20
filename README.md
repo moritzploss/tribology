@@ -77,8 +77,14 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
+#### 0.5.5
+- function `approx_hertz_rad` now returns additional parameters
+- function `abbottfirestone` moved to module `rough_surfaces`
+- function `import_del` and `import_dir` now have an additional argument 
+  `colheadlines` for files where the column headers span multiple rows
+
 #### 0.5.4
-- method `approx_hertz_rad` improved (more accurate circle approximation) 
+- function `approx_hertz_rad` improved (more accurate circle approximation) 
 
 #### 0.5.3
 - function `phertz` now has additional argument to indicate if mean or maximum

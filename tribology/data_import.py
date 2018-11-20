@@ -350,7 +350,7 @@ def __write_to_out_dict(num_data, column_headers, pcs=False):
     return out_dict
 
 
-def __process_header(prev_line):
+def __process_header(heads):
     """
 
     Process the column headers by removing special characters and converting to
@@ -368,11 +368,17 @@ def __process_header(prev_line):
 
     """
 
+    merge = []
+    # merge colum headers if they span several lines
+    for i in range(len(heads[0])):
+        merge.extend([' '.join([heads[row][i] for row in range(len(heads))])])
+
     # replace non-alphanumeric characters and trailing underscores
-    col_heads = [re.sub("\W+", '_', item.lower()).strip('_')
-                 for item in prev_line]
+    col_heads = [re.sub(r"\W+", '_', item.lower()).strip('_') for item in merge]
+
     # convert data type for easy matlab export
     col_heads = np.asarray(col_heads, dtype='object')
+
     return col_heads
 
 
@@ -415,7 +421,7 @@ def __process_data(split_line, num_dat, max_len, num_data_tables):
     return num_dat
 
 
-def __process_file(in_file, dec_mark, deli, pad=0):
+def __process_file(in_file, dec_mark, deli, pad=0, colheadlines=1):
     """
 
     Extract data from a delimited text file and return a dictionary containing
@@ -446,7 +452,7 @@ def __process_file(in_file, dec_mark, deli, pad=0):
     num_dat = []
     col_heads = []
     num_data_tables = []
-    prev_line = ''
+    prev_lines = []
 
     with open(in_file) as dat_file:
         for line in dat_file:
@@ -464,7 +470,9 @@ def __process_file(in_file, dec_mark, deli, pad=0):
             if not (line[0].isdigit() or line[0] == '-') or \
                     len(split_line) <= 1:
                 if split_line != ['']:
-                    prev_line = split_line
+                    prev_lines.append(split_line)
+                    if len(prev_lines) > colheadlines:
+                        del prev_lines[0]
                 continue
 
             # if line contains data, split line into data fields, fill empty
@@ -473,7 +481,7 @@ def __process_file(in_file, dec_mark, deli, pad=0):
             # if this is the first data-containing line...
             if not len(col_heads):
                 # get the column headers
-                col_heads = __process_header(prev_line)
+                col_heads = __process_header(prev_lines)
                 # write the first line to the data table
                 num_dat = np.asarray(
                     [__to_float(item.rstrip('\n'))
@@ -555,6 +563,27 @@ def __save_out_file(out_file, out_dict, out_ext):
 
 
 def __get_out_file(in_file, out_dir):
+    """
+
+    Get the path of the output file.
+
+    Parameters
+    ----------
+    in_file: str
+        Path to input file.
+    out_dir: str
+        Path to output directory.
+
+    Returns
+    -------
+    file_no_ext: str
+        The file name without extension.
+    out_dir: str
+        The path to the output directory.
+    out_file: str
+        The path of the output file.
+
+    """
     if out_dir == '':
         out_dir = os.path.dirname(in_file)
     file_no_ext = os.path.splitext(in_file)[0].split(os.sep)[-1]
@@ -565,7 +594,7 @@ def __get_out_file(in_file, out_dir):
 
 
 def __import_file(in_file, out_file, out_ext, force=False, deli='\t',
-                  dec_mark='.', pad=0):
+                  dec_mark='.', pad=0, colheadlines=1):
 
     import_status = None
     num_dat = None
@@ -575,7 +604,8 @@ def __import_file(in_file, out_file, out_ext, force=False, deli='\t',
     if (not out_file_exists) or (force is True):
         try:
             num_dat, col_heads = __process_file(in_file, dec_mark, deli,
-                                                pad=pad)
+                                                pad=pad,
+                                                colheadlines=colheadlines)
             import_status = True
         except (ValueError, AttributeError):
             import_status = False
@@ -584,7 +614,7 @@ def __import_file(in_file, out_file, out_ext, force=False, deli='\t',
 
 
 def import_del(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
-               out_dir='', pad=0):
+               out_dir='', pad=0, colheadlines=1):
     """
 
     Import a delimited data file into Numpy or Matlab database format. The file
@@ -612,6 +642,10 @@ def import_del(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
     pad: positive int
         The numbers of data columns to skip. For :code:`pad = n`, the first
         :code:`n` data columns will not be imported.
+    colheadlines: int, optional
+        The number of lines spanned by the column headers. If several lines are
+        spanned, the lines will be merged to generate the column keys in the
+        output dictionary.
 
     Returns
     -------
@@ -631,7 +665,7 @@ def import_del(in_file, force=False, deli='\t', dec_mark='.', out_ext='npz',
 
     num_dat, col_heads, import_status = \
         __import_file(in_file, out_file_no_ext, out_ext, force=force, deli=deli,
-                      dec_mark=dec_mark, pad=pad)
+                      dec_mark=dec_mark, pad=pad, colheadlines=colheadlines)
 
     if import_status is True:
         out_dict = __write_to_out_dict(num_dat, col_heads)
@@ -887,13 +921,15 @@ def __parse_args():
                              ' current working directory')
     parser.add_argument('-p', '--pcs', action="store_true", default=False,
                         help='indicate if files are pcs files.')
+    parser.add_argument('-c', '--colheadlines', action="store", default='1',
+                        help='number of lines spanned by the column headers')
     args = parser.parse_args()
     return args
 
 
 def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
                dec_mark='.', out_ext='npz', out_dir='', print_stat=False,
-               pcs=False):
+               pcs=False, colheadlines=1):
     """
 
     Import all delimited data files in a directory into Numpy or Matlab
@@ -939,6 +975,10 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
     pcs: bool, optional
         If :code:`True`, the delimited files are treated like files that were
         generated using an MTM or EHD2 test rig manufactured by PCS Instruments.
+    colheadlines: int, optional
+        The number of lines spanned by the column headers. If several lines are
+        spanned, the lines will be merged to generate the column keys in the
+        output dictionary.
 
     Returns
     -------
@@ -968,7 +1008,8 @@ def import_dir(in_dir, in_ext='txt', recursive=False, force=False, deli='\t',
         if pcs is False:
             out_file, status, _ = import_del(in_file, force=force, deli=deli,
                                              dec_mark=dec_mark, out_ext=out_ext,
-                                             out_dir=out_dir)
+                                             out_dir=out_dir,
+                                             colheadlines=colheadlines)
         else:
             out_file, status, _ = import_pcs(in_file, force=force,
                                              out_ext=out_ext,
@@ -989,4 +1030,4 @@ if __name__ == "__main__":
     import_dir(os.getcwd(), in_ext=ARGS.extension, recursive=ARGS.recursive,
                force=ARGS.force, deli=ARGS.delimiter, dec_mark=ARGS.mark,
                out_ext=ARGS.outformat, out_dir=os.getcwd(), print_stat=True,
-               pcs=ARGS.pcs)
+               pcs=ARGS.pcs, colheadlines=int(ARGS.colheadlines))

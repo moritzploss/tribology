@@ -113,34 +113,6 @@
 package.</p>
 <span class="target" id="module-tribology"></span><p>The functions in this module are related to tribology in general.</p>
 <dl class="function">
-<dt id="tribology.abbottfirestone">
-<code class="descname">abbottfirestone</code><span class="sig-paren">(</span><em>trace</em>, <em>num_bins=100</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#abbottfirestone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.abbottfirestone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the Abbott-Firestone curve for a 1D profile trace.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>trace</strong> (<em>ndarray</em>) – The profile heights of the 1D trace.</li>
-<li><strong>num_bins</strong> (<em>positive int, optional</em>) – The number of bins for the calculation of the profile height
-probability distribution.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>bins</strong> (<em>ndarray</em>) – The bins used for the calculation of the profile height
-probability distribution (= x-axis data for Abbott-Firestone plot).</li>
-<li><strong>prob_dist</strong> (<em>ndarray</em>) – The probability distribution of the profile (= y-axis data for Abbott-
-Firestone plot).</li>
-</ul>
-</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="tribology.fball3plates">
 <code class="descname">fball3plates</code><span class="sig-paren">(</span><em>ax_force</em>, <em>plate_angle=1.5708</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tribology.html#fball3plates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tribology.fball3plates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the normal force per contact in ball-on-3-plates setup.</p>

@@ -114,6 +114,34 @@ module of the package.</p>
 <span class="target" id="module-rough_surfaces"></span><p>This module contains functions related to rough surfaces. Please see the
 <code class="code docutils literal notranslate"><span class="pre">/demo</span></code> directory for minimum examples.</p>
 <dl class="function">
+<dt id="rough_surfaces.abbottfirestone">
+<code class="descname">abbottfirestone</code><span class="sig-paren">(</span><em>trace</em>, <em>num_bins=100</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rough_surfaces.html#abbottfirestone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rough_surfaces.abbottfirestone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the Abbott-Firestone curve for a 1D profile trace.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>trace</strong> (<em>ndarray</em>) – The profile heights of the 1D trace.</li>
+<li><strong>num_bins</strong> (<em>positive int, optional</em>) – The number of bins for the calculation of the profile height
+probability distribution.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>bins</strong> (<em>ndarray</em>) – The bins used for the calculation of the profile height
+probability distribution (= x-axis data for Abbott-Firestone plot).</li>
+<li><strong>prob_dist</strong> (<em>ndarray</em>) – The probability distribution of the profile (= y-axis data for Abbott-
+Firestone plot).</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="rough_surfaces.randsurf">
 <code class="descname">randsurf</code><span class="sig-paren">(</span><em>n_x</em>, <em>n_y</em>, <em>delta_x</em>, <em>delta_y</em>, <em>s_q</em>, <em>lambda_x</em>, <em>lambda_y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rough_surfaces.html#randsurf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rough_surfaces.randsurf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a random rough surface in the x-y-plane. The surface has a Gaussian

@@ -488,37 +488,6 @@
     <span class="k">return</span> <span class="n">val_refix</span></div>
 
 
-<div class="viewcode-block" id="abbottfirestone"><a class="viewcode-back" href="../sec_general_tribology.html#tribology.abbottfirestone">[docs]</a><span class="k">def</span> <span class="nf">abbottfirestone</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">num_bins</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">    Calculate the Abbott-Firestone curve for a 1D profile trace.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    trace: ndarray</span>
-<span class="sd">        The profile heights of the 1D trace.</span>
-<span class="sd">    num_bins: positive int, optional</span>
-<span class="sd">        The number of bins for the calculation of the profile height</span>
-<span class="sd">        probability distribution.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    bins: ndarray</span>
-<span class="sd">        The bins used for the calculation of the profile height</span>
-<span class="sd">        probability distribution (= x-axis data for Abbott-Firestone plot).</span>
-<span class="sd">    prob_dist: ndarray</span>
-<span class="sd">        The probability distribution of the profile (= y-axis data for Abbott-</span>
-<span class="sd">        Firestone plot).</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">trace</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">trace</span><span class="p">),</span> <span class="n">num_bins</span><span class="p">)</span>
-    <span class="n">prob_dist</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">each_bin</span> <span class="ow">in</span> <span class="n">bins</span><span class="p">:</span>
-        <span class="n">prob_dist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">trace</span> <span class="o">&gt;=</span> <span class="n">each_bin</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span> <span class="o">*</span> <span class="n">num_bins</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">bins</span><span class="p">,</span> <span class="n">prob_dist</span></div>
-
-
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="k">pass</span>
 </pre></div>

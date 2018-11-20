@@ -113,7 +113,8 @@
 <span class="sd">implemented.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">floor</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -419,6 +420,40 @@
     <span class="k">return</span> <span class="n">p_hertz</span></div>
 
 
+<span class="k">def</span> <span class="nf">__circ3points</span><span class="p">(</span><span class="n">x_cords</span><span class="p">,</span> <span class="n">y_cords</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Calculate the radius of a circle that goes through three arbitratry</span>
+<span class="sd">    points in the x-y plane.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x_cords: tuple</span>
+<span class="sd">        x-coordinates of the three points: (x1, x2, x3)</span>
+<span class="sd">    y_cords: tuple</span>
+<span class="sd">        y-coordinates of the three points: (y1, y2, y3)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    rad: float</span>
+<span class="sd">        The radius of the circle. If all points are on a straight line, rad</span>
+<span class="sd">        will be :code:`Inf`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">((</span><span class="n">x_cords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_cords</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y_cords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_cords</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">((</span><span class="n">x_cords</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_cords</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y_cords</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_cords</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">((</span><span class="n">x_cords</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_cords</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y_cords</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_cords</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">c</span><span class="p">))</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">rad</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">*</span> <span class="n">c</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+        <span class="n">rad</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;Inf&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">rad</span>
+
+
 <div class="viewcode-block" id="approx_hertz_rad"><a class="viewcode-back" href="../sec_contact_mechanics.html#hertz.approx_hertz_rad">[docs]</a><span class="k">def</span> <span class="nf">approx_hertz_rad</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">profile</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
@@ -428,7 +463,11 @@
 <span class="sd">    approximation.</span>
 
 <span class="sd">    This method has been tested for continuous (or at least semi-continuous)</span>
-<span class="sd">    profiles only.</span>
+<span class="sd">    profiles only. It works best for cases where the circle radius is larger</span>
+<span class="sd">    than the absolute minimum and maximum of the profile axis.</span>
+
+<span class="sd">    The function will not produce sensible results for profiles where the</span>
+<span class="sd">    maximum profile height is large compared to the axis length.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -445,48 +484,66 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    rad: scalar or inf</span>
+<span class="sd">    rad: scalar</span>
 <span class="sd">        The radius of the circle that best approximates `profile`. If the</span>
 <span class="sd">        profile cannot be approximated with a circle (usually if the profile</span>
 <span class="sd">        is a straight line), the function returns :code:`inf`.</span>
+<span class="sd">    ax_approx: ndarray</span>
+<span class="sd">        The elements of :code:`axis` that were used for the approximation.</span>
+<span class="sd">    prof_approx: ndarray</span>
+<span class="sd">        The elements of :code:`profile` that were used for the approximation.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">profile</span><span class="p">))</span> <span class="o">&gt;</span> \
+            <span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">axis</span><span class="p">)):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;profile range larger than axis range&#39;</span><span class="p">)</span>
+
     <span class="n">cen_idx</span> <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
 
-    <span class="c1"># flip the profile so that lower points are in the center</span>
-    <span class="k">if</span> <span class="n">profile</span><span class="p">[</span><span class="n">cen_idx</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">profile</span><span class="p">[</span><span class="n">cen_idx</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">profile</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="c1"># flip profile so that lowest point is not at the edges and minimum at zero</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">profile</span><span class="p">[</span><span class="n">cen_idx</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">profile</span><span class="p">[</span><span class="n">cen_idx</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">profile</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> \
+            <span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">profile</span><span class="p">[</span><span class="n">cen_idx</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">profile</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
         <span class="n">profile</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-
     <span class="n">profile</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
 
-    <span class="c1"># approximate profile with circle through three points (left, center, right)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">axis</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="p">[</span><span class="n">cen_idx</span><span class="p">],</span> <span class="n">axis</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">profile</span><span class="p">[</span><span class="n">cen_idx</span><span class="p">],</span> <span class="n">profile</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="c1"># approximate profile with circle for initial guess of rad</span>
+    <span class="k">if</span> <span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">profile</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">profile</span><span class="p">[</span><span class="n">cen_idx</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">cen_idx</span><span class="p">]</span> <span class="o">-</span> <span class="n">profile</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">rad</span> <span class="o">=</span> <span class="n">__circ3points</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">axis</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="p">[</span><span class="n">cen_idx</span><span class="p">],</span> <span class="n">axis</span><span class="p">[</span><span class="n">idx</span><span class="p">]),</span>
+        <span class="p">(</span><span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">profile</span><span class="p">[</span><span class="n">cen_idx</span><span class="p">],</span> <span class="n">profile</span><span class="p">[</span><span class="n">idx</span><span class="p">]))</span>
 
-    <span class="n">a</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">c</span><span class="p">))</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">rad</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">*</span> <span class="n">c</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;Inf&#39;</span><span class="p">)</span>
-
-    <span class="c1"># apply secant method to find circle radius</span>
+    <span class="c1"># improve guess with secant method</span>
     <span class="n">radii</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">deltas</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
-        <span class="n">circ_prof</span> <span class="o">=</span> <span class="n">profball</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">rad</span><span class="p">)</span>
-        <span class="n">circ_prof</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">circ_prof</span><span class="p">))]</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">circ_prof</span> <span class="o">-</span> <span class="n">profile</span><span class="p">)</span>
+    <span class="n">ax_approx</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+    <span class="n">prof_approx</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
 
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+        <span class="n">ax_approx</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+        <span class="n">prof_approx</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
+
+        <span class="c1"># remove axis elements that lie outside the circle</span>
+        <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">rad</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">ax_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+            <span class="n">prof_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">prof_approx</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+        <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">prof_approx</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">rad</span><span class="p">:</span>
+            <span class="n">ax_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">prof_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">prof_approx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># apply secant method</span>
         <span class="n">radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span> <span class="p">[</span><span class="n">rad</span><span class="p">])</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">profball</span><span class="p">(</span><span class="n">ax_approx</span><span class="p">,</span> <span class="n">rad</span><span class="p">)</span> <span class="o">-</span> <span class="n">prof_approx</span><span class="p">)</span>
         <span class="n">deltas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">deltas</span><span class="p">,</span> <span class="p">[</span><span class="n">delta</span><span class="p">])</span>
         <span class="n">rad</span> <span class="o">=</span> <span class="n">__secant</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span> <span class="n">deltas</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rad</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">rad</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
 
-    <span class="k">return</span> <span class="n">rad</span></div>
+    <span class="k">return</span> <span class="n">rad</span><span class="p">,</span> <span class="n">ax_approx</span><span class="p">,</span> <span class="n">prof_approx</span></div>
 </pre></div>
 
           </div>

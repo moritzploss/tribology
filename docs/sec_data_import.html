@@ -115,7 +115,7 @@ module of the package.</p>
 Matlab database format.</p>
 <dl class="function">
 <dt id="data_import.import_del">
-<code class="descname">import_del</code><span class="sig-paren">(</span><em>in_file</em>, <em>force=False</em>, <em>deli='\t'</em>, <em>dec_mark='.'</em>, <em>out_ext='npz'</em>, <em>out_dir=''</em>, <em>pad=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_del"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_del" title="Permalink to this definition">¶</a></dt>
+<code class="descname">import_del</code><span class="sig-paren">(</span><em>in_file</em>, <em>force=False</em>, <em>deli='\t'</em>, <em>dec_mark='.'</em>, <em>out_ext='npz'</em>, <em>out_dir=''</em>, <em>pad=0</em>, <em>colheadlines=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_del"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_del" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import a delimited data file into Numpy or Matlab database format. The file
 must have at least two data columns that are separated by <code class="code docutils literal notranslate"><span class="pre">deli</span></code>.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -136,6 +136,9 @@ database format.</li>
 current working directory.</li>
 <li><strong>pad</strong> (<em>positive int</em>) – The numbers of data columns to skip. For <code class="code docutils literal notranslate"><span class="pre">pad</span> <span class="pre">=</span> <span class="pre">n</span></code>, the first
 <code class="code docutils literal notranslate"><span class="pre">n</span></code> data columns will not be imported.</li>
+<li><strong>colheadlines</strong> (<em>int, optional</em>) – The number of lines spanned by the column headers. If several lines are
+spanned, the lines will be merged to generate the column keys in the
+output dictionary.</li>
 </ul>
 </td>
 </tr>
@@ -156,7 +159,7 @@ because an output file with the same name already exists).</li>
 
 <dl class="function">
 <dt id="data_import.import_dir">
-<code class="descname">import_dir</code><span class="sig-paren">(</span><em>in_dir</em>, <em>in_ext='txt'</em>, <em>recursive=False</em>, <em>force=False</em>, <em>deli='\t'</em>, <em>dec_mark='.'</em>, <em>out_ext='npz'</em>, <em>out_dir=''</em>, <em>print_stat=False</em>, <em>pcs=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_dir" title="Permalink to this definition">¶</a></dt>
+<code class="descname">import_dir</code><span class="sig-paren">(</span><em>in_dir</em>, <em>in_ext='txt'</em>, <em>recursive=False</em>, <em>force=False</em>, <em>deli='\t'</em>, <em>dec_mark='.'</em>, <em>out_ext='npz'</em>, <em>out_dir=''</em>, <em>print_stat=False</em>, <em>pcs=False</em>, <em>colheadlines=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#import_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.import_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import all delimited data files in a directory into Numpy or Matlab
 database format. Optionally, all data files in a directory and all its
 child directories can be imported. The method can be applied to regular
@@ -192,6 +195,9 @@ is not specified.</li>
 Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.</li>
 <li><strong>pcs</strong> (<em>bool, optional</em>) – If <code class="code docutils literal notranslate"><span class="pre">True</span></code>, the delimited files are treated like files that were
 generated using an MTM or EHD2 test rig manufactured by PCS Instruments.</li>
+<li><strong>colheadlines</strong> (<em>int, optional</em>) – The number of lines spanned by the column headers. If several lines are
+spanned, the lines will be merged to generate the column keys in the
+output dictionary.</li>
 </ul>
 </td>
 </tr>

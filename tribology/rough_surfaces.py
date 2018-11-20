@@ -11,6 +11,37 @@ This module contains functions related to rough surfaces. Please see the
 import numpy as np
 
 
+def abbottfirestone(trace, num_bins=100):
+    """
+
+    Calculate the Abbott-Firestone curve for a 1D profile trace.
+
+    Parameters
+    ----------
+    trace: ndarray
+        The profile heights of the 1D trace.
+    num_bins: positive int, optional
+        The number of bins for the calculation of the profile height
+        probability distribution.
+
+    Returns
+    -------
+    bins: ndarray
+        The bins used for the calculation of the profile height
+        probability distribution (= x-axis data for Abbott-Firestone plot).
+    prob_dist: ndarray
+        The probability distribution of the profile (= y-axis data for Abbott-
+        Firestone plot).
+
+    """
+    bins = np.linspace(np.amax(trace), np.amin(trace), num_bins)
+    prob_dist = []
+    for each_bin in bins:
+        prob_dist.append(
+            len(np.where(trace >= each_bin)[0]) / len(trace) * num_bins)
+    return bins, prob_dist
+
+
 def randsurf(n_x, n_y, delta_x, delta_y, s_q, lambda_x, lambda_y):
     """
 

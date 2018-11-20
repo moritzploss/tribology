@@ -265,7 +265,10 @@ of a circle that minimizes the average discrepancy between the actual
 profile and a circle profile. The secant method is used to find the circle
 approximation.</p>
 <p>This method has been tested for continuous (or at least semi-continuous)
-profiles only.</p>
+profiles only. It works best for cases where the circle radius is larger
+than the absolute minimum and maximum of the profile axis.</p>
+<p>The function will not produce sensible results for profiles where the
+maximum profile height is large compared to the axis length.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -281,12 +284,14 @@ returned.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>rad</strong> – The radius of the circle that best approximates <cite>profile</cite>. If the
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>rad</strong> (<em>scalar</em>) – The radius of the circle that best approximates <cite>profile</cite>. If the
 profile cannot be approximated with a circle (usually if the profile
-is a straight line), the function returns <code class="code docutils literal notranslate"><span class="pre">inf</span></code>.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar or inf</p>
+is a straight line), the function returns <code class="code docutils literal notranslate"><span class="pre">inf</span></code>.</li>
+<li><strong>ax_approx</strong> (<em>ndarray</em>) – The elements of <code class="code docutils literal notranslate"><span class="pre">axis</span></code> that were used for the approximation.</li>
+<li><strong>prof_approx</strong> (<em>ndarray</em>) – The elements of <code class="code docutils literal notranslate"><span class="pre">profile</span></code> that were used for the approximation.</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
