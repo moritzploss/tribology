@@ -332,7 +332,7 @@ def __circ3points(x_cords, y_cords):
     -------
     rad: float
         The radius of the circle. If all points are on a straight line, rad
-        will be :code:`Inf`
+        will be :code:`inf`
 
     """
     a = sqrt((x_cords[0] - x_cords[1]) ** 2 + (y_cords[0] - y_cords[1]) ** 2)
