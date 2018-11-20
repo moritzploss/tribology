@@ -77,7 +77,7 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
-### 0.5.6
+#### 0.5.6
 - fixed a bug that lead function `approx_hertz_rad` to return radius `nan` 
   rather than `inf` for a straight line profile. added corresponding test
   case.
