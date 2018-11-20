@@ -341,9 +341,9 @@ def __circ3points(x_cords, y_cords):
     s = (a + b + c) / 2
     d = sqrt(s * (s - a) * (s - b) * (s - c))
 
-    try:
+    if d != 0:
         rad = a * b * c / (4 * d)
-    except ZeroDivisionError:
+    else:
         rad = float('Inf')
 
     return rad
