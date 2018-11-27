@@ -321,7 +321,7 @@ databases. An exception (type KeyError) will be raised if not.</li>
 
 <dl class="function">
 <dt id="data_import.split_del">
-<code class="descname">split_del</code><span class="sig-paren">(</span><em>file</em>, <em>deli='\t'</em>, <em>ext='txt'</em>, <em>cmin=3</em>, <em>hspan=1</em>, <em>outdir=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#split_del"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.split_del" title="Permalink to this definition">¶</a></dt>
+<code class="descname">split_del</code><span class="sig-paren">(</span><em>file</em>, <em>deli='\t'</em>, <em>ext='txt'</em>, <em>cmin=3</em>, <em>hspan=1</em>, <em>outdir=None</em>, <em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#split_del"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.split_del" title="Permalink to this definition">¶</a></dt>
 <dd><p>Split a delimited data file into several separate data files, if the file
 contains more than one block of data. Blocks of data are typically
 separated by at least one line of column headers. The first data column
@@ -346,6 +346,8 @@ be classified as data.</li>
 written to individual data files (usually equal to number of lines
 spanned by the column headers).</li>
 <li><strong>outdir</strong> (<em>str, optional</em>) – Path to output directory. Default is current working directory.</li>
+<li><strong>force</strong> (<em>bool</em>) – If True, existing output files will be overwritten. Will raise an
+exception if file exists and force is False.</li>
 </ul>
 </td>
 </tr>

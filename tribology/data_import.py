@@ -81,7 +81,8 @@ def __num_char(char):
     return bool(char.isdigit() or char == '-')
 
 
-def split_del(file, deli='\t', ext='txt', cmin=3, hspan=1, outdir=None):
+def split_del(file, deli='\t', ext='txt', cmin=3, hspan=1, outdir=None,
+              force=False):
     """
 
     Split a delimited data file into several separate data files, if the file
@@ -113,6 +114,9 @@ def split_del(file, deli='\t', ext='txt', cmin=3, hspan=1, outdir=None):
         spanned by the column headers).
     outdir: str, optional
         Path to output directory. Default is current working directory.
+    force: bool
+        If True, existing output files will be overwritten. Will raise an
+        exception if file exists and force is False.
 
     Returns
     -------
@@ -149,6 +153,13 @@ def split_del(file, deli='\t', ext='txt', cmin=3, hspan=1, outdir=None):
                                          __get_outfile(file, idx, ext)])
                     if f_out not in outfiles:
                         outfiles.append(f_out)
+
+                    if os.path.isfile(f_out):
+                        if force:
+                            os.remove(f_out)
+                        else:
+                            raise OSError("output file exists. "
+                                          "use argument 'force' to overwrite.")
 
             if write and f_out:
                 with open(f_out, "a") as out:

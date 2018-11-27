@@ -77,6 +77,10 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
+#### 0.5.9
+- function `split_del` now has additional argument `force` to overwrite existing
+  output files
+
 #### 0.5.8
 - bug fixes
 
