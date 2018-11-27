@@ -73,7 +73,7 @@ def __get_outpath(outdir):
 
 
 def __get_outfile(in_file, idx, out_ext):
-    fname = ''.join(in_file.split('.')[:-1])
+    fname = ''.join(in_file.split('.')[:-1]).split(os.sep)[-1]
     return '{}-{}.{}'.format(fname, str(idx), out_ext)
 
 

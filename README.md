@@ -77,6 +77,9 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
+#### 0.5.8
+- bug fixes
+
 #### 0.5.7
 - function `split_del` added to module `data_import`
 
