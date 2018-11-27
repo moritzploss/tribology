@@ -288,7 +288,8 @@ a file name is generated based on the input file names.</li>
 <dt id="data_import.merge_npz">
 <code class="descname">merge_npz</code><span class="sig-paren">(</span><em>in_files</em>, <em>accum=None</em>, <em>safe=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#merge_npz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.merge_npz" title="Permalink to this definition">¶</a></dt>
 <dd><p>Merge npz databases by concatenating all databases in <code class="code docutils literal notranslate"><span class="pre">in_files</span></code>.
-Databases are concatenated in the order given in <code class="code docutils literal notranslate"><span class="pre">in_files</span></code>.</p>
+Databases are concatenated in the order given in <code class="code docutils literal notranslate"><span class="pre">in_files</span></code>; the data
+should be of numeric type.</p>
 <p>Database keys for which values are to be accumulated can be given as a list
 using the <code class="code docutils literal notranslate"><span class="pre">accum</span></code> argument. For examples, if all databases have the
 key <code class="code docutils literal notranslate"><span class="pre">time</span></code>, then <code class="code docutils literal notranslate"><span class="pre">accum=['time']</span></code> will produce a continuous

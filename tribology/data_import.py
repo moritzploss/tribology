@@ -188,11 +188,12 @@ def __verify_merge(in_files, accum):
 
 
 def __same_length(merged, dat):
+    counter = 1
     val = next(iter(merged.values()))
-    if len(val) != len(dat):
-        return False
-    else:
-        return True
+    while isinstance(val, object) and counter < len(merged.files):
+        val = next(iter(merged.values()))
+        counter += 1
+    return bool(len(val) == len(dat))
 
 
 def __get_len(merged):
@@ -207,7 +208,7 @@ def __equalize(merged):
 
     for key, val in merged.items():
         vlen = len(val)
-        if vlen < max_len:
+        if vlen < max_len and not isinstance(merged[key], object):
             merged[key] = np.append(merged[key],
                                     np.ones(max_len - vlen) * float('nan'))
     return merged
@@ -217,7 +218,8 @@ def merge_npz(in_files, accum=None, safe=True):
     """
 
     Merge npz databases by concatenating all databases in :code:`in_files`.
-    Databases are concatenated in the order given in :code:`in_files`.
+    Databases are concatenated in the order given in :code:`in_files`; the data
+    should be of numeric type.
 
     Database keys for which values are to be accumulated can be given as a list
     using the :code:`accum` argument. For examples, if all databases have the
@@ -258,7 +260,8 @@ def merge_npz(in_files, accum=None, safe=True):
                 else:
                     merged[key] = np.append(merged[key], in_dat[key])
             else:
-                if not merged or __same_length(merged, in_dat[key]):
+                if not merged or isinstance(in_dat[key], object) or \
+                        __same_length(merged, in_dat[key]):
                     merged[key] = in_dat[key]
                 else:
                     len_diff = __get_len(merged)

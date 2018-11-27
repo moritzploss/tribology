@@ -293,11 +293,12 @@
 
 
 <span class="k">def</span> <span class="nf">__same_length</span><span class="p">(</span><span class="n">merged</span><span class="p">,</span> <span class="n">dat</span><span class="p">):</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">val</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">merged</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">while</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span> <span class="ow">and</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">merged</span><span class="o">.</span><span class="n">files</span><span class="p">):</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">merged</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">))</span>
 
 
 <span class="k">def</span> <span class="nf">__get_len</span><span class="p">(</span><span class="n">merged</span><span class="p">):</span>
@@ -312,7 +313,7 @@
 
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">merged</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">vlen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">vlen</span> <span class="o">&lt;</span> <span class="n">max_len</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">vlen</span> <span class="o">&lt;</span> <span class="n">max_len</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">object</span><span class="p">):</span>
             <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">],</span>
                                     <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">max_len</span> <span class="o">-</span> <span class="n">vlen</span><span class="p">)</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">merged</span>
@@ -322,7 +323,8 @@
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Merge npz databases by concatenating all databases in :code:`in_files`.</span>
-<span class="sd">    Databases are concatenated in the order given in :code:`in_files`.</span>
+<span class="sd">    Databases are concatenated in the order given in :code:`in_files`; the data</span>
+<span class="sd">    should be of numeric type.</span>
 
 <span class="sd">    Database keys for which values are to be accumulated can be given as a list</span>
 <span class="sd">    using the :code:`accum` argument. For examples, if all databases have the</span>
@@ -363,7 +365,8 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">in_dat</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">merged</span> <span class="ow">or</span> <span class="n">__same_length</span><span class="p">(</span><span class="n">merged</span><span class="p">,</span> <span class="n">in_dat</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">merged</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">in_dat</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">object</span><span class="p">)</span> <span class="ow">or</span> \
+                        <span class="n">__same_length</span><span class="p">(</span><span class="n">merged</span><span class="p">,</span> <span class="n">in_dat</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
                     <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">in_dat</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">len_diff</span> <span class="o">=</span> <span class="n">__get_len</span><span class="p">(</span><span class="n">merged</span><span class="p">)</span>
