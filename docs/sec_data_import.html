@@ -318,6 +318,46 @@ databases. An exception (type KeyError) will be raised if not.</li>
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="data_import.split_del">
+<code class="descname">split_del</code><span class="sig-paren">(</span><em>file</em>, <em>deli='\t'</em>, <em>ext='txt'</em>, <em>cmin=3</em>, <em>hspan=1</em>, <em>outdir=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_import.html#split_del"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_import.split_del" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split a delimited data file into several separate data files, if the file
+contains more than one block of data. Blocks of data are typically
+separated by at least one line of column headers. The first data column
+of each data block has to be numeric.</p>
+<p>This function is meant to be used on data files where different blocks of
+data have different numbers of columns or different column headers. After
+splitting the data file into individual data files, import methods like
+<code class="code docutils literal notranslate"><span class="pre">import_del</span></code> can be used on the individual files. If all data should
+be merged into a single database afterwards, the <code class="code docutils literal notranslate"><span class="pre">merge_npz</span></code> function
+can be used.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file</strong> (<em>str</em>) – Path to the data file.</li>
+<li><strong>deli</strong> (<em>str, optional</em>) – Delimiter used to separate data columns in <code class="code docutils literal notranslate"><span class="pre">file</span></code></li>
+<li><strong>ext</strong> (<em>str, optional</em>) – File extension of output files. Default is <code class="code docutils literal notranslate"><span class="pre">txt</span></code></li>
+<li><strong>cmin</strong> (<em>int, optional</em>) – Minimum number of columns that a line of data needs to have in order to
+be classified as data.</li>
+<li><strong>hspan</strong> (<em>int, optional</em>) – Maximum number of non-data lines above each data block that should be
+written to individual data files (usually equal to number of lines
+spanned by the column headers).</li>
+<li><strong>outdir</strong> (<em>str, optional</em>) – Path to output directory. Default is current working directory.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>outfiles</strong> – Paths to output files.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 

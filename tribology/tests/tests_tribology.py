@@ -308,6 +308,16 @@ class TestDataImport(unittest.TestCase):
         self.assertEqual(dat['viscosity_pa_s'][50], 0.0363864)
         os.remove(f_out)
 
+    def test_split_del(self):
+        """
+        check if delimited text file can be split into several files
+        """
+        outfiles = td.split_del('tribology/tests/data_import/demo_1.txt',
+                                hspan=1)
+        self.assertEqual(3, len(outfiles))
+        for file in outfiles:
+            os.remove(file)
+
 
 class TestHertz(unittest.TestCase):
     """

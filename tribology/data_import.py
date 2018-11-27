@@ -41,7 +41,7 @@ class _Colors:
 class _TextSnippets(Enum):
     """
 
-    Text snippets to be used when merging dellimited files.
+    Text snippets to be used when merging delimited files.
 
     """
     header = "This file was automatically generated using the merge_del\n" \
@@ -56,6 +56,108 @@ class _TextSnippets(Enum):
     seperator = "\n" \
                 "Beginning of file:\n" \
                 "{}\n"
+
+
+def __make_dir(dirpath):
+    if not os.path.isdir(dirpath):
+        os.makedirs(dirpath)
+    return dirpath
+
+
+def __get_outpath(outdir):
+    if outdir:
+        outpath = __make_dir(outdir)
+    else:
+        outpath = os.getcwd()
+    return outpath
+
+
+def __get_outfile(in_file, idx, out_ext):
+    fname = ''.join(in_file.split('.')[:-1])
+    return '{}-{}.{}'.format(fname, str(idx), out_ext)
+
+
+def __num_char(char):
+    return bool(char.isdigit() or char == '-')
+
+
+def split_del(file, deli='\t', ext='txt', cmin=3, hspan=1, outdir=None):
+    """
+
+    Split a delimited data file into several separate data files, if the file
+    contains more than one block of data. Blocks of data are typically
+    separated by at least one line of column headers. The first data column
+    of each data block has to be numeric.
+
+    This function is meant to be used on data files where different blocks of
+    data have different numbers of columns or different column headers. After
+    splitting the data file into individual data files, import methods like
+    :code:`import_del` can be used on the individual files. If all data should
+    be merged into a single database afterwards, the :code:`merge_npz` function
+    can be used.
+
+    Parameters
+    ----------
+    file: str
+        Path to the data file.
+    deli: str, optional
+        Delimiter used to separate data columns in :code:`file`
+    ext: str, optional
+        File extension of output files. Default is :code:`txt`
+    cmin: int, optional
+        Minimum number of columns that a line of data needs to have in order to
+        be classified as data.
+    hspan: int, optional
+        Maximum number of non-data lines above each data block that should be
+        written to individual data files (usually equal to number of lines
+        spanned by the column headers).
+    outdir: str, optional
+        Path to output directory. Default is current working directory.
+
+    Returns
+    -------
+    outfiles: list
+        Paths to output files.
+
+    """
+    outpath = __get_outpath(outdir)
+
+    outfiles = []
+    idx = 0
+    f_out = None
+    write = False
+    to_write = []
+
+    with open(file) as infile:
+        for line in infile:
+
+            # if first character of line is not numeric
+            if not __num_char(line[0]):
+                write = False
+                to_write.append(line)
+
+                while len(to_write) > hspan:
+                    del to_write[0]
+
+            else:
+                # if numeric line has at least 'cmin' columns
+                if len(line.split(deli)) >= cmin and not write:
+                    write = True
+
+                    idx += 1
+                    f_out = os.sep.join([outpath,
+                                         __get_outfile(file, idx, ext)])
+                    if f_out not in outfiles:
+                        outfiles.append(f_out)
+
+            if write and f_out:
+                with open(f_out, "a") as out:
+                    for element in to_write:
+                        out.write(element)
+                    to_write = []
+                    out.write(line)
+
+    return outfiles
 
 
 def __verify_merge(in_files, accum):
@@ -83,6 +185,32 @@ def __verify_merge(in_files, accum):
         if accum and not all(key in keys for key in accum):
             raise KeyError('key(s) defined in accum not in npz database {}'
                            .format(file))
+
+
+def __same_length(merged, dat):
+    val = next(iter(merged.values()))
+    if len(val) != len(dat):
+        return False
+    else:
+        return True
+
+
+def __get_len(merged):
+    _, val = next(iter(merged.items()))
+    return len(val)
+
+
+def __equalize(merged):
+    max_len = 0
+    for key, val in merged.items():
+        max_len = max(max_len, len(val))
+
+    for key, val in merged.items():
+        vlen = len(val)
+        if vlen < max_len:
+            merged[key] = np.append(merged[key],
+                                    np.ones(max_len - vlen) * float('nan'))
+    return merged
 
 
 def merge_npz(in_files, accum=None, safe=True):
@@ -130,7 +258,13 @@ def merge_npz(in_files, accum=None, safe=True):
                 else:
                     merged[key] = np.append(merged[key], in_dat[key])
             else:
-                merged[key] = in_dat[key]
+                if not merged or __same_length(merged, in_dat[key]):
+                    merged[key] = in_dat[key]
+                else:
+                    len_diff = __get_len(merged)
+                    merged[key] = np.append(np.ones(len_diff) * float('nan'),
+                                            in_dat[key])
+        merged = __equalize(merged)
 
     return merged
 
