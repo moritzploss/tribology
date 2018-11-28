@@ -77,6 +77,11 @@ Neutral builds are continuously deployed to PyPI. The log for
 neutral builds includes changes with respect to the latest numbered
 release listed below.
 
+#### 0.5.10
+- function `merge_npz` restored to earlier implementation; use more
+  advanced data structures to merge databases where values are not numeric or
+  not all databases contain the same set of keys
+
 #### 0.5.9
 - function `split_del` now has additional argument `force` to overwrite existing
   output files
