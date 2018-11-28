@@ -59,7 +59,7 @@ overview of the DOI release history can be found through
 
     DOI:  10.5281/zenodo.1117727
 
-The suggested format for citations is:
+The suggested citation format is:
 
     [List of contributors] et al., Tribology -- A Python Package for Tribology 
     Research and Education, version v[x.x.x] ([date]). doi: [DOI] 
