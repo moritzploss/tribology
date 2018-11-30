@@ -31,7 +31,7 @@ def kin2dyn(kin, density):
         The dynamic viscosity of the lubricant.
 
     """
-    dyn = kin / density
+    dyn = kin * density
     return dyn
 
 
@@ -53,7 +53,7 @@ def dyn2kin(dyn, density):
         The kinematic viscosity of the lubricant.
 
     """
-    kin = dyn * density
+    kin = dyn / density
     return kin
 
 

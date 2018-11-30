@@ -136,7 +136,7 @@
 <span class="sd">        The dynamic viscosity of the lubricant.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">dyn</span> <span class="o">=</span> <span class="n">kin</span> <span class="o">/</span> <span class="n">density</span>
+    <span class="n">dyn</span> <span class="o">=</span> <span class="n">kin</span> <span class="o">*</span> <span class="n">density</span>
     <span class="k">return</span> <span class="n">dyn</span></div>
 
 
@@ -158,7 +158,7 @@
 <span class="sd">        The kinematic viscosity of the lubricant.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">kin</span> <span class="o">=</span> <span class="n">dyn</span> <span class="o">*</span> <span class="n">density</span>
+    <span class="n">kin</span> <span class="o">=</span> <span class="n">dyn</span> <span class="o">/</span> <span class="n">density</span>
     <span class="k">return</span> <span class="n">kin</span></div>
 
 

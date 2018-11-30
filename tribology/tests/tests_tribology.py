@@ -32,13 +32,13 @@ class TestTribology(unittest.TestCase):
         """
         base test for dyn2kin method
         """
-        self.assertEqual(tl.dyn2kin(1, 0.5), 0.5)
+        self.assertEqual(tl.dyn2kin(1, 0.5), 2)
 
     def test_kin2dyn(self):
         """
         base test for kin2dyn method
         """
-        self.assertEqual(tl.kin2dyn(1, 0.5), 2)
+        self.assertEqual(tl.kin2dyn(1, 0.5), 0.5)
 
     def test_effective_modulus(self):
         """
