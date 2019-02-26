@@ -45,7 +45,7 @@ def demo_ball_on_plate():
     r_ball = tr.RadBall.HInch.value
     f_outer = 10
     e_eff = tr.eeff(tr.YoungsMod.STEEL.value, tr.PoissonRatio.STEEL.value,
-                    315000, 0.26)
+                    tr.YoungsMod.STEEL.value, tr.PoissonRatio.STEEL.value)
     r_eff, r_eff_x, r_eff_y = tr.reff(r_ball, r_ball, 0, 0)
 
     # create 3d profile for ball and flat plate. calculate Hertz contact width
@@ -65,7 +65,7 @@ def demo_ball_on_plate():
                                       inf_mat_red, delta_x, delta_y)
 
     # calculate analytical solution using Hertz equations
-    p_max_hertz = 1.5 * tr.phertz(r_eff, r_eff_x, r_eff_x, e_eff, f_inner)
+    p_max_hertz = 1.5 * tr.phertz(r_eff, r_eff_x, r_eff_y, e_eff, f_inner)
 
     # show results
     plot_results(ax_x, ax_y, press)
