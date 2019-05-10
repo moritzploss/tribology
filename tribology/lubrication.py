@@ -5,8 +5,7 @@
 This module contains functions related to lubricants and lubrication.
 
 """
-
-
+import math
 from math import log10 as lg
 from math import pi, e
 
@@ -257,11 +256,11 @@ def barus(eta_0, alpha_p, pressure):
 
     Parameters
     ----------
-    eta_0: scalar
+    eta_0: float, ndarray
         The dynamic viscosity at atmospheric pressure.
-    alpha_p: scalar
+    alpha_p: float, ndarray
         The pressure-viscosity coefficient of the fluid.
-    pressure: scalar
+    pressure: float, ndarray
         The pressure at which to calculate the dynamic viscosity.
 
     Returns
@@ -270,5 +269,7 @@ def barus(eta_0, alpha_p, pressure):
         The dynamic viscosity at pressure `pressure`.
 
     """
-    eta_p = eta_0 * e ** (alpha_p * pressure)
+    eta_p = eta_0 * np.power(e, (alpha_p * pressure))
     return eta_p
+
+

@@ -903,10 +903,10 @@ def __get_pcs_steps(in_file):
         for line in dat_file:
             if line.startswith('Step ') and ' started at ' in line:
                 steps.append('data')
-            if line.startswith('Step type	MAPPER	') or \
-                line.startswith('Step type	ZERO_CHECK	') or \
-                line.startswith('Step type	FILM_ZERO	') or \
-                line.startswith('Step type	HEATING	'):
+            if line.lower().startswith('step type	mapper	') or \
+                line.lower().startswith('step type	zero_check	') or \
+                line.lower().startswith('step type	film_zero	') or \
+                line.lower().startswith('step type	heating	'):
                 steps[-1] = 'other'
     return steps
 

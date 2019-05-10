@@ -110,8 +110,7 @@
 <span class="sd">This module contains functions related to lubricants and lubrication.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-
-
+<span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">log10</span> <span class="k">as</span> <span class="n">lg</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">e</span>
 
@@ -362,11 +361,11 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    eta_0: scalar</span>
+<span class="sd">    eta_0: float, ndarray</span>
 <span class="sd">        The dynamic viscosity at atmospheric pressure.</span>
-<span class="sd">    alpha_p: scalar</span>
+<span class="sd">    alpha_p: float, ndarray</span>
 <span class="sd">        The pressure-viscosity coefficient of the fluid.</span>
-<span class="sd">    pressure: scalar</span>
+<span class="sd">    pressure: float, ndarray</span>
 <span class="sd">        The pressure at which to calculate the dynamic viscosity.</span>
 
 <span class="sd">    Returns</span>
@@ -375,8 +374,10 @@
 <span class="sd">        The dynamic viscosity at pressure `pressure`.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">eta_p</span> <span class="o">=</span> <span class="n">eta_0</span> <span class="o">*</span> <span class="n">e</span> <span class="o">**</span> <span class="p">(</span><span class="n">alpha_p</span> <span class="o">*</span> <span class="n">pressure</span><span class="p">)</span>
+    <span class="n">eta_p</span> <span class="o">=</span> <span class="n">eta_0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">(</span><span class="n">alpha_p</span> <span class="o">*</span> <span class="n">pressure</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">eta_p</span></div>
+
+
 </pre></div>
 
           </div>
