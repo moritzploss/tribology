@@ -401,7 +401,7 @@ def __get_thick(file, x, y, rads, x_vals, y_vals, r_mean, rgb_map, skip=1,
                     y_idx >= y_mean - r_mean * (1 - aperture['top']) and \
                     x_idx <= x_mean + r_mean * (1 - aperture['right']) and \
                     x_idx >= x_mean - r_mean * (1 - aperture['left']):
-                pix = pixels[x_idx, y_idx]
+                pix = pixels[x_idx, y_idx][0:3]
                 thick[idx_1, idx_2], rgb[idx_1, idx_2], dist[idx_1, idx_2] = \
                     __rgb_to_thick(pix, rgb_map)
 
@@ -703,6 +703,7 @@ def slim2thick_batch(bitmaps, zero_bmp, rgb_map, mtm_file,
     # initialize dictionary that holds outputs
     out_dict = {
         'mean_thickness_nm': [],
+        'thickness_nm': [],
         'mean_color_error': [],
         'skip': skip,
         'crop': crop,
@@ -738,6 +739,7 @@ def slim2thick_batch(bitmaps, zero_bmp, rgb_map, mtm_file,
 
         # store data in output dictionary
         out_dict['mean_thickness_nm'].append(mean_thick)
+        out_dict['thickness_nm'].append(thick)
         out_dict['mean_color_error'].append(np.nanmean(dist))
         for var in pcs_vars:
             out_dict[var].append(__get_data_at_step(file, mtm_dat, var))

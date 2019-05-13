@@ -506,7 +506,7 @@
                     <span class="n">y_idx</span> <span class="o">&gt;=</span> <span class="n">y_mean</span> <span class="o">-</span> <span class="n">r_mean</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aperture</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">])</span> <span class="ow">and</span> \
                     <span class="n">x_idx</span> <span class="o">&lt;=</span> <span class="n">x_mean</span> <span class="o">+</span> <span class="n">r_mean</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aperture</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">])</span> <span class="ow">and</span> \
                     <span class="n">x_idx</span> <span class="o">&gt;=</span> <span class="n">x_mean</span> <span class="o">-</span> <span class="n">r_mean</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aperture</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">]):</span>
-                <span class="n">pix</span> <span class="o">=</span> <span class="n">pixels</span><span class="p">[</span><span class="n">x_idx</span><span class="p">,</span> <span class="n">y_idx</span><span class="p">]</span>
+                <span class="n">pix</span> <span class="o">=</span> <span class="n">pixels</span><span class="p">[</span><span class="n">x_idx</span><span class="p">,</span> <span class="n">y_idx</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
                 <span class="n">thick</span><span class="p">[</span><span class="n">idx_1</span><span class="p">,</span> <span class="n">idx_2</span><span class="p">],</span> <span class="n">rgb</span><span class="p">[</span><span class="n">idx_1</span><span class="p">,</span> <span class="n">idx_2</span><span class="p">],</span> <span class="n">dist</span><span class="p">[</span><span class="n">idx_1</span><span class="p">,</span> <span class="n">idx_2</span><span class="p">]</span> <span class="o">=</span> \
                     <span class="n">__rgb_to_thick</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">rgb_map</span><span class="p">)</span>
 
@@ -808,6 +808,7 @@
     <span class="c1"># initialize dictionary that holds outputs</span>
     <span class="n">out_dict</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;mean_thickness_nm&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;thickness_nm&#39;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="s1">&#39;mean_color_error&#39;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="s1">&#39;skip&#39;</span><span class="p">:</span> <span class="n">skip</span><span class="p">,</span>
         <span class="s1">&#39;crop&#39;</span><span class="p">:</span> <span class="n">crop</span><span class="p">,</span>
@@ -843,6 +844,7 @@
 
         <span class="c1"># store data in output dictionary</span>
         <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;mean_thickness_nm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_thick</span><span class="p">)</span>
+        <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;thickness_nm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thick</span><span class="p">)</span>
         <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;mean_color_error&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">dist</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">pcs_vars</span><span class="p">:</span>
             <span class="n">out_dict</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">__get_data_at_step</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mtm_dat</span><span class="p">,</span> <span class="n">var</span><span class="p">))</span>
