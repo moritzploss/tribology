@@ -18,7 +18,7 @@ setup(
    license='MIT',
    keywords='tribology machine design research',
    install_requires=[
-       'numpy',
+       'numpy<=1.16.1',
        'numexpr',
        'scipy',
        'opencv-python==3.4.2.16',
