@@ -129,6 +129,7 @@ class TestDataImport(unittest.TestCase):
     """
     demo_1 = 'tribology/tests/data_import/demo_1'
     demo_2 = 'tribology/tests/data_import/demo_2'
+    demo_ETM = 'tribology/tests/data_import/test_data_pcs/ETM_slim_mapper.txt'
     demo_1_pcs = 'tribology/tests/data_import/test_data_pcs/demo_1'
     demo_2_pcs = 'tribology/tests/data_import/test_data_pcs/demo_2'
 
@@ -238,6 +239,17 @@ class TestDataImport(unittest.TestCase):
         self.assertEqual(status, True)
         database = np.load(f_out)
         self.assertEqual(database['step_time_s'][0], 23)
+        os.remove(f_out)
+
+    def test_import_pcs_etm_to_npz(self):
+        """
+        check if ETM (PCS Instruments) output file can be imported to npz
+        """
+        f_out, status, _ = td.import_pcs(self.demo_ETM, out_ext='npz')
+        self.assertEqual(status, True)
+        database = np.load(f_out)
+        self.assertEqual(database['traction_coeff'][22], 0.0171)
+        self.assertEqual(len(database['step_start']), 518)
         os.remove(f_out)
 
     def test_import_pcs_ehd_to_npz(self):
