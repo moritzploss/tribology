@@ -914,8 +914,8 @@ def __get_pcs_steps(in_file):
 def import_pcs(in_file, force=False, out_ext='npz', out_dir=''):
     """
 
-    Import a delimited data file that was produced by an MTM or EHD2 test rig
-    manufactured by PCS Instruments. The method calls the :code:`import_del`
+    Import a delimited data file that was produced by an MTM, ETM or EHD2 test
+    rig manufactured by PCS Instruments. The method calls the :code:`import_del`
     method to perform a basic import of a delimited text file, and generates
     additional output variables that simplify data analysis.
 
