@@ -35,20 +35,6 @@ the package are provided in the [`/examples`](./examples) directory.
 The package is provided under an MIT license. See the 
 [`LICENSE.txt`](LICENSE.txt) file for more information.
 
-
-# known issues
-Some older versions of the package (0.4 <= version < 0.5) may raise the 
-following error when imported:
-
-    ModuleNotFoundError: No module named 'cv2'
-
-This is caused by a missing `install_requires` argument in
-[`setup.py`](./setup.py). To fix this, either update to a later version of the
-package, or install the missing `cv2` package manually:
-
-    pip install opencv-python
-
-
 # use in scientific publications
 
 You can refer to the tribology package in **scientific publications** by
@@ -67,7 +53,28 @@ The suggested citation format is:
 
 # version history
 
-Please refer to the release history for a detailed overview. The current version
-on GitHub incorporates the following changes with respect to the latest release:
+Please refer to the release history for a detailed overview.
 
-- None
+
+# known issues
+
+### numpy
+
+The following releases of NumPy may cause file access errors when using data
+import and processing routines of the tribology package. It is 
+recommended to use the NumPy release(s) specified in [`setup.py`](setup.py).
+
+    1.16.2
+    1.16.3
+
+### missing install requires
+Some older versions of the tribology package (0.4 <= version < 0.5) may raise the 
+following error when imported:
+
+    ModuleNotFoundError: No module named 'cv2'
+
+This is caused by a missing `install_requires` argument in
+[`setup.py`](./setup.py). To fix this, either update to a later version of the
+package, or install the missing `cv2` package manually:
+
+    pip install opencv-python
