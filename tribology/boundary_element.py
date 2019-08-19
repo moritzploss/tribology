@@ -41,9 +41,7 @@ def __secant(x_list, fx_list):
 
     """
     if fx_list[-1] != 0:
-        if len(x_list) > 1 and \
-                        fx_list[-1] != 0 and \
-                        abs(fx_list[-1]) != abs(fx_list[-2]):
+        if len(x_list) > 1 and abs(fx_list[-1]) != abs(fx_list[-2]):
             x_0 = x_list[-2]
             x_1 = x_list[-1]
             fx_0 = fx_list[-2]
@@ -79,8 +77,7 @@ def __beinflumatgrid(axis):
     vertical_ax = np.zeros((len_axis, 1))
     vertical_ax[:, 0] = axis
     grid = np.repeat(vec, len_axis, axis=0)
-    infl_mat_grid = np.absolute(np.subtract(grid, vertical_ax))
-    return infl_mat_grid
+    return np.absolute(np.subtract(grid, vertical_ax))
 
 
 def beinflumatred(infl_mat):
@@ -198,8 +195,7 @@ def beinflumat(x_axis, y_axis, e_eff):
                                                   (ymb[j, j_prime])) +
                                       np.multiply(xpa, xpa))))))
 
-    infl_mat = influence_matrix_complete * 1 / e_eff * 2 / pi
-    return infl_mat
+    return influence_matrix_complete * 1 / e_eff * 2 / pi
 
 
 def __begetd(profile, norm_disp):
@@ -221,8 +217,7 @@ def __begetd(profile, norm_disp):
 
     """
     displ_field = np.subtract(np.ones(profile.shape) * norm_disp, profile)
-    disp = np.reshape(displ_field, (profile.shape[0] * profile.shape[1]))
-    return disp
+    return np.reshape(displ_field, (profile.shape[0] * profile.shape[1]))
 
 
 def __solvepress(red_infl_mat, disp):
@@ -266,8 +261,7 @@ def __solvepress(red_infl_mat, disp):
     return pressure
 
 
-def besolve(profile_1, profile_2, outer_force,
-            red_infl_mat, delta_x, delta_y,
+def besolve(profile_1, profile_2, outer_force, red_infl_mat, delta_x, delta_y,
             norm_disp=0.1, max_offset=0.005):
     """
 

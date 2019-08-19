@@ -370,15 +370,17 @@ def refix(val, p_in="", p_out=""):
         The value in units of prefix :code:`p_out`.
 
     """
-    prefix = {'p': 10 ** -12,
-              'n': 10 ** -9,
-              'mu': 10 ** -6,
-              'm': 10 ** -3,
-              '': 10 ** -0,
-              'k': 10 ** 3,
-              'M': 10 ** 6,
-              'G': 10 ** 9,
-              'T': 10 ** 12}
+    prefix = {
+        'p': 10 ** -12,
+        'n': 10 ** -9,
+        'mu': 10 ** -6,
+        'm': 10 ** -3,
+        '': 10 ** -0,
+        'k': 10 ** 3,
+        'M': 10 ** 6,
+        'G': 10 ** 9,
+        'T': 10 ** 12
+    }
     val_refix = val * prefix[p_in] / prefix[p_out]
     return val_refix
 

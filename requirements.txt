@@ -4,7 +4,7 @@ scipy==1.0.0
 numexpr
 mock
 sphinx
-pylint
+pylint>=2.3.1
 sphinxjp.themes.dotted
 sphinx_rtd_theme
 guzzle_sphinx_theme
