@@ -13,5 +13,5 @@ bumpversion
 matplotlib
 pytest
 opencv-python==3.4.2.16
-pillow==5.0.0
+pillow==8.1.1
 
