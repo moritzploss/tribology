@@ -21,7 +21,7 @@ setup(
        'numpy<=1.16.1',
        'numexpr',
        'scipy',
-       'opencv-python==3.4.2.16',
+       'opencv-python==3.4.7.28',
        'matplotlib',
    ],
    python_requires='>=3.5',
